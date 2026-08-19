@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '1.7.3');
+define('GRAVEDAD_VERSION', '1.8.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -398,5 +398,3 @@ add_action('woocommerce_single_product_summary', 'gravedad_single_product_trust_
 
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
-add_action('woocommerce_before_main_content', function(){ echo '<main class="store-main"><div class="store-shell">'; }, 10);
-add_action('woocommerce_after_main_content', function(){ echo '</div></main>'; }, 10);
