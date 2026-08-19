@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '2.9.0');
+define('GRAVEDAD_VERSION', '3.0.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -31,7 +31,6 @@ function gravedad_setup() {
     add_theme_support('custom-logo', array('height' => 120, 'width' => 420, 'flex-height' => true, 'flex-width' => true));
     add_theme_support('html5', array('search-form', 'gallery', 'caption', 'style', 'script'));
     add_theme_support('woocommerce');
-    add_theme_support('wc-product-gallery-zoom');
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
     register_nav_menus(array('primary' => __('Menú principal', 'gravedad-store'), 'footer' => __('Menú del pie', 'gravedad-store')));
