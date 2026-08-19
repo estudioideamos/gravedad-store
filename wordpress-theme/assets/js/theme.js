@@ -48,6 +48,13 @@ document.addEventListener('DOMContentLoaded',()=>{
     plus.addEventListener('click',()=>setVal((parseFloat(input.value)||min)+step));
   });
 
+  (function freeRelatedFromProductGrid(){
+    const productEl=document.querySelector('div.product');
+    if(!productEl||!productEl.parentNode) return;
+    const stray=productEl.querySelectorAll(':scope > .related.products, :scope > .upsells.products');
+    stray.forEach(section=>{ productEl.parentNode.insertBefore(section, productEl.nextSibling); });
+  })();
+
   (function buildProductAccordion(){
     const tabsWrap=document.querySelector('.woocommerce-tabs');
     const summary=document.querySelector('div.product div.summary');
