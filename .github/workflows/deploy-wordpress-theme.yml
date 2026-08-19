@@ -27,7 +27,7 @@ jobs:
             --get "https://mon23.servidoraweb.net:2083/execute/VersionControl/update" \
             --data-urlencode "repository_root=/home5/oaggssaw/repositories/gravedad-store" \
             --data-urlencode "branch=main" \
-            | python3 -c 'import json,sys; r=json.load(sys.stdin); assert r["result"]["status"] == 1, r'
+            | python3 -c 'import json,sys; r=json.load(sys.stdin); x=r.get("result") or r.get("cpanelresult") or r; s=x.get("status"); print("cPanel:", x.get("errors") or x.get("error") or x.get("messages") or "respuesta sin estado"); assert s == 1, "cPanel no confirmó la actualización"'
 
       - name: Desplegar tema en WordPress
         shell: bash
@@ -39,4 +39,4 @@ jobs:
             --header "Authorization: cpanel oaggssaw:${CPANEL_TOKEN}" \
             --get "https://mon23.servidoraweb.net:2083/execute/VersionControlDeployment/create" \
             --data-urlencode "repository_root=/home5/oaggssaw/repositories/gravedad-store" \
-            | python3 -c 'import json,sys; r=json.load(sys.stdin); assert r["result"]["status"] == 1, r'
+            | python3 -c 'import json,sys; r=json.load(sys.stdin); x=r.get("result") or r.get("cpanelresult") or r; s=x.get("status"); print("cPanel:", x.get("errors") or x.get("error") or x.get("messages") or "respuesta sin estado"); assert s == 1, "cPanel no confirmó el despliegue"'
