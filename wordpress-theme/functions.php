@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '1.9.0');
+define('GRAVEDAD_VERSION', '1.9.1');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -395,6 +395,12 @@ function gravedad_single_product_trust_badges() {
     echo '</ul>';
 }
 add_action('woocommerce_single_product_summary', 'gravedad_single_product_trust_badges', 31);
+
+add_filter('woocommerce_output_related_products_args', function ($args) {
+    $args['posts_per_page'] = 8;
+    $args['columns'] = 8;
+    return $args;
+});
 
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
