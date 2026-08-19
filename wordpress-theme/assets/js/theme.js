@@ -86,30 +86,32 @@ document.addEventListener('DOMContentLoaded',()=>{
     tabsWrap.remove();
   })();
 
-  document.querySelectorAll('.related.products, .upsells.products').forEach(section=>{
-    const track=section.querySelector('ul.products');
-    if(!track||section.querySelector('.carousel-nav')) return;
+  document.querySelectorAll('.related.products, .upsells.products, .product-cards').forEach(section=>{
+    const isCards=section.classList.contains('product-cards');
+    const track=isCards?section:section.querySelector('ul.products');
+    const itemSelector=isCards?':scope > .gravity-product':'li.product';
+    if(!track||section.querySelector(':scope > .carousel-nav')) return;
     const nav=document.createElement('div'); nav.className='carousel-nav';
     const prev=document.createElement('button'); prev.type='button'; prev.textContent='←'; prev.setAttribute('aria-label','Anterior');
     const next=document.createElement('button'); next.type='button'; next.textContent='→'; next.setAttribute('aria-label','Siguiente');
     nav.appendChild(prev); nav.appendChild(next);
-    section.insertBefore(nav, track);
-    const cardStep=()=>{ const card=track.querySelector('li.product'); return card?card.getBoundingClientRect().width+16:280; };
+    if(isCards){ section.parentElement.insertBefore(nav, section); } else { section.insertBefore(nav, track); }
+    const cardStep=()=>{ const card=track.querySelector(itemSelector); return card?card.getBoundingClientRect().width+16:280; };
     const atEnd=()=>track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
     const scrollByCard=(dir)=>{ track.scrollBy({left:dir*cardStep(),behavior:'smooth'}); };
     prev.addEventListener('click',()=>scrollByCard(-1));
     next.addEventListener('click',()=>scrollByCard(1));
 
-    if(!reduceMotion&&track.querySelectorAll('li.product').length>1){
+    if(!reduceMotion&&track.querySelectorAll(itemSelector).length>1){
       let timer=null;
       const advance=()=>{ if(atEnd()){ track.scrollTo({left:0,behavior:'smooth'}); } else { scrollByCard(1); } };
       const start=()=>{ stop(); timer=setInterval(advance,3800); };
       const stop=()=>{ if(timer){ clearInterval(timer); timer=null; } };
       start();
-      section.addEventListener('mouseenter',stop);
-      section.addEventListener('mouseleave',start);
-      section.addEventListener('touchstart',stop,{passive:true});
-      section.addEventListener('touchend',start);
+      track.addEventListener('mouseenter',stop);
+      track.addEventListener('mouseleave',start);
+      track.addEventListener('touchstart',stop,{passive:true});
+      track.addEventListener('touchend',start);
       prev.addEventListener('click',start);
       next.addEventListener('click',start);
     }

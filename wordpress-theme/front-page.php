@@ -15,7 +15,7 @@ $games = array(
 <section class="featured-products"><div class="section-head"><div><p class="section-label">RECIÉN LLEGADOS</p><h2>Novedades que<br><em>atraen miradas.</em></h2></div><a href="<?php echo esc_url(gravedad_shop_url()); ?>">VER TODOS LOS PRODUCTOS →</a></div>
 <div class="product-cards">
 <?php if (class_exists('WooCommerce')):
- $query = new WP_Query(array('post_type'=>'product','post_status'=>'publish','posts_per_page'=>4,'orderby'=>'date','order'=>'DESC'));
+ $query = new WP_Query(array('post_type'=>'product','post_status'=>'publish','posts_per_page'=>12,'orderby'=>'date','order'=>'DESC'));
  if ($query->have_posts()): while ($query->have_posts()): $query->the_post(); $product=wc_get_product(get_the_ID()); ?>
  <article class="gravity-product"><a class="product-image" href="<?php the_permalink(); ?>"><?php echo $product->is_on_sale()?'<span>OFERTA</span>':'<span>NUEVO</span>'; echo $product->get_image('woocommerce_thumbnail'); ?></a><div><small><?php echo wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')); ?></small><h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3><div class="product-price"><?php echo wp_kses_post($product->get_price_html()); ?><a class="plus" href="<?php echo esc_url($product->add_to_cart_url()); ?>" data-product_id="<?php echo esc_attr($product->get_id()); ?>">+</a></div></div></article>
  <?php endwhile; wp_reset_postdata(); else: gravedad_placeholder_products(); endif; else: gravedad_placeholder_products(); endif; ?>
