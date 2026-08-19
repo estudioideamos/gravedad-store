@@ -13,22 +13,15 @@ $games = array(
   <?php if ($game[2]): ?><img class="game-logo <?php echo esc_attr($game[0]); ?>" src="<?php echo esc_url($uri.'/assets/img/'.$game[2]); ?>" alt="<?php echo esc_attr($game[1]); ?>"><?php else: ?><span class="dice-logo"><?php echo gravedad_icon('dice'); ?></span><?php endif; ?><strong><?php echo esc_html($game[1]); ?></strong><b>→</b></a><?php endforeach; ?>
 </div></section>
 
-<section class="featured-products"><div class="section-head"><div><p class="section-label">RECIÉN LLEGADOS</p><h2>Novedades que<br><em>atraen miradas.</em></h2></div><a href="<?php echo esc_url(gravedad_shop_url()); ?>">VER TODOS LOS PRODUCTOS →</a></div>
-<div class="product-cards">
-<?php if (class_exists('WooCommerce')):
- $query = new WP_Query(array('post_type'=>'product','post_status'=>'publish','posts_per_page'=>12,'orderby'=>'date','order'=>'DESC'));
- if ($query->have_posts()): while ($query->have_posts()): $query->the_post(); $product=wc_get_product(get_the_ID()); ?>
- <article class="gravity-product"><a class="product-image" href="<?php the_permalink(); ?>"><?php echo $product->is_on_sale()?'<span>OFERTA</span>':'<span class="is-new">NUEVO</span>'; echo $product->get_image('woocommerce_thumbnail'); ?></a><div><small><?php echo wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')); ?></small><h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3><div class="product-price"><?php echo wp_kses_post($product->get_price_html()); ?><a class="plus" href="<?php echo esc_url($product->add_to_cart_url()); ?>" data-product_id="<?php echo esc_attr($product->get_id()); ?>">+</a></div></div></article>
- <?php endwhile; wp_reset_postdata(); else: gravedad_placeholder_products(); endif; else: gravedad_placeholder_products(); endif; ?>
-</div></section>
-
-<section class="feature-categories">
- <a href="<?php echo esc_url(gravedad_shop_url('cartas-sueltas')); ?>"><b><?php echo gravedad_icon('sparkle'); ?></b><div><small>MILES DE OPCIONES</small><h3>Cartas sueltas</h3><p>Buscá por juego, colección, rareza, idioma, condición y más.</p><strong>EXPLORAR →</strong></div></a>
- <a href="<?php echo esc_url(gravedad_shop_url('tcg')); ?>"><b><?php echo gravedad_icon('box'); ?></b><div><small>ABRÍ. JUGÁ. COLECCIONÁ.</small><h3>Productos sellados</h3><p>Sobres, booster boxes, bundles, mazos y ediciones especiales.</p><strong>EXPLORAR →</strong></div></a>
- <a href="<?php echo esc_url(gravedad_shop_url('juegos-de-mesa')); ?>"><b><?php echo gravedad_icon('hexagon'); ?></b><div><small>PARA COMPARTIR LA MESA</small><h3>Juegos de mesa</h3><p>Selección de Devir, Buró, Popullar y otras editoriales.</p><strong>EXPLORAR →</strong></div></a>
- <a href="<?php echo esc_url(gravedad_shop_url('preventas')); ?>"><b><?php echo gravedad_icon('hourglass'); ?></b><div><small>RESERVÁ EL TUYO</small><h3>Preventas</h3><p>Próximos lanzamientos disponibles para reservar.</p><strong>EXPLORAR →</strong></div></a>
- <a href="<?php echo esc_url(gravedad_shop_url('ofertas')); ?>"><b><?php echo gravedad_icon('tag'); ?></b><div><small>NO TE LO PIERDAS</small><h3>Ofertas</h3><p>Productos con promociones y precios especiales.</p><strong>EXPLORAR →</strong></div></a>
-</section>
+<?php
+gravedad_home_carousel('RECIÉN LLEGADOS', 'Novedades que<br><em>atraen miradas.</em>', 'Los últimos ingresos a la tienda, antes que nadie.', array('posts_per_page' => 12), gravedad_shop_url('novedades'), 'novedades');
+gravedad_home_carousel('MILES DE OPCIONES', 'Cartas sueltas<br><em>para tu mazo.</em>', 'Cartas individuales disponibles, filtrables por juego, rareza e idioma.', array('tax_query' => array(array('taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => 'cartas-sueltas'))), gravedad_shop_url('cartas-sueltas'));
+gravedad_home_carousel('ABRÍ. JUGÁ. COLECCIONÁ.', 'Sellado para<br><em>abrir ahora.</em>', 'Booster Box, sobres, mazos, kits y bundles de tus juegos favoritos.', array('tax_query' => array(array('taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => 'tcg'))), gravedad_shop_url('tcg'));
+gravedad_home_carousel('PARA COMPARTIR LA MESA', 'Juegos para<br><em>compartir.</em>', 'Selección de Devir, Buró, Popullar y otras editoriales.', array('tax_query' => array(array('taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => 'juegos-de-mesa'))), gravedad_shop_url('juegos-de-mesa'));
+gravedad_home_carousel('RESERVÁ EL TUYO', 'Reservá antes<br><em>que se agote.</em>', 'Próximos lanzamientos disponibles para reservar.', array('tax_query' => array(array('taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => 'preventas'))), gravedad_shop_url('preventas'));
+$sale_ids = function_exists('wc_get_product_ids_on_sale') ? wc_get_product_ids_on_sale() : array();
+if ($sale_ids) { gravedad_home_carousel('NO TE LO PIERDAS', 'Precios que<br><em>no vuelven.</em>', 'Productos con promociones y precios especiales.', array('post__in' => $sale_ids), gravedad_shop_url('ofertas')); }
+?>
 
 <section class="event-section" id="eventos"><div class="event-visual"><div class="hero-grid"></div><time><?php $date=explode(' ',gravedad_option('gravedad_event_date','24 AGO')); ?><b><?php echo esc_html($date[0]); ?></b><span><?php echo esc_html($date[1]??'AGO'); ?></span></time><div class="event-card"><i></i><b>GRAVEDAD</b><small>STORE CHAMPIONSHIP</small></div></div><div class="event-copy"><p class="section-label">PRÓXIMO EVENTO</p><h2>La comunidad<br>también <em>juega.</em></h2><p>Vení a competir, intercambiar y compartir con otros jugadores. Torneos, lanzamientos y encuentros en nuestro local.</p><div class="event-meta"><?php echo gravedad_icon('pin'); ?> <?php echo esc_html(gravedad_option('gravedad_event_location','José C. Paz, Buenos Aires')); ?> · <?php echo gravedad_icon('clock'); ?> 14:00 hs</div><a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>">Reservar mi lugar →</a></div></section>
 

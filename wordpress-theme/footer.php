@@ -1,5 +1,24 @@
 <?php if (!defined('ABSPATH')) { exit; } ?>
-<section class="newsletter"><div class="hero-grid"></div><div class="newsletter-copy"><p class="kicker">NO TE QUEDES AFUERA</p><h2>Todo lo nuevo,<br><em>directo a tu inbox.</em></h2></div><form><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg><input type="email" name="email" placeholder="tu@email.com" aria-label="Tu correo" required><button type="submit">QUIERO ENTERARME <span>→</span></button><small>Solo lanzamientos, preventas y eventos.</small></form></section>
+<section class="newsletter"><div class="hero-grid"></div>
+  <div class="newsletter-copy">
+    <p class="section-label"><i class="label-dash"></i>NO TE QUEDES AFUERA</p>
+    <h2>Todo lo nuevo,<br><em>antes que se agote.</em></h2>
+    <p class="newsletter-desc">Lanzamientos, preventas y ofertas elegidas por el equipo. Solo lo que vale la pena abrir.</p>
+    <div class="newsletter-stats">
+      <div><b>01</b><span>Lanzamientos exclusivos</span></div>
+      <div><b>02</b><span>Preventas anticipadas</span></div>
+      <div><b>03</b><span>Descuentos para la lista</span></div>
+    </div>
+  </div>
+  <div class="newsletter-card">
+    <div class="newsletter-card-meta"><span>GRAVEDAD STORE</span><span>ACCESO Nº 001</span></div>
+    <p class="kicker">UNA VENTAJA EN TU INBOX</p>
+    <h3>Sumate ahora.</h3>
+    <form><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg><input type="email" name="email" placeholder="tu@email.com" aria-label="Tu correo" required><button type="submit">QUIERO ENTERARME <span>→</span></button></form>
+    <div class="newsletter-card-trust"><span>1 correo por semana</span><span>0 spam</span></div>
+    <small>✓ Podés darte de baja cuando quieras.</small>
+  </div>
+</section>
 <footer class="site-footer">
   <div class="footer-glow"></div>
   <div class="footer-top">

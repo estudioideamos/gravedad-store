@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '4.1.1');
+define('GRAVEDAD_VERSION', '4.2.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -21,6 +21,11 @@ function gravedad_icon($name) {
         'clock' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>',
         'hourglass' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12"></path><path d="M6 22h12"></path><path d="M6 2c0 5 4 6.5 6 8 2-1.5 6-3 6-8"></path><path d="M6 22c0-5 4-6.5 6-8 2 1.5 6 3 6 8"></path></svg>',
         'tag' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 12 22l-10-10V3h9l9.59 9.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"></circle></svg>',
+        'game-magic' => '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1.5l2.7 7.2 7.3.3-5.8 4.6 2.1 7.1L12 16.6l-6.3 4.1 2.1-7.1L2 8.9l7.3-.2z"></path></svg>',
+        'game-pokemon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"></circle><path d="M2.5 12h6.2a3.3 3.3 0 0 0 6.6 0h6.2" stroke-width="1.8"></path><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke-width="1.4"></circle></svg>',
+        'game-onepiece' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"></circle><path d="M12 3v3.4M12 17.6V21M21 12h-3.4M6.4 12H3M18.4 5.6l-2.4 2.4M8 13.6l-2.4 2.4M18.4 18.4l-2.4-2.4M8 10.4 5.6 8"></path></svg>',
+        'game-digimon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 3 7.5v9L12 22l9-5.5v-9z"></path><path d="M12 8l2.8 2.8L12 13.6 9.2 10.8z" fill="currentColor" stroke="none"></path></svg>',
+        'game-dragonball' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5" fill="none"></circle><circle cx="12" cy="7.2" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="8.2" cy="9.6" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="9.6" cy="14" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="14.4" cy="14" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="15.8" cy="9.6" r="1.15" fill="currentColor" stroke="none"></circle></svg>',
         'whatsapp' => '<svg viewBox="-23 -21 682 682.66669" fill="currentColor" fill-rule="evenodd"><path d="m544.386719 93.007812c-59.875-59.945312-139.503907-92.9726558-224.335938-93.007812-174.804687 0-317.070312 142.261719-317.140625 317.113281-.023437 55.894531 14.578125 110.457031 42.332032 158.550781l-44.992188 164.335938 168.121094-44.101562c46.324218 25.269531 98.476562 38.585937 151.550781 38.601562h.132813c174.785156 0 317.066406-142.273438 317.132812-317.132812.035156-84.742188-32.921875-164.417969-92.800781-224.359376zm-224.335938 487.933594h-.109375c-47.296875-.019531-93.683594-12.730468-134.160156-36.742187l-9.621094-5.714844-99.765625 26.171875 26.628907-97.269531-6.269532-9.972657c-26.386718-41.96875-40.320312-90.476562-40.296875-140.28125.054688-145.332031 118.304688-263.570312 263.699219-263.570312 70.40625.023438 136.589844 27.476562 186.355469 77.300781s77.15625 116.050781 77.132812 186.484375c-.0625 145.34375-118.304687 263.59375-263.59375 263.59375zm144.585938-197.417968c-7.921875-3.96875-46.882813-23.132813-54.148438-25.78125-7.257812-2.644532-12.546875-3.960938-17.824219 3.96875-5.285156 7.929687-20.46875 25.78125-25.09375 31.066406-4.625 5.289062-9.242187 5.953125-17.167968 1.984375-7.925782-3.964844-33.457032-12.335938-63.726563-39.332031-23.554687-21.011719-39.457031-46.960938-44.082031-54.890626-4.617188-7.9375-.039062-11.8125 3.476562-16.171874 8.578126-10.652344 17.167969-21.820313 19.808594-27.105469 2.644532-5.289063 1.320313-9.917969-.664062-13.882813-1.976563-3.964844-17.824219-42.96875-24.425782-58.839844-6.4375-15.445312-12.964843-13.359374-17.832031-13.601562-4.617187-.230469-9.902343-.277344-15.1875-.277344-5.28125 0-13.867187 1.980469-21.132812 9.917969-7.261719 7.933594-27.730469 27.101563-27.730469 66.105469s28.394531 76.683594 32.355469 81.972656c3.960937 5.289062 55.878906 85.328125 135.367187 119.648438 18.90625 8.171874 33.664063 13.042968 45.175782 16.695312 18.984374 6.03125 36.253906 5.179688 49.910156 3.140625 15.226562-2.277344 46.878906-19.171875 53.488281-37.679687 6.601563-18.511719 6.601563-34.375 4.617187-37.683594-1.976562-3.304688-7.261718-5.285156-15.183593-9.253906zm0 0"/></svg>',
     );
     return isset($icons[$name]) ? $icons[$name] : '';
@@ -102,6 +107,25 @@ function gravedad_shop_url($slug = '') {
     return home_url('/tienda/');
 }
 
+function gravedad_render_gravity_product($product) {
+    $permalink = get_permalink($product->get_id());
+    echo '<article class="gravity-product"><a class="product-image" href="' . esc_url($permalink) . '">';
+    echo $product->is_on_sale() ? '<span>OFERTA</span>' : '<span class="is-new">NUEVO</span>';
+    echo $product->get_image('woocommerce_thumbnail');
+    echo '</a><div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
+}
+
+function gravedad_home_carousel($kicker, $title_html, $desc, $query_args, $view_all_url, $section_id = '') {
+    if (!class_exists('WooCommerce')) { return; }
+    $defaults = array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => 12, 'orderby' => 'date', 'order' => 'DESC');
+    $query = new WP_Query(array_merge($defaults, $query_args));
+    if (!$query->have_posts()) { wp_reset_postdata(); return; }
+    echo '<section class="featured-products"' . ($section_id ? ' id="' . esc_attr($section_id) . '"' : '') . '><div class="section-head"><div><p class="section-label">' . esc_html($kicker) . '</p><h2>' . $title_html . '</h2>' . ($desc ? '<p class="section-desc">' . esc_html($desc) . '</p>' : '') . '</div><a href="' . esc_url($view_all_url) . '">VER TODO →</a></div><div class="product-cards">';
+    while ($query->have_posts()) { $query->the_post(); gravedad_render_gravity_product(wc_get_product(get_the_ID())); }
+    echo '</div></section>';
+    wp_reset_postdata();
+}
+
 function gravedad_marquee($items = array()) {
     if (!$items) {
         $items = array('ENVÍOS A TODO EL PAÍS', 'COMPRA PROTEGIDA', 'RETIRÁ EN TIENDA SIN CARGO', 'ATENCIÓN PERSONALIZADA', 'NUEVOS INGRESOS TODAS LAS SEMANAS');
@@ -127,17 +151,17 @@ function gravedad_megamenu($key) {
     ob_start();
     if ($key === 'tcg') {
         $games = array(
-            array('Magic: The Gathering', 'magic', 'logo-magic.svg'),
-            array('Pokémon', 'pokemon', 'logo-pokemon.svg'),
-            array('One Piece', 'one-piece', 'logo-onepiece.jpg'),
-            array('Digimon', 'digimon', 'logo-digimon.png'),
-            array('Dragon Ball', 'dragon-ball', 'logo-dragonball.png'),
+            array('Magic: The Gathering', 'magic', 'game-magic'),
+            array('Pokémon', 'pokemon', 'game-pokemon'),
+            array('One Piece', 'one-piece', 'game-onepiece'),
+            array('Digimon', 'digimon', 'game-digimon'),
+            array('Dragon Ball', 'dragon-ball', 'game-dragonball'),
         );
         $tipos = array('Sobres', 'Booster Box', 'Collector Booster', 'Productos especiales');
         echo '<div class="mega-menu"><div class="mega-columns mega-columns-5">';
         foreach ($games as $g) {
             list($label, $slug, $icon) = $g;
-            echo '<div class="mega-col"><h4><img src="' . esc_url(get_template_directory_uri() . '/assets/img/' . $icon) . '" alt="">' . esc_html($label) . '</h4>';
+            echo '<div class="mega-col"><h4>' . gravedad_icon($icon) . esc_html($label) . '</h4>';
             echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">Cartas sueltas</a>';
             foreach ($tipos as $t) { echo '<a href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug, 'f_tipo_producto' => sanitize_title($t)))) . '">' . esc_html($t) . '</a>'; }
             echo '<a class="mega-view-all" href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug))) . '">Ver todo →</a></div>';
