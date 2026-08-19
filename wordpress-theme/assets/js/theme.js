@@ -109,6 +109,16 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(items.length<2) return;
     track.dataset.carouselReady='1';
 
+    const sizeItems=()=>{
+      const w=window.innerWidth;
+      const cols=w<=650?2:(w<=1200?3:5);
+      const gap=16;
+      const basis='calc((100% - '+(gap*(cols-1))+'px)/'+cols+')';
+      items.forEach(it=>{ it.style.flex='0 0 '+basis; it.style.width='auto'; });
+    };
+    sizeItems();
+    window.addEventListener('resize',sizeItems);
+
     const wrap=document.createElement('div'); wrap.className='carousel-wrap';
     track.parentNode.insertBefore(wrap, track);
     wrap.appendChild(track);
