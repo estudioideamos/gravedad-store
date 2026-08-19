@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '1.3.0');
+define('GRAVEDAD_VERSION', '1.4.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -27,7 +27,7 @@ function gravedad_setup() {
 add_action('after_setup_theme', 'gravedad_setup');
 
 function gravedad_assets() {
-    wp_enqueue_style('gravedad-fonts', 'https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,700&family=Manrope:wght@400;500;600;700;800&display=swap', array(), null);
+    wp_enqueue_style('gravedad-fonts', 'https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap', array(), null);
     wp_enqueue_style('gravedad-theme', get_template_directory_uri() . '/assets/css/theme.css', array(), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);

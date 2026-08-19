@@ -6,8 +6,8 @@
     "layout": {"contentSize": "1180px", "wideSize": "1440px"},
     "color": {"palette": [
       {"slug":"ink","name":"Ink","color":"#090a0c"},
-      {"slug":"acid","name":"Acid","color":"#c9ff3f"},
-      {"slug":"violet","name":"Violet","color":"#8b5cf6"},
+      {"slug":"gold","name":"Gold","color":"#f2a900"},
+      {"slug":"red","name":"Red","color":"#cc1414"},
       {"slug":"white","name":"White","color":"#f5f5f2"}
     ]}
   }
