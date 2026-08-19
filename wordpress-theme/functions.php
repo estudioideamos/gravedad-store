@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '2.2.0');
+define('GRAVEDAD_VERSION', '2.3.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -399,8 +399,7 @@ function gravedad_single_product_trust_badges() {
 add_action('woocommerce_single_product_summary', 'gravedad_single_product_trust_badges', 31);
 
 add_filter('woocommerce_output_related_products_args', function ($args) {
-    $args['posts_per_page'] = 8;
-    $args['columns'] = 8;
+    $args['posts_per_page'] = 10;
     return $args;
 });
 
