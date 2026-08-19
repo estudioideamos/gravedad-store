@@ -20,18 +20,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Instalar cliente FTPS
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lftp
 
       - name: Publicar en WordPress
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: mon23.servidoraweb.net
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./wordpress-theme/
-          server-dir: ${{ secrets.FTP_PATH }}
-          exclude: |
-            **/.git*
-            **/.git*/**
+        shell: bash
+        env:
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PATH: ${{ secrets.FTP_PATH }}
+        run: |
+          set -euo pipefail
+          lftp <<LFTP
+          set cmd:fail-exit yes
+          set net:timeout 60
+          set net:max-retries 2
+          set ftp:passive-mode true
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate yes
+          open -p 21 -u "$FTP_USERNAME","$FTP_PASSWORD" mon23.servidoraweb.net
+          mirror --reverse --delete --verbose --exclude-glob .git* ./wordpress-theme/ "$FTP_PATH"
+          bye
+          LFTP
