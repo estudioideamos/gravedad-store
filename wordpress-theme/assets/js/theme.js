@@ -47,4 +47,48 @@ document.addEventListener('DOMContentLoaded',()=>{
     minus.addEventListener('click',()=>setVal((parseFloat(input.value)||min)-step));
     plus.addEventListener('click',()=>setVal((parseFloat(input.value)||min)+step));
   });
+
+  (function buildProductAccordion(){
+    const tabsWrap=document.querySelector('.woocommerce-tabs');
+    const summary=document.querySelector('div.product div.summary');
+    if(!tabsWrap||!summary) return;
+    const tabLinks=[...tabsWrap.querySelectorAll('ul.tabs > li > a')];
+    if(!tabLinks.length) return;
+    const accordion=document.createElement('div');
+    accordion.className='product-accordion';
+    tabLinks.forEach((link,i)=>{
+      const panel=tabsWrap.querySelector(link.getAttribute('href'));
+      if(!panel) return;
+      const item=document.createElement('div');
+      item.className='accordion-item'+(i===0?' is-open':'');
+      const trigger=document.createElement('button');
+      trigger.type='button'; trigger.className='accordion-trigger';
+      trigger.innerHTML='<span>'+link.textContent.trim()+'</span><i>+</i>';
+      const body=document.createElement('div');
+      body.className='accordion-body';
+      body.appendChild(panel);
+      trigger.addEventListener('click',()=>{
+        const wasOpen=item.classList.contains('is-open');
+        accordion.querySelectorAll('.accordion-item').forEach(el=>el.classList.remove('is-open'));
+        if(!wasOpen) item.classList.add('is-open');
+      });
+      item.appendChild(trigger); item.appendChild(body);
+      accordion.appendChild(item);
+    });
+    summary.appendChild(accordion);
+    tabsWrap.remove();
+  })();
+
+  document.querySelectorAll('.related.products, .upsells.products').forEach(section=>{
+    const track=section.querySelector('ul.products');
+    if(!track||section.querySelector('.carousel-nav')) return;
+    const nav=document.createElement('div'); nav.className='carousel-nav';
+    const prev=document.createElement('button'); prev.type='button'; prev.textContent='←'; prev.setAttribute('aria-label','Anterior');
+    const next=document.createElement('button'); next.type='button'; next.textContent='→'; next.setAttribute('aria-label','Siguiente');
+    nav.appendChild(prev); nav.appendChild(next);
+    section.insertBefore(nav, track);
+    const scrollByCard=(dir)=>{ const card=track.querySelector('li.product'); const amount=card?card.getBoundingClientRect().width+16:280; track.scrollBy({left:dir*amount*2,behavior:'smooth'}); };
+    prev.addEventListener('click',()=>scrollByCard(-1));
+    next.addEventListener('click',()=>scrollByCard(1));
+  });
 });
