@@ -2,7 +2,7 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
   const startLeft=el.scrollLeft;
   const distance=targetLeft-startLeft;
   const startTime=performance.now();
-  const ease=(t)=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const ease=(t)=>t<.5?8*t*t*t*t:1-Math.pow(-2*t+2,4)/2;
   function step(now){
     const elapsed=now-startTime;
     const progress=Math.min(elapsed/duration,1);
@@ -39,6 +39,29 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
     btn.classList.add('is-bumping');
     setTimeout(()=>btn.classList.remove('is-bumping'),400);
   });
+  document.querySelectorAll('[data-carousel-filters]').forEach(filterBar=>{
+    const section=filterBar.closest('.featured-products');
+    const cardsWrap=section?section.querySelector('[data-filterable-cards]'):null;
+    if(!cardsWrap) return;
+    const cards=[...cardsWrap.querySelectorAll('.gravity-product')];
+    const noResults=cardsWrap.querySelector('.qf-no-results');
+    const selects=[...filterBar.querySelectorAll('select[data-filter-key]')];
+    function applyFilters(){
+      const active=selects.filter(s=>s.value).map(s=>({key:s.dataset.filterKey, value:s.value}));
+      let visibleCount=0;
+      cards.forEach(card=>{
+        const matches=active.every(f=>{
+          const raw=card.dataset[f.key]||'';
+          return raw.split(' ').includes(f.value);
+        });
+        card.hidden=!matches;
+        if(matches) visibleCount++;
+      });
+      if(noResults) noResults.hidden=visibleCount>0;
+    }
+    selects.forEach(s=>s.addEventListener('change',applyFilters));
+  });
+
   document.addEventListener('DOMContentLoaded',()=>{
     updateFavUI();
     const favGrid=document.querySelector('[data-favorites-grid]');
@@ -229,10 +252,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     const perPage=()=>Math.max(1, Math.round(track.clientWidth/cardStep()));
     const maxScroll=()=>track.scrollWidth-track.clientWidth;
     const atEnd=()=>track.scrollLeft>=maxScroll()-4;
-    const scrollByCard=(dir)=>{ gravedadSmoothScrollTo(track, Math.max(0,Math.min(track.scrollLeft+dir*cardStep(), maxScroll())), 700); };
+    const scrollByCard=(dir)=>{ gravedadSmoothScrollTo(track, Math.max(0,Math.min(track.scrollLeft+dir*cardStep(), maxScroll())), 950); };
 
     let timer=null;
-    const advance=()=>{ if(atEnd()){ gravedadSmoothScrollTo(track,0,900); } else { scrollByCard(1); } };
+    const advance=()=>{ if(atEnd()){ gravedadSmoothScrollTo(track,0,1100); } else { scrollByCard(1); } };
     const start=()=>{ if(reduceMotion) return; stop(); timer=setInterval(advance,3800); };
     const stop=()=>{ if(timer){ clearInterval(timer); timer=null; } };
 
@@ -246,7 +269,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       const count=Math.max(1, Math.ceil(items.length/perPage()));
       for(let i=0;i<count;i++){
         const d=document.createElement('button'); d.type='button'; d.className='carousel-dot'; d.setAttribute('aria-label','Ir a la página '+(i+1));
-        d.addEventListener('click',()=>{ stop(); gravedadSmoothScrollTo(track, Math.min(i*perPage()*cardStep(), maxScroll()), 600); start(); });
+        d.addEventListener('click',()=>{ stop(); gravedadSmoothScrollTo(track, Math.min(i*perPage()*cardStep(), maxScroll()), 850); start(); });
         dotsWrap.appendChild(d); dotEls.push(d);
       }
       syncDots();
