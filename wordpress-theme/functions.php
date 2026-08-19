@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '3.0.0');
+define('GRAVEDAD_VERSION', '3.1.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -385,6 +385,16 @@ function gravedad_filter_terms($taxonomy) {
     $terms = get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => true, 'orderby' => 'name'));
     return is_wp_error($terms) ? array() : $terms;
 }
+
+function gravedad_loop_game_label() {
+    global $product;
+    if (!$product) { return; }
+    $terms = get_the_terms($product->get_id(), 'pa_juego');
+    if ($terms && !is_wp_error($terms)) {
+        echo '<span class="loop-game-label">' . esc_html($terms[0]->name) . '</span>';
+    }
+}
+add_action('woocommerce_after_shop_loop_item_title', 'gravedad_loop_game_label', 5);
 
 function gravedad_render_product_grid($query) {
     echo '<div class="woocommerce">';
