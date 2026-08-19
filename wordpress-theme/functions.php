@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.2.0');
+define('GRAVEDAD_VERSION', '5.3.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -224,12 +224,32 @@ function gravedad_render_gravity_product($product) {
     echo '</a>' . gravedad_fav_button($product->get_id()) . '<div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
 }
 
-function gravedad_home_carousel($kicker, $title_html, $desc, $query_args, $view_all_url, $section_id = '') {
+function gravedad_home_quick_filters($view_all_url, $dims) {
+    $groups = array();
+    foreach ($dims as $param => $data) {
+        list($label, $taxonomy) = $data;
+        $terms = gravedad_filter_terms($taxonomy);
+        if ($terms) { $groups[] = array($param, $label, array_slice($terms, 0, 6)); }
+    }
+    if (!$groups) { return; }
+    echo '<div class="home-quick-filters">';
+    foreach ($groups as $g) {
+        list($param, $label, $terms) = $g;
+        echo '<div class="qf-group"><span class="qf-label">' . esc_html($label) . '</span><div class="qf-chips">';
+        foreach ($terms as $t) { echo '<a href="' . esc_url(add_query_arg(array($param => $t->slug), $view_all_url)) . '">' . esc_html($t->name) . '</a>'; }
+        echo '</div></div>';
+    }
+    echo '</div>';
+}
+
+function gravedad_home_carousel($kicker, $title_html, $desc, $query_args, $view_all_url, $section_id = '', $quick_filter_dims = array()) {
     if (!class_exists('WooCommerce')) { return; }
     $defaults = array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => 12, 'orderby' => 'date', 'order' => 'DESC');
     $query = new WP_Query(array_merge($defaults, $query_args));
     if (!$query->have_posts()) { wp_reset_postdata(); return; }
-    echo '<section class="featured-products"' . ($section_id ? ' id="' . esc_attr($section_id) . '"' : '') . '><div class="section-head"><div><p class="section-label">' . esc_html($kicker) . '</p><h2>' . $title_html . '</h2>' . ($desc ? '<p class="section-desc">' . esc_html($desc) . '</p>' : '') . '</div><a href="' . esc_url($view_all_url) . '">VER TODO →</a></div><div class="product-cards">';
+    echo '<section class="featured-products"' . ($section_id ? ' id="' . esc_attr($section_id) . '"' : '') . '><div class="section-head"><div><p class="section-label">' . esc_html($kicker) . '</p><h2>' . $title_html . '</h2>' . ($desc ? '<p class="section-desc">' . esc_html($desc) . '</p>' : '') . '</div><a href="' . esc_url($view_all_url) . '">VER TODO →</a></div>';
+    if ($quick_filter_dims) { gravedad_home_quick_filters($view_all_url, $quick_filter_dims); }
+    echo '<div class="product-cards">';
     while ($query->have_posts()) { $query->the_post(); gravedad_render_gravity_product(wc_get_product(get_the_ID())); }
     echo '</div></section>';
     wp_reset_postdata();
