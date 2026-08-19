@@ -12,6 +12,53 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
   requestAnimationFrame(step);
 }
 
+(function(){
+  const FAV_KEY='gravedad_favorites';
+  function getFavorites(){ try{ const v=JSON.parse(localStorage.getItem(FAV_KEY)); return Array.isArray(v)?v:[]; }catch(e){ return []; } }
+  function setFavorites(ids){ try{ localStorage.setItem(FAV_KEY, JSON.stringify(ids)); }catch(e){} updateFavUI(); }
+  function toggleFavorite(id){
+    const ids=getFavorites(); const idx=ids.indexOf(id);
+    if(idx>-1){ ids.splice(idx,1); } else { ids.push(id); }
+    setFavorites(ids);
+    return idx===-1;
+  }
+  function updateFavUI(){
+    const ids=getFavorites().map(String);
+    document.querySelectorAll('.fav-toggle').forEach(btn=>{
+      btn.classList.toggle('is-active', ids.includes(String(btn.dataset.productId)));
+    });
+    document.querySelectorAll('.fav-count').forEach(el=>{
+      el.textContent=String(ids.length); el.hidden=ids.length===0;
+    });
+  }
+  document.addEventListener('click',(e)=>{
+    const btn=e.target.closest('.fav-toggle');
+    if(!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    const nowFav=toggleFavorite(String(btn.dataset.productId));
+    btn.classList.add('is-bumping');
+    setTimeout(()=>btn.classList.remove('is-bumping'),400);
+  });
+  document.addEventListener('DOMContentLoaded',()=>{
+    updateFavUI();
+    const favGrid=document.querySelector('[data-favorites-grid]');
+    if(!favGrid) return;
+    const ids=getFavorites();
+    if(!ids.length){ favGrid.className='favorites-empty'; favGrid.innerHTML='<p>Todavía no agregaste productos a favoritos.</p><a class="button primary" href="'+(window.location.origin)+'/gravedad/">Explorar la tienda →</a>'; return; }
+    if(!window.gravedadAjax){ favGrid.innerHTML='<p>No se pudieron cargar los favoritos.</p>'; return; }
+    const formData=new FormData();
+    formData.append('action','gravedad_get_favorites');
+    ids.forEach(id=>formData.append('ids[]', id));
+    fetch(window.gravedadAjax.url,{method:'POST', body:formData})
+      .then(r=>r.json())
+      .then(res=>{
+        if(res&&res.success&&res.data&&res.data.html){ favGrid.outerHTML='<div data-favorites-grid>'+res.data.html+'</div>'; updateFavUI(); }
+        else { favGrid.className='favorites-empty'; favGrid.innerHTML='<p>Esos productos ya no están disponibles.</p>'; }
+      })
+      .catch(()=>{ favGrid.innerHTML='<p>No se pudieron cargar los favoritos.</p>'; });
+  });
+})();
+
 document.addEventListener('DOMContentLoaded',()=>{
   const menuButton=document.querySelector('.menu-toggle');
   const nav=document.querySelector('.main-nav');

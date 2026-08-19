@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '4.2.0');
+define('GRAVEDAD_VERSION', '5.0.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -26,6 +26,8 @@ function gravedad_icon($name) {
         'game-onepiece' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"></circle><path d="M12 3v3.4M12 17.6V21M21 12h-3.4M6.4 12H3M18.4 5.6l-2.4 2.4M8 13.6l-2.4 2.4M18.4 18.4l-2.4-2.4M8 10.4 5.6 8"></path></svg>',
         'game-digimon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 3 7.5v9L12 22l9-5.5v-9z"></path><path d="M12 8l2.8 2.8L12 13.6 9.2 10.8z" fill="currentColor" stroke="none"></path></svg>',
         'game-dragonball' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5" fill="none"></circle><circle cx="12" cy="7.2" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="8.2" cy="9.6" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="9.6" cy="14" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="14.4" cy="14" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="15.8" cy="9.6" r="1.15" fill="currentColor" stroke="none"></circle></svg>',
+        'heart' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.1C.5 8.4 2.3 5 5.8 5c2 0 3.4 1 4.9 2.8C12.2 6 13.6 5 15.6 5c3.5 0 5.3 3.4 3.8 6.9-2.5 4.5-10 9.1-10 9.1z"></path></svg>',
+        'heart-filled' => '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21s-7.5-4.6-10-9.1C.5 8.4 2.3 5 5.8 5c2 0 3.4 1 4.9 2.8C12.2 6 13.6 5 15.6 5c3.5 0 5.3 3.4 3.8 6.9-2.5 4.5-10 9.1-10 9.1z"></path></svg>',
         'whatsapp' => '<svg viewBox="-23 -21 682 682.66669" fill="currentColor" fill-rule="evenodd"><path d="m544.386719 93.007812c-59.875-59.945312-139.503907-92.9726558-224.335938-93.007812-174.804687 0-317.070312 142.261719-317.140625 317.113281-.023437 55.894531 14.578125 110.457031 42.332032 158.550781l-44.992188 164.335938 168.121094-44.101562c46.324218 25.269531 98.476562 38.585937 151.550781 38.601562h.132813c174.785156 0 317.066406-142.273438 317.132812-317.132812.035156-84.742188-32.921875-164.417969-92.800781-224.359376zm-224.335938 487.933594h-.109375c-47.296875-.019531-93.683594-12.730468-134.160156-36.742187l-9.621094-5.714844-99.765625 26.171875 26.628907-97.269531-6.269532-9.972657c-26.386718-41.96875-40.320312-90.476562-40.296875-140.28125.054688-145.332031 118.304688-263.570312 263.699219-263.570312 70.40625.023438 136.589844 27.476562 186.355469 77.300781s77.15625 116.050781 77.132812 186.484375c-.0625 145.34375-118.304687 263.59375-263.59375 263.59375zm144.585938-197.417968c-7.921875-3.96875-46.882813-23.132813-54.148438-25.78125-7.257812-2.644532-12.546875-3.960938-17.824219 3.96875-5.285156 7.929687-20.46875 25.78125-25.09375 31.066406-4.625 5.289062-9.242187 5.953125-17.167968 1.984375-7.925782-3.964844-33.457032-12.335938-63.726563-39.332031-23.554687-21.011719-39.457031-46.960938-44.082031-54.890626-4.617188-7.9375-.039062-11.8125 3.476562-16.171874 8.578126-10.652344 17.167969-21.820313 19.808594-27.105469 2.644532-5.289063 1.320313-9.917969-.664062-13.882813-1.976563-3.964844-17.824219-42.96875-24.425782-58.839844-6.4375-15.445312-12.964843-13.359374-17.832031-13.601562-4.617187-.230469-9.902343-.277344-15.1875-.277344-5.28125 0-13.867187 1.980469-21.132812 9.917969-7.261719 7.933594-27.730469 27.101563-27.730469 66.105469s28.394531 76.683594 32.355469 81.972656c3.960937 5.289062 55.878906 85.328125 135.367187 119.648438 18.90625 8.171874 33.664063 13.042968 45.175782 16.695312 18.984374 6.03125 36.253906 5.179688 49.910156 3.140625 15.226562-2.277344 46.878906-19.171875 53.488281-37.679687 6.601563-18.511719 6.601563-34.375 4.617187-37.683594-1.976562-3.304688-7.261718-5.285156-15.183593-9.253906zm0 0"/></svg>',
     );
     return isset($icons[$name]) ? $icons[$name] : '';
@@ -50,6 +52,7 @@ function gravedad_assets() {
     wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);
     wp_enqueue_script('gravedad-theme', get_template_directory_uri() . '/assets/js/theme.js', array(), GRAVEDAD_VERSION, true);
+    wp_localize_script('gravedad-theme', 'gravedadAjax', array('url' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'gravedad_assets');
 
@@ -107,12 +110,16 @@ function gravedad_shop_url($slug = '') {
     return home_url('/tienda/');
 }
 
+function gravedad_fav_button($product_id) {
+    return '<button type="button" class="fav-toggle" data-product-id="' . esc_attr($product_id) . '" aria-label="Agregar a favoritos"><span class="fav-icon-off">' . gravedad_icon('heart') . '</span><span class="fav-icon-on">' . gravedad_icon('heart-filled') . '</span></button>';
+}
+
 function gravedad_render_gravity_product($product) {
     $permalink = get_permalink($product->get_id());
     echo '<article class="gravity-product"><a class="product-image" href="' . esc_url($permalink) . '">';
     echo $product->is_on_sale() ? '<span>OFERTA</span>' : '<span class="is-new">NUEVO</span>';
     echo $product->get_image('woocommerce_thumbnail');
-    echo '</a><div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
+    echo '</a>' . gravedad_fav_button($product->get_id()) . '<div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
 }
 
 function gravedad_home_carousel($kicker, $title_html, $desc, $query_args, $view_all_url, $section_id = '') {
@@ -328,10 +335,34 @@ function gravedad_ensure_catalog_structure() {
 }
 add_action('after_switch_theme', 'gravedad_ensure_catalog_structure');
 
+add_action('woocommerce_before_shop_loop_item_title', function () {
+    global $product;
+    if ($product) { echo gravedad_fav_button($product->get_id()); }
+}, 15);
+
+add_action('woocommerce_single_product_summary', function () {
+    global $product;
+    if ($product) { echo gravedad_fav_button($product->get_id()); }
+}, 31);
+
+add_action('wp_ajax_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
+add_action('wp_ajax_nopriv_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
+function gravedad_ajax_get_favorites() {
+    $ids = isset($_POST['ids']) ? array_map('absint', (array) $_POST['ids']) : array();
+    if (!$ids) { wp_send_json_success(array('html' => '', 'count' => 0)); }
+    $query = new WP_Query(array('post_type' => 'product', 'post_status' => 'publish', 'post__in' => $ids, 'orderby' => 'post__in', 'posts_per_page' => 100));
+    $count = $query->post_count;
+    ob_start();
+    gravedad_render_product_grid($query);
+    $html = ob_get_clean();
+    wp_send_json_success(array('html' => $html, 'count' => $count));
+}
+
 function gravedad_ensure_catalog_pages() {
     $defs = array(
         'novedades' => array('Novedades', 'page-novedades.php'),
         'ofertas' => array('Ofertas', 'page-ofertas.php'),
+        'favoritos' => array('Favoritos', 'page-favoritos.php'),
     );
     foreach ($defs as $slug => $data) {
         list($title, $template) = $data;
