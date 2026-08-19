@@ -21,3 +21,5 @@ arriba y estilos completos para carrito y checkout clásico o por bloques.
 Cartas sueltas ahora es una categoría real con plantilla y URL propias. El tema
 crea sus atributos de filtrado: Juego, Colección, Rareza, Color, Tipo, Idioma,
 Condición y Acabado. Para que aparezcan en los filtros, asignarlos a cada carta.
+
+Despliegue automático FTPS habilitado.
