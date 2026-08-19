@@ -10,4 +10,41 @@ document.addEventListener('DOMContentLoaded',()=>{
   window.addEventListener('scroll',updateTop,{passive:true}); updateTop();
   goTop?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
   filterButton?.addEventListener('click',()=>{const open=filters?.classList.toggle('is-open');filterButton.setAttribute('aria-expanded',String(Boolean(open)))});
+
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const updateScrolled=()=>document.body.classList.toggle('is-scrolled',window.scrollY>10);
+  window.addEventListener('scroll',updateScrolled,{passive:true}); updateScrolled();
+
+  if(!reduceMotion&&'IntersectionObserver' in window){
+    const revealTargets=document.querySelectorAll('.games-grid>a,.product-cards>article,.feature-categories>a,.benefits>div,.event-copy,.event-visual,.woocommerce ul.products>li,.related.products ul.products>li');
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); } });
+    },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+    revealTargets.forEach((el,i)=>{ el.classList.add('js-reveal'); el.style.transitionDelay=(i%6)*70+'ms'; io.observe(el); });
+  }
+
+  const cartLink=document.querySelector('.header-cart');
+  const cartCount=document.querySelector('.header-cart .cart-count');
+  if(cartLink&&cartCount&&'MutationObserver' in window){
+    let lastCount=cartCount.textContent;
+    const mo=new MutationObserver(()=>{
+      if(cartCount.textContent!==lastCount){
+        lastCount=cartCount.textContent;
+        if(!reduceMotion){ cartLink.classList.remove('is-bumping'); void cartLink.offsetWidth; cartLink.classList.add('is-bumping'); }
+      }
+    });
+    mo.observe(cartCount,{childList:true,characterData:true,subtree:true});
+  }
+
+  document.querySelectorAll('.woocommerce div.product .quantity').forEach(wrap=>{
+    const input=wrap.querySelector('input.qty');
+    if(!input||wrap.querySelector('.qty-step')) return;
+    const minus=document.createElement('button'); minus.type='button'; minus.className='qty-step qty-minus'; minus.textContent='−'; minus.setAttribute('aria-label','Restar');
+    const plus=document.createElement('button'); plus.type='button'; plus.className='qty-step qty-plus'; plus.textContent='+'; plus.setAttribute('aria-label','Sumar');
+    wrap.insertBefore(minus,input); wrap.appendChild(plus);
+    const step=parseFloat(input.step)||1, min=parseFloat(input.min)||1, max=input.max?parseFloat(input.max):Infinity;
+    const setVal=(v)=>{ input.value=Math.max(min,Math.min(max,v)); input.dispatchEvent(new Event('change',{bubbles:true})); };
+    minus.addEventListener('click',()=>setVal((parseFloat(input.value)||min)-step));
+    plus.addEventListener('click',()=>setVal((parseFloat(input.value)||min)+step));
+  });
 });

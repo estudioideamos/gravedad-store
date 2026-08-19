@@ -23,7 +23,7 @@ $games = array(
 
 <section class="feature-categories">
  <a href="<?php echo esc_url(gravedad_shop_url('cartas-sueltas')); ?>"><b>✦</b><div><small>MILES DE OPCIONES</small><h3>Cartas sueltas</h3><p>Buscá por juego, colección, rareza, idioma, condición y más.</p><strong>EXPLORAR →</strong></div></a>
- <a href="<?php echo esc_url(gravedad_shop_url('productos-sellados')); ?>"><b>◈</b><div><small>ABRÍ. JUGÁ. COLECCIONÁ.</small><h3>Productos sellados</h3><p>Sobres, booster boxes, bundles, mazos y ediciones especiales.</p><strong>EXPLORAR →</strong></div></a>
+ <a href="<?php echo esc_url(gravedad_shop_url('tcg')); ?>"><b>◈</b><div><small>ABRÍ. JUGÁ. COLECCIONÁ.</small><h3>Productos sellados</h3><p>Sobres, booster boxes, bundles, mazos y ediciones especiales.</p><strong>EXPLORAR →</strong></div></a>
  <a href="<?php echo esc_url(gravedad_shop_url('juegos-de-mesa')); ?>"><b>⬡</b><div><small>PARA COMPARTIR LA MESA</small><h3>Juegos de mesa</h3><p>Estrategia, party games, cooperativos, familiares y mucho más.</p><strong>EXPLORAR →</strong></div></a>
 </section>
 

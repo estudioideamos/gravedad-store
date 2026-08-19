@@ -2,7 +2,17 @@
 <html <?php language_attributes(); ?>>
 <head><meta charset="<?php bloginfo('charset'); ?>"><meta name="viewport" content="width=device-width, initial-scale=1"><?php wp_head(); ?></head>
 <body <?php body_class(); ?>><?php wp_body_open(); ?>
-<div class="topbar"><span><?php echo esc_html(gravedad_option('gravedad_announcement','ENVÍOS A TODO EL PAÍS')); ?></span><span><?php echo esc_html(gravedad_option('gravedad_promo','3 CUOTAS SIN INTERÉS EN PRODUCTOS SELECCIONADOS')); ?></span><a href="<?php echo esc_url(gravedad_option('gravedad_instagram','https://www.instagram.com/gravedadstore')); ?>" target="_blank" rel="noopener">@GRAVEDADSTORE ↗</a></div>
+<div class="topbar">
+  <div class="topbar-marquee"><div class="topbar-track">
+  <?php for ($i = 0; $i < 2; $i++): ?>
+    <span><?php echo esc_html(gravedad_option('gravedad_announcement','ENVÍOS A TODO EL PAÍS')); ?></span><i>★</i>
+    <span><?php echo esc_html(gravedad_option('gravedad_promo','3 CUOTAS SIN INTERÉS EN PRODUCTOS SELECCIONADOS')); ?></span><i>★</i>
+    <span>NUEVOS INGRESOS TODAS LAS SEMANAS</span><i>★</i>
+    <span>RETIRÁ EN TIENDA SIN CARGO</span><i>★</i>
+  <?php endfor; ?>
+  </div></div>
+  <a class="topbar-ig" href="<?php echo esc_url(gravedad_option('gravedad_instagram','https://www.instagram.com/gravedadstore')); ?>" target="_blank" rel="noopener">@GRAVEDADSTORE ↗</a>
+</div>
 <header class="site-header">
   <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i></button>
   <?php if (has_custom_logo()): ?><div class="brand brand-custom"><?php the_custom_logo(); ?></div><?php else: ?>
