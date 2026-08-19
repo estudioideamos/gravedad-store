@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '2.7.1');
+define('GRAVEDAD_VERSION', '2.8.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -331,6 +331,10 @@ function gravedad_section_copy() {
 function gravedad_section_hero_image($section) {
     $images = array(
         'cartas-sueltas' => 'hero-cartas-sueltas.jpg',
+        'tcg' => 'hero-tcg.jpg',
+        'juegos-de-mesa' => 'hero-juegos-de-mesa.jpg',
+        'accesorios' => 'hero-accesorios.jpg',
+        'preventas' => 'hero-preventas.jpg',
     );
     return isset($images[$section]) ? get_template_directory_uri() . '/assets/img/' . $images[$section] : '';
 }
