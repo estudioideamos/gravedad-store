@@ -1,6 +1,10 @@
 name: Publicar tema en WordPress
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "wordpress-theme/**"
   workflow_dispatch:
 
 concurrency:
@@ -9,34 +13,30 @@ concurrency:
 
 jobs:
   deploy:
-    name: Sincronizar tema por FTPS
+    name: Actualizar y desplegar desde cPanel
     runs-on: ubuntu-latest
     steps:
-      - name: Descargar código
-        uses: actions/checkout@v6
-
-      - name: Instalar cliente FTPS
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y lftp
-
-      - name: Publicar en WordPress
+      - name: Actualizar repositorio en cPanel
         shell: bash
         env:
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_PATH: ${{ secrets.FTP_PATH }}
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
         run: |
           set -euo pipefail
-          lftp <<LFTP
-          set cmd:fail-exit yes
-          set net:timeout 60
-          set net:max-retries 2
-          set ftp:passive-mode true
-          set ftp:ssl-force true
-          set ftp:ssl-protect-data true
-          set ssl:verify-certificate yes
-          open -p 21 -u "$FTP_USERNAME","$FTP_PASSWORD" mon23.servidoraweb.net
-          mirror --reverse --delete --verbose --exclude-glob .git* ./wordpress-theme/ "$FTP_PATH"
-          bye
-          LFTP
+          curl --fail --silent --show-error --retry 2 \
+            --header "Authorization: cpanel oaggssaw:${CPANEL_TOKEN}" \
+            --get "https://mon23.servidoraweb.net:2083/execute/VersionControl/update" \
+            --data-urlencode "repository_root=/home5/oaggssaw/repositories/gravedad-store" \
+            --data-urlencode "branch=main" \
+            | python3 -c 'import json,sys; r=json.load(sys.stdin); assert r["result"]["status"] == 1, r'
+
+      - name: Desplegar tema en WordPress
+        shell: bash
+        env:
+          CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 2 \
+            --header "Authorization: cpanel oaggssaw:${CPANEL_TOKEN}" \
+            --get "https://mon23.servidoraweb.net:2083/execute/VersionControlDeployment/create" \
+            --data-urlencode "repository_root=/home5/oaggssaw/repositories/gravedad-store" \
+            | python3 -c 'import json,sys; r=json.load(sys.stdin); assert r["result"]["status"] == 1, r'
