@@ -1,3 +1,17 @@
+function gravedadSmoothScrollTo(el,targetLeft,duration){
+  const startLeft=el.scrollLeft;
+  const distance=targetLeft-startLeft;
+  const startTime=performance.now();
+  const ease=(t)=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  function step(now){
+    const elapsed=now-startTime;
+    const progress=Math.min(elapsed/duration,1);
+    el.scrollLeft=startLeft+distance*ease(progress);
+    if(progress<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   const menuButton=document.querySelector('.menu-toggle');
   const nav=document.querySelector('.main-nav');
@@ -98,13 +112,13 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(isCards){ section.parentElement.insertBefore(nav, section); } else { section.insertBefore(nav, track); }
     const cardStep=()=>{ const card=track.querySelector(itemSelector); return card?card.getBoundingClientRect().width+16:280; };
     const atEnd=()=>track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-    const scrollByCard=(dir)=>{ track.scrollBy({left:dir*cardStep(),behavior:'smooth'}); };
+    const scrollByCard=(dir)=>{ gravedadSmoothScrollTo(track, track.scrollLeft+dir*cardStep(), 700); };
     prev.addEventListener('click',()=>scrollByCard(-1));
     next.addEventListener('click',()=>scrollByCard(1));
 
     if(!reduceMotion&&track.querySelectorAll(itemSelector).length>1){
       let timer=null;
-      const advance=()=>{ if(atEnd()){ track.scrollTo({left:0,behavior:'smooth'}); } else { scrollByCard(1); } };
+      const advance=()=>{ if(atEnd()){ gravedadSmoothScrollTo(track, 0, 900); } else { scrollByCard(1); } };
       const start=()=>{ stop(); timer=setInterval(advance,3800); };
       const stop=()=>{ if(timer){ clearInterval(timer); timer=null; } };
       start();
