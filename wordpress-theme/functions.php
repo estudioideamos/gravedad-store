@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '1.9.2');
+define('GRAVEDAD_VERSION', '2.0.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -40,6 +40,8 @@ function gravedad_assets() {
 add_action('wp_enqueue_scripts', 'gravedad_assets');
 
 function gravedad_uncropped_thumbnails($size) {
+    $size['width'] = max((int) $size['width'], 640);
+    $size['height'] = max((int) $size['height'], 640);
     $size['crop'] = 0;
     return $size;
 }

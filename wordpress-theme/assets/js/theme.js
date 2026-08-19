@@ -94,8 +94,24 @@ document.addEventListener('DOMContentLoaded',()=>{
     const next=document.createElement('button'); next.type='button'; next.textContent='→'; next.setAttribute('aria-label','Siguiente');
     nav.appendChild(prev); nav.appendChild(next);
     section.insertBefore(nav, track);
-    const scrollByCard=(dir)=>{ const card=track.querySelector('li.product'); const amount=card?card.getBoundingClientRect().width+16:280; track.scrollBy({left:dir*amount*2,behavior:'smooth'}); };
+    const cardStep=()=>{ const card=track.querySelector('li.product'); return card?card.getBoundingClientRect().width+16:280; };
+    const atEnd=()=>track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+    const scrollByCard=(dir)=>{ track.scrollBy({left:dir*cardStep(),behavior:'smooth'}); };
     prev.addEventListener('click',()=>scrollByCard(-1));
     next.addEventListener('click',()=>scrollByCard(1));
+
+    if(!reduceMotion&&track.querySelectorAll('li.product').length>1){
+      let timer=null;
+      const advance=()=>{ if(atEnd()){ track.scrollTo({left:0,behavior:'smooth'}); } else { scrollByCard(1); } };
+      const start=()=>{ stop(); timer=setInterval(advance,3800); };
+      const stop=()=>{ if(timer){ clearInterval(timer); timer=null; } };
+      start();
+      section.addEventListener('mouseenter',stop);
+      section.addEventListener('mouseleave',start);
+      section.addEventListener('touchstart',stop,{passive:true});
+      section.addEventListener('touchend',start);
+      prev.addEventListener('click',start);
+      next.addEventListener('click',start);
+    }
   });
 });
