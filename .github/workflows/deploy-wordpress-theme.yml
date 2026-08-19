@@ -1,13 +1,6 @@
 name: Publicar tema en WordPress
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "wordpress-theme/**"
-      - ".github/workflows/deploy-wordpress-theme.yml"
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 concurrency:
