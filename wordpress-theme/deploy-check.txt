@@ -1,2 +1,2 @@
 gravedad-auto-deploy-ok
-commit-check: 2026-08-19-377f6ed1
+api-check: 2026-08-19-cpanel-token
