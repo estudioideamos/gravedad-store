@@ -4,3 +4,4 @@ deployment:
     - export DEPLOYPATH=/home5/oaggssaw/public_html/gravedad/wp-content/themes/gravedad-store/
     - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -R wordpress-theme/. $DEPLOYPATH
+    - /bin/rm -f $DEPLOYPATH/deploy-check.txt $DEPLOYPATH/deploy-check.html
