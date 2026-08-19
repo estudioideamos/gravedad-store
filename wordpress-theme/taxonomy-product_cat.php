@@ -17,9 +17,10 @@ if ($section && isset($copy[$section]) && $term->slug === $section) {
     $search_ph = 'Ej: nombre del producto';
 }
 $clear_url = get_term_link($term);
+$hero_image = $section ? gravedad_section_hero_image($section) : '';
 ?>
 <main class="singles-page">
-  <header class="singles-hero"><div class="singles-orbit"></div><div><p class="section-label"><?php echo esc_html($eyebrow); ?></p><h1><?php echo esc_html($title); ?></h1><p><?php echo esc_html($desc); ?></p></div></header>
+  <header class="singles-hero<?php echo $hero_image ? ' has-image' : ''; ?>"<?php echo $hero_image ? ' style="--hero:url(\'' . esc_url($hero_image) . '\')"' : ''; ?>><div class="singles-orbit"></div><div><p class="section-label"><?php echo esc_html($eyebrow); ?></p><h1><?php echo esc_html($title); ?></h1><p><?php echo esc_html($desc); ?></p></div></header>
   <div class="singles-toolbar"><button class="singles-filter-toggle" type="button" aria-expanded="false">FILTROS <span>＋</span></button><div class="singles-count"><?php woocommerce_result_count(); ?></div><div class="singles-order"><?php woocommerce_catalog_ordering(); ?></div></div>
   <div class="singles-layout">
     <aside class="singles-filters">

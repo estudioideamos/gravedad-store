@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '2.6.2');
+define('GRAVEDAD_VERSION', '2.7.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -326,6 +326,13 @@ function gravedad_section_copy() {
         'accesorios' => array('CUIDÁ TU COLECCIÓN', 'Accesorios.', 'Sleeves, deck boxes, carpetas, playmats y todo lo necesario para jugar y proteger tus cartas.', 'Buscar accesorio', 'Ej: Dragon Shield'),
         'preventas' => array('RESERVÁ EL TUYO', 'Preventas.', 'Próximos lanzamientos disponibles para reservar antes que se agoten.', 'Buscar preventa', 'Ej: nombre del producto'),
     );
+}
+
+function gravedad_section_hero_image($section) {
+    $images = array(
+        'cartas-sueltas' => 'hero-cartas-sueltas.jpg',
+    );
+    return isset($images[$section]) ? get_template_directory_uri() . '/assets/img/' . $images[$section] : '';
 }
 
 function gravedad_filter_taxonomy_map() {
