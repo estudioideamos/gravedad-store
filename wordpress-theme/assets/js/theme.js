@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     tabLinks.forEach((link,i)=>{
       const panel=tabsWrap.querySelector(link.getAttribute('href'));
       if(!panel) return;
+      const panelHeading=panel.querySelector(':scope > h2');
+      if(panelHeading) panelHeading.remove();
       const item=document.createElement('div');
       item.className='accordion-item'+(i===0?' is-open':'');
       const trigger=document.createElement('button');
