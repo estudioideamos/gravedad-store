@@ -21,7 +21,7 @@ $query = new WP_Query($args);
 $clear_url = get_permalink();
 ?>
 <main class="singles-page">
-  <header class="singles-hero"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Novedades</nav><p class="section-label"><i class="label-dash"></i>RECIÉN LLEGADOS</p><h1>Novedades.</h1><p>Los últimos ingresos a la tienda, primero.</p></div></header>
+  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-novedades.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Novedades</nav><p class="section-label"><i class="label-dash"></i>RECIÉN LLEGADOS</p><h1>Novedades.</h1><p>Los últimos ingresos a la tienda, primero.</p></div></header>
   <?php gravedad_marquee(array('NUEVOS INGRESOS TODAS LAS SEMANAS','ENVÍOS A TODO EL PAÍS','COMPRA PROTEGIDA','ATENCIÓN PERSONALIZADA')); ?>
   <div class="singles-toolbar"><button class="singles-filter-toggle" type="button" aria-expanded="false">FILTROS <span>＋</span></button><div class="singles-count"><?php echo esc_html($query->found_posts); ?> resultados</div></div>
   <div class="singles-layout">

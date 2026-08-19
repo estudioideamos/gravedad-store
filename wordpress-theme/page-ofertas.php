@@ -28,7 +28,7 @@ if ($tab === 'ultimas') {
 $query = new WP_Query($args);
 ?>
 <main class="singles-page">
-  <header class="singles-hero"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Ofertas</nav><p class="section-label"><i class="label-dash"></i>NO TE LO PIERDAS</p><h1>Ofertas.</h1><p>Promociones, precios especiales y últimas unidades disponibles.</p></div></header>
+  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-ofertas.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Ofertas</nav><p class="section-label"><i class="label-dash"></i>NO TE LO PIERDAS</p><h1>Ofertas.</h1><p>Promociones, precios especiales y últimas unidades disponibles.</p></div></header>
   <?php gravedad_marquee(array('3 CUOTAS SIN INTERÉS','ÚLTIMAS UNIDADES','PRECIOS ESPECIALES','ENVÍOS A TODO EL PAÍS')); ?>
   <div class="singles-toolbar offers-tabs">
     <div class="offer-tabs">
