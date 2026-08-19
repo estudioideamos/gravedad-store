@@ -1,0 +1,56 @@
+.game > span:not(.diceLogo) { display: none; }
+
+.gameLogo {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 72%;
+  height: 68px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  filter: grayscale(1) brightness(1.8);
+  opacity: .5;
+  transition: .25s;
+}
+
+.gameLogo.magic { width: 76%; }
+.gameLogo.pokemon { height: 78px; }
+.gameLogo.onepiece {
+  width: 77%;
+  height: 74px;
+  filter: invert(1) grayscale(1);
+  mix-blend-mode: screen;
+}
+.gameLogo.digimon { width: 76%; }
+.gameLogo.dragonball { height: 80px; }
+
+.diceLogo {
+  position: absolute;
+  left: 50%;
+  top: 43%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 7px;
+  color: #6c6e76;
+  opacity: .65;
+  transition: .25s;
+}
+.diceLogo i {
+  width: 39px;
+  height: 39px;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font: 700 22px var(--display);
+  font-style: normal;
+}
+.diceLogo i:last-child { transform: rotate(16deg); margin-top: 9px; }
+.game:hover .gameLogo { filter: none; opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+.game:hover .gameLogo.onepiece { filter: invert(1); mix-blend-mode: screen; }
+.game:hover .diceLogo { color: var(--acid); opacity: 1; }
+
+@media (max-width: 600px) {
+  .gameLogo { height: 55px; }
+  .gameLogo.pokemon, .gameLogo.dragonball { height: 62px; }
+}
