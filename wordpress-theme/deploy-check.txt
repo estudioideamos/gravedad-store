@@ -1,2 +1,0 @@
-gravedad-auto-deploy-ok
-api-diagnostic: 2026-08-19
