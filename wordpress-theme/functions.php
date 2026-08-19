@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.1.0');
+define('GRAVEDAD_VERSION', '5.2.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -47,7 +47,7 @@ function gravedad_setup() {
 add_action('after_setup_theme', 'gravedad_setup');
 
 function gravedad_assets() {
-    wp_enqueue_style('gravedad-fonts', 'https://fonts.googleapis.com/css2?family=Fugaz+One&family=Manrope:wght@400;500;600;700;800&display=swap', array(), null);
+    wp_enqueue_style('gravedad-fonts', 'https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Manrope:wght@400;500;600;700;800&display=swap', array(), null);
     wp_enqueue_style('gravedad-theme', get_template_directory_uri() . '/assets/css/theme.css', array(), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);
@@ -89,10 +89,112 @@ function gravedad_customize($wp_customize) {
         $wp_customize->add_setting($id, array('default' => $field[1], 'sanitize_callback' => 'sanitize_text_field'));
         $wp_customize->add_control($id, array('label' => __($field[0], 'gravedad-store'), 'section' => 'gravedad_store', 'type' => 'text'));
     }
+    $wp_customize->add_setting('gravedad_usd_rate_manual', array('default' => '', 'sanitize_callback' => 'sanitize_text_field'));
+    $wp_customize->add_control('gravedad_usd_rate_manual', array(
+        'label' => __('Cotización manual del dólar (opcional)', 'gravedad-store'),
+        'description' => __('Dejar vacío para usar la cotización oficial automática. Si cargás un valor acá, se usa ese en vez del automático.', 'gravedad-store'),
+        'section' => 'gravedad_store', 'type' => 'number',
+    ));
 }
 add_action('customize_register', 'gravedad_customize');
+add_action('customize_save_after', function () { gravedad_recalculate_usd_prices(); });
 
 function gravedad_option($key, $default = '') { return get_theme_mod($key, $default); }
+
+/* ---- Cotización del dólar y precios en USD ---- */
+
+function gravedad_fetch_official_usd_rate() {
+    $response = wp_remote_get('https://dolarapi.com/v1/dolares/oficial', array('timeout' => 12));
+    if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) { return false; }
+    $body = json_decode(wp_remote_retrieve_body($response), true);
+    if (!is_array($body) || empty($body['venta'])) { return false; }
+    return (float) $body['venta'];
+}
+
+add_action('gravedad_fetch_usd_rate_event', 'gravedad_update_usd_rate');
+function gravedad_update_usd_rate() {
+    $rate = gravedad_fetch_official_usd_rate();
+    if (!$rate) { return; }
+    $previous = (float) get_option('gravedad_usd_rate_auto', 0);
+    update_option('gravedad_usd_rate_auto', $rate);
+    update_option('gravedad_usd_rate_auto_updated', current_time('mysql'));
+    if (abs($previous - $rate) > 0.009) { gravedad_recalculate_usd_prices(); }
+}
+
+add_action('after_setup_theme', function () {
+    if (!wp_next_scheduled('gravedad_fetch_usd_rate_event')) {
+        wp_schedule_event(time(), 'hourly', 'gravedad_fetch_usd_rate_event');
+    }
+});
+
+function gravedad_get_usd_rate() {
+    $manual = get_theme_mod('gravedad_usd_rate_manual', '');
+    if ($manual !== '' && is_numeric($manual) && (float) $manual > 0) { return (float) $manual; }
+    $auto = (float) get_option('gravedad_usd_rate_auto', 0);
+    if ($auto > 0) { return $auto; }
+    $fetched = gravedad_fetch_official_usd_rate();
+    if ($fetched) {
+        update_option('gravedad_usd_rate_auto', $fetched);
+        update_option('gravedad_usd_rate_auto_updated', current_time('mysql'));
+        return $fetched;
+    }
+    return 1000; // resguardo si todavía no hay cotización disponible
+}
+
+function gravedad_recalculate_usd_prices() {
+    if (!class_exists('WooCommerce')) { return; }
+    $rate = gravedad_get_usd_rate();
+    $ids = get_posts(array('post_type' => 'product', 'posts_per_page' => -1, 'fields' => 'ids', 'meta_key' => '_price_usd', 'post_status' => 'any'));
+    foreach ($ids as $id) {
+        $usd_regular = get_post_meta($id, '_price_usd', true);
+        $usd_sale = get_post_meta($id, '_sale_price_usd', true);
+        if ($usd_regular === '' || !is_numeric($usd_regular)) { continue; }
+        $ars_regular = round($usd_regular * $rate, 2);
+        update_post_meta($id, '_regular_price', $ars_regular);
+        if ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0) {
+            $ars_sale = round($usd_sale * $rate, 2);
+            update_post_meta($id, '_sale_price', $ars_sale);
+            update_post_meta($id, '_price', $ars_sale);
+        } else {
+            update_post_meta($id, '_price', $ars_regular);
+        }
+        wc_delete_product_transients($id);
+    }
+}
+
+add_action('woocommerce_product_options_pricing', function () {
+    global $post;
+    woocommerce_wp_text_input(array('id' => '_price_usd', 'label' => __('Precio en USD (opcional)', 'gravedad-store'), 'description' => __('Si cargás un valor acá, el precio en pesos se calcula solo con la cotización del dólar y pisa el precio regular.', 'gravedad-store'), 'desc_tip' => true, 'data_type' => 'price'));
+    woocommerce_wp_text_input(array('id' => '_sale_price_usd', 'label' => __('Precio de oferta en USD (opcional)', 'gravedad-store'), 'data_type' => 'price'));
+});
+
+add_action('woocommerce_process_product_meta', function ($post_id) {
+    $usd_regular = isset($_POST['_price_usd']) ? wc_format_decimal(wp_unslash($_POST['_price_usd'])) : '';
+    $usd_sale = isset($_POST['_sale_price_usd']) ? wc_format_decimal(wp_unslash($_POST['_sale_price_usd'])) : '';
+    update_post_meta($post_id, '_price_usd', $usd_regular);
+    update_post_meta($post_id, '_sale_price_usd', $usd_sale);
+    if ($usd_regular !== '' && is_numeric($usd_regular)) {
+        $rate = gravedad_get_usd_rate();
+        $ars_regular = round($usd_regular * $rate, 2);
+        update_post_meta($post_id, '_regular_price', $ars_regular);
+        if ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0) {
+            $ars_sale = round($usd_sale * $rate, 2);
+            update_post_meta($post_id, '_sale_price', $ars_sale);
+            update_post_meta($post_id, '_price', $ars_sale);
+        } else {
+            update_post_meta($post_id, '_price', $ars_regular);
+        }
+    }
+});
+
+function gravedad_usd_reference_note() {
+    global $product;
+    if (!$product) { return; }
+    $usd = get_post_meta($product->get_id(), '_price_usd', true);
+    if ($usd === '' || !is_numeric($usd)) { return; }
+    echo '<small class="usd-reference">≈ USD ' . esc_html(number_format((float) $usd, 2)) . ' · cotización $' . esc_html(number_format(gravedad_get_usd_rate(), 0, ',', '.')) . '</small>';
+}
+add_action('woocommerce_single_product_summary', 'gravedad_usd_reference_note', 11);
 
 function gravedad_shop_url($slug = '') {
     if (in_array($slug, array('novedades', 'ofertas'), true)) {
