@@ -1,0 +1,48 @@
+name: Publicar tema en WordPress
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wordpress-theme/**"
+      - ".github/workflows/deploy-wordpress-theme.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: gravedad-wordpress-theme
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Sincronizar tema por FTPS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Incorporar recursos visuales
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p wordpress-theme/assets/img
+          curl --fail --location --retry 3 "https://gravedad-store.r-lavega.chatgpt.site/hero-gravedad.png" --output wordpress-theme/assets/img/hero-gravedad.png
+          curl --fail --location --retry 3 "https://gravedad-store.r-lavega.chatgpt.site/logo-magic.svg" --output wordpress-theme/assets/img/logo-magic.svg
+          curl --fail --location --retry 3 "https://gravedad-store.r-lavega.chatgpt.site/logo-pokemon.svg" --output wordpress-theme/assets/img/logo-pokemon.svg
+          curl --fail --location --retry 3 "https://gravedad-store.r-lavega.chatgpt.site/logo-onepiece.jpg" --output wordpress-theme/assets/img/logo-onepiece.jpg
+          curl --fail --location --retry 3 "https://gravedad-store.r-lavega.chatgpt.site/logo-digimon.png" --output wordpress-theme/assets/img/logo-digimon.png
+          curl --fail --location --retry 3 "https://gravedad-store.r-lavega.chatgpt.site/logo-dragonball.png" --output wordpress-theme/assets/img/logo-dragonball.png
+          cp wordpress-theme/assets/img/hero-gravedad.png wordpress-theme/screenshot.png
+
+      - name: Publicar en WordPress
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./wordpress-theme/
+          server-dir: ${{ secrets.FTP_PATH }}
+          exclude: |
+            **/.git*
+            **/.git*/**
