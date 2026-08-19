@@ -20,7 +20,8 @@ $clear_url = get_term_link($term);
 $hero_image = $section ? gravedad_section_hero_image($section) : '';
 ?>
 <main class="singles-page">
-  <header class="singles-hero<?php echo $hero_image ? ' has-image' : ''; ?>"<?php echo $hero_image ? ' style="--hero:url(\'' . esc_url($hero_image) . '\')"' : ''; ?>><div class="singles-orbit"></div><div><p class="section-label"><?php echo esc_html($eyebrow); ?></p><h1><?php echo esc_html($title); ?></h1><p><?php echo esc_html($desc); ?></p></div></header>
+  <header class="singles-hero<?php echo $hero_image ? ' has-image' : ''; ?>"<?php echo $hero_image ? ' style="--hero:url(\'' . esc_url($hero_image) . '\')"' : ''; ?>><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / <?php echo esc_html($term->name); ?></nav><p class="section-label"><i class="label-dash"></i><?php echo esc_html($eyebrow); ?></p><h1><?php echo esc_html($title); ?></h1><p><?php echo esc_html($desc); ?></p></div></header>
+  <?php gravedad_marquee(); ?>
   <div class="singles-toolbar"><button class="singles-filter-toggle" type="button" aria-expanded="false">FILTROS <span>＋</span></button><div class="singles-count"><?php woocommerce_result_count(); ?></div><div class="singles-order"><?php woocommerce_catalog_ordering(); ?></div></div>
   <div class="singles-layout">
     <aside class="singles-filters">

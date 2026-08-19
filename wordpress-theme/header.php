@@ -19,8 +19,10 @@
   <a class="brand brand-image" href="<?php echo esc_url(home_url('/')); ?>" aria-label="Gravedad Store"><img class="brand-logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store" width="1200" height="400"></a>
   <?php endif; ?>
   <form class="header-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>"><span><?php echo gravedad_icon('search'); ?></span><input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="Buscá cartas, juegos, colecciones..."><input type="hidden" name="post_type" value="product"></form>
-  <div class="header-actions"><a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : wp_login_url()); ?>" aria-label="Mi cuenta"><?php echo gravedad_icon('user'); ?></a><a class="header-cart" href="<?php echo esc_url(function_exists('wc_get_cart_url') ? wc_get_cart_url() : '#'); ?>" aria-label="Carrito"><?php echo gravedad_icon('cart'); ?><span class="cart-count"><?php echo function_exists('WC') && WC()->cart ? esc_html(WC()->cart->get_cart_contents_count()) : '0'; ?></span></a></div>
+  <div class="header-actions"><a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : wp_login_url()); ?>" aria-label="Mi cuenta"><?php echo gravedad_icon('user'); ?></a><a class="header-cart" href="<?php echo esc_url(function_exists('wc_get_cart_url') ? wc_get_cart_url() : '#'); ?>" aria-label="Carrito" aria-controls="cart-drawer" aria-expanded="false"><?php echo gravedad_icon('cart'); ?><span class="cart-count"><?php echo function_exists('WC') && WC()->cart ? esc_html(WC()->cart->get_cart_contents_count()) : '0'; ?></span></a></div>
 </header>
+<div class="nav-backdrop"></div>
 <nav class="main-nav" aria-label="Navegación principal">
+  <div class="nav-drawer-header"><strong>Menú</strong><button class="nav-close" type="button" aria-label="Cerrar menú">×</button></div>
 <?php wp_nav_menu(array('theme_location'=>'primary','container'=>false,'fallback_cb'=>'gravedad_default_menu','depth'=>2)); ?>
 </nav>
