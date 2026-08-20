@@ -28,7 +28,7 @@
       <h3>¿Tenés dudas?</h3>
       <a class="footer-whatsapp-link" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>" target="_blank" rel="noopener"><span>Hablar por WhatsApp</span><i aria-hidden="true">↗</i></a>
       <div class="footer-contact-meta">
-        <p><a href="mailto:silvafacu18@gmail.com.ar">silvafacu18@gmail.com.ar</a></p>
+        <p><a href="mailto:info@gravedad.com.ar">info@gravedad.com.ar</a></p>
         <p>José C. Paz, Buenos Aires</p>
       </div>
     </div>
