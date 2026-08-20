@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.23.1');
+define('GRAVEDAD_VERSION', '5.24.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -46,6 +46,15 @@ function gravedad_setup() {
     register_nav_menus(array('primary' => __('Menú principal', 'gravedad-store'), 'footer' => __('Menú del pie', 'gravedad-store')));
 }
 add_action('after_setup_theme', 'gravedad_setup');
+
+function gravedad_force_search_template($template) {
+    if (is_search()) {
+        $custom = get_template_directory() . '/archive-product.php';
+        if (file_exists($custom)) { return $custom; }
+    }
+    return $template;
+}
+add_filter('template_include', 'gravedad_force_search_template', 99);
 
 function gravedad_assets() {
     wp_enqueue_style('gravedad-fonts', 'https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Manrope:wght@400;500;600;700;800&display=swap', array(), null);
