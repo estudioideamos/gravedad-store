@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.33.0');
+define('GRAVEDAD_VERSION', '5.33.1');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -731,6 +731,13 @@ function gravedad_register_evento_cpt() {
     ));
 }
 add_action('init', 'gravedad_register_evento_cpt');
+
+function gravedad_register_evento_meta() {
+    foreach (array('fecha', 'hora', 'ubicacion', 'enlace') as $f) {
+        register_post_meta('evento', '_evento_' . $f, array('type' => 'string', 'single' => true, 'show_in_rest' => true));
+    }
+}
+add_action('init', 'gravedad_register_evento_meta');
 
 function gravedad_evento_meta_box() {
     add_meta_box('gravedad_evento_datos', 'Datos del evento', 'gravedad_evento_meta_box_html', 'evento', 'side', 'high');
