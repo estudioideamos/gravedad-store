@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     nav.classList.remove('is-open'); document.body.classList.remove('menu-is-open');
     menuButton&&menuButton.setAttribute('aria-expanded','false');
     nav.querySelectorAll('li.has-mega.is-open').forEach(li=>li.classList.remove('is-open'));
+    nav.classList.remove('submenu-open');
   }
   menuButton&&menuButton.addEventListener('click',()=>{ nav&&nav.classList.contains('is-open') ? closeNav() : openNav(); });
   navBackdrop&&navBackdrop.addEventListener('click',closeNav);
@@ -140,6 +141,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   });
 
+  function closeSubmenu(){
+    nav.querySelectorAll('li.has-mega.is-open').forEach(li=>li.classList.remove('is-open'));
+    nav.classList.remove('submenu-open');
+  }
   nav&&nav.querySelectorAll('li.has-mega > a').forEach(link=>{
     link.addEventListener('click',(e)=>{
       if(window.innerWidth>950) return;
@@ -148,6 +153,15 @@ document.addEventListener('DOMContentLoaded',()=>{
         e.preventDefault();
         nav.querySelectorAll('li.has-mega.is-open').forEach(other=>{ if(other!==li) other.classList.remove('is-open'); });
         li.classList.add('is-open');
+        nav.classList.add('submenu-open');
+        const mega=li.querySelector('.mega-menu');
+        if(mega&&!mega.querySelector('.mega-back')){
+          const back=document.createElement('button');
+          back.type='button'; back.className='mega-back';
+          back.innerHTML='<span>‹</span> Volver al menú';
+          back.addEventListener('click',closeSubmenu);
+          mega.insertBefore(back, mega.firstChild);
+        }
       }
     });
   });
