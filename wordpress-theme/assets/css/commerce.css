@@ -33,6 +33,20 @@
 .comment-form-cookies-consent{display:flex;align-items:center;gap:8px;margin:14px 0}
 
 /* Mi cuenta */
+.faq-shell{padding:60px 3.5vw 90px;max-width:900px}
+.faq-group{margin-bottom:48px}
+.faq-group h2{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);margin:0 0 20px;color:#fff}
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:0 22px;transition:border-color .2s}
+.faq-item[open]{border-color:var(--acid)}
+.faq-item summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;font:700 14px var(--body);color:#f0f0f2}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-toggle{flex-shrink:0;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);color:var(--acid);font-size:16px;transition:transform .25s}
+.faq-item[open] .faq-toggle{transform:rotate(45deg);border-color:var(--acid)}
+.faq-item p{margin:0 0 20px;color:#a6a7ae;font-size:13px;line-height:1.7}
+.faq-cta{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:20px;padding:30px 32px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.faq-cta p{margin:0;font:700 15px var(--body);color:#fff}
+@media(max-width:600px){.faq-cta{flex-direction:column;align-items:flex-start}}
 .account-shell{padding:60px 3.5vw 90px}
 .account-shell:after{content:'';display:table;clear:both}
 .woocommerce-MyAccount-navigation{float:left;width:230px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 20px 45px rgba(0,0,0,.3)}
