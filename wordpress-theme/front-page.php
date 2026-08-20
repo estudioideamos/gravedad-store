@@ -20,7 +20,25 @@ gravedad_home_carousel('ABRÍ. JUGÁ. COLECCIONÁ.', 'Sellado para<br><em>abrir 
 gravedad_home_carousel('PARA COMPARTIR LA MESA', 'Juegos para<br><em>compartir.</em>', 'Selección de Devir, Buró, Popullar y otras editoriales.', array('tax_query' => array(array('taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => 'juegos-de-mesa'))), gravedad_shop_url('juegos-de-mesa'), '', array('f_editorial' => array('Editorial', 'pa_editorial'), 'f_tipo_juego' => array('Tipo de juego', 'pa_tipo-juego')));
 ?>
 
-<section class="event-section" id="eventos"><div class="event-visual"><div class="hero-grid"></div><time><?php $date=explode(' ',gravedad_option('gravedad_event_date','24 AGO')); ?><b><?php echo esc_html($date[0]); ?></b><span><?php echo esc_html($date[1]??'AGO'); ?></span></time><div class="event-card"><i></i><b>GRAVEDAD</b><small>STORE CHAMPIONSHIP</small></div></div><div class="event-copy"><p class="section-label">PRÓXIMO EVENTO</p><h2>La comunidad<br>también <em>juega.</em></h2><p>Vení a competir, intercambiar y compartir con otros jugadores. Torneos, lanzamientos y encuentros en nuestro local.</p><div class="event-meta"><?php echo gravedad_icon('pin'); ?> <?php echo esc_html(gravedad_option('gravedad_event_location','José C. Paz, Buenos Aires')); ?> · <?php echo gravedad_icon('clock'); ?> 14:00 hs</div><a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>">Reservar mi lugar →</a></div></section>
+<?php
+$next_event = new WP_Query(array('post_type' => 'evento', 'post_status' => 'publish', 'posts_per_page' => 1, 'meta_key' => '_evento_fecha', 'orderby' => 'meta_value', 'order' => 'ASC', 'meta_query' => array(array('key' => '_evento_fecha', 'value' => date('Y-m-d'), 'compare' => '>=', 'type' => 'DATE'))));
+$meses_evt = array('ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC');
+if ($next_event->have_posts()):
+  $next_event->the_post();
+  $evt_id = get_the_ID();
+  $evt_ts = strtotime(get_post_meta($evt_id, '_evento_fecha', true));
+  $evt_flyer = get_the_post_thumbnail_url($evt_id, 'large');
+  $evt_hora = gravedad_evento_meta($evt_id, 'hora', '14:00 hs');
+  $evt_ubicacion = gravedad_evento_meta($evt_id, 'ubicacion', gravedad_option('gravedad_event_location', 'José C. Paz, Buenos Aires'));
+  $evt_link = get_permalink($evt_id);
+?>
+<section class="event-section" id="eventos"><div class="event-visual"><div class="hero-grid"></div><time><b><?php echo esc_html(date('d', $evt_ts)); ?></b><span><?php echo esc_html($meses_evt[(int) date('n', $evt_ts) - 1]); ?></span></time><?php if ($evt_flyer): ?><a class="event-card event-card-flyer" href="<?php echo esc_url($evt_link); ?>"><img src="<?php echo esc_url($evt_flyer); ?>" alt="<?php the_title_attribute(); ?>"></a><?php else: ?><a class="event-card" href="<?php echo esc_url($evt_link); ?>"><i></i><b>GRAVEDAD</b><small><?php the_title(); ?></small></a><?php endif; ?></div><div class="event-copy"><p class="section-label">PRÓXIMO EVENTO</p><h2><a href="<?php echo esc_url($evt_link); ?>"><?php the_title(); ?></a></h2><?php if (get_the_excerpt()): ?><p><?php echo esc_html(wp_trim_words(get_the_excerpt(), 24)); ?></p><?php endif; ?><div class="event-meta"><?php echo gravedad_icon('pin'); ?> <?php echo esc_html($evt_ubicacion); ?> · <?php echo gravedad_icon('clock'); ?> <?php echo esc_html($evt_hora); ?></div><div class="event-actions"><a class="button primary" href="<?php echo esc_url($evt_link); ?>">Ver evento →</a><a class="event-all-link" href="<?php echo esc_url(home_url('/eventos/')); ?>">Ver todos los eventos</a></div></div></section>
+<?php
+  wp_reset_postdata();
+else:
+?>
+<section class="event-section" id="eventos"><div class="event-visual"><div class="hero-grid"></div><div class="event-card"><i></i><b>GRAVEDAD</b><small>STORE CHAMPIONSHIP</small></div></div><div class="event-copy"><p class="section-label">EVENTOS</p><h2>La comunidad<br>también <em>juega.</em></h2><p>Vení a competir, intercambiar y compartir con otros jugadores. Torneos, lanzamientos y encuentros en nuestro local.</p><div class="event-actions"><a class="button primary" href="<?php echo esc_url(home_url('/eventos/')); ?>">Ver eventos →</a></div></div></section>
+<?php endif; ?>
 
 <?php
 gravedad_home_carousel('RESERVÁ EL TUYO', 'Reservá antes<br><em>que se agote.</em>', 'Próximos lanzamientos disponibles para reservar.', array('tax_query' => array(array('taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => 'preventas'))), gravedad_shop_url('preventas'), '', array('f_juego' => array('Juego', 'pa_juego')));

@@ -73,9 +73,10 @@
 .evento-date-badge small{display:block;font:700 9px var(--body);letter-spacing:.08em}
 .evento-body{padding:20px}
 .evento-body h3{margin:0 0 10px;font-family:var(--display);font-size:19px;color:#fff;text-transform:uppercase}
-.evento-meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:0 0 12px;color:#9a9ba2;font-size:11px}
-.evento-meta svg{width:13px;height:13px;color:var(--acid);vertical-align:-2px}
-.evento-meta span{color:#4d4e55}
+.evento-meta{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:0 0 12px;color:#9a9ba2;font-size:11px}
+.evento-meta span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.evento-meta span+span:before{content:'·';margin-right:5px;color:#4d4e55}
+.evento-meta svg{width:13px;height:13px;color:var(--acid);flex-shrink:0}
 .evento-excerpt{margin:0 0 14px;color:#8d8e95;font-size:12px;line-height:1.6}
 .evento-cta{color:var(--acid);font:700 10px var(--body);letter-spacing:.08em;text-transform:uppercase}
 .evento-empty{color:#8d8e95;font-size:13px;line-height:1.8}
