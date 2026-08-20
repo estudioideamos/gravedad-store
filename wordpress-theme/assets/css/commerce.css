@@ -33,6 +33,18 @@
 .comment-form-cookies-consent{display:flex;align-items:center;gap:8px;margin:14px 0}
 
 /* Mi cuenta */
+.search-toolbar{grid-template-columns:1fr auto auto}
+.search-refine{display:flex;align-items:center;gap:10px;background:#15161b;border:1px solid #35363d;border-radius:8px;padding:8px 8px 8px 16px;max-width:340px}
+.search-refine input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font-size:13px}
+.search-refine button{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;background:var(--acid);border:0;border-radius:6px;color:#08090b;cursor:pointer}
+.search-refine button svg{width:16px;height:16px}
+.singles-order select{background:#15161b;border:1px solid #35363d;border-radius:6px;color:#c7c8ce;font:600 11px var(--body);padding:9px 14px}
+.search-empty{padding:60px 0;text-align:center}
+.search-empty p{color:#a6a7ae;font-size:14px;margin:0 0 24px}
+.search-empty-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.search-empty-links a{padding:12px 22px;border:1px solid var(--line);border-radius:8px;color:#f0f0f2;font:700 11px var(--body);letter-spacing:.06em;text-transform:uppercase;transition:border-color .2s,color .2s}
+.search-empty-links a:hover{border-color:var(--acid);color:var(--acid)}
+@media(max-width:600px){.search-toolbar{grid-template-columns:1fr}.search-refine{max-width:none}}
 .faq-shell{padding:60px 3.5vw 90px;max-width:900px}
 .faq-group{margin-bottom:48px}
 .faq-group h2{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);margin:0 0 20px;color:#fff}

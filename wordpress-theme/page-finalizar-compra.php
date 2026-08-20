@@ -1,0 +1,12 @@
+<?php
+defined('ABSPATH') || exit;
+get_header();
+?>
+<main class="singles-page">
+  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-finalizar-compra.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Finalizar compra</nav><p class="section-label"><i class="label-dash"></i>ÚLTIMO PASO</p><h1>Finalizar compra.</h1><p>Completá tus datos para confirmar el pedido.</p></div></header>
+  <?php gravedad_marquee(); ?>
+  <div class="content-shell account-shell">
+    <?php while (have_posts()): the_post(); the_content(); endwhile; ?>
+  </div>
+</main>
+<?php get_footer(); ?>
