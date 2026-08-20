@@ -120,6 +120,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     headerSearch.classList.remove('is-open');
     searchToggle&&(searchToggle.classList.remove('is-active'),searchToggle.setAttribute('aria-expanded','false'));
   });
+  document.querySelectorAll('.footer-nav-toggle-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const parent=btn.closest('.footer-nav');
+      if(!parent) return;
+      const isOpen=parent.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded',isOpen?'true':'false');
+    });
+  });
+
   nav&&nav.querySelectorAll('li.has-mega > a').forEach(link=>{
     link.addEventListener('click',(e)=>{
       if(window.innerWidth>950) return;
