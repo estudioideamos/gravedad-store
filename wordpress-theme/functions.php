@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.31.1');
+define('GRAVEDAD_VERSION', '5.33.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -370,7 +370,7 @@ function gravedad_default_menu() {
     echo '<li><a href="' . esc_url(gravedad_shop_url('preventas')) . '">Preventas</a></li>';
     echo '<li><a href="' . esc_url(gravedad_shop_url('novedades')) . '">Novedades</a></li>';
     echo '<li><a href="' . esc_url(gravedad_shop_url('ofertas')) . '">Ofertas</a></li>';
-    echo '<li><a href="' . esc_url(home_url('/#eventos')) . '">Eventos</a></li>';
+    echo '<li><a href="' . esc_url(home_url('/eventos/')) . '">Eventos</a></li>';
     echo '</ul>';
 }
 
@@ -702,3 +702,114 @@ add_filter('woocommerce_output_related_products_args', function ($args) {
 
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+
+/* ---- Eventos (CPT) ---- */
+
+function gravedad_register_evento_cpt() {
+    register_post_type('evento', array(
+        'labels' => array(
+            'name' => 'Eventos',
+            'singular_name' => 'Evento',
+            'add_new' => 'Añadir evento',
+            'add_new_item' => 'Añadir nuevo evento',
+            'edit_item' => 'Editar evento',
+            'new_item' => 'Nuevo evento',
+            'view_item' => 'Ver evento',
+            'search_items' => 'Buscar eventos',
+            'not_found' => 'No se encontraron eventos',
+            'not_found_in_trash' => 'No hay eventos en la papelera',
+            'all_items' => 'Todos los eventos',
+            'menu_name' => 'Eventos',
+        ),
+        'public' => true,
+        'has_archive' => false,
+        'rewrite' => array('slug' => 'evento'),
+        'menu_icon' => 'dashicons-calendar-alt',
+        'menu_position' => 26,
+        'supports' => array('title', 'editor', 'thumbnail'),
+        'show_in_rest' => true,
+    ));
+}
+add_action('init', 'gravedad_register_evento_cpt');
+
+function gravedad_evento_meta_box() {
+    add_meta_box('gravedad_evento_datos', 'Datos del evento', 'gravedad_evento_meta_box_html', 'evento', 'side', 'high');
+}
+add_action('add_meta_boxes', 'gravedad_evento_meta_box');
+
+function gravedad_evento_meta_box_html($post) {
+    wp_nonce_field('gravedad_evento_save', 'gravedad_evento_nonce');
+    $fecha = get_post_meta($post->ID, '_evento_fecha', true);
+    $hora = get_post_meta($post->ID, '_evento_hora', true);
+    if (!$hora) { $hora = '14:00 hs'; }
+    $ubicacion = get_post_meta($post->ID, '_evento_ubicacion', true);
+    if (!$ubicacion) { $ubicacion = gravedad_option('gravedad_event_location', 'José C. Paz, Buenos Aires'); }
+    $enlace = get_post_meta($post->ID, '_evento_enlace', true);
+    ?>
+    <p><label for="gravedad_evento_fecha"><strong>Fecha</strong></label><br>
+    <input type="date" id="gravedad_evento_fecha" name="gravedad_evento_fecha" value="<?php echo esc_attr($fecha); ?>" style="width:100%"></p>
+    <p><label for="gravedad_evento_hora"><strong>Hora</strong></label><br>
+    <input type="text" id="gravedad_evento_hora" name="gravedad_evento_hora" value="<?php echo esc_attr($hora); ?>" style="width:100%" placeholder="14:00 hs"></p>
+    <p><label for="gravedad_evento_ubicacion"><strong>Ubicación</strong></label><br>
+    <input type="text" id="gravedad_evento_ubicacion" name="gravedad_evento_ubicacion" value="<?php echo esc_attr($ubicacion); ?>" style="width:100%"></p>
+    <p><label for="gravedad_evento_enlace"><strong>Enlace de inscripción</strong></label><br>
+    <input type="url" id="gravedad_evento_enlace" name="gravedad_evento_enlace" value="<?php echo esc_attr($enlace); ?>" style="width:100%" placeholder="https://wa.me/... (opcional)"></p>
+    <p style="color:#787c82;font-size:12px;margin-top:14px">📌 Subí el flyer del evento como <strong>Imagen destacada</strong>, en el panel de la derecha. Usá la <strong>Descripción</strong> (arriba) para los detalles del evento.</p>
+    <?php
+}
+
+function gravedad_evento_save($post_id) {
+    if (!isset($_POST['gravedad_evento_nonce']) || !wp_verify_nonce($_POST['gravedad_evento_nonce'], 'gravedad_evento_save')) { return; }
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) { return; }
+    if (!current_user_can('edit_post', $post_id)) { return; }
+    $fields = array('fecha', 'hora', 'ubicacion', 'enlace');
+    foreach ($fields as $f) {
+        $key = 'gravedad_evento_' . $f;
+        if (isset($_POST[$key])) {
+            $value = $f === 'enlace' ? esc_url_raw(wp_unslash($_POST[$key])) : sanitize_text_field(wp_unslash($_POST[$key]));
+            update_post_meta($post_id, '_evento_' . $f, $value);
+        }
+    }
+}
+add_action('save_post_evento', 'gravedad_evento_save');
+
+add_filter('manage_evento_posts_columns', function ($columns) {
+    $new = array();
+    foreach ($columns as $key => $label) {
+        $new[$key] = $label;
+        if ($key === 'title') { $new['evento_fecha'] = 'Fecha'; $new['evento_estado'] = 'Estado'; }
+    }
+    return $new;
+});
+add_action('manage_evento_posts_custom_column', function ($column, $post_id) {
+    if ($column === 'evento_fecha') {
+        $fecha = get_post_meta($post_id, '_evento_fecha', true);
+        echo $fecha ? esc_html(date_i18n('d/m/Y', strtotime($fecha))) : '—';
+    }
+    if ($column === 'evento_estado') {
+        $fecha = get_post_meta($post_id, '_evento_fecha', true);
+        if (!$fecha) { echo '—'; return; }
+        echo strtotime($fecha) >= strtotime('today') ? '<span style="color:#1a8a3c;font-weight:600">Próximo</span>' : '<span style="color:#9a9ba2">Pasado</span>';
+    }
+}, 10, 2);
+add_filter('manage_edit-evento_sortable_columns', function ($columns) {
+    $columns['evento_fecha'] = 'evento_fecha';
+    return $columns;
+});
+add_action('pre_get_posts', function ($query) {
+    if (!is_admin() || !$query->is_main_query()) { return; }
+    if ($query->get('post_type') !== 'evento') { return; }
+    if ($query->get('orderby') === 'evento_fecha') {
+        $query->set('meta_key', '_evento_fecha');
+        $query->set('orderby', 'meta_value');
+    } elseif (!$query->get('orderby')) {
+        $query->set('meta_key', '_evento_fecha');
+        $query->set('orderby', 'meta_value');
+        $query->set('order', 'ASC');
+    }
+});
+
+function gravedad_evento_meta($id, $key, $default = '') {
+    $v = get_post_meta($id, '_evento_' . $key, true);
+    return $v !== '' ? $v : $default;
+}
