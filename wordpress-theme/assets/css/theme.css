@@ -98,7 +98,7 @@ body.cart-drawer-open{overflow:hidden}
 .nav-backdrop{position:fixed;inset:0;background:rgba(5,5,7,.7);z-index:44;opacity:0;visibility:hidden;transition:opacity .3s ease}
 body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 .main-nav{position:fixed;inset:0;width:100vw;height:100dvh;background:radial-gradient(circle at 88% 12%,rgba(242,169,0,.1),transparent 32%),radial-gradient(circle at 10% 90%,rgba(204,20,20,.12),transparent 34%),#0a0b0d;border:0;padding:0;opacity:0;visibility:hidden;clip-path:inset(0 0 100% 0);pointer-events:none;transition:clip-path .6s cubic-bezier(.76,0,.24,1),opacity .3s,visibility 0s linear .6s;z-index:46;overflow-y:auto}
-.main-nav.is-open{opacity:1;visibility:visible;clip-path:inset(0 0 0 0);pointer-events:auto;transition:clip-path .6s cubic-bezier(.76,0,.24,1),opacity .3s,visibility 0s linear}
+.main-nav.is-open{opacity:1!important;visibility:visible!important;clip-path:inset(0 0 0 0)!important;pointer-events:auto!important;transition:clip-path .6s cubic-bezier(.76,0,.24,1),opacity .3s,visibility 0s linear}
 .nav-close{position:absolute;top:20px;right:20px;z-index:3;background:none;border:1px solid #3a3b42;border-radius:50%;width:38px;height:38px;color:#fff;font-size:20px;line-height:1;cursor:pointer}
 .nav-inner{position:relative;z-index:2;min-height:100%;padding:90px 26px max(28px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
 .nav-eyebrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;padding-bottom:13px;border-bottom:1px solid rgba(255,255,255,.14);color:var(--acid);font:700 8px var(--body);letter-spacing:.18em;text-transform:uppercase}
