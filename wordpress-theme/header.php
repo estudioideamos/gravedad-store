@@ -14,7 +14,7 @@
   <a class="topbar-ig" href="<?php echo esc_url(gravedad_option('gravedad_instagram','https://www.instagram.com/gravedadstore')); ?>" target="_blank" rel="noopener">@GRAVEDADSTORE ↗</a>
 </div>
 <header class="site-header">
-  <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i></button>
+  <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
   <?php if (has_custom_logo()): ?><div class="brand brand-custom"><?php the_custom_logo(); ?></div><?php else: ?>
   <a class="brand brand-image" href="<?php echo esc_url(home_url('/')); ?>" aria-label="Gravedad Store"><img class="brand-logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store" width="1200" height="400"></a>
   <?php endif; ?>
@@ -23,6 +23,19 @@
 </header>
 <div class="nav-backdrop"></div>
 <nav class="main-nav" aria-label="Navegación principal">
-  <div class="nav-drawer-header"><strong>Menú</strong><button class="nav-close" type="button" aria-label="Cerrar menú">×</button></div>
-<?php wp_nav_menu(array('theme_location'=>'primary','container'=>false,'fallback_cb'=>'gravedad_default_menu','depth'=>2)); ?>
+  <button class="nav-close" type="button" aria-label="Cerrar menú">×</button>
+  <div class="nav-inner">
+    <div class="nav-eyebrow"><span>Gravedad Store</span><span>TCG &amp; Juegos de mesa</span></div>
+    <?php wp_nav_menu(array('theme_location'=>'primary','container'=>false,'fallback_cb'=>'gravedad_default_menu','depth'=>2)); ?>
+    <div class="nav-footer">
+      <div class="nav-quick">
+        <a href="<?php echo esc_url(home_url('/favoritos/')); ?>" aria-label="Favoritos"><?php echo gravedad_icon('heart'); ?></a>
+        <a href="<?php echo esc_url(function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/carrito/')); ?>" aria-label="Carrito"><?php echo gravedad_icon('cart'); ?></a>
+        <a href="<?php echo esc_url(gravedad_option('gravedad_instagram','https://www.instagram.com/gravedadstore')); ?>" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.4" cy="6.6" r="1"></circle></svg></a>
+        <a href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>" target="_blank" rel="noopener" aria-label="WhatsApp"><?php echo gravedad_icon('whatsapp'); ?></a>
+      </div>
+      <p><?php echo esc_html(gravedad_option('gravedad_event_location','José C. Paz')); ?> <span>·</span> Desde 2024</p>
+    </div>
+  </div>
+  <span class="nav-monogram" aria-hidden="true">G</span>
 </nav>
