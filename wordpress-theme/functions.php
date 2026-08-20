@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.34.0');
+define('GRAVEDAD_VERSION', '5.34.1');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -807,12 +807,9 @@ add_action('pre_get_posts', function ($query) {
     if (!is_admin() || !$query->is_main_query()) { return; }
     if ($query->get('post_type') !== 'evento') { return; }
     if ($query->get('orderby') === 'evento_fecha') {
+        $query->set('meta_query', array('relation' => 'OR', array('key' => '_evento_fecha', 'compare' => 'EXISTS'), array('key' => '_evento_fecha', 'compare' => 'NOT EXISTS')));
         $query->set('meta_key', '_evento_fecha');
         $query->set('orderby', 'meta_value');
-    } elseif (!$query->get('orderby')) {
-        $query->set('meta_key', '_evento_fecha');
-        $query->set('orderby', 'meta_value');
-        $query->set('order', 'ASC');
     }
 });
 
