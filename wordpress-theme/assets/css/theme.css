@@ -48,14 +48,14 @@
 .cart-drawer__trust svg{width:14px;height:14px;color:var(--acid)}
 .cart-drawer .woocommerce-mini-cart__empty-message{color:#a2a3aa;text-align:center;margin-top:60px;font-size:13px}
 .cart-drawer ul.woocommerce-mini-cart{list-style:none;margin:0;padding:0}
-.cart-drawer ul.woocommerce-mini-cart li{position:relative;padding:16px 0;border-bottom:1px solid var(--line)}
-.cart-drawer ul.woocommerce-mini-cart li>a:not(.remove){display:flex;align-items:flex-start;gap:12px;color:#f0f0f2;font:600 13px var(--body);line-height:1.4;padding-right:26px}
+.cart-drawer ul.woocommerce-mini-cart li{position:relative;padding:16px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:56px 1fr;column-gap:12px;align-items:start}
+.cart-drawer ul.woocommerce-mini-cart li>a:not(.remove){display:contents;color:#f0f0f2;font:600 13px var(--body);line-height:1.4}
 .cart-drawer ul.woocommerce-mini-cart li>a:not(.remove):hover{color:var(--acid)}
-.cart-drawer ul.woocommerce-mini-cart img{width:48px;height:48px;object-fit:contain;background:#16171c;border-radius:6px;flex-shrink:0}
+.cart-drawer ul.woocommerce-mini-cart img{grid-column:1;grid-row:1/3;width:56px;height:74px;object-fit:contain;background:#16171c;border-radius:6px}
 .cart-drawer ul.woocommerce-mini-cart a.remove{position:absolute;top:16px;right:0;color:#777!important;border:1px solid #3b3c43;border-radius:50%;width:18px;height:18px;line-height:16px!important;text-align:center;font-size:13px;transition:color .2s,border-color .2s}
 .cart-drawer ul.woocommerce-mini-cart a.remove:hover{color:var(--violet)!important;border-color:var(--violet)}
 .cart-drawer .woocommerce-Price-amount{color:var(--acid);font-family:var(--display);font-weight:700}
-.cart-drawer .quantity{display:block;margin:8px 0 0 68px;color:#8d8e95;font-size:12px}
+.cart-drawer .quantity{display:block;grid-column:2;grid-row:2;align-self:start;margin:4px 0 0;color:#8d8e95;font-size:12px}
 .cart-drawer .quantity .qty{width:55px!important;background:#15161b;color:#fff;border:1px solid #35363d;border-radius:4px;padding:4px}
 .cart-drawer p.woocommerce-mini-cart__total{padding:18px 24px;margin:0;border-top:1px solid var(--line);display:flex;justify-content:space-between;font:700 15px var(--display);text-transform:uppercase}
 .cart-drawer p.woocommerce-mini-cart__buttons{display:flex;flex-direction:column;gap:10px;padding:0 24px 24px;margin:0}
