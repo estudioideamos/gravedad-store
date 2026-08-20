@@ -88,6 +88,7 @@
 .account-shell .wc-block-components-sidebar-layout{padding-left:0!important;padding-right:0!important;padding-top:30px!important}
 .wc-block-components-order-summary-item__quantity{background:var(--acid)!important;color:#090a0c!important;font-weight:700}
 .wc-block-components-order-summary-item__individual-prices{display:none!important}
+.wc-block-cart-item__prices .wc-block-components-product-price__value::after{content:' c/u';font-size:10px;font-weight:400;color:#8d8e95;margin-left:2px}
 .account-shell:after{content:'';display:table;clear:both}
 .woocommerce-MyAccount-navigation{float:left;width:230px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 20px 45px rgba(0,0,0,.3)}
 .woocommerce-MyAccount-navigation ul{list-style:none;margin:0;padding:0}
