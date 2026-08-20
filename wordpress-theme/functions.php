@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.35.1');
+define('GRAVEDAD_VERSION', '5.36.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -637,6 +637,40 @@ function gravedad_catalog_meta_query_from_get() {
         $meta_query[] = array('key' => '_stock_status', 'value' => sanitize_key($_GET['f_stock']));
     }
     return $meta_query;
+}
+
+function gravedad_active_filter_chips($filters_map) {
+    $chips = array();
+    foreach ($filters_map as $param => $data) {
+        if (empty($_GET[$param])) { continue; }
+        $slug = sanitize_title(wp_unslash($_GET[$param]));
+        $term = get_term_by('slug', $slug, $data[1]);
+        if ($term && !is_wp_error($term)) {
+            $chips[] = array($param, $data[0] . ': ' . $term->name);
+        }
+    }
+    if (!empty($_GET['precio_min']) || !empty($_GET['precio_max'])) {
+        $min = !empty($_GET['precio_min']) ? '$' . number_format((float) wp_unslash($_GET['precio_min']), 0, ',', '.') : '';
+        $max = !empty($_GET['precio_max']) ? '$' . number_format((float) wp_unslash($_GET['precio_max']), 0, ',', '.') : '';
+        $label = 'Precio: ' . ($min && $max ? $min . ' - ' . $max : ($min ? 'desde ' . $min : 'hasta ' . $max));
+        $chips[] = array('precio', $label);
+    }
+    if (!empty($_GET['f_stock'])) {
+        $chips[] = array('f_stock', 'Disponibilidad: ' . ($_GET['f_stock'] === 'instock' ? 'En stock' : 'Sin stock'));
+    }
+    if (!empty($_GET['s'])) {
+        $chips[] = array('s', 'Búsqueda: "' . sanitize_text_field(wp_unslash($_GET['s'])) . '"');
+    }
+    if (!$chips) { return; }
+    echo '<div class="active-filters">';
+    foreach ($chips as $chip) {
+        list($param, $label) = $chip;
+        $remove_args = $param === 'precio' ? array('precio_min', 'precio_max') : array($param);
+        echo '<span class="filter-chip">' . esc_html($label) . '<a href="' . esc_url(remove_query_arg($remove_args)) . '" aria-label="Quitar filtro">×</a></span>';
+    }
+    $clear_args = array_merge(array_keys($filters_map), array('precio_min', 'precio_max', 'f_stock', 's'));
+    echo '<a class="filter-chip-clear" href="' . esc_url(remove_query_arg($clear_args)) . '">Limpiar todo</a>';
+    echo '</div>';
 }
 
 function gravedad_apply_catalog_filters($query) {
