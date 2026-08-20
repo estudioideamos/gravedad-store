@@ -62,6 +62,8 @@
 .account-shell{max-width:none;padding:60px 3.5vw 90px}
 .account-shell .wp-block-woocommerce-checkout,.account-shell .wp-block-woocommerce-cart{padding:0!important;max-width:none!important;margin-left:0!important;margin-right:0!important}
 .account-shell .wc-block-components-sidebar-layout{padding-left:0!important;padding-right:0!important;padding-top:30px!important}
+.wc-block-components-order-summary-item__quantity{background:var(--acid)!important;color:#090a0c!important;font-weight:700}
+.wc-block-components-order-summary-item__individual-prices{display:none!important}
 .account-shell:after{content:'';display:table;clear:both}
 .woocommerce-MyAccount-navigation{float:left;width:230px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 20px 45px rgba(0,0,0,.3)}
 .woocommerce-MyAccount-navigation ul{list-style:none;margin:0;padding:0}

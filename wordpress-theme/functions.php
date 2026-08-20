@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.17.4');
+define('GRAVEDAD_VERSION', '5.17.5');
 
 function gravedad_icon($name) {
     $icons = array(
