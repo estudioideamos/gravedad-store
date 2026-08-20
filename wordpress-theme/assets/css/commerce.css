@@ -33,8 +33,8 @@
 .comment-form-cookies-consent{display:flex;align-items:center;gap:8px;margin:14px 0}
 
 /* Mi cuenta */
-body.woocommerce-account .page-content:after{content:'';display:table;clear:both}
-body.woocommerce-account .page-content>h1{margin-bottom:36px}
+.account-shell{padding:60px 3.5vw 90px}
+.account-shell:after{content:'';display:table;clear:both}
 .woocommerce-MyAccount-navigation{float:left;width:230px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 20px 45px rgba(0,0,0,.3)}
 .woocommerce-MyAccount-navigation ul{list-style:none;margin:0;padding:0}
 .woocommerce-MyAccount-navigation li{border-bottom:1px solid var(--line)}
