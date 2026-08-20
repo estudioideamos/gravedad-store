@@ -80,17 +80,29 @@
 .evento-cta{color:var(--acid);font:700 10px var(--body);letter-spacing:.08em;text-transform:uppercase}
 .evento-empty{color:#8d8e95;font-size:13px;line-height:1.8}
 .evento-empty a{color:var(--acid)}
-.evento-single{display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:50px;align-items:start}
-.evento-single-flyer{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.evento-single{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:60px;align-items:start}
+.evento-single-flyer-wrap{position:sticky;top:110px}
+.evento-single-flyer{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 70px rgba(0,0,0,.45);transition:transform .3s}
+.evento-single-flyer:hover{transform:translateY(-4px)}
 .evento-single-flyer img{width:100%;display:block}
-.evento-single-meta{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:16px}
-.evento-single-meta li{display:flex;align-items:center;gap:12px}
-.evento-single-meta svg{width:22px;height:22px;color:var(--acid);flex-shrink:0}
-.evento-single-meta strong{display:block;font:700 9px var(--body);letter-spacing:.1em;text-transform:uppercase;color:#77787f;margin-bottom:2px}
-.evento-single-meta span{color:#e6e6ea;font-size:14px}
-.evento-single-desc{color:#a6a7ae;font-size:13px;line-height:1.9;margin-bottom:28px}
-.evento-single-desc p{margin:0 0 14px}
-@media(max-width:800px){.evento-single{grid-template-columns:1fr}}
+.evento-single-badge{position:absolute;top:18px;left:18px;background:var(--acid);color:#090a0c;border-radius:10px;padding:8px 14px;text-align:center;line-height:1.1;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.evento-single-badge b{display:block;font:800 22px var(--display)}
+.evento-single-badge small{display:block;font:700 10px var(--body);letter-spacing:.1em}
+.evento-countdown{display:flex;align-items:center;gap:8px;justify-content:center;margin:18px 0 0;padding:12px;border:1px dashed #35363d;border-radius:10px;color:var(--acid);font:700 11px var(--body);letter-spacing:.06em;text-transform:uppercase}
+.evento-countdown svg{width:16px;height:16px}
+.evento-single-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:36px}
+.evento-chip{display:flex;align-items:center;gap:14px;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;transition:border-color .25s,transform .25s}
+.evento-chip:hover{border-color:#3a3b42;transform:translateY(-2px)}
+.evento-chip .step-icon{margin-bottom:0;flex-shrink:0}
+.evento-chip strong{display:block;font:700 9px var(--body);letter-spacing:.1em;text-transform:uppercase;color:#77787f;margin-bottom:3px}
+.evento-chip span{color:#e6e6ea;font-size:13px;font-weight:600;line-height:1.35}
+.evento-single-desc{position:relative;padding-left:22px;color:#a6a7ae;font-size:14px;line-height:1.9;margin-bottom:32px}
+.evento-single-desc .label-dash{position:absolute;left:0;top:8px}
+.evento-single-desc p{margin:0 0 16px}
+.evento-single-cta{display:inline-flex}
+.evento-single-share{margin:20px 0 0;color:#77787f;font-size:12px}
+.evento-single-share a{color:var(--acid)}
+@media(max-width:800px){.evento-single{grid-template-columns:1fr;gap:32px}.evento-single-flyer-wrap{position:static}}
 .info-step .step-highlight{font:700 13px var(--body);color:var(--acid);display:inline;margin:0}
 .info-note{color:#8d8e95;font-size:12px;margin:-30px 0 40px}
 .info-block p{color:#a6a7ae;font-size:13px;line-height:1.8;margin:0 0 14px}
