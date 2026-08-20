@@ -45,7 +45,7 @@
 .search-empty-links a{padding:12px 22px;border:1px solid var(--line);border-radius:8px;color:#f0f0f2;font:700 11px var(--body);letter-spacing:.06em;text-transform:uppercase;transition:border-color .2s,color .2s}
 .search-empty-links a:hover{border-color:var(--acid);color:var(--acid)}
 @media(max-width:600px){.search-toolbar{grid-template-columns:1fr}.search-refine{max-width:none}}
-.faq-shell{padding:60px 4vw 90px 4vw;max-width:1240px;margin-left:0}
+.faq-shell{padding:60px 4vw 90px 4vw;max-width:none;margin-left:0}
 .info-shell{padding:60px 4vw 90px 4vw;max-width:900px;margin-left:0}
 .faq-columns{display:grid;grid-template-columns:1fr 1fr;gap:0 60px}
 @media(max-width:800px){.faq-columns{grid-template-columns:1fr}}
