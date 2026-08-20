@@ -1,6 +1,12 @@
 <?php
 defined('ABSPATH') || exit;
 get_header();
+$faq_icons = array(
+    'Pedidos y pagos' => 'tag',
+    'Envíos y retiro' => 'truck',
+    'Cambios y devoluciones' => 'refresh',
+    'Productos y stock' => 'box',
+);
 $faq_groups = array(
     'Pedidos y pagos' => array(
         array('¿Qué medios de pago aceptan?', 'Aceptamos Mercado Pago, Visa, Mastercard, transferencia bancaria y efectivo en el local. En productos seleccionados ofrecemos 3 cuotas sin interés.'),
@@ -30,7 +36,7 @@ $faq_groups = array(
   <div class="content-shell faq-shell">
     <?php foreach ($faq_groups as $group => $items): ?>
     <section class="faq-group">
-      <h2><?php echo esc_html($group); ?></h2>
+      <h2><?php echo gravedad_icon($faq_icons[$group]); ?><?php echo esc_html($group); ?></h2>
       <div class="faq-list">
         <?php foreach ($items as $item): ?>
         <details class="faq-item">
