@@ -53,7 +53,12 @@
   </div>
   <div class="footer-payments">
     <span>MEDIOS DE PAGO</span>
-    <div class="payment-badges"><b>Mercado Pago</b><b>Visa</b><b>Mastercard</b><b>Transferencia</b><b>Efectivo</b></div>
+    <div class="payment-badges">
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/payments/mercadopago.svg'); ?>" alt="Mercado Pago" loading="lazy">
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/payments/visa.svg'); ?>" alt="Visa" loading="lazy">
+      <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/payments/mastercard.svg'); ?>" alt="Mastercard" loading="lazy">
+      <b>Transferencia</b><b>Efectivo</b>
+    </div>
   </div>
   <div class="footer-bottom">
     <span class="footer-copyright">© <?php echo esc_html(date('Y')); ?> GRAVEDAD STORE</span>
