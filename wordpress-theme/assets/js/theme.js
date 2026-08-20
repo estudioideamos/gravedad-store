@@ -192,6 +192,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   goTop?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
   filterButton?.addEventListener('click',()=>{const open=filters?.classList.toggle('is-open');filterButton.setAttribute('aria-expanded',String(Boolean(open)))});
 
+  document.querySelectorAll('.singles-filters form select').forEach(select=>{
+    select.addEventListener('change',()=>{ select.form?.requestSubmit ? select.form.requestSubmit() : select.form?.submit(); });
+  });
+
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const updateScrolled=()=>document.body.classList.toggle('is-scrolled',window.scrollY>10);
   window.addEventListener('scroll',updateScrolled,{passive:true}); updateScrolled();
