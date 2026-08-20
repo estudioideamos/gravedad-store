@@ -34,19 +34,21 @@ $faq_groups = array(
   <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-preguntas-frecuentes.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Preguntas frecuentes</nav><p class="section-label"><i class="label-dash"></i>ESTAMOS PARA AYUDARTE</p><h1>Preguntas frecuentes.</h1><p>Todo lo que necesitás saber sobre pagos, envíos y cambios antes de tu próxima compra.</p></div></header>
   <?php gravedad_marquee(); ?>
   <div class="content-shell faq-shell">
-    <?php foreach ($faq_groups as $group => $items): ?>
-    <section class="faq-group">
-      <h2><?php echo gravedad_icon($faq_icons[$group]); ?><?php echo esc_html($group); ?></h2>
-      <div class="faq-list">
-        <?php foreach ($items as $item): ?>
-        <details class="faq-item">
-          <summary><?php echo esc_html($item[0]); ?><span class="faq-toggle">+</span></summary>
-          <p><?php echo esc_html($item[1]); ?></p>
-        </details>
-        <?php endforeach; ?>
-      </div>
-    </section>
-    <?php endforeach; ?>
+    <div class="faq-columns">
+      <?php foreach ($faq_groups as $group => $items): ?>
+      <section class="faq-group">
+        <h2><?php echo gravedad_icon($faq_icons[$group]); ?><?php echo esc_html($group); ?></h2>
+        <div class="faq-list">
+          <?php foreach ($items as $item): ?>
+          <details class="faq-item">
+            <summary><?php echo esc_html($item[0]); ?><span class="faq-toggle">+</span></summary>
+            <p><?php echo esc_html($item[1]); ?></p>
+          </details>
+          <?php endforeach; ?>
+        </div>
+      </section>
+      <?php endforeach; ?>
+    </div>
     <div class="faq-cta">
       <p>¿No encontraste lo que buscabas?</p>
       <a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>">Escribinos por WhatsApp →</a>
