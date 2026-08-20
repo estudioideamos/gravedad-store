@@ -31,7 +31,7 @@
         <defs><path id="footer-orbit-path" d="M80,80 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"></path></defs>
         <text><textPath href="#footer-orbit-path" startOffset="0" textLength="350" lengthAdjust="spacing">VER TIENDA · GRAVEDAD STORE ·</textPath></text>
       </svg>
-      <span class="footer-cta-jewel"><?php echo gravedad_icon('hexagon'); ?></span>
+      <span class="footer-cta-jewel"><?php echo gravedad_icon('tarot'); ?></span>
     </a>
   </section>
   <div class="footer-top">
