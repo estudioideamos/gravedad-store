@@ -97,8 +97,8 @@
 .evento-chip .step-icon{margin-bottom:0;flex-shrink:0}
 .evento-chip strong{display:block;font:700 9px var(--body);letter-spacing:.1em;text-transform:uppercase;color:#77787f;margin-bottom:3px}
 .evento-chip span{color:#e6e6ea;font-size:13px;font-weight:600;line-height:1.35}
-.evento-single-desc{position:relative;padding-left:22px;color:#a6a7ae;font-size:14px;line-height:1.9;margin-bottom:32px}
-.evento-single-desc .label-dash{position:absolute;left:0;top:8px}
+.evento-single-desc{color:#a6a7ae;font-size:14px;line-height:1.9;margin-bottom:32px}
+.evento-single-desc .label-dash{display:block;margin-bottom:16px}
 .evento-single-desc p{margin:0 0 16px}
 .evento-single-cta{display:inline-flex}
 .evento-single-share{margin:20px 0 0;color:#77787f;font-size:12px}
