@@ -120,6 +120,17 @@ document.addEventListener('DOMContentLoaded',()=>{
     headerSearch.classList.remove('is-open');
     searchToggle&&(searchToggle.classList.remove('is-active'),searchToggle.setAttribute('aria-expanded','false'));
   });
+  const footerGlow=document.querySelector('[data-footer-glow]');
+  if(footerGlow){
+    footerGlow.addEventListener('pointermove',(e)=>{
+      const r=footerGlow.getBoundingClientRect();
+      const x=((e.clientX-r.left)/r.width*100).toFixed(2);
+      const y=((e.clientY-r.top)/r.height*100).toFixed(2);
+      footerGlow.style.setProperty('--footer-x',x+'%');
+      footerGlow.style.setProperty('--footer-y',y+'%');
+    });
+  }
+
   document.querySelectorAll('.footer-nav-toggle-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const parent=btn.closest('.footer-nav');

@@ -1,6 +1,7 @@
 <?php if (!defined('ABSPATH')) { exit; } ?>
-<footer class="site-footer">
+<footer class="site-footer" data-footer-glow>
   <div class="footer-glow"></div>
+  <div class="footer-cursor-glow"></div>
   <section class="footer-cta">
     <div>
       <p class="section-label"><i class="label-dash"></i>EXPLORÁ EL CATÁLOGO</p>
