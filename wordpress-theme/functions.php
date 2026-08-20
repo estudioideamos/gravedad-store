@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.38.2');
+define('GRAVEDAD_VERSION', '5.39.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -687,6 +687,39 @@ function gravedad_filter_terms($taxonomy) {
     if (!taxonomy_exists($taxonomy)) { return array(); }
     $terms = get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => true, 'orderby' => 'name'));
     return is_wp_error($terms) ? array() : $terms;
+}
+
+/**
+ * Terms available for one filter dropdown, narrowed down by the category
+ * plus whatever OTHER filters are already active (chained/faceted filters):
+ * e.g. with f_juego=digimon selected, f_coleccion only lists Digimon sets.
+ */
+function gravedad_faceted_terms($taxonomy, $filters, $exclude_param, $base_tax_query = array()) {
+    if (!taxonomy_exists($taxonomy)) { return array(); }
+    $tax_query = $base_tax_query;
+    $has_other_filter = false;
+    foreach ($filters as $param => $data) {
+        if ($param === $exclude_param) { continue; }
+        if (!empty($_GET[$param])) {
+            $has_other_filter = true;
+            $tax_query[] = array('taxonomy' => $data[1], 'field' => 'slug', 'terms' => sanitize_title(wp_unslash($_GET[$param])));
+        }
+    }
+    if (!$has_other_filter) { return gravedad_filter_terms($taxonomy); }
+    if (count($tax_query) > 1) { $tax_query['relation'] = 'AND'; }
+    $ids = get_posts(array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'tax_query' => $tax_query));
+    if (!$ids) { return array(); }
+    $terms = wp_get_object_terms($ids, $taxonomy, array('fields' => 'all'));
+    if (is_wp_error($terms)) { return array(); }
+    $seen = array();
+    $out = array();
+    foreach ($terms as $t) {
+        if (isset($seen[$t->term_id])) { continue; }
+        $seen[$t->term_id] = true;
+        $out[] = $t;
+    }
+    usort($out, function ($a, $b) { return strcasecmp($a->name, $b->name); });
+    return $out;
 }
 
 function gravedad_loop_game_label() {

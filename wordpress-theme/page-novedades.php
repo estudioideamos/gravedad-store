@@ -30,7 +30,7 @@ $clear_url = get_permalink();
       <div class="filter-heading"><span>AFINAR BÚSQUEDA</span><a href="<?php echo esc_url($clear_url); ?>">Limpiar todo</a></div>
       <form method="get" action="<?php echo esc_url($clear_url); ?>">
         <label class="filter-search"><span>Buscar producto</span><input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="Ej: nombre del producto"></label>
-        <?php foreach ($filters as $name => $data): $terms = gravedad_filter_terms($data[1]); if (!$terms) continue; ?>
+        <?php foreach ($filters as $name => $data): $terms = gravedad_faceted_terms($data[1], $filters, $name); $has_active = !empty($_GET[$name]); if (!$terms && !$has_active) continue; ?>
         <label><span><?php echo esc_html($data[0]); ?></span><select name="<?php echo esc_attr($name); ?>"><option value="">Todos</option><?php foreach ($terms as $t): ?><option value="<?php echo esc_attr($t->slug); ?>" <?php selected(isset($_GET[$name]) ? sanitize_title(wp_unslash($_GET[$name])) : '', $t->slug); ?>><?php echo esc_html($t->name); ?></option><?php endforeach; ?></select></label>
         <?php endforeach; ?>
         <button class="apply-filters" type="submit">APLICAR FILTROS →</button>

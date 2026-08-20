@@ -29,7 +29,8 @@ $hero_image = $section ? gravedad_section_hero_image($section) : '';
       <div class="filter-heading"><span>AFINAR BÚSQUEDA</span><a href="<?php echo esc_url($clear_url); ?>">Limpiar todo</a></div>
       <form method="get" action="<?php echo esc_url($clear_url); ?>">
         <label class="filter-search"><span><?php echo esc_html($search_label); ?></span><input type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="<?php echo esc_attr($search_ph); ?>"><input type="hidden" name="post_type" value="product"></label>
-        <?php foreach ($filters as $name => $data): $terms = gravedad_filter_terms($data[1]); if (!$terms) continue; ?>
+        <?php $base_tax_query = array(array('taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $term->term_id)); ?>
+        <?php foreach ($filters as $name => $data): $terms = gravedad_faceted_terms($data[1], $filters, $name, $base_tax_query); $has_active = !empty($_GET[$name]); if (!$terms && !$has_active) continue; ?>
         <label><span><?php echo esc_html($data[0]); ?></span><select name="<?php echo esc_attr($name); ?>"><option value="">Todos</option><?php foreach ($terms as $t): ?><option value="<?php echo esc_attr($t->slug); ?>" <?php selected(isset($_GET[$name]) ? sanitize_title(wp_unslash($_GET[$name])) : '', $t->slug); ?>><?php echo esc_html($t->name); ?> <small>(<?php echo esc_html($t->count); ?>)</small></option><?php endforeach; ?></select></label>
         <?php endforeach; ?>
         <fieldset><legend>Precio</legend><div class="price-inputs"><input type="number" name="precio_min" min="0" step="1" value="<?php echo isset($_GET['precio_min']) ? esc_attr(wp_unslash($_GET['precio_min'])) : ''; ?>" placeholder="Mínimo"><input type="number" name="precio_max" min="0" step="1" value="<?php echo isset($_GET['precio_max']) ? esc_attr(wp_unslash($_GET['precio_max'])) : ''; ?>" placeholder="Máximo"></div></fieldset>
