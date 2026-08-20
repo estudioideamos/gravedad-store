@@ -3,7 +3,7 @@ defined('ABSPATH') || exit;
 get_header();
 ?>
 <main class="singles-page">
-  <header class="singles-hero"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Mi cuenta</nav><p class="section-label"><i class="label-dash"></i>TU ESPACIO PERSONAL</p><h1>Mi cuenta.</h1><p>Pedidos, direcciones y datos de tu cuenta, todo en un solo lugar.</p></div></header>
+  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-mi-cuenta.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Mi cuenta</nav><p class="section-label"><i class="label-dash"></i>TU ESPACIO PERSONAL</p><h1>Mi cuenta.</h1><p>Pedidos, direcciones y datos de tu cuenta, todo en un solo lugar.</p></div></header>
   <?php gravedad_marquee(); ?>
   <div class="content-shell account-shell">
     <?php while (have_posts()): the_post(); the_content(); endwhile; ?>

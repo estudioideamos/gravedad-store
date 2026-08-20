@@ -105,6 +105,21 @@ document.addEventListener('DOMContentLoaded',()=>{
   menuButton&&menuButton.addEventListener('click',()=>{ nav&&nav.classList.contains('is-open') ? closeNav() : openNav(); });
   navBackdrop&&navBackdrop.addEventListener('click',closeNav);
   navClose&&navClose.addEventListener('click',closeNav);
+
+  const searchToggle=document.querySelector('.mobile-search-toggle');
+  const headerSearch=document.querySelector('.header-search');
+  searchToggle&&headerSearch&&searchToggle.addEventListener('click',()=>{
+    const isOpen=headerSearch.classList.toggle('is-open');
+    searchToggle.classList.toggle('is-active',isOpen);
+    searchToggle.setAttribute('aria-expanded',isOpen?'true':'false');
+    if(isOpen){ const input=headerSearch.querySelector('input[type="search"]'); input&&input.focus(); }
+  });
+  document.addEventListener('click',(e)=>{
+    if(!headerSearch||!headerSearch.classList.contains('is-open')) return;
+    if(headerSearch.contains(e.target)||e.target===searchToggle||(searchToggle&&searchToggle.contains(e.target))) return;
+    headerSearch.classList.remove('is-open');
+    searchToggle&&(searchToggle.classList.remove('is-active'),searchToggle.setAttribute('aria-expanded','false'));
+  });
   nav&&nav.querySelectorAll('li.has-mega > a').forEach(link=>{
     link.addEventListener('click',(e)=>{
       if(window.innerWidth>950) return;
