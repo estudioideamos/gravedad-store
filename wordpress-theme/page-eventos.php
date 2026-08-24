@@ -50,7 +50,7 @@ $pasados = new WP_Query(array('post_type' => 'evento', 'post_status' => 'publish
     <?php endif; ?>
     <div class="faq-cta">
       <p>¿Querés organizar un torneo o evento con nosotros?</p>
-      <a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp', '541136403287')); ?>">Escribinos por WhatsApp →</a>
+      <a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp', '542320673750')); ?>">Escribinos por WhatsApp →</a>
     </div>
   </div>
 </main>

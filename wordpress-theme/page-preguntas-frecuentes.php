@@ -51,7 +51,7 @@ $faq_groups = array(
     </div>
     <div class="faq-cta">
       <p>¿No encontraste lo que buscabas?</p>
-      <a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>">Escribinos por WhatsApp →</a>
+      <a class="button primary" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','542320673750')); ?>">Escribinos por WhatsApp →</a>
     </div>
   </div>
 </main>
