@@ -15,7 +15,7 @@ $faq_groups = array(
     ),
     'Envíos y retiro' => array(
         array('¿Hacen envíos a todo el país?', 'Sí, enviamos a todo el país por Correo Argentino. El costo y el tiempo estimado se calculan al finalizar la compra según tu código postal.'),
-        array('¿Puedo retirar en el local?', 'Sí, podés elegir "Retiro en tienda" sin cargo al finalizar la compra. Te avisamos por WhatsApp o email cuando esté listo para retirar en José C. Paz, Buenos Aires.'),
+        array('¿Puedo retirar en el local?', 'Sí, podés elegir "Retiro en tienda" sin cargo al finalizar la compra. Te avisamos por WhatsApp o email cuando esté listo para retirar en Roque Sáenz Peña 5086, José C. Paz, Buenos Aires.'),
         array('¿Cuánto tarda en llegar mi pedido?', 'Dentro del AMBA suele demorar entre 2 y 4 días hábiles, y en el resto del país entre 4 y 8 días hábiles según la zona.'),
     ),
     'Cambios y devoluciones' => array(

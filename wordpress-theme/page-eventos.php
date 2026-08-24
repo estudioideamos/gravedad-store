@@ -6,7 +6,7 @@ function gravedad_evento_card($post_id) {
     $fecha = get_post_meta($post_id, '_evento_fecha', true);
     $ts = $fecha ? strtotime($fecha) : false;
     $hora = gravedad_evento_meta($post_id, 'hora', '14:00 hs');
-    $ubicacion = gravedad_evento_meta($post_id, 'ubicacion', gravedad_option('gravedad_event_location', 'José C. Paz, Buenos Aires'));
+    $ubicacion = gravedad_evento_meta($post_id, 'ubicacion', gravedad_option('gravedad_event_location', 'Roque Sáenz Peña 5086, José C. Paz, Buenos Aires'));
     $enlace = gravedad_evento_meta($post_id, 'enlace', '');
     if (!$enlace) { $enlace = get_permalink($post_id); }
     $flyer = get_the_post_thumbnail_url($post_id, 'medium_large');

@@ -30,7 +30,7 @@
       <a class="footer-whatsapp-link" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','541136403287')); ?>" target="_blank" rel="noopener"><span>Hablar por WhatsApp</span><i aria-hidden="true">↗</i></a>
       <div class="footer-contact-meta">
         <p><a href="mailto:info@gravedad.com.ar">info@gravedad.com.ar</a></p>
-        <p>José C. Paz, Buenos Aires</p>
+        <p>Roque Sáenz Peña 5086, José C. Paz, Buenos Aires</p>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.39.1');
+define('GRAVEDAD_VERSION', '5.40.0');
 
 function gravedad_icon($name) {
     $icons = array(
@@ -93,7 +93,7 @@ function gravedad_customize($wp_customize) {
         'gravedad_whatsapp' => array('WhatsApp', '541136403287'),
         'gravedad_instagram' => array('Instagram', 'https://www.instagram.com/gravedadstore'),
         'gravedad_event_date' => array('Fecha del próximo evento', '24 AGO'),
-        'gravedad_event_location' => array('Lugar del próximo evento', 'José C. Paz, Buenos Aires'),
+        'gravedad_event_location' => array('Lugar del próximo evento', 'Roque Sáenz Peña 5086, José C. Paz, Buenos Aires'),
     );
     foreach ($fields as $id => $field) {
         $wp_customize->add_setting($id, array('default' => $field[1], 'sanitize_callback' => 'sanitize_text_field'));
@@ -817,7 +817,7 @@ function gravedad_evento_meta_box_html($post) {
     $hora = get_post_meta($post->ID, '_evento_hora', true);
     if (!$hora) { $hora = '14:00 hs'; }
     $ubicacion = get_post_meta($post->ID, '_evento_ubicacion', true);
-    if (!$ubicacion) { $ubicacion = gravedad_option('gravedad_event_location', 'José C. Paz, Buenos Aires'); }
+    if (!$ubicacion) { $ubicacion = gravedad_option('gravedad_event_location', 'Roque Sáenz Peña 5086, José C. Paz, Buenos Aires'); }
     $enlace = get_post_meta($post->ID, '_evento_enlace', true);
     ?>
     <p><label for="gravedad_evento_fecha"><strong>Fecha</strong></label><br>
