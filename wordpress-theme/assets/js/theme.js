@@ -194,6 +194,18 @@ document.addEventListener('DOMContentLoaded',()=>{
     const toolbar=document.querySelector('.singles-toolbar');
     if(!layout) return;
 
+    function buildFilterUrl(form){
+      const params=new URLSearchParams();
+      for(const [key,value] of new FormData(form).entries()){
+        if(value==='') continue;
+        if(key==='post_type') continue;
+        params.append(key,value);
+      }
+      if(params.has('s')) params.set('post_type','product');
+      const qs=params.toString();
+      return form.action+(qs?(form.action.includes('?')?'&':'?')+qs:'');
+    }
+
     function swapTo(url,pushState){
       layout.style.opacity='.5';
       fetch(url,{headers:{'X-Requested-With':'XMLHttpRequest'}})
@@ -229,18 +241,10 @@ document.addEventListener('DOMContentLoaded',()=>{
       layoutEl.style.opacity='';
 
       layoutEl.querySelectorAll('.singles-filters form select').forEach(select=>{
-        select.addEventListener('change',()=>{
-          const form=select.form;
-          const url=form.action+(form.action.includes('?')?'&':'?')+new URLSearchParams(new FormData(form)).toString();
-          swapTo(url,true);
-        });
+        select.addEventListener('change',()=>{ swapTo(buildFilterUrl(select.form),true); });
       });
       layoutEl.querySelectorAll('.singles-filters form').forEach(form=>{
-        form.addEventListener('submit',(e)=>{
-          e.preventDefault();
-          const url=form.action+(form.action.includes('?')?'&':'?')+new URLSearchParams(new FormData(form)).toString();
-          swapTo(url,true);
-        });
+        form.addEventListener('submit',(e)=>{ e.preventDefault(); swapTo(buildFilterUrl(form),true); });
       });
       layoutEl.querySelectorAll('.active-filters a, .singles-filters .filter-heading a').forEach(link=>{
         link.addEventListener('click',(e)=>{ e.preventDefault(); swapTo(link.href,true); });
@@ -252,7 +256,11 @@ document.addEventListener('DOMContentLoaded',()=>{
       toolbarEl?.querySelectorAll('.singles-order select').forEach(select=>{
         select.addEventListener('change',()=>{
           const form=select.closest('form')||select.form;
-          const url=form?(form.action+(form.action.includes('?')?'&':'?')+new URLSearchParams(new FormData(form)).toString()):(window.location.pathname+'?orderby='+encodeURIComponent(select.value));
+          const currentParams=new URLSearchParams(window.location.search);
+          currentParams.set('orderby',select.value);
+          currentParams.delete('post_type');
+          const qs=currentParams.toString();
+          const url=form?buildFilterUrl(form):(window.location.pathname+(qs?'?'+qs:''));
           swapTo(url,true);
         });
       });
