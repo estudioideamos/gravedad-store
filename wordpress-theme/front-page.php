@@ -1,7 +1,7 @@
 <?php get_header();
 $uri = get_template_directory_uri();
 $games = array(
- array('magic','Magic','logo-magic.svg'), array('pokemon','Pokémon','logo-pokemon.svg'), array('one-piece','One Piece','logo-onepiece.jpg'),
+ array('magic','Magic','logo-magic.png'), array('pokemon','Pokémon','logo-pokemon.svg'), array('one-piece','One Piece','logo-onepiece.jpg'),
  array('digimon','Digimon','logo-digimon.png'), array('dragon-ball','Dragon Ball','logo-dragonball.png'), array('juegos-de-mesa','Juegos de mesa','')
 ); ?>
 <main>
