@@ -1,0 +1,26 @@
+.gravedad-panel-wrap{max-width:980px;margin:24px 20px 60px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.gravedad-panel-header{background:#111318;border-radius:16px;padding:32px 36px;margin-bottom:24px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.gravedad-panel-brand{display:flex;align-items:center;gap:22px}
+.gravedad-panel-brand img{width:110px;height:auto;flex-shrink:0}
+.gravedad-panel-brand h1{color:#fff;font-size:24px;margin:0 0 6px;font-weight:800}
+.gravedad-panel-brand p{color:#a9abb3;margin:0;font-size:14px;line-height:1.6}
+.gravedad-panel-notice{background:#e9f9ee;border:1px solid #8fd8a8;color:#1a7a3c;padding:14px 18px;border-radius:10px;margin-bottom:20px;font-weight:600}
+.gravedad-panel-quicklinks{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.gravedad-panel-quicklinks a{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e3e4e8;border-radius:12px;padding:16px 18px;color:#1d1e22;font-weight:700;font-size:13px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.gravedad-panel-quicklinks a:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.08);border-color:#f2a900;color:#1d1e22}
+.gravedad-panel-quicklinks a span{font-size:20px}
+.gravedad-panel-card{background:#fff;border:1px solid #e3e4e8;border-radius:14px;padding:26px 30px;margin-bottom:20px}
+.gravedad-panel-card__head{display:flex;align-items:flex-start;gap:16px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid #eee}
+.gravedad-panel-card__icon{font-size:26px;line-height:1;flex-shrink:0}
+.gravedad-panel-card__head h2{margin:0 0 4px;font-size:17px;color:#1d1e22}
+.gravedad-panel-card__head p{margin:0;font-size:13px;color:#767a82;line-height:1.6;max-width:640px}
+.gravedad-panel-card__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px}
+.gravedad-panel-field{display:flex;flex-direction:column;gap:6px}
+.gravedad-panel-field__label{font-size:12px;font-weight:700;color:#3a3b40;letter-spacing:.01em}
+.gravedad-panel-field input{border:1px solid #d6d8dd;border-radius:8px;padding:10px 12px;font-size:14px;color:#1d1e22;background:#fbfbfc;transition:border-color .15s ease,box-shadow .15s ease}
+.gravedad-panel-field input:focus{outline:none;border-color:#f2a900;box-shadow:0 0 0 3px rgba(242,169,0,.15);background:#fff}
+.gravedad-panel-field small{color:#8b8e94;font-size:11.5px;line-height:1.5}
+.gravedad-panel-save{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,#f0f0f1 30%);padding:18px 0 4px;text-align:right}
+.gravedad-panel-save .button-primary{background:#f2a900;border-color:#c98d00;color:#1d1e22;font-weight:800;font-size:14px;padding:8px 26px;height:auto;border-radius:8px;text-shadow:none;box-shadow:0 6px 16px rgba(242,169,0,.35)}
+.gravedad-panel-save .button-primary:hover{background:#ffb70f}
+@media(max-width:782px){.gravedad-panel-card__grid,.gravedad-panel-quicklinks{grid-template-columns:1fr}.gravedad-panel-brand{flex-direction:column;text-align:center}}

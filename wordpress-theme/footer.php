@@ -29,7 +29,7 @@
       <h3>¿Tenés dudas?</h3>
       <a class="footer-whatsapp-link" href="https://wa.me/<?php echo esc_attr(gravedad_option('gravedad_whatsapp','542320673750')); ?>" target="_blank" rel="noopener"><span>Hablar por WhatsApp</span><i aria-hidden="true">↗</i></a>
       <div class="footer-contact-meta">
-        <p><a href="mailto:info@gravedad.com.ar">info@gravedad.com.ar</a></p>
+        <p><a href="mailto:<?php echo esc_attr(gravedad_option('gravedad_email', 'info@gravedad.com.ar')); ?>"><?php echo esc_html(gravedad_option('gravedad_email', 'info@gravedad.com.ar')); ?></a></p>
         <p>Roque Sáenz Peña 5086, José C. Paz, Buenos Aires</p>
       </div>
     </div>

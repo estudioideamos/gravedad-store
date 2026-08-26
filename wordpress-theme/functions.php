@@ -1,7 +1,9 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.44.2');
+define('GRAVEDAD_VERSION', '5.45.0');
+
+require_once get_template_directory() . '/inc/admin-panel.php';
 
 function gravedad_icon($name) {
     $icons = array(
@@ -92,6 +94,7 @@ function gravedad_customize($wp_customize) {
         'gravedad_announcement' => array('Aviso superior', 'ENVÍOS A TODO EL PAÍS'),
         'gravedad_promo' => array('Promoción superior', '3 CUOTAS SIN INTERÉS EN PRODUCTOS SELECCIONADOS'),
         'gravedad_whatsapp' => array('WhatsApp', '542320673750'),
+        'gravedad_email' => array('Email de contacto', 'info@gravedad.com.ar'),
         'gravedad_instagram' => array('Instagram', 'https://www.instagram.com/gravedadstore'),
         'gravedad_event_date' => array('Fecha del próximo evento', '24 AGO'),
         'gravedad_event_location' => array('Lugar del próximo evento', 'Roque Sáenz Peña 5086, José C. Paz, Buenos Aires'),
