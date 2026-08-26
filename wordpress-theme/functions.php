@@ -1,9 +1,12 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.46.0');
+define('GRAVEDAD_VERSION', '5.47.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
+require_once get_template_directory() . '/inc/content-panels.php';
+
+add_filter('use_block_editor_for_post_type', '__return_false');
 
 function gravedad_icon($name) {
     $icons = array(
