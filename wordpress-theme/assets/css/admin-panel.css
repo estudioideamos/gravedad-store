@@ -20,6 +20,14 @@
 .gravedad-panel-field input{border:1px solid #d6d8dd;border-radius:8px;padding:10px 12px;font-size:14px;color:#1d1e22;background:#fbfbfc;transition:border-color .15s ease,box-shadow .15s ease}
 .gravedad-panel-field input:focus{outline:none;border-color:#f2a900;box-shadow:0 0 0 3px rgba(242,169,0,.15);background:#fff}
 .gravedad-panel-field small{color:#8b8e94;font-size:11.5px;line-height:1.5}
+.gravedad-panel-usd-status{background:#fbf7ec;border:1px solid #f0dfa6;border-radius:10px;padding:18px 20px;margin-bottom:22px}
+.gravedad-panel-usd-status__value{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.gravedad-panel-usd-status__value span{font-size:12px;font-weight:700;color:#8a6d00;letter-spacing:.01em}
+.gravedad-panel-usd-status__value strong{font-size:22px;color:#1d1e22}
+.gravedad-panel-usd-status__value em{font-style:normal;font-size:12px;color:#8b8e94}
+.gravedad-panel-usd-status ul{margin:0;padding-left:18px}
+.gravedad-panel-usd-status li{font-size:12.5px;color:#5c5f66;line-height:1.7}
+.gravedad-panel-usd-status a{color:#a97a00;font-weight:700}
 .gravedad-panel-save{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,#f0f0f1 30%);padding:18px 0 4px;text-align:right}
 .gravedad-panel-save .button-primary{background:#f2a900;border-color:#c98d00;color:#1d1e22;font-weight:800;font-size:14px;padding:8px 26px;height:auto;border-radius:8px;text-shadow:none;box-shadow:0 6px 16px rgba(242,169,0,.35)}
 .gravedad-panel-save .button-primary:hover{background:#ffb70f}

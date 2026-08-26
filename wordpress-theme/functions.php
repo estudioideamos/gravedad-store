@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.45.1');
+define('GRAVEDAD_VERSION', '5.46.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 

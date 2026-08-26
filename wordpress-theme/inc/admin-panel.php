@@ -102,6 +102,27 @@ function gravedad_admin_panel_save() {
 }
 add_action('admin_post_gravedad_panel_save', 'gravedad_admin_panel_save');
 
+function gravedad_admin_panel_usd_status() {
+    $manual = get_theme_mod('gravedad_usd_rate_manual', '');
+    $usando_manual = ($manual !== '' && is_numeric($manual) && (float) $manual > 0);
+    $rate = function_exists('gravedad_get_usd_rate') ? gravedad_get_usd_rate() : 0;
+    $updated = get_option('gravedad_usd_rate_auto_updated', '');
+    ?>
+    <div class="gravedad-panel-usd-status">
+      <div class="gravedad-panel-usd-status__value">
+        <span>Cotización que se está usando ahora</span>
+        <strong>$<?php echo esc_html(number_format($rate, 0, ',', '.')); ?></strong>
+        <em><?php echo $usando_manual ? '(cargada a mano, abajo)' : '(automática)'; ?></em>
+      </div>
+      <ul>
+        <li><b>Se actualiza:</b> sola, cada 1 hora<?php if ($updated) { echo ' — la última vez fue el ' . esc_html(date_i18n('d/m/Y \a \l\a\s H:i', strtotime($updated))) . ' hs'; } ?>.</li>
+        <li><b>De dónde sale el valor:</b> del dólar oficial en <a href="https://dolarapi.com" target="_blank" rel="noopener">dolarapi.com</a> (cotización de venta).</li>
+        <li><b>Si cargás un número en "Cotización manual" de abajo</b>, esa pisa a la automática hasta que la borres.</li>
+      </ul>
+    </div>
+    <?php
+}
+
 function gravedad_admin_panel_render() {
     if (!current_user_can('manage_options')) { return; }
     $sections = gravedad_admin_panel_sections();
@@ -122,19 +143,19 @@ function gravedad_admin_panel_render() {
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=product')); ?>"><span>🛒</span>Productos</a>
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=evento')); ?>"><span>🎟️</span>Eventos</a>
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>"><span>📄</span>Páginas</a>
-        <a href="<?php echo esc_url(admin_url('nav-menus.php')); ?>"><span>🧭</span>Menú de navegación</a>
       </div>
 
       <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="gravedad-panel-form">
         <input type="hidden" name="action" value="gravedad_panel_save">
         <?php wp_nonce_field('gravedad_panel_save', 'gravedad_panel_nonce'); ?>
 
-        <?php foreach ($sections as $section): ?>
+        <?php foreach ($sections as $section_key => $section): ?>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head">
             <span class="gravedad-panel-card__icon"><?php echo esc_html($section['icono']); ?></span>
             <div><h2><?php echo esc_html($section['titulo']); ?></h2><?php if (!empty($section['ayuda'])): ?><p><?php echo esc_html($section['ayuda']); ?></p><?php endif; ?></div>
           </div>
+          <?php if ($section_key === 'dolar') { gravedad_admin_panel_usd_status(); } ?>
           <div class="gravedad-panel-card__grid">
             <?php foreach ($section['campos'] as $key => $field): ?>
             <label class="gravedad-panel-field">

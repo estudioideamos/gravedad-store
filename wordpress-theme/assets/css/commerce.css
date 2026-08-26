@@ -128,6 +128,23 @@
 .faq-cta p{margin:0;font:700 15px var(--body);color:#fff}
 @media(max-width:600px){.faq-cta{flex-direction:column;align-items:flex-start}}
 .account-shell{max-width:none;padding:60px 3.5vw 90px}
+.editable-content{max-width:900px}
+.editable-content h2{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);margin:44px 0 20px;color:#fff}
+.editable-content h2:first-child{margin-top:0}
+.editable-content h3{font-family:var(--body);font-weight:800;font-size:16px;margin:28px 0 10px;color:#fff}
+.editable-content p{color:#a6a7ae;font-size:13px;line-height:1.8;margin:0 0 16px}
+.editable-content ul,.editable-content ol{color:#a6a7ae;font-size:13px;line-height:1.9;margin:0 0 16px;padding-left:20px}
+.editable-content li{margin-bottom:6px}
+.editable-content li b,.editable-content li strong,.editable-content p b,.editable-content p strong{color:#e6e6ea}
+.editable-content a{color:var(--acid);text-decoration:underline}
+.editable-content details{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:0 22px;margin-bottom:10px;transition:border-color .2s}
+.editable-content details[open]{border-color:var(--acid)}
+.editable-content summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;font:700 14px var(--body);color:#f0f0f2}
+.editable-content summary::-webkit-details-marker{display:none}
+.editable-content summary:after{content:'+';flex-shrink:0;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);color:var(--acid);font-size:16px;transition:transform .25s}
+.editable-content details[open] summary:after{transform:rotate(45deg);border-color:var(--acid)}
+.editable-content details>*:not(summary){color:#a6a7ae;font-size:13px;line-height:1.7}
+.editable-content details p:last-child{margin-bottom:20px}
 .account-shell .wp-block-woocommerce-checkout,.account-shell .wp-block-woocommerce-cart{padding:0!important;max-width:none!important;margin-left:0!important;margin-right:0!important}
 .account-shell .wc-block-components-sidebar-layout{padding-left:0!important;padding-right:0!important;padding-top:30px!important}
 .wc-block-components-order-summary-item__quantity{background:var(--acid)!important;color:#090a0c!important;font-weight:700}
