@@ -11,20 +11,22 @@ $faq_group_icons = array('g1' => 'tag', 'g2' => 'truck', 'g3' => 'refresh', 'g4'
     <div class="faq-columns">
       <?php foreach ($faq_def['groups'] as $gkey => $group):
         $label = gravedad_content_panel_opt('faq', $gkey . '_label', $group['label']);
+        $items_count = gravedad_content_panel_count('faq', $gkey . '_items', count($group['items']));
       ?>
       <section class="faq-group">
         <h2><?php echo gravedad_icon($faq_group_icons[$gkey]); ?><?php echo esc_html($label); ?></h2>
         <div class="faq-list">
-          <?php foreach ($group['items'] as $i => $item): $n = $i + 1;
-            $q = gravedad_content_panel_opt('faq', $gkey . '_q' . $n, $item['q']);
-            $a = gravedad_content_panel_opt('faq', $gkey . '_a' . $n, $item['a']);
+          <?php for ($n = 1; $n <= $items_count; $n++):
+            $default_item = isset($group['items'][$n - 1]) ? $group['items'][$n - 1] : array('q' => '', 'a' => '');
+            $q = gravedad_content_panel_opt('faq', $gkey . '_q' . $n, $default_item['q']);
+            $a = gravedad_content_panel_opt('faq', $gkey . '_a' . $n, $default_item['a']);
             if (!$q) { continue; }
           ?>
           <details class="faq-item">
             <summary><?php echo esc_html($q); ?><span class="faq-toggle">+</span></summary>
             <p><?php echo esc_html($a); ?></p>
           </details>
-          <?php endforeach; ?>
+          <?php endfor; ?>
         </div>
       </section>
       <?php endforeach; ?>

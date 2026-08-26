@@ -8,13 +8,16 @@ $cc_def = gravedad_content_panel_definitions()['como-comprar'];
   <?php gravedad_marquee(); ?>
   <div class="content-shell info-shell">
     <div class="info-steps">
-      <?php foreach ($cc_def['steps'] as $i => $step): $n = $i + 1;
-        $titulo = gravedad_content_panel_opt('como-comprar', 'paso' . $n . '_titulo', $step['titulo']);
-        $texto = gravedad_content_panel_opt('como-comprar', 'paso' . $n . '_texto', $step['texto']);
+      <?php
+        $steps_count = gravedad_content_panel_count('como-comprar', 'steps', count($cc_def['steps']));
+        for ($n = 1; $n <= $steps_count; $n++):
+        $default_step = isset($cc_def['steps'][$n - 1]) ? $cc_def['steps'][$n - 1] : array('titulo' => '', 'texto' => '');
+        $titulo = gravedad_content_panel_opt('como-comprar', 'paso' . $n . '_titulo', $default_step['titulo']);
+        $texto = gravedad_content_panel_opt('como-comprar', 'paso' . $n . '_texto', $default_step['texto']);
         if (!$titulo) { continue; }
       ?>
       <div class="info-step"><b><?php echo esc_html(sprintf('%02d', $n)); ?></b><h3><?php echo esc_html($titulo); ?></h3><p><?php echo esc_html($texto); ?></p></div>
-      <?php endforeach; ?>
+      <?php endfor; ?>
     </div>
     <div class="faq-cta">
       <p>¿Tenés dudas antes de comprar?</p>

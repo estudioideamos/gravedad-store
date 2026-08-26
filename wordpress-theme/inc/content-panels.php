@@ -96,6 +96,82 @@ function gravedad_content_panel_opt($key, $field, $default) {
     return get_option('gravedad_content_' . $key . '_' . $field, $default);
 }
 
+/**
+ * Cuántos ítems tiene hoy una colección (preguntas de un grupo, pasos, zonas,
+ * bloques, condiciones). Empieza en la cantidad original y crece cuando el
+ * admin usa "+ Agregar"; nunca baja de 1.
+ */
+function gravedad_content_panel_count($page, $collection, $default) {
+    $v = get_option('gravedad_content_' . $page . '_' . $collection . '_count', '');
+    return ($v !== '' && is_numeric($v)) ? max(1, (int) $v) : max(1, (int) $default);
+}
+
+function gravedad_content_faq_group_default_items($group) {
+    $def = gravedad_content_panel_definitions()['faq'];
+    return isset($def['groups'][$group]) ? count($def['groups'][$group]['items']) : 1;
+}
+
+function gravedad_content_panel_shift_down($page, $key_template, $from_index, $count) {
+    for ($i = $from_index; $i < $count; $i++) {
+        $from_opt = 'gravedad_content_' . $page . '_' . sprintf($key_template, $i + 1);
+        $to_opt = 'gravedad_content_' . $page . '_' . sprintf($key_template, $i);
+        update_option($to_opt, get_option($from_opt, ''));
+    }
+    delete_option('gravedad_content_' . $page . '_' . sprintf($key_template, $count));
+}
+
+function gravedad_content_panel_add_item($page, $spec) {
+    $parts = explode(':', $spec);
+    $collection = sanitize_key($parts[0]);
+    $group = isset($parts[1]) ? sanitize_key($parts[1]) : '';
+
+    if ($collection === 'faq_items' && $group) {
+        $count = gravedad_content_panel_count($page, $group . '_items', gravedad_content_faq_group_default_items($group));
+        update_option('gravedad_content_' . $page . '_' . $group . '_items_count', $count + 1);
+        return;
+    }
+
+    $definitions = gravedad_content_panel_definitions();
+    $default = isset($definitions[$page][$collection]) ? count($definitions[$page][$collection]) : 1;
+    $count = gravedad_content_panel_count($page, $collection, $default);
+    update_option('gravedad_content_' . $page . '_' . $collection . '_count', $count + 1);
+}
+
+function gravedad_content_panel_remove_item($page, $spec) {
+    $parts = explode(':', $spec);
+    $collection = sanitize_key($parts[0]);
+
+    if ($collection === 'faq_items') {
+        $group = isset($parts[1]) ? sanitize_key($parts[1]) : '';
+        $index = isset($parts[2]) ? (int) $parts[2] : 0;
+        if (!$group || $index < 1) { return; }
+        $count = gravedad_content_panel_count($page, $group . '_items', gravedad_content_faq_group_default_items($group));
+        if ($count <= 1) { return; }
+        gravedad_content_panel_shift_down($page, $group . '_q%d', $index, $count);
+        gravedad_content_panel_shift_down($page, $group . '_a%d', $index, $count);
+        update_option('gravedad_content_' . $page . '_' . $group . '_items_count', $count - 1);
+        return;
+    }
+
+    $index = isset($parts[1]) ? (int) $parts[1] : 0;
+    if ($index < 1) { return; }
+    $templates = array(
+        'steps' => array('paso%d_titulo', 'paso%d_texto'),
+        'zonas' => array('zona%d_nombre', 'zona%d_tiempo', 'zona%d_costo'),
+        'bloques' => array('bloque%d_titulo', 'bloque%d_texto'),
+        'condiciones' => array('cond%d_titulo', 'cond%d_texto'),
+    );
+    if (!isset($templates[$collection])) { return; }
+    $definitions = gravedad_content_panel_definitions();
+    $default = isset($definitions[$page][$collection]) ? count($definitions[$page][$collection]) : 1;
+    $count = gravedad_content_panel_count($page, $collection, $default);
+    if ($count <= 1) { return; }
+    foreach ($templates[$collection] as $tpl) {
+        gravedad_content_panel_shift_down($page, $tpl, $index, $count);
+    }
+    update_option('gravedad_content_' . $page . '_' . $collection . '_count', $count - 1);
+}
+
 function gravedad_content_panel_save() {
     if (!isset($_POST['gravedad_content_nonce']) || !wp_verify_nonce($_POST['gravedad_content_nonce'], 'gravedad_content_save')) { return; }
     if (!current_user_can('manage_options')) { return; }
@@ -107,6 +183,11 @@ function gravedad_content_panel_save() {
         $option_key = 'gravedad_content_' . $page_key . '_' . substr($post_key, 3);
         $value = sanitize_textarea_field(wp_unslash($raw_value));
         update_option($option_key, $value);
+    }
+    if (!empty($_POST['content_add_item'])) {
+        gravedad_content_panel_add_item($page_key, sanitize_text_field(wp_unslash($_POST['content_add_item'])));
+    } elseif (!empty($_POST['content_remove_item'])) {
+        gravedad_content_panel_remove_item($page_key, sanitize_text_field(wp_unslash($_POST['content_remove_item'])));
     }
     wp_safe_redirect(add_query_arg(array('page' => $definitions[$page_key]['slug'], 'guardado' => '1'), admin_url('admin.php')));
     exit;
@@ -145,7 +226,9 @@ function gravedad_content_panel_render($key, $def) {
         <input type="hidden" name="gravedad_content_page" value="<?php echo esc_attr($key); ?>">
         <?php wp_nonce_field('gravedad_content_save', 'gravedad_content_nonce'); ?>
 
-        <?php if ($key === 'faq'): foreach ($def['groups'] as $gkey => $group): ?>
+        <?php if ($key === 'faq'): foreach ($def['groups'] as $gkey => $group):
+          $items_count = gravedad_content_panel_count($key, $gkey . '_items', count($group['items']));
+        ?>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">💬</span>
             <div>
@@ -154,85 +237,129 @@ function gravedad_content_panel_render($key, $def) {
             </div>
           </div>
           <?php gravedad_content_field('Nombre del grupo', 'gc_' . $gkey . '_label', gravedad_content_panel_opt($key, $gkey . '_label', $group['label'])); ?>
-          <?php foreach ($group['items'] as $i => $item): $n = $i + 1; ?>
+          <?php for ($n = 1; $n <= $items_count; $n++):
+            $default_item = isset($group['items'][$n - 1]) ? $group['items'][$n - 1] : array('q' => '', 'a' => '');
+          ?>
           <div class="gravedad-panel-item">
             <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
             <div class="gravedad-panel-item__body">
-              <?php gravedad_content_field('Pregunta ' . $n, 'gc_' . $gkey . '_q' . $n, gravedad_content_panel_opt($key, $gkey . '_q' . $n, $item['q'])); ?>
-              <?php gravedad_content_field('Respuesta ' . $n, 'gc_' . $gkey . '_a' . $n, gravedad_content_panel_opt($key, $gkey . '_a' . $n, $item['a']), true); ?>
+              <?php gravedad_content_field('Pregunta ' . $n, 'gc_' . $gkey . '_q' . $n, gravedad_content_panel_opt($key, $gkey . '_q' . $n, $default_item['q'])); ?>
+              <?php gravedad_content_field('Respuesta ' . $n, 'gc_' . $gkey . '_a' . $n, gravedad_content_panel_opt($key, $gkey . '_a' . $n, $default_item['a']), true); ?>
             </div>
+            <?php if ($items_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="faq_items:<?php echo esc_attr($gkey); ?>:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar esta pregunta?');" title="Quitar pregunta">✕</button>
+            <?php endif; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="faq_items:<?php echo esc_attr($gkey); ?>" class="gravedad-panel-add" formnovalidate>+ Agregar pregunta</button>
         </section>
         <?php endforeach; endif; ?>
 
-        <?php if ($key === 'como-comprar'): ?>
+        <?php if ($key === 'como-comprar'):
+          $steps_count = gravedad_content_panel_count($key, 'steps', count($def['steps']));
+        ?>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🛒</span><div><h2>Pasos de compra</h2><p>Se muestran en orden en la página "Cómo comprar".</p></div></div>
-          <?php foreach ($def['steps'] as $i => $step): $n = $i + 1; ?>
+          <?php for ($n = 1; $n <= $steps_count; $n++):
+            $default_step = isset($def['steps'][$n - 1]) ? $def['steps'][$n - 1] : array('titulo' => '', 'texto' => '');
+          ?>
           <div class="gravedad-panel-item">
             <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
             <div class="gravedad-panel-item__body">
-              <?php gravedad_content_field('Título del paso ' . $n, 'gc_paso' . $n . '_titulo', gravedad_content_panel_opt($key, 'paso' . $n . '_titulo', $step['titulo'])); ?>
-              <?php gravedad_content_field('Texto del paso ' . $n, 'gc_paso' . $n . '_texto', gravedad_content_panel_opt($key, 'paso' . $n . '_texto', $step['texto']), true, 2); ?>
+              <?php gravedad_content_field('Título del paso ' . $n, 'gc_paso' . $n . '_titulo', gravedad_content_panel_opt($key, 'paso' . $n . '_titulo', $default_step['titulo'])); ?>
+              <?php gravedad_content_field('Texto del paso ' . $n, 'gc_paso' . $n . '_texto', gravedad_content_panel_opt($key, 'paso' . $n . '_texto', $default_step['texto']), true, 2); ?>
             </div>
+            <?php if ($steps_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="steps:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar este paso?');" title="Quitar paso">✕</button>
+            <?php endif; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="steps" class="gravedad-panel-add" formnovalidate>+ Agregar paso</button>
         </section>
         <?php endif; ?>
 
-        <?php if ($key === 'envios'): ?>
+        <?php if ($key === 'envios'):
+          $zonas_count = gravedad_content_panel_count($key, 'zonas', count($def['zonas']));
+          $bloques_count = gravedad_content_panel_count($key, 'bloques', count($def['bloques']));
+        ?>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🚚</span><div><h2>Zonas de envío</h2><p>Nombre, tiempo estimado y costo de cada zona.</p></div></div>
-          <?php foreach ($def['zonas'] as $i => $zona): $n = $i + 1; ?>
+          <?php for ($n = 1; $n <= $zonas_count; $n++):
+            $default_zona = isset($def['zonas'][$n - 1]) ? $def['zonas'][$n - 1] : array('nombre' => '', 'tiempo' => '', 'costo' => '');
+          ?>
           <div class="gravedad-panel-item">
             <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
             <div class="gravedad-panel-item__body gravedad-panel-item__body--trio">
-              <?php gravedad_content_field('Zona ' . $n, 'gc_zona' . $n . '_nombre', gravedad_content_panel_opt($key, 'zona' . $n . '_nombre', $zona['nombre'])); ?>
-              <?php gravedad_content_field('Tiempo', 'gc_zona' . $n . '_tiempo', gravedad_content_panel_opt($key, 'zona' . $n . '_tiempo', $zona['tiempo'])); ?>
-              <?php gravedad_content_field('Costo', 'gc_zona' . $n . '_costo', gravedad_content_panel_opt($key, 'zona' . $n . '_costo', $zona['costo'])); ?>
+              <?php gravedad_content_field('Zona ' . $n, 'gc_zona' . $n . '_nombre', gravedad_content_panel_opt($key, 'zona' . $n . '_nombre', $default_zona['nombre'])); ?>
+              <?php gravedad_content_field('Tiempo', 'gc_zona' . $n . '_tiempo', gravedad_content_panel_opt($key, 'zona' . $n . '_tiempo', $default_zona['tiempo'])); ?>
+              <?php gravedad_content_field('Costo', 'gc_zona' . $n . '_costo', gravedad_content_panel_opt($key, 'zona' . $n . '_costo', $default_zona['costo'])); ?>
             </div>
+            <?php if ($zonas_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="zonas:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar esta zona?');" title="Quitar zona">✕</button>
+            <?php endif; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="zonas" class="gravedad-panel-add" formnovalidate>+ Agregar zona</button>
         </section>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">📦</span><div><h2>Bloques informativos</h2><p>Textos adicionales debajo de las zonas de envío.</p></div></div>
-          <?php foreach ($def['bloques'] as $i => $bloque): $n = $i + 1; ?>
+          <?php for ($n = 1; $n <= $bloques_count; $n++):
+            $default_bloque = isset($def['bloques'][$n - 1]) ? $def['bloques'][$n - 1] : array('titulo' => '', 'texto' => '');
+          ?>
           <div class="gravedad-panel-item">
             <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
             <div class="gravedad-panel-item__body">
-              <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $bloque['titulo'])); ?>
-              <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $bloque['texto']), true, 3); ?>
+              <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $default_bloque['titulo'])); ?>
+              <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $default_bloque['texto']), true, 3); ?>
             </div>
+            <?php if ($bloques_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="bloques:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar este bloque?');" title="Quitar bloque">✕</button>
+            <?php endif; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="bloques" class="gravedad-panel-add" formnovalidate>+ Agregar bloque</button>
         </section>
         <?php endif; ?>
 
-        <?php if ($key === 'cambios'): ?>
+        <?php if ($key === 'cambios'):
+          $cond_count = gravedad_content_panel_count($key, 'condiciones', count($def['condiciones']));
+          $bloques_count = gravedad_content_panel_count($key, 'bloques', count($def['bloques']));
+        ?>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🔄</span><div><h2>Condiciones</h2><p>Se muestran como tarjetas breves en la página.</p></div></div>
-          <?php foreach ($def['condiciones'] as $i => $cond): $n = $i + 1; ?>
+          <?php for ($n = 1; $n <= $cond_count; $n++):
+            $default_cond = isset($def['condiciones'][$n - 1]) ? $def['condiciones'][$n - 1] : array('titulo' => '', 'texto' => '');
+          ?>
           <div class="gravedad-panel-item">
             <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
             <div class="gravedad-panel-item__body">
-              <?php gravedad_content_field('Título ' . $n, 'gc_cond' . $n . '_titulo', gravedad_content_panel_opt($key, 'cond' . $n . '_titulo', $cond['titulo'])); ?>
-              <?php gravedad_content_field('Texto ' . $n, 'gc_cond' . $n . '_texto', gravedad_content_panel_opt($key, 'cond' . $n . '_texto', $cond['texto']), true, 2); ?>
+              <?php gravedad_content_field('Título ' . $n, 'gc_cond' . $n . '_titulo', gravedad_content_panel_opt($key, 'cond' . $n . '_titulo', $default_cond['titulo'])); ?>
+              <?php gravedad_content_field('Texto ' . $n, 'gc_cond' . $n . '_texto', gravedad_content_panel_opt($key, 'cond' . $n . '_texto', $default_cond['texto']), true, 2); ?>
             </div>
+            <?php if ($cond_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="condiciones:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar esta condición?');" title="Quitar condición">✕</button>
+            <?php endif; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="condiciones" class="gravedad-panel-add" formnovalidate>+ Agregar condición</button>
         </section>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">📦</span><div><h2>Bloques informativos</h2><p>Textos adicionales debajo de las condiciones.</p></div></div>
-          <?php foreach ($def['bloques'] as $i => $bloque): $n = $i + 1; ?>
+          <?php for ($n = 1; $n <= $bloques_count; $n++):
+            $default_bloque = isset($def['bloques'][$n - 1]) ? $def['bloques'][$n - 1] : array('titulo' => '', 'texto' => '');
+          ?>
           <div class="gravedad-panel-item">
             <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
             <div class="gravedad-panel-item__body">
-              <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $bloque['titulo'])); ?>
-              <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $bloque['texto']), true, 3); ?>
+              <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $default_bloque['titulo'])); ?>
+              <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $default_bloque['texto']), true, 3); ?>
             </div>
+            <?php if ($bloques_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="bloques:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar este bloque?');" title="Quitar bloque">✕</button>
+            <?php endif; ?>
           </div>
-          <?php endforeach; ?>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="bloques" class="gravedad-panel-add" formnovalidate>+ Agregar bloque</button>
         </section>
         <?php endif; ?>
 
