@@ -113,11 +113,11 @@ function gravedad_content_panel_save() {
 }
 add_action('admin_post_gravedad_content_save', 'gravedad_content_panel_save');
 
-function gravedad_content_field($label, $name, $value, $textarea = false) {
-    echo '<label class="gravedad-panel-field">';
+function gravedad_content_field($label, $name, $value, $textarea = false, $rows = 3) {
+    echo '<label class="gravedad-panel-field gravedad-panel-field--full">';
     echo '<span class="gravedad-panel-field__label">' . esc_html($label) . '</span>';
     if ($textarea) {
-        echo '<textarea name="' . esc_attr($name) . '" rows="3">' . esc_textarea($value) . '</textarea>';
+        echo '<textarea name="' . esc_attr($name) . '" rows="' . esc_attr($rows) . '">' . esc_textarea($value) . '</textarea>';
     } else {
         echo '<input type="text" name="' . esc_attr($name) . '" value="' . esc_attr($value) . '">';
     }
@@ -148,67 +148,93 @@ function gravedad_content_panel_render($key, $def) {
         <?php if ($key === 'faq'): foreach ($def['groups'] as $gkey => $group): ?>
         <section class="gravedad-panel-card">
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">💬</span>
-            <div><?php gravedad_content_field('Nombre del grupo', 'gc_' . $gkey . '_label', gravedad_content_panel_opt($key, $gkey . '_label', $group['label'])); ?></div>
+            <div>
+              <h2>Grupo de preguntas</h2>
+              <p>El nombre del grupo aparece como categoría en la página de Preguntas frecuentes.</p>
+            </div>
           </div>
+          <?php gravedad_content_field('Nombre del grupo', 'gc_' . $gkey . '_label', gravedad_content_panel_opt($key, $gkey . '_label', $group['label'])); ?>
           <?php foreach ($group['items'] as $i => $item): $n = $i + 1; ?>
-          <div class="gravedad-panel-card__grid gravedad-panel-card__grid--pair">
-            <?php gravedad_content_field('Pregunta ' . $n, 'gc_' . $gkey . '_q' . $n, gravedad_content_panel_opt($key, $gkey . '_q' . $n, $item['q'])); ?>
-            <?php gravedad_content_field('Respuesta ' . $n, 'gc_' . $gkey . '_a' . $n, gravedad_content_panel_opt($key, $gkey . '_a' . $n, $item['a']), true); ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body">
+              <?php gravedad_content_field('Pregunta ' . $n, 'gc_' . $gkey . '_q' . $n, gravedad_content_panel_opt($key, $gkey . '_q' . $n, $item['q'])); ?>
+              <?php gravedad_content_field('Respuesta ' . $n, 'gc_' . $gkey . '_a' . $n, gravedad_content_panel_opt($key, $gkey . '_a' . $n, $item['a']), true); ?>
+            </div>
           </div>
           <?php endforeach; ?>
         </section>
         <?php endforeach; endif; ?>
 
-        <?php if ($key === 'como-comprar'): foreach ($def['steps'] as $i => $step): $n = $i + 1; ?>
+        <?php if ($key === 'como-comprar'): ?>
         <section class="gravedad-panel-card">
-          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon"><?php echo esc_html($n); ?>️⃣</span><div><h2>Paso <?php echo esc_html($n); ?></h2></div></div>
-          <div class="gravedad-panel-card__grid gravedad-panel-card__grid--pair">
-            <?php gravedad_content_field('Título', 'gc_paso' . $n . '_titulo', gravedad_content_panel_opt($key, 'paso' . $n . '_titulo', $step['titulo'])); ?>
-            <?php gravedad_content_field('Texto', 'gc_paso' . $n . '_texto', gravedad_content_panel_opt($key, 'paso' . $n . '_texto', $step['texto']), true); ?>
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🛒</span><div><h2>Pasos de compra</h2><p>Se muestran en orden en la página "Cómo comprar".</p></div></div>
+          <?php foreach ($def['steps'] as $i => $step): $n = $i + 1; ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body">
+              <?php gravedad_content_field('Título del paso ' . $n, 'gc_paso' . $n . '_titulo', gravedad_content_panel_opt($key, 'paso' . $n . '_titulo', $step['titulo'])); ?>
+              <?php gravedad_content_field('Texto del paso ' . $n, 'gc_paso' . $n . '_texto', gravedad_content_panel_opt($key, 'paso' . $n . '_texto', $step['texto']), true, 2); ?>
+            </div>
           </div>
+          <?php endforeach; ?>
         </section>
-        <?php endforeach; endif; ?>
+        <?php endif; ?>
 
         <?php if ($key === 'envios'): ?>
         <section class="gravedad-panel-card">
-          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🚚</span><div><h2>Zonas de envío</h2></div></div>
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🚚</span><div><h2>Zonas de envío</h2><p>Nombre, tiempo estimado y costo de cada zona.</p></div></div>
           <?php foreach ($def['zonas'] as $i => $zona): $n = $i + 1; ?>
-          <div class="gravedad-panel-card__grid gravedad-panel-card__grid--trio">
-            <?php gravedad_content_field('Zona ' . $n, 'gc_zona' . $n . '_nombre', gravedad_content_panel_opt($key, 'zona' . $n . '_nombre', $zona['nombre'])); ?>
-            <?php gravedad_content_field('Tiempo', 'gc_zona' . $n . '_tiempo', gravedad_content_panel_opt($key, 'zona' . $n . '_tiempo', $zona['tiempo'])); ?>
-            <?php gravedad_content_field('Costo', 'gc_zona' . $n . '_costo', gravedad_content_panel_opt($key, 'zona' . $n . '_costo', $zona['costo'])); ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body gravedad-panel-item__body--trio">
+              <?php gravedad_content_field('Zona ' . $n, 'gc_zona' . $n . '_nombre', gravedad_content_panel_opt($key, 'zona' . $n . '_nombre', $zona['nombre'])); ?>
+              <?php gravedad_content_field('Tiempo', 'gc_zona' . $n . '_tiempo', gravedad_content_panel_opt($key, 'zona' . $n . '_tiempo', $zona['tiempo'])); ?>
+              <?php gravedad_content_field('Costo', 'gc_zona' . $n . '_costo', gravedad_content_panel_opt($key, 'zona' . $n . '_costo', $zona['costo'])); ?>
+            </div>
           </div>
           <?php endforeach; ?>
         </section>
-        <?php foreach ($def['bloques'] as $i => $bloque): $n = $i + 1; ?>
         <section class="gravedad-panel-card">
-          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">📦</span><div><h2>Bloque informativo <?php echo esc_html($n); ?></h2></div></div>
-          <div class="gravedad-panel-card__grid gravedad-panel-card__grid--pair">
-            <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $bloque['titulo'])); ?>
-            <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $bloque['texto']), true); ?>
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">📦</span><div><h2>Bloques informativos</h2><p>Textos adicionales debajo de las zonas de envío.</p></div></div>
+          <?php foreach ($def['bloques'] as $i => $bloque): $n = $i + 1; ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body">
+              <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $bloque['titulo'])); ?>
+              <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $bloque['texto']), true, 3); ?>
+            </div>
           </div>
+          <?php endforeach; ?>
         </section>
-        <?php endforeach; endif; ?>
+        <?php endif; ?>
 
         <?php if ($key === 'cambios'): ?>
         <section class="gravedad-panel-card">
-          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🔄</span><div><h2>Condiciones</h2></div></div>
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🔄</span><div><h2>Condiciones</h2><p>Se muestran como tarjetas breves en la página.</p></div></div>
           <?php foreach ($def['condiciones'] as $i => $cond): $n = $i + 1; ?>
-          <div class="gravedad-panel-card__grid gravedad-panel-card__grid--pair">
-            <?php gravedad_content_field('Título ' . $n, 'gc_cond' . $n . '_titulo', gravedad_content_panel_opt($key, 'cond' . $n . '_titulo', $cond['titulo'])); ?>
-            <?php gravedad_content_field('Texto ' . $n, 'gc_cond' . $n . '_texto', gravedad_content_panel_opt($key, 'cond' . $n . '_texto', $cond['texto']), true); ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body">
+              <?php gravedad_content_field('Título ' . $n, 'gc_cond' . $n . '_titulo', gravedad_content_panel_opt($key, 'cond' . $n . '_titulo', $cond['titulo'])); ?>
+              <?php gravedad_content_field('Texto ' . $n, 'gc_cond' . $n . '_texto', gravedad_content_panel_opt($key, 'cond' . $n . '_texto', $cond['texto']), true, 2); ?>
+            </div>
           </div>
           <?php endforeach; ?>
         </section>
-        <?php foreach ($def['bloques'] as $i => $bloque): $n = $i + 1; ?>
         <section class="gravedad-panel-card">
-          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">📦</span><div><h2>Bloque informativo <?php echo esc_html($n); ?></h2></div></div>
-          <div class="gravedad-panel-card__grid gravedad-panel-card__grid--pair">
-            <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $bloque['titulo'])); ?>
-            <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $bloque['texto']), true); ?>
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">📦</span><div><h2>Bloques informativos</h2><p>Textos adicionales debajo de las condiciones.</p></div></div>
+          <?php foreach ($def['bloques'] as $i => $bloque): $n = $i + 1; ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body">
+              <?php gravedad_content_field('Título', 'gc_bloque' . $n . '_titulo', gravedad_content_panel_opt($key, 'bloque' . $n . '_titulo', $bloque['titulo'])); ?>
+              <?php gravedad_content_field('Texto (una línea por punto)', 'gc_bloque' . $n . '_texto', gravedad_content_panel_opt($key, 'bloque' . $n . '_texto', $bloque['texto']), true, 3); ?>
+            </div>
           </div>
+          <?php endforeach; ?>
         </section>
-        <?php endforeach; endif; ?>
+        <?php endif; ?>
 
         <div class="gravedad-panel-save"><button type="submit" class="button button-primary">Guardar cambios</button></div>
       </form>

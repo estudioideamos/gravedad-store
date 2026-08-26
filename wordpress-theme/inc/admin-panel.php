@@ -15,7 +15,8 @@ function gravedad_admin_panel_menu() {
 add_action('admin_menu', 'gravedad_admin_panel_menu');
 
 function gravedad_admin_panel_assets($hook) {
-    if ($hook !== 'toplevel_page_gravedad-panel') { return; }
+    $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+    if (strpos($page, 'gravedad') !== 0) { return; }
     wp_enqueue_style('gravedad-admin-panel', get_template_directory_uri() . '/assets/css/admin-panel.css', array(), GRAVEDAD_VERSION);
 }
 add_action('admin_enqueue_scripts', 'gravedad_admin_panel_assets');
