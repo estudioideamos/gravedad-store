@@ -27,10 +27,10 @@ function gravedad_admin_panel_sections() {
             'icono' => '📞',
             'ayuda' => 'Estos datos aparecen en el pie de página, en los botones de WhatsApp y en la ficha de eventos.',
             'campos' => array(
-                'gravedad_whatsapp' => array('label' => 'WhatsApp', 'ayuda' => 'Solo números, con código de país y área. Ej: 542320673750 (sin espacios ni signos +).', 'type' => 'text'),
-                'gravedad_email' => array('label' => 'Email de contacto', 'type' => 'email'),
-                'gravedad_instagram' => array('label' => 'Instagram', 'ayuda' => 'Pegá el link completo de tu perfil.', 'type' => 'url'),
-                'gravedad_event_location' => array('label' => 'Dirección de la tienda', 'type' => 'text'),
+                'gravedad_whatsapp' => array('label' => 'WhatsApp', 'ayuda' => 'Solo números, con código de país y área. Ej: 542320673750 (sin espacios ni signos +).', 'type' => 'text', 'default' => '542320673750'),
+                'gravedad_email' => array('label' => 'Email de contacto', 'type' => 'email', 'default' => 'info@gravedad.com.ar'),
+                'gravedad_instagram' => array('label' => 'Instagram', 'ayuda' => 'Pegá el link completo de tu perfil.', 'type' => 'url', 'default' => 'https://www.instagram.com/gravedadstore'),
+                'gravedad_event_location' => array('label' => 'Dirección de la tienda', 'type' => 'text', 'default' => 'Roque Sáenz Peña 5086, José C. Paz, Buenos Aires'),
             ),
         ),
         'avisos' => array(
@@ -38,8 +38,8 @@ function gravedad_admin_panel_sections() {
             'icono' => '📢',
             'ayuda' => 'El texto que se desliza en la franja de arriba de todas las páginas.',
             'campos' => array(
-                'gravedad_announcement' => array('label' => 'Aviso 1', 'type' => 'text'),
-                'gravedad_promo' => array('label' => 'Aviso 2 (promoción)', 'type' => 'text'),
+                'gravedad_announcement' => array('label' => 'Aviso 1', 'type' => 'text', 'default' => 'ENVÍOS A TODO EL PAÍS'),
+                'gravedad_promo' => array('label' => 'Aviso 2 (promoción)', 'type' => 'text', 'default' => '3 CUOTAS SIN INTERÉS EN PRODUCTOS SELECCIONADOS'),
             ),
         ),
         'evento' => array(
@@ -47,7 +47,7 @@ function gravedad_admin_panel_sections() {
             'icono' => '📅',
             'ayuda' => 'Se muestra en la sección de eventos de la portada. Para cargar el resto de los eventos, andá al menú "Eventos".',
             'campos' => array(
-                'gravedad_event_date' => array('label' => 'Fecha (texto corto)', 'ayuda' => 'Ej: 24 AGO', 'type' => 'text'),
+                'gravedad_event_date' => array('label' => 'Fecha (texto corto)', 'ayuda' => 'Ej: 24 AGO', 'type' => 'text', 'default' => '24 AGO'),
             ),
         ),
         'dolar' => array(
@@ -63,18 +63,22 @@ function gravedad_admin_panel_sections() {
             'icono' => '🏪',
             'ayuda' => 'Se usan en los comprobantes y en el punto de venta de WooCommerce.',
             'campos' => array(
-                'wc_pos_store_name' => array('label' => 'Nombre de la tienda', 'type' => 'text', 'wc' => 'woocommerce_pos_store_name'),
-                'wc_pos_store_address' => array('label' => 'Dirección', 'type' => 'text', 'wc' => 'woocommerce_pos_store_address'),
-                'wc_pos_store_phone' => array('label' => 'Teléfono', 'type' => 'text', 'wc' => 'woocommerce_pos_store_phone'),
-                'wc_pos_store_email' => array('label' => 'Email', 'type' => 'email', 'wc' => 'woocommerce_pos_store_email'),
+                'wc_pos_store_name' => array('label' => 'Nombre de la tienda', 'type' => 'text', 'wc' => 'woocommerce_pos_store_name', 'default' => 'Gravedad Store'),
+                'wc_pos_store_address' => array('label' => 'Dirección', 'type' => 'text', 'wc' => 'woocommerce_pos_store_address', 'default' => 'Roque Saenz Pena 5086, Jose C. Paz, Buenos Aires'),
+                'wc_pos_store_phone' => array('label' => 'Teléfono', 'type' => 'text', 'wc' => 'woocommerce_pos_store_phone', 'default' => '2320 673750'),
+                'wc_pos_store_email' => array('label' => 'Email', 'type' => 'email', 'wc' => 'woocommerce_pos_store_email', 'default' => 'info@gravedad.com.ar'),
             ),
         ),
     );
 }
 
 function gravedad_admin_panel_get_value($key, $field) {
-    if (!empty($field['wc'])) { return get_option($field['wc'], ''); }
-    return get_theme_mod($key, '');
+    $default = isset($field['default']) ? $field['default'] : '';
+    if (!empty($field['wc'])) {
+        $value = get_option($field['wc'], '');
+        return $value !== '' ? $value : $default;
+    }
+    return get_theme_mod($key, $default);
 }
 
 function gravedad_admin_panel_save() {
