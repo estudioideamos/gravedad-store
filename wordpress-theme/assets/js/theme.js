@@ -119,6 +119,62 @@ document.addEventListener('DOMContentLoaded',()=>{
     headerSearch.classList.remove('is-open');
     searchToggle&&(searchToggle.classList.remove('is-active'),searchToggle.setAttribute('aria-expanded','false'));
   });
+
+  const searchInput=headerSearch&&headerSearch.querySelector('input[type="search"]');
+  const searchSuggest=document.getElementById('search-suggest');
+  if(searchInput&&searchSuggest&&window.gravedadAjax){
+    let searchTimer=null, searchAbort=null, activeIndex=-1;
+    function closeSuggest(){
+      searchSuggest.hidden=true; searchSuggest.innerHTML='';
+      searchInput.setAttribute('aria-expanded','false');
+      activeIndex=-1;
+    }
+    function getItems(){ return Array.from(searchSuggest.querySelectorAll('.search-suggest-list a')); }
+    function setActive(i){
+      const items=getItems();
+      if(!items.length) return;
+      items.forEach(a=>a.classList.remove('is-active'));
+      activeIndex=(i+items.length)%items.length;
+      items[activeIndex].classList.add('is-active');
+      items[activeIndex].scrollIntoView({block:'nearest'});
+    }
+    function runSearch(term){
+      if(searchAbort) searchAbort.abort();
+      searchAbort=new AbortController();
+      const url=window.gravedadAjax.url+'?action=gravedad_search_products&term='+encodeURIComponent(term);
+      fetch(url,{signal:searchAbort.signal})
+        .then(r=>r.json())
+        .then(res=>{
+          if(!res||!res.success) return;
+          if(!res.data.html){ closeSuggest(); return; }
+          let html=res.data.html;
+          if(res.data.count>6){ html+='<a class="search-suggest-more" href="'+headerSearch.getAttribute('action')+'?s='+encodeURIComponent(term)+'&post_type=product">Ver los '+res.data.count+' resultados para "'+term+'" →</a>'; }
+          searchSuggest.innerHTML=html;
+          searchSuggest.hidden=false;
+          searchInput.setAttribute('aria-expanded','true');
+          activeIndex=-1;
+        })
+        .catch(()=>{});
+    }
+    searchInput.addEventListener('input',()=>{
+      const term=searchInput.value.trim();
+      clearTimeout(searchTimer);
+      if(term.length<2){ closeSuggest(); return; }
+      searchTimer=setTimeout(()=>runSearch(term),300);
+    });
+    searchInput.addEventListener('keydown',(e)=>{
+      const items=getItems();
+      if(e.key==='ArrowDown'&&items.length){ e.preventDefault(); setActive(activeIndex+1); }
+      else if(e.key==='ArrowUp'&&items.length){ e.preventDefault(); setActive(activeIndex-1); }
+      else if(e.key==='Enter'&&activeIndex>-1&&items[activeIndex]){ e.preventDefault(); window.location.href=items[activeIndex].href; }
+      else if(e.key==='Escape'){ closeSuggest(); }
+    });
+    searchInput.addEventListener('focus',()=>{ if(searchInput.value.trim().length>=2&&searchSuggest.innerHTML) searchSuggest.hidden=false; });
+    document.addEventListener('click',(e)=>{
+      if(searchSuggest.contains(e.target)||e.target===searchInput) return;
+      closeSuggest();
+    });
+  }
   const footerGlow=document.querySelector('[data-footer-glow]');
   if(footerGlow){
     footerGlow.addEventListener('pointermove',(e)=>{

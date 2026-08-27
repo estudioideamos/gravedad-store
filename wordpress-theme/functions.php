@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.49.0');
+define('GRAVEDAD_VERSION', '5.50.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -503,6 +503,43 @@ function gravedad_ajax_get_favorites() {
     gravedad_render_product_grid($query);
     $html = ob_get_clean();
     wp_send_json_success(array('html' => $html, 'count' => $count));
+}
+
+add_action('wp_ajax_gravedad_search_products', 'gravedad_ajax_search_products');
+add_action('wp_ajax_nopriv_gravedad_search_products', 'gravedad_ajax_search_products');
+function gravedad_ajax_search_products() {
+    $term = isset($_GET['term']) ? sanitize_text_field(wp_unslash($_GET['term'])) : '';
+    if (mb_strlen(trim($term)) < 2) { wp_send_json_success(array('html' => '', 'count' => 0)); }
+
+    $query = new WP_Query(array(
+        'post_type' => 'product',
+        'post_status' => 'publish',
+        's' => $term,
+        'posts_per_page' => 6,
+        'no_found_rows' => false,
+    ));
+    $count = $query->found_posts;
+
+    ob_start();
+    if ($query->have_posts()) {
+        echo '<ul class="search-suggest-list">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            $product = wc_get_product(get_the_ID());
+            if (!$product) { continue; }
+            echo '<li><a href="' . esc_url(get_permalink()) . '">';
+            echo '<span class="search-suggest-thumb">' . get_the_post_thumbnail(get_the_ID(), 'thumbnail') . '</span>';
+            echo '<span class="search-suggest-info"><span class="search-suggest-name">' . esc_html(get_the_title()) . '</span><span class="search-suggest-price">' . wp_kses_post($product->get_price_html()) . '</span></span>';
+            echo '</a></li>';
+        }
+        echo '</ul>';
+        wp_reset_postdata();
+    } else {
+        echo '<p class="search-suggest-empty">No encontramos productos para "' . esc_html($term) . '".</p>';
+    }
+    $html = ob_get_clean();
+
+    wp_send_json_success(array('html' => $html, 'count' => $count, 'term' => $term));
 }
 
 function gravedad_ensure_catalog_pages() {
