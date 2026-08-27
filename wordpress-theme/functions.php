@@ -1,10 +1,11 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.50.0');
+define('GRAVEDAD_VERSION', '5.51.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
+require_once get_template_directory() . '/inc/seo-security.php';
 
 add_filter('use_block_editor_for_post_type', '__return_false');
 

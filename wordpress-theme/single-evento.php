@@ -22,7 +22,7 @@ $dias_restantes = $ts ? ceil((strtotime(date('Y-m-d', $ts)) - strtotime(date('Y-
     <div class="evento-single-flyer-wrap">
       <?php if ($flyer): ?>
       <div class="evento-single-flyer">
-        <img src="<?php echo esc_url($flyer); ?>" alt="<?php the_title_attribute(); ?>">
+        <img src="<?php echo esc_url($flyer); ?>" alt="<?php the_title_attribute(); ?>" fetchpriority="high" decoding="async">
         <?php if ($ts): ?><span class="evento-single-badge"><b><?php echo esc_html(date('d', $ts)); ?></b><small><?php echo esc_html($meses_cortos[(int) date('n', $ts) - 1]); ?></small></span><?php endif; ?>
       </div>
       <?php endif; ?>
