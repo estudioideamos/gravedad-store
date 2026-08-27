@@ -1,0 +1,27 @@
+.mm-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.mm-column{min-width:0}
+.mm-column-title{margin:0 0 10px;font-size:13px;font-weight:800;color:#3a3b40}
+.mm-list{background:#fafafb;border:1px solid #ececef;border-radius:12px;padding:10px}
+.mm-list-games{background:none;border:none;padding:0}
+.mm-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e3e4e8;border-radius:8px;padding:8px 10px;margin-bottom:8px}
+.mm-row:last-of-type{margin-bottom:10px}
+.mm-row.is-dragging{opacity:.35}
+.mm-handle{flex-shrink:0;cursor:grab;color:#b7b9c0;font-size:14px;letter-spacing:-2px;user-select:none;padding:2px}
+.mm-handle:active{cursor:grabbing}
+.mm-select{flex:1;min-width:0;border:1px solid #d6d8dd;border-radius:7px;padding:8px 10px;font-size:13px;color:#1d1e22;background:#fbfbfc}
+.mm-select:focus{outline:none;border-color:#f2a900;box-shadow:0 0 0 3px rgba(242,169,0,.15)}
+.mm-row-remove{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px solid #e6d2d2;background:#fff;color:#b23b3b;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:background .15s ease,border-color .15s ease}
+.mm-row-remove:hover{background:#fdeeee;border-color:#e0a3a3}
+.mm-add{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:#fff;border:1.5px dashed #d6d8dd;border-radius:8px;padding:9px 14px;color:#8a6d00;font-weight:700;font-size:12.5px;cursor:pointer;transition:border-color .15s ease,color .15s ease,background .15s ease}
+.mm-add:hover{border-color:#f2a900;color:#a97a00;background:#fffaf0}
+.mm-games-wrap{display:flex;flex-direction:column;gap:14px}
+.mm-list-games .mm-game-row{margin-bottom:14px}
+.mm-game-row{background:#fafafb;border:1px solid #ececef;border-radius:12px;padding:16px}
+.mm-game-row.is-dragging{opacity:.35}
+.mm-game-row__head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.mm-game-row__head .mm-select{flex:1 1 220px}
+.mm-check{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#3a3b40;white-space:nowrap}
+.mm-check input{width:16px;height:16px;accent-color:#f2a900}
+.mm-game-row__head .mm-row-remove{width:auto;height:auto;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:700;gap:4px}
+.mm-game-row .mm-column-title{margin-top:2px}
+@media(max-width:900px){.mm-columns{grid-template-columns:1fr}}

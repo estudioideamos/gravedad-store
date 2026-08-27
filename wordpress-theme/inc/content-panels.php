@@ -253,7 +253,7 @@ function gravedad_content_panel_render($key, $def) {
           <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🧭</span>
             <div>
               <h2>Ítems principales</h2>
-              <p>TCG, Cartas sueltas, Juegos de mesa y Accesorios siguen mostrando sus desplegables conectados a la tienda real: acá solo cambiás el texto que se ve, no a dónde apuntan.</p>
+              <p>TCG, Cartas sueltas, Juegos de mesa y Accesorios siguen mostrando sus desplegables conectados a la tienda real: acá solo cambiás el texto que se ve. Para editar qué aparece adentro de cada desplegable, andá a <a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-mm')); ?>">Menús desplegables</a>.</p>
             </div>
           </div>
           <?php foreach ($def['fixed_items'] as $slug => $default_label): ?>

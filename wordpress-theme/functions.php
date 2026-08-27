@@ -1,10 +1,11 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.52.0');
+define('GRAVEDAD_VERSION', '5.53.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
+require_once get_template_directory() . '/inc/menu-editor.php';
 require_once get_template_directory() . '/inc/seo-security.php';
 
 add_filter('use_block_editor_for_post_type', '__return_false');
@@ -303,64 +304,62 @@ function gravedad_mega_promo($kicker, $title, $cta, $url, $image) {
 
 function gravedad_megamenu($key) {
     ob_start();
+    $game_icons = array(
+        'magic-the-gathering' => 'game-magic', 'pokemon' => 'game-pokemon', 'one-piece' => 'game-onepiece',
+        'digimon' => 'game-digimon', 'dragon-ball' => 'game-dragonball', 'yu-gi-oh' => 'game-yugioh',
+    );
     if ($key === 'tcg') {
-        $tipos_default = array('Sobres', 'Booster Box', 'Productos especiales');
-        $games = array(
-            array('Magic: The Gathering', 'magic', 'game-magic', array('Sobres', 'Booster Box', 'Collector Booster', 'Productos especiales'), true),
-            array('Pokémon', 'pokemon', 'game-pokemon', $tipos_default, true),
-            array('One Piece', 'one-piece', 'game-onepiece', $tipos_default, true),
-            array('Digimon', 'digimon', 'game-digimon', $tipos_default, true),
-            array('Dragon Ball', 'dragon-ball', 'game-dragonball', $tipos_default, true),
-            array('Yu-Gi-Oh!', 'yu-gi-oh', 'game-yugioh', array('Booster Pack', 'Structure Deck', 'Legendary Decks', 'Tins', 'Starter Decks', 'Otros'), false),
-        );
+        $games = gravedad_mm_get('tcg');
         echo '<div class="mega-menu"><div class="mega-columns mega-columns-6">';
         foreach ($games as $g) {
-            list($label, $slug, $icon, $tipos, $has_sueltas) = $g;
+            $slug = $g['juego'];
+            if (!$slug) { continue; }
+            $label = gravedad_mm_term_label('pa_juego', $slug);
+            $icon = isset($game_icons[$slug]) ? $game_icons[$slug] : 'hexagon';
             echo '<div class="mega-col"><h4>' . gravedad_icon($icon) . esc_html($label) . '</h4>';
-            if ($has_sueltas) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">Cartas sueltas</a>'; }
-            foreach ($tipos as $t) { echo '<a href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug, 'f_tipo_producto' => sanitize_title($t)))) . '">' . esc_html($t) . '</a>'; }
+            if (!empty($g['sueltas'])) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">Cartas sueltas</a>'; }
+            foreach ($g['tipos'] as $t) {
+                if (!$t) { continue; }
+                echo '<a href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug, 'f_tipo_producto' => $t))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-producto', $t)) . '</a>';
+            }
             echo '<a class="mega-view-all" href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug))) . '">Ver todo →</a></div>';
         }
         echo '</div>';
         gravedad_mega_promo('TRADING CARD GAMES', 'Sellado y singles', 'Ver todo TCG →', gravedad_shop_url('tcg'), 'hero-tcg.jpg');
         echo '</div>';
     } elseif ($key === 'cartas-sueltas') {
-        $games = array('Magic: The Gathering' => 'magic', 'Pokémon' => 'pokemon', 'One Piece' => 'one-piece', 'Digimon' => 'digimon', 'Dragon Ball' => 'dragon-ball', 'Otros' => 'otros');
-        $rarezas = array('Común', 'Infrecuente', 'Rara', 'Mítica', 'Promo', 'Especial');
-        $idiomas = array('Español', 'Inglés', 'Japonés', 'Portugués');
+        $cs = gravedad_mm_get('cartas-sueltas');
         echo '<div class="mega-menu"><div class="mega-columns mega-columns-3">';
         echo '<div class="mega-col"><h4>Elegir juego</h4>';
-        foreach ($games as $label => $slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">' . esc_html($label) . '</a>'; }
+        foreach ($cs['juego'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_juego', $slug)) . '</a>'; } }
         echo '</div><div class="mega-col"><h4>Por rareza</h4>';
-        foreach ($rarezas as $r) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_rareza' => sanitize_title($r)))) . '">' . esc_html($r) . '</a>'; }
+        foreach ($cs['rareza'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_rareza' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_rareza', $slug)) . '</a>'; } }
         echo '</div><div class="mega-col"><h4>Por idioma</h4>';
-        foreach ($idiomas as $i) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_idioma' => sanitize_title($i)))) . '">' . esc_html($i) . '</a>'; }
+        foreach ($cs['idioma'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_idioma' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_idioma', $slug)) . '</a>'; } }
         echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('cartas-sueltas')) . '">Ver todas →</a></div>';
         echo '</div>';
         gravedad_mega_promo('ENCONTRÁ ESA CARTA', 'Cartas sueltas', 'Explorar →', gravedad_shop_url('cartas-sueltas'), 'hero-cartas-sueltas.jpg');
         echo '</div>';
     } elseif ($key === 'juegos-de-mesa') {
-        $editoriales = array('Devir' => 'devir', 'Buró' => 'buro', 'Popullar' => 'popullar', 'Otras editoriales' => 'otras-editoriales');
-        $tipos = array('Familiares', 'Party Games', 'Estrategia', 'Cooperativos', 'Para 2 jugadores', 'Infantiles', 'Juegos de cartas', 'Rol / Aventura');
+        $jm = gravedad_mm_get('juegos-de-mesa');
         echo '<div class="mega-menu"><div class="mega-columns mega-columns-3">';
         echo '<div class="mega-col"><h4>Por editorial</h4>';
-        foreach ($editoriales as $label => $slug) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_editorial' => $slug))) . '">' . esc_html($label) . '</a>'; }
+        foreach ($jm['editorial'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_editorial' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_editorial', $slug)) . '</a>'; } }
         echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('juegos-de-mesa')) . '">Ver todos →</a></div>';
         echo '<div class="mega-col mega-col-wide"><h4>Por tipo de juego</h4><div class="mega-col-grid">';
-        foreach ($tipos as $t) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_tipo_juego' => sanitize_title($t)))) . '">' . esc_html($t) . '</a>'; }
+        foreach ($jm['tipo-juego'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_tipo_juego' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-juego', $slug)) . '</a>'; } }
         echo '</div></div>';
         echo '</div>';
         gravedad_mega_promo('PARA COMPARTIR LA MESA', 'Juegos de mesa', 'Explorar →', gravedad_shop_url('juegos-de-mesa'), 'hero-juegos-de-mesa.jpg');
         echo '</div>';
     } elseif ($key === 'accesorios') {
-        $tipos = array('Folios / Sleeves' => 'folios-sleeves', 'Deck Boxes' => 'deck-boxes', 'Carpetas' => 'carpetas', 'Playmats' => 'playmats', 'Dados y Contadores' => 'dados-y-contadores', 'Almacenamiento' => 'almacenamiento');
-        $marcas = array('Dragon Shield', 'Ultra Pro', 'Ultimate Guard', 'KMC');
+        $ac = gravedad_mm_get('accesorios');
         echo '<div class="mega-menu"><div class="mega-columns mega-columns-2">';
         echo '<div class="mega-col"><h4>Por tipo</h4>';
-        foreach ($tipos as $label => $slug) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_tipo_accesorio' => $slug))) . '">' . esc_html($label) . '</a>'; }
+        foreach ($ac['tipo-accesorio'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_tipo_accesorio' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-accesorio', $slug)) . '</a>'; } }
         echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('accesorios')) . '">Ver todos →</a></div>';
         echo '<div class="mega-col"><h4>Por marca</h4>';
-        foreach ($marcas as $m) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_marca' => sanitize_title($m)))) . '">' . esc_html($m) . '</a>'; }
+        foreach ($ac['marca'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_marca' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_marca', $slug)) . '</a>'; } }
         echo '</div>';
         echo '</div>';
         gravedad_mega_promo('CUIDÁ TU COLECCIÓN', 'Accesorios', 'Explorar →', gravedad_shop_url('accesorios'), 'hero-accesorios.jpg');

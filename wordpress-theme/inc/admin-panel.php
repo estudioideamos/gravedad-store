@@ -144,6 +144,7 @@ function gravedad_admin_panel_render() {
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=product')); ?>"><span>🛒</span>Productos</a>
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=evento')); ?>"><span>🎟️</span>Eventos</a>
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>"><span>📄</span>Páginas</a>
+        <a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-mm')); ?>"><span>🧭</span>Menús desplegables</a>
       </div>
 
       <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="gravedad-panel-form">
