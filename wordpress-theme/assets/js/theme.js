@@ -67,7 +67,7 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
     const favGrid=document.querySelector('[data-favorites-grid]');
     if(!favGrid) return;
     const ids=getFavorites();
-    if(!ids.length){ favGrid.className='favorites-empty'; favGrid.innerHTML='<p>Todavía no agregaste productos a favoritos.</p><a class="button primary" href="'+(window.location.origin)+'/gravedad/">Explorar la tienda →</a>'; return; }
+    if(!ids.length){ favGrid.className='favorites-empty'; var shopUrl=(window.gravedadAjax&&window.gravedadAjax.shopUrl)?window.gravedadAjax.shopUrl:window.location.origin+'/'; favGrid.innerHTML='<p>Todavía no agregaste productos a favoritos.</p><a class="button primary" href="'+shopUrl+'">Explorar la tienda →</a>'; return; }
     if(!window.gravedadAjax){ favGrid.innerHTML='<p>No se pudieron cargar los favoritos.</p>'; return; }
     const formData=new FormData();
     formData.append('action','gravedad_get_favorites');

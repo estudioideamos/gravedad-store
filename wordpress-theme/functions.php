@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.54.1');
+define('GRAVEDAD_VERSION', '5.55.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -70,7 +70,7 @@ function gravedad_assets() {
     wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);
     wp_enqueue_script('gravedad-theme', get_template_directory_uri() . '/assets/js/theme.js', array(), GRAVEDAD_VERSION, true);
-    wp_localize_script('gravedad-theme', 'gravedadAjax', array('url' => admin_url('admin-ajax.php')));
+    wp_localize_script('gravedad-theme', 'gravedadAjax', array('url' => admin_url('admin-ajax.php'), 'shopUrl' => gravedad_shop_url()));
 }
 add_action('wp_enqueue_scripts', 'gravedad_assets');
 
