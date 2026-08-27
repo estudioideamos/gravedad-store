@@ -2,7 +2,8 @@
 $uri = get_template_directory_uri();
 $games = array(
  array('magic','Magic','logo-magic.png'), array('pokemon','Pokémon','logo-pokemon.svg'), array('one-piece','One Piece','logo-onepiece.jpg'),
- array('digimon','Digimon','logo-digimon.png'), array('dragon-ball','Dragon Ball','logo-dragonball.png'), array('juegos-de-mesa','Juegos de mesa','')
+ array('digimon','Digimon','logo-digimon.png'), array('dragon-ball','Dragon Ball','logo-dragonball.png'), array('yu-gi-oh','Yu-Gi-Oh!','logo-yugioh.png'),
+ array('juegos-de-mesa','Juegos de mesa','')
 ); ?>
 <main>
 <section class="hero" style="--hero:url('<?php echo esc_url($uri.'/assets/img/hero-gravedad.jpg'); ?>')"><video class="hero-video" autoplay muted loop playsinline poster="<?php echo esc_url($uri.'/assets/img/hero-gravedad.jpg'); ?>"><source src="<?php echo esc_url($uri.'/assets/img/video/hero-loop.mp4'); ?>" type="video/mp4"></video><div class="hero-video-overlay"></div><div class="hero-grid"></div><div class="hero-copy"><span class="eyebrow"><i></i> TODO TU UNIVERSO TCG</span><h1>Entrá en<br><em>otra dimensión.</em></h1><p>Cartas, juegos y accesorios para quienes no vienen solamente a jugar.</p><div><a class="button primary" href="<?php echo esc_url(gravedad_shop_url('novedades')); ?>">Explorar novedades →</a><a class="button ghost" href="<?php echo esc_url(gravedad_shop_url('cartas-sueltas')); ?>">Ver cartas sueltas</a></div></div><span class="hero-scroll">DESLIZÁ PARA EXPLORAR</span></section>
