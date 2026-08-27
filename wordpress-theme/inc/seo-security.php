@@ -207,11 +207,19 @@ add_filter('the_generator', '__return_empty_string');
 
 // XML-RPC no se usa en este sitio (sin apps móviles ni publicación remota)
 // y es un vector clásico de fuerza bruta / amplificación DDoS (pingback).
+// El filtro xmlrpc_enabled solo bloquea los métodos que requieren login,
+// así que además cortamos cualquier request a xmlrpc.php directamente.
 add_filter('xmlrpc_enabled', '__return_false');
 add_filter('wp_headers', function ($headers) {
     unset($headers['X-Pingback']);
     return $headers;
 });
+add_action('init', function () {
+    if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+        status_header(403);
+        exit('XML-RPC deshabilitado.');
+    }
+}, 1);
 
 // No exponer el listado de usuarios (nombres de usuario reales) por la
 // REST API a visitantes sin sesión: es la primera pista que usa un
