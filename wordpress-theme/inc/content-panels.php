@@ -10,6 +10,25 @@ defined('ABSPATH') || exit;
 
 function gravedad_content_panel_definitions() {
     return array(
+        'menu' => array(
+            'slug' => 'gravedad-content-menu',
+            'menu_title' => 'Menú',
+            'page_title' => 'Menú de navegación',
+            'ayuda' => 'Textos y links de la barra de navegación principal.',
+            'fixed_items' => array(
+                'inicio' => 'Inicio',
+                'tcg' => 'TCG',
+                'cartas-sueltas' => 'Cartas sueltas',
+                'juegos-de-mesa' => 'Juegos de mesa',
+                'accesorios' => 'Accesorios',
+            ),
+            'items' => array(
+                array('label' => 'Preventas', 'url' => gravedad_shop_url('preventas')),
+                array('label' => 'Novedades', 'url' => gravedad_shop_url('novedades')),
+                array('label' => 'Ofertas', 'url' => gravedad_shop_url('ofertas')),
+                array('label' => 'Eventos', 'url' => home_url('/eventos/')),
+            ),
+        ),
         'faq' => array(
             'slug' => 'gravedad-content-faq',
             'menu_title' => 'Preguntas frecuentes',
@@ -160,6 +179,7 @@ function gravedad_content_panel_remove_item($page, $spec) {
         'zonas' => array('zona%d_nombre', 'zona%d_tiempo', 'zona%d_costo'),
         'bloques' => array('bloque%d_titulo', 'bloque%d_texto'),
         'condiciones' => array('cond%d_titulo', 'cond%d_texto'),
+        'items' => array('item%d_label', 'item%d_url'),
     );
     if (!isset($templates[$collection])) { return; }
     $definitions = gravedad_content_panel_definitions();
@@ -180,8 +200,10 @@ function gravedad_content_panel_save() {
     if (!isset($definitions[$page_key])) { return; }
     foreach ($_POST as $post_key => $raw_value) {
         if (strpos($post_key, 'gc_') !== 0) { continue; }
-        $option_key = 'gravedad_content_' . $page_key . '_' . substr($post_key, 3);
-        $value = sanitize_textarea_field(wp_unslash($raw_value));
+        $field_name = substr($post_key, 3);
+        $option_key = 'gravedad_content_' . $page_key . '_' . $field_name;
+        $raw = wp_unslash($raw_value);
+        $value = (substr($field_name, -4) === '_url') ? esc_url_raw($raw) : sanitize_textarea_field($raw);
         update_option($option_key, $value);
     }
     if (!empty($_POST['content_add_item'])) {
@@ -225,6 +247,40 @@ function gravedad_content_panel_render($key, $def) {
         <input type="hidden" name="action" value="gravedad_content_save">
         <input type="hidden" name="gravedad_content_page" value="<?php echo esc_attr($key); ?>">
         <?php wp_nonce_field('gravedad_content_save', 'gravedad_content_nonce'); ?>
+
+        <?php if ($key === 'menu'): ?>
+        <section class="gravedad-panel-card">
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">🧭</span>
+            <div>
+              <h2>Ítems principales</h2>
+              <p>TCG, Cartas sueltas, Juegos de mesa y Accesorios siguen mostrando sus desplegables conectados a la tienda real: acá solo cambiás el texto que se ve, no a dónde apuntan.</p>
+            </div>
+          </div>
+          <?php foreach ($def['fixed_items'] as $slug => $default_label): ?>
+          <?php gravedad_content_field('Texto: "' . $default_label . '"', 'gc_label_' . $slug, gravedad_content_panel_opt($key, 'label_' . $slug, $default_label)); ?>
+          <?php endforeach; ?>
+        </section>
+        <section class="gravedad-panel-card">
+          <div class="gravedad-panel-card__head"><span class="gravedad-panel-card__icon">➕</span><div><h2>Otros ítems del menú</h2><p>Links simples al final de la barra, como "Eventos". Podés agregar, quitar o editar el texto y el link de cada uno.</p></div></div>
+          <?php
+            $items_count = gravedad_content_panel_count($key, 'items', count($def['items']));
+            for ($n = 1; $n <= $items_count; $n++):
+            $default_item = isset($def['items'][$n - 1]) ? $def['items'][$n - 1] : array('label' => '', 'url' => '');
+          ?>
+          <div class="gravedad-panel-item">
+            <span class="gravedad-panel-item__badge"><?php echo esc_html($n); ?></span>
+            <div class="gravedad-panel-item__body">
+              <?php gravedad_content_field('Texto del ítem ' . $n, 'gc_item' . $n . '_label', gravedad_content_panel_opt($key, 'item' . $n . '_label', $default_item['label'])); ?>
+              <?php gravedad_content_field('Link (ej: /eventos/)', 'gc_item' . $n . '_url', gravedad_content_panel_opt($key, 'item' . $n . '_url', $default_item['url'])); ?>
+            </div>
+            <?php if ($items_count > 1): ?>
+            <button type="submit" name="content_remove_item" value="items:<?php echo esc_attr($n); ?>" class="gravedad-panel-item__remove" formnovalidate onclick="return confirm('¿Quitar este ítem del menú?');" title="Quitar ítem">✕</button>
+            <?php endif; ?>
+          </div>
+          <?php endfor; ?>
+          <button type="submit" name="content_add_item" value="items" class="gravedad-panel-add" formnovalidate>+ Agregar ítem al menú</button>
+        </section>
+        <?php endif; ?>
 
         <?php if ($key === 'faq'): foreach ($def['groups'] as $gkey => $group):
           $items_count = gravedad_content_panel_count($key, $gkey . '_items', count($group['items']));

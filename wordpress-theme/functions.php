@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.51.1');
+define('GRAVEDAD_VERSION', '5.52.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -370,16 +370,25 @@ function gravedad_megamenu($key) {
 }
 
 function gravedad_default_menu() {
+    $menu_def = gravedad_content_panel_definitions()['menu'];
     echo '<ul>';
-    echo '<li><a href="' . esc_url(home_url('/')) . '">Inicio</a></li>';
-    echo '<li class="has-mega has-mega-tcg"><a href="' . esc_url(gravedad_shop_url('tcg')) . '">TCG</a>' . gravedad_megamenu('tcg') . '</li>';
-    echo '<li class="has-mega"><a href="' . esc_url(gravedad_shop_url('cartas-sueltas')) . '">Cartas sueltas</a>' . gravedad_megamenu('cartas-sueltas') . '</li>';
-    echo '<li class="has-mega"><a href="' . esc_url(gravedad_shop_url('juegos-de-mesa')) . '">Juegos de mesa</a>' . gravedad_megamenu('juegos-de-mesa') . '</li>';
-    echo '<li class="has-mega"><a href="' . esc_url(gravedad_shop_url('accesorios')) . '">Accesorios</a>' . gravedad_megamenu('accesorios') . '</li>';
-    echo '<li><a href="' . esc_url(gravedad_shop_url('preventas')) . '">Preventas</a></li>';
-    echo '<li><a href="' . esc_url(gravedad_shop_url('novedades')) . '">Novedades</a></li>';
-    echo '<li><a href="' . esc_url(gravedad_shop_url('ofertas')) . '">Ofertas</a></li>';
-    echo '<li><a href="' . esc_url(home_url('/eventos/')) . '">Eventos</a></li>';
+    foreach ($menu_def['fixed_items'] as $slug => $default_label) {
+        $label = gravedad_content_panel_opt('menu', 'label_' . $slug, $default_label);
+        if ($slug === 'inicio') {
+            echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html($label) . '</a></li>';
+            continue;
+        }
+        $mega_class = $slug === 'tcg' ? ' has-mega-tcg' : '';
+        echo '<li class="has-mega' . $mega_class . '"><a href="' . esc_url(gravedad_shop_url($slug)) . '">' . esc_html($label) . '</a>' . gravedad_megamenu($slug) . '</li>';
+    }
+    $items_count = gravedad_content_panel_count('menu', 'items', count($menu_def['items']));
+    for ($n = 1; $n <= $items_count; $n++) {
+        $default_item = isset($menu_def['items'][$n - 1]) ? $menu_def['items'][$n - 1] : array('label' => '', 'url' => '');
+        $label = gravedad_content_panel_opt('menu', 'item' . $n . '_label', $default_item['label']);
+        $url = gravedad_content_panel_opt('menu', 'item' . $n . '_url', $default_item['url']);
+        if (!$label || !$url) { continue; }
+        echo '<li><a href="' . esc_url($url) . '">' . esc_html($label) . '</a></li>';
+    }
     echo '</ul>';
 }
 
