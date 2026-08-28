@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.55.0');
+define('GRAVEDAD_VERSION', '5.56.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -246,6 +246,7 @@ function gravedad_render_gravity_product($product, $filter_dims = array()) {
     }
     echo '<article class="gravity-product"' . $data_attrs . '><a class="product-image" href="' . esc_url($permalink) . '">';
     echo $product->is_on_sale() ? '<span>OFERTA</span>' : '<span class="is-new">NUEVO</span>';
+    echo gravedad_foil_badge_html($product->get_id());
     echo $product->get_image('woocommerce_thumbnail');
     echo '</a>' . gravedad_fav_button($product->get_id()) . '<div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
 }
@@ -500,6 +501,35 @@ add_action('woocommerce_single_product_summary', function () {
     global $product;
     if ($product) { echo gravedad_fav_button($product->get_id()); }
 }, 31);
+
+// Cartel "FOIL" (o Holo / Reverse Holo) para diferenciar de un vistazo las
+// versiones brillantes de una carta de las normales, en cualquier lugar
+// donde se muestre el producto: grilla de tienda, carruseles y ficha.
+function gravedad_product_foil_label($product_id) {
+    $terms = get_the_terms($product_id, 'pa_acabado');
+    if (!$terms || is_wp_error($terms)) { return ''; }
+    foreach ($terms as $term) {
+        if ($term->slug === 'no-foil') { continue; }
+        return $term->name;
+    }
+    return '';
+}
+
+function gravedad_foil_badge_html($product_id, $class = 'foil-badge') {
+    $label = gravedad_product_foil_label($product_id);
+    if (!$label) { return ''; }
+    return '<span class="' . esc_attr($class) . '">✦ ' . esc_html(mb_strtoupper($label, 'UTF-8')) . '</span>';
+}
+
+add_action('woocommerce_before_shop_loop_item_title', function () {
+    global $product;
+    if ($product) { echo gravedad_foil_badge_html($product->get_id()); }
+}, 11);
+
+add_action('woocommerce_single_product_summary', function () {
+    global $product;
+    if ($product) { echo gravedad_foil_badge_html($product->get_id(), 'foil-badge foil-badge--inline'); }
+}, 4);
 
 add_action('wp_ajax_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
 add_action('wp_ajax_nopriv_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
