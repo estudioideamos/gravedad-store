@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.61.0');
+define('GRAVEDAD_VERSION', '5.62.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -82,6 +82,15 @@ function gravedad_uncropped_thumbnails($size) {
 }
 add_filter('woocommerce_get_image_size_thumbnail', 'gravedad_uncropped_thumbnails');
 add_filter('woocommerce_get_image_size_gallery_thumbnail', 'gravedad_uncropped_thumbnails');
+
+// El plugin de Correo Argentino trae algunos textos sin traducir al español.
+// Se traducen acá en vez de tocar el código del plugin.
+add_filter('gettext', function ($translated, $text, $domain) {
+    if (strpos($text, 'To get the shipping cost by Correo Argentino') !== false) {
+        return 'Para calcular el costo de envío con Correo Argentino, completá los datos de tu dirección';
+    }
+    return $translated;
+}, 10, 3);
 
 // El campo "city" de WooCommerce se traduce por defecto como "Población",
 // que no es como se le dice en Argentina. Además: Localidad y Código postal
