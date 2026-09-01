@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.59.0');
+define('GRAVEDAD_VERSION', '5.60.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -84,9 +84,17 @@ add_filter('woocommerce_get_image_size_thumbnail', 'gravedad_uncropped_thumbnail
 add_filter('woocommerce_get_image_size_gallery_thumbnail', 'gravedad_uncropped_thumbnails');
 
 // El campo "city" de WooCommerce se traduce por defecto como "Población",
-// que no es como se le dice en Argentina.
+// que no es como se le dice en Argentina. Además: Localidad y Código postal
+// van en la misma fila (son cortos) y Región/Provincia queda ancho completo
+// porque hay valores largos como "Ciudad Autónoma de Buenos Aires".
 add_filter('woocommerce_get_country_locale', function ($locale) {
     $locale['AR']['city']['label'] = 'Localidad';
+    $locale['AR']['city']['class'] = array('form-row-first');
+    $locale['AR']['city']['priority'] = 70;
+    $locale['AR']['postcode']['class'] = array('form-row-last');
+    $locale['AR']['postcode']['priority'] = 80;
+    $locale['AR']['state']['class'] = array('form-row-wide');
+    $locale['AR']['state']['priority'] = 90;
     return $locale;
 });
 
