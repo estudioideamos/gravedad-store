@@ -5,7 +5,7 @@
 .gravedad-panel-brand h1{color:#fff;font-size:24px;margin:0 0 6px;font-weight:800}
 .gravedad-panel-brand p{color:#a9abb3;margin:0;font-size:14px;line-height:1.6}
 .gravedad-panel-notice{background:#e9f9ee;border:1px solid #8fd8a8;color:#1a7a3c;padding:14px 18px;border-radius:10px;margin-bottom:20px;font-weight:600}
-.gravedad-panel-quicklinks{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.gravedad-panel-quicklinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
 .gravedad-panel-quicklinks a{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e3e4e8;border-radius:12px;padding:16px 18px;color:#1d1e22;font-weight:700;font-size:13px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
 .gravedad-panel-quicklinks a:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.08);border-color:#f2a900;color:#1d1e22}
 .gravedad-panel-quicklinks a span{font-size:20px}

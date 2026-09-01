@@ -57,7 +57,19 @@ function gravedad_seo_get_canonical() {
     return home_url(add_query_arg(array(), $wp->request) . '/');
 }
 
+function gravedad_seo_is_noindex_page() {
+    if (function_exists('is_cart') && is_cart()) { return true; }
+    if (function_exists('is_checkout') && is_checkout()) { return true; }
+    if (function_exists('is_account_page') && is_account_page()) { return true; }
+    if (is_search()) { return true; }
+    return false;
+}
+
 function gravedad_seo_head() {
+    if (gravedad_seo_is_noindex_page()) {
+        echo "\n" . '<meta name="robots" content="noindex, follow">' . "\n";
+        return;
+    }
     $description = gravedad_seo_get_description();
     $canonical = gravedad_seo_get_canonical();
     $image = gravedad_seo_get_image();

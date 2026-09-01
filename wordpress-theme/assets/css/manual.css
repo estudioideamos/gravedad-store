@@ -1,0 +1,13 @@
+.gravedad-manual-toc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;background:#fff;border:1px solid #e3e4e8;border-radius:12px;padding:18px 20px;margin-bottom:24px}
+.gravedad-manual-toc a{font-size:13px;font-weight:700;color:#1d1e22;text-decoration:none;padding:8px 10px;border-radius:7px;transition:background .15s ease}
+.gravedad-manual-toc a:hover{background:#fbf7ec;color:#8a6d00}
+.gravedad-manual-card{scroll-margin-top:20px}
+.gravedad-manual-where{margin:2px 0 0!important;font-size:12px!important;color:#8a6d00!important;font-weight:700}
+.gravedad-manual-list{margin:0;display:grid;gap:2px}
+.gravedad-manual-list dt{font-size:13px;font-weight:800;color:#1d1e22;margin-top:16px}
+.gravedad-manual-list dt:first-child{margin-top:0}
+.gravedad-manual-list dd{margin:4px 0 0;font-size:13px;color:#5c5f66;line-height:1.7}
+.gravedad-manual-help{margin:0;font-size:13px;color:#5c5f66}
+.gravedad-manual-help a{color:#8a6d00;font-weight:700;text-decoration:none}
+.gravedad-manual-help a:hover{text-decoration:underline}
+@media(max-width:782px){.gravedad-manual-toc{grid-template-columns:1fr}}
