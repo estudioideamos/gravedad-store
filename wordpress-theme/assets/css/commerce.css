@@ -178,3 +178,14 @@
 .wc-block-checkout__shipping-method-option:hover{border-color:var(--acid)}
 .wc-block-checkout__shipping-method-option--selected{border-color:var(--acid)!important;box-shadow:0 0 0 1px var(--acid)}
 .wc-block-checkout__shipping-method-option-title-wrapper{display:flex;align-items:center;gap:8px}
+/* Select2 (usado por el selector de sucursal de Correo Argentino y similares):
+   la lista desplegable se agrega aparte del cuadro cerrado y no heredaba
+   ningún estilo del tema, quedando con el fondo blanco por defecto de
+   Select2 y texto claro casi ilegible encima. */
+.select2-dropdown{background:#0d0e11!important;border:1px solid #383941!important;border-radius:5px!important;overflow:hidden;z-index:9999}
+.select2-search--dropdown{background:#0d0e11!important;padding:8px!important}
+.select2-search__field{background:#17181d!important;color:#fff!important;border:1px solid #383941!important;border-radius:4px!important;padding:8px 10px!important}
+.select2-results__option{color:#e6e6ea!important;padding:10px 14px!important;font-size:13px!important}
+.select2-results__option--highlighted{background:var(--acid)!important;color:#08090b!important}
+.select2-results__option[aria-selected=true]{background:#202126!important}
+.select2-results__message{color:#8b8e94!important}
