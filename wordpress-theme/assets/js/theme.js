@@ -475,3 +475,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     start();
   });
 });
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!document.body.classList.contains('woocommerce-checkout')) return;
+  function cleanNotices(){
+    document.querySelectorAll('.woocommerce-message, .woocommerce-info').forEach(el=>{
+      if(/zona de coincidencia/i.test(el.textContent)) el.remove();
+    });
+  }
+  cleanNotices();
+  if(window.jQuery){ window.jQuery(document.body).on('updated_checkout',cleanNotices); }
+  new MutationObserver(cleanNotices).observe(document.body,{childList:true,subtree:true});
+});
