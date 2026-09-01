@@ -86,6 +86,19 @@ function gravedad_manual_sections() {
             ),
         ),
         array(
+            'icon' => '💵',
+            'title' => 'Precios en pesos y en dólares',
+            'where' => 'Productos → (elegir un producto) → sección "Precio del producto"',
+            'items' => array(
+                array('Dos formas de poner precio', 'Podés cargar el precio en pesos como siempre (campo "Precio regular"), o cargar el precio en dólares (campo "Precio en USD", más abajo en esa misma sección) y dejar que el sitio calcule solo el precio en pesos.'),
+                array('¿Cómo funciona el precio en USD?', 'Si completás "Precio en USD (opcional)", al guardar el producto el sitio multiplica ese número por la cotización del dólar del momento y pisa automáticamente el precio en pesos. Lo mismo con "Precio de oferta en USD" para el precio rebajado.'),
+                array('¿De dónde sale la cotización?', 'Del dólar oficial de dolarapi.com. Se actualiza sola cada 1 hora. Podés ver la cotización que se está usando en este momento en Editar Sitio → pantalla principal → sección "Cotización del dólar".'),
+                array('¿Se actualizan los precios solos cuando cambia el dólar?', 'Sí: todos los productos que tengan cargado un "Precio en USD" se recalculan automáticamente cada vez que se actualiza la cotización (cada 1 hora), sin que tengas que tocar nada. Los productos con precio fijo en pesos no se ven afectados nunca por esto.'),
+                array('¿Puedo fijar yo la cotización?', 'Sí. En Editar Sitio → "Cotización manual" cargá el número que quieras y ese va a pisar al automático (útil si querés redondear o dejar un valor fijo por un tiempo). Borrá ese campo para volver a la cotización automática.'),
+                array('¿Qué ve el cliente?', 'En la ficha del producto, debajo del precio en pesos, aparece una referencia chiquita tipo "≈ USD 45,00 · cotización $1.530" solo en los productos que tienen precio en USD cargado.'),
+            ),
+        ),
+        array(
             'icon' => '🎟️',
             'title' => 'Eventos',
             'where' => 'Menú lateral → Eventos',
@@ -119,14 +132,20 @@ function gravedad_manual_render() {
       </header>
       <p><a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-panel')); ?>">← Volver a Editar Sitio</a></p>
 
+      <p class="gravedad-manual-toc-label">Saltar directo a un tema</p>
       <div class="gravedad-manual-toc">
         <?php foreach ($sections as $i => $s): ?>
-        <a href="#manual-<?php echo esc_attr($i); ?>"><?php echo esc_html($s['icon']); ?> <?php echo esc_html($s['title']); ?></a>
+        <a href="#manual-<?php echo esc_attr($i); ?>">
+          <span class="gravedad-manual-toc-icon"><?php echo esc_html($s['icon']); ?></span>
+          <span class="gravedad-manual-toc-title"><?php echo esc_html($s['title']); ?></span>
+          <span class="gravedad-manual-toc-arrow">→</span>
+        </a>
         <?php endforeach; ?>
       </div>
 
       <?php foreach ($sections as $i => $s): ?>
       <section class="gravedad-panel-card gravedad-manual-card" id="manual-<?php echo esc_attr($i); ?>">
+        <span class="gravedad-manual-num"><?php echo esc_html($i + 1); ?></span>
         <div class="gravedad-panel-card__head">
           <span class="gravedad-panel-card__icon"><?php echo esc_html($s['icon']); ?></span>
           <div>
@@ -136,8 +155,10 @@ function gravedad_manual_render() {
         </div>
         <dl class="gravedad-manual-list">
           <?php foreach ($s['items'] as $item): ?>
-          <dt><?php echo esc_html($item[0]); ?></dt>
-          <dd><?php echo esc_html($item[1]); ?></dd>
+          <div class="gravedad-manual-item">
+            <dt><?php echo esc_html($item[0]); ?></dt>
+            <dd><?php echo esc_html($item[1]); ?></dd>
+          </div>
           <?php endforeach; ?>
         </dl>
       </section>
