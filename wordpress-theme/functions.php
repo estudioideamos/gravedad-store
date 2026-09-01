@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.58.0');
+define('GRAVEDAD_VERSION', '5.59.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -82,6 +82,13 @@ function gravedad_uncropped_thumbnails($size) {
 }
 add_filter('woocommerce_get_image_size_thumbnail', 'gravedad_uncropped_thumbnails');
 add_filter('woocommerce_get_image_size_gallery_thumbnail', 'gravedad_uncropped_thumbnails');
+
+// El campo "city" de WooCommerce se traduce por defecto como "Población",
+// que no es como se le dice en Argentina.
+add_filter('woocommerce_get_country_locale', function ($locale) {
+    $locale['AR']['city']['label'] = 'Localidad';
+    return $locale;
+});
 
 function gravedad_favicon() {
     if (has_site_icon()) { return; }
