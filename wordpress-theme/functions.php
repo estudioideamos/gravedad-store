@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.66.0');
+define('GRAVEDAD_VERSION', '5.67.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -649,12 +649,32 @@ function gravedad_ensure_catalog_pages() {
 }
 add_action('after_switch_theme', 'gravedad_ensure_catalog_pages');
 
+// Colores y logo de los mails de WooCommerce (pedidos, facturas, etc.) para
+// que coincidan con la marca del sitio en vez de quedar con el violeta
+// genérico por defecto. Fondo oscuro exterior + tarjeta blanca de contenido
+// (más confiable entre clientes de correo que un mail 100% oscuro) con
+// acentos dorados y logo del sitio.
+function gravedad_brand_wc_emails() {
+    if (!class_exists('WooCommerce')) { return; }
+    update_option('woocommerce_email_auto_sync_with_theme', 'no');
+    update_option('woocommerce_email_background_color', '#0d0e11');
+    update_option('woocommerce_email_body_background_color', '#ffffff');
+    update_option('woocommerce_email_base_color', '#f2a900');
+    update_option('woocommerce_email_text_color', '#1d1e22');
+    update_option('woocommerce_email_footer_text_color', '#8b8e94');
+    update_option('woocommerce_email_header_image', get_template_directory_uri() . '/assets/img/logo-gravedad-store.png');
+    update_option('woocommerce_email_header_image_width', '160');
+    update_option('woocommerce_email_header_alignment', 'left');
+    update_option('woocommerce_email_footer_text', 'Gravedad Store · TCG &amp; Juegos de mesa<br/>José C. Paz, Buenos Aires');
+}
+
 function gravedad_run_theme_upgrades() {
     $installed = get_option('gravedad_theme_version', '0');
     if (version_compare($installed, GRAVEDAD_VERSION, '>=')) { return; }
     gravedad_ensure_woocommerce_pages();
     gravedad_ensure_catalog_structure();
     gravedad_ensure_catalog_pages();
+    if (version_compare($installed, '5.67.0', '<')) { gravedad_brand_wc_emails(); }
     update_option('gravedad_theme_version', GRAVEDAD_VERSION);
 }
 add_action('admin_init', 'gravedad_run_theme_upgrades');

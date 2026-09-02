@@ -103,6 +103,16 @@ function gravedad_manual_sections() {
             ),
         ),
         array(
+            'icon' => '✉️',
+            'title' => 'Mails de pedidos (nuevo pedido, pago confirmado, etc.)',
+            'where' => 'WooCommerce → Ajustes → Correos electrónicos',
+            'items' => array(
+                array('Ya vienen con marca', 'Los mails que recibe el cliente (pedido confirmado, en camino, etc.) ya están configurados con el logo y los colores de Gravedad Store en vez del diseño genérico de WooCommerce.'),
+                array('¿Puedo cambiar el remitente?', 'Sí, en "Opciones del remitente del correo electrónico" (misma pantalla) podés cambiar el nombre y el email desde el que salen esos mails.'),
+                array('¿Puedo cambiar los colores o el logo?', 'Sí, más abajo hay una sección "Paleta de colores" y "Plantilla de correo" donde podés ajustarlo vos mismo si querés, con una vista previa en vivo al costado.'),
+            ),
+        ),
+        array(
             'icon' => '🎟️',
             'title' => 'Eventos',
             'where' => 'Menú lateral → Eventos',
