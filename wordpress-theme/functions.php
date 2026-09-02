@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.64.0');
+define('GRAVEDAD_VERSION', '5.65.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -83,6 +83,32 @@ function gravedad_uncropped_thumbnails($size) {
 }
 add_filter('woocommerce_get_image_size_thumbnail', 'gravedad_uncropped_thumbnails');
 add_filter('woocommerce_get_image_size_gallery_thumbnail', 'gravedad_uncropped_thumbnails');
+
+// Salud del sitio marcaba como error crítico de seguridad que se puede
+// navegar/listar el directorio de subidas. Se protege escribiendo los
+// mismos archivos que WooCommerce debería crear: un index.html vacío en
+// uploads (bloquea el listado, nunca el acceso a las fotos que sí son
+// públicas) y, si existe, un .htaccess que además bloquea el acceso
+// directo a la carpeta de descargas protegidas de WooCommerce.
+function gravedad_protect_uploads_dir() {
+    $upload = wp_upload_dir();
+    if (empty($upload['basedir']) || !is_dir($upload['basedir'])) { return; }
+    $base = trailingslashit($upload['basedir']);
+
+    if (!file_exists($base . 'index.html')) {
+        @file_put_contents($base . 'index.html', '');
+    }
+
+    $wc_dir = $base . 'woocommerce_uploads/';
+    if (is_dir($wc_dir)) {
+        if (!file_exists($wc_dir . 'index.html')) { @file_put_contents($wc_dir . 'index.html', ''); }
+        if (!file_exists($wc_dir . '.htaccess')) {
+            $rules = "Options -Indexes\n<IfModule mod_authz_core.c>\n\tRequire all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n\tDeny from all\n</IfModule>\n";
+            @file_put_contents($wc_dir . '.htaccess', $rules);
+        }
+    }
+}
+add_action('admin_init', 'gravedad_protect_uploads_dir');
 
 // El plugin de Correo Argentino trae algunos textos sin traducir al español.
 // Se traducen acá en vez de tocar el código del plugin.
