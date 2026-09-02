@@ -358,6 +358,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.woocommerce div.product .quantity').forEach(wrap=>{
     const input=wrap.querySelector('input.qty');
     if(!input||wrap.querySelector('.qty-step')) return;
+    if(input.type==='hidden'){ wrap.style.display='none'; return; }
     const minus=document.createElement('button'); minus.type='button'; minus.className='qty-step qty-minus'; minus.textContent='−'; minus.setAttribute('aria-label','Restar');
     const plus=document.createElement('button'); plus.type='button'; plus.className='qty-step qty-plus'; plus.textContent='+'; plus.setAttribute('aria-label','Sumar');
     wrap.insertBefore(minus,input); wrap.appendChild(plus);
