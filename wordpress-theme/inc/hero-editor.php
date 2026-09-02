@@ -43,21 +43,21 @@ function gravedad_hero_slide_defaults($i) {
             'texto' => 'Nuevos ingresos todas las semanas en cartas sueltas y sellado.',
             'boton1_texto' => 'Ver novedades', 'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('novedades') : home_url('/'),
             'boton2_texto' => 'Ver ofertas', 'boton2_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('ofertas') : home_url('/'),
-            'imagen_producto' => $img_uri . 'hero-slide-carta.jpg', 'fondo' => '',
+            'imagen_producto' => $img_uri . 'hero-slide-carta.webp', 'fondo' => '',
         ),
         2 => array(
             'activo' => 1, 'eyebrow' => 'SELLADO DE FÁBRICA', 'titulo_1' => 'Abrí sobres,', 'titulo_2' => 'sumá cartas.',
             'texto' => 'Booster boxes, displays y bundles de tus juegos favoritos, siempre en stock.',
             'boton1_texto' => 'Ver sellado', 'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('tcg') : home_url('/'),
             'boton2_texto' => 'Ver cartas sueltas', 'boton2_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('cartas-sueltas') : home_url('/'),
-            'imagen_producto' => $img_uri . 'hero-slide-sobres.jpg', 'fondo' => '',
+            'imagen_producto' => $img_uri . 'hero-slide-sobres.webp', 'fondo' => '',
         ),
         3 => array(
             'activo' => 1, 'eyebrow' => 'PARA JUGAR EN GRUPO', 'titulo_1' => 'Sumate a la', 'titulo_2' => 'mesa.',
             'texto' => 'Juegos de mesa y torneos todas las semanas en José C. Paz.',
             'boton1_texto' => 'Ver juegos de mesa', 'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('juegos-de-mesa') : home_url('/'),
             'boton2_texto' => 'Ver eventos', 'boton2_url' => home_url('/eventos/'),
-            'imagen_producto' => $img_uri . 'hero-slide-juegos.jpg', 'fondo' => '',
+            'imagen_producto' => $img_uri . 'hero-slide-juegos.webp', 'fondo' => '',
         ),
     );
     return isset($defaults[$i]) ? $defaults[$i] : $defaults[2];
@@ -274,7 +274,7 @@ function gravedad_hero_render() {
               gravedad_hero_field('Botón 2 — a dónde lleva', 'gh_slide' . $i . '_boton2_url', gravedad_hero_slide_opt($i, 'boton2_url'), 0, '');
             ?>
           </div>
-          <?php gravedad_hero_media_field('Imagen de producto (al costado)', 'gh_slide' . $i . '_imagen_producto', gravedad_hero_slide_opt($i, 'imagen_producto'), 'image', 'Foto de una carta, caja o producto destacado. Fondo prolijo o transparente. Al menos 800 px de lado.'); ?>
+          <?php gravedad_hero_media_field('Imagen de producto (al costado)', 'gh_slide' . $i . '_imagen_producto', gravedad_hero_slide_opt($i, 'imagen_producto'), 'image', 'Foto de una carta, caja o producto destacado. Usá .png o .webp con fondo TRANSPARENTE (no un fondo blanco o de color) para que flote naturalmente sobre el fondo del slide, sin un recuadro alrededor. Al menos 800 px de lado.'); ?>
           <?php gravedad_hero_media_field('Fondo personalizado (opcional)', 'gh_slide' . $i . '_fondo', gravedad_hero_slide_opt($i, 'fondo'), 'image', 'Si no cargás nada, se usa el fondo oscuro con la textura de líneas de la marca (el mismo del resto del sitio). Solo cargá algo acá si para este slide en particular querés otra imagen de fondo.', true); ?>
         </section>
         <?php endfor; ?>
