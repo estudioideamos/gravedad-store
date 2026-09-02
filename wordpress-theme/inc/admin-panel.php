@@ -146,6 +146,7 @@ function gravedad_admin_panel_render() {
         <a href="<?php echo esc_url(admin_url('edit.php?post_type=page')); ?>"><span>📄</span>Páginas</a>
         <a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-mm')); ?>"><span>🧭</span>Menús desplegables</a>
         <a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-hero')); ?>"><span>🖼️</span>Hero de la home</a>
+        <a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-autoattrs')); ?>"><span>🏷️</span>Atributos automáticos</a>
         <a href="<?php echo esc_url(admin_url('admin.php?page=gravedad-manual')); ?>"><span>📖</span>Manual de uso</a>
       </div>
 

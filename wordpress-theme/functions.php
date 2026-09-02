@@ -1,13 +1,14 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.73.0');
+define('GRAVEDAD_VERSION', '5.74.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
 require_once get_template_directory() . '/inc/menu-editor.php';
 require_once get_template_directory() . '/inc/hero-editor.php';
 require_once get_template_directory() . '/inc/manual.php';
+require_once get_template_directory() . '/inc/product-attributes-auto.php';
 require_once get_template_directory() . '/inc/seo-security.php';
 
 add_filter('use_block_editor_for_post_type', '__return_false');
@@ -549,6 +550,32 @@ function gravedad_ensure_catalog_structure() {
     flush_rewrite_rules();
 }
 add_action('after_switch_theme', 'gravedad_ensure_catalog_structure');
+
+function gravedad_prefill_cartas_sueltas_attributes($product_id) {
+    if (!function_exists('gravedad_autoattrs_enabled') || !gravedad_autoattrs_enabled()) { return; }
+    if (!has_term(gravedad_autoattrs_category(), 'product_cat', $product_id)) { return; }
+    $required = gravedad_autoattrs_list();
+    $attributes = get_post_meta($product_id, '_product_attributes', true);
+    if (!is_array($attributes)) { $attributes = array(); }
+    $changed = false;
+    $position = count($attributes);
+    foreach ($required as $tax) {
+        if (isset($attributes[$tax]) || !taxonomy_exists($tax)) { continue; }
+        $attributes[$tax] = array(
+            'name' => $tax, 'value' => '', 'position' => $position++,
+            'is_visible' => 1, 'is_variation' => 0, 'is_taxonomy' => 1,
+        );
+        $changed = true;
+    }
+    if ($changed) { update_post_meta($product_id, '_product_attributes', $attributes); }
+}
+add_action('woocommerce_new_product', 'gravedad_prefill_cartas_sueltas_attributes', 20);
+add_action('woocommerce_update_product', 'gravedad_prefill_cartas_sueltas_attributes', 20);
+add_action('set_object_terms', function ($object_id, $terms, $tt_ids, $taxonomy) {
+    if ($taxonomy === 'product_cat' && get_post_type($object_id) === 'product') {
+        gravedad_prefill_cartas_sueltas_attributes($object_id);
+    }
+}, 20, 4);
 
 add_action('woocommerce_before_shop_loop_item_title', function () {
     global $product;

@@ -51,3 +51,7 @@
 .gravedad-panel-save .button-primary{background:#f2a900;border-color:#c98d00;color:#1d1e22;font-weight:800;font-size:14px;padding:8px 26px;height:auto;border-radius:8px;text-shadow:none;box-shadow:0 6px 16px rgba(242,169,0,.35)}
 .gravedad-panel-save .button-primary:hover{background:#ffb70f}
 @media(max-width:782px){.gravedad-panel-card__grid,.gravedad-panel-card__grid--pair,.gravedad-panel-card__grid--trio,.gravedad-panel-quicklinks{grid-template-columns:1fr}.gravedad-panel-brand{flex-direction:column;text-align:center}}
+.gravedad-panel-checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px 16px;margin-top:4px}
+.gravedad-panel-check{display:flex;align-items:center;gap:8px;font-size:13px;color:#3a3b40;cursor:pointer}
+.gravedad-panel-check input{width:16px;height:16px;margin:0;flex-shrink:0}
+.gravedad-panel-field select{border:1px solid #d6d8dd;border-radius:8px;padding:10px 12px;font-size:14px;color:#1d1e22;background:#fbfbfc}
