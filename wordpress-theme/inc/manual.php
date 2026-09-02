@@ -120,7 +120,7 @@ function gravedad_manual_sections() {
                 array('¿De dónde sale la cotización?', 'Del dólar oficial de dolarapi.com. Se actualiza sola cada 1 hora. Podés ver la cotización que se está usando en este momento en Editar Sitio → pantalla principal → sección "Cotización del dólar".'),
                 array('¿Se actualizan los precios solos cuando cambia el dólar?', 'Sí: todos los productos que tengan cargado un "Precio en USD" se recalculan automáticamente cada vez que se actualiza la cotización (cada 1 hora), sin que tengas que tocar nada. Los productos con precio fijo en pesos no se ven afectados nunca por esto.'),
                 array('¿Puedo fijar yo la cotización?', 'Sí. En Editar Sitio → "Cotización manual" cargá el número que quieras y ese va a pisar al automático (útil si querés redondear o dejar un valor fijo por un tiempo). Borrá ese campo para volver a la cotización automática.'),
-                array('¿Qué ve el cliente?', 'En la ficha del producto, debajo del precio en pesos, aparece una referencia chiquita tipo "≈ USD 45,00 · cotización $1.530" solo en los productos que tienen precio en USD cargado.'),
+                array('¿Qué ve el cliente?', 'Solo el precio final en pesos. La cotización en dólares y el valor de referencia en USD son un dato interno, para vos: no se muestran en ningún lado de la tienda.'),
                 array('Redondeo', 'El precio en pesos que calcula el sitio siempre redondea a la decena más cercana, así nunca queda con centavos sueltos (ej: da $45.680 en vez de $45.678,23).'),
             ),
         ),

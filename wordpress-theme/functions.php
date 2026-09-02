@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.74.0');
+define('GRAVEDAD_VERSION', '5.75.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -264,15 +264,6 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
         }
     }
 });
-
-function gravedad_usd_reference_note() {
-    global $product;
-    if (!$product) { return; }
-    $usd = get_post_meta($product->get_id(), '_price_usd', true);
-    if ($usd === '' || !is_numeric($usd)) { return; }
-    echo '<small class="usd-reference">≈ USD ' . esc_html(number_format((float) $usd, 2)) . ' · cotización $' . esc_html(number_format(gravedad_get_usd_rate(), 0, ',', '.')) . '</small>';
-}
-add_action('woocommerce_single_product_summary', 'gravedad_usd_reference_note', 11);
 
 function gravedad_shop_url($slug = '') {
     if (in_array($slug, array('novedades', 'ofertas'), true)) {
