@@ -176,17 +176,17 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 .hero-slider-wrap{padding:0!important}
 .hero-slider-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hero-slider-track::-webkit-scrollbar{display:none}
-.hero-slide{flex:0 0 100%;width:100%;height:100%;position:relative;scroll-snap-align:start;background:var(--hero,radial-gradient(ellipse 70% 60% at 22% 45%,rgba(204,20,20,.28),transparent 60%),radial-gradient(ellipse 60% 70% at 85% 30%,rgba(242,169,0,.14),transparent 55%),#0d0e11);background-position:center;background-size:cover}
-.hero-slide .hero-grid{opacity:.55}
+.hero-slide{flex:0 0 100%;width:100%;height:100%;position:relative;scroll-snap-align:start;background:var(--hero);background-position:center;background-size:cover}
+.hero-slide .hero-grid{opacity:.7}
 .hero-slide-inner{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:space-between;gap:40px;padding:90px 4vw 0}
-.hero-slide-inner h1{line-height:1.04}
+.hero-slide-inner h1{font-size:clamp(46px,5vw,80px);line-height:1.05}
 .hero-slide .hero-copy{position:static;width:auto;flex:1 1 50%;padding:0;max-width:640px}
 .hero-slide-product{flex:0 1 38%;display:flex;align-items:center;justify-content:center;max-width:420px;filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
 .hero-slide-product img{width:100%;height:auto;max-height:480px;object-fit:contain}
 .hero-slider-dots{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;display:flex;gap:8px}
 .hero-slider-wrap .hero-slider-dots .carousel-dot{background:rgba(255,255,255,.3)}
 .hero-slider-wrap .hero-slider-dots .carousel-dot.is-active{background:var(--acid)}
-.hero-slider-wrap .carousel-arrow{display:grid;position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:48px;height:48px;background:rgba(9,10,12,.55);border-color:rgba(255,255,255,.18);backdrop-filter:blur(4px)}
+.hero-slider-wrap .carousel-arrow{display:grid;position:absolute;top:auto;bottom:26px;transform:none;z-index:4;width:42px;height:42px;background:rgba(9,10,12,.55);border-color:rgba(255,255,255,.18);backdrop-filter:blur(4px)}
 .hero-slider-wrap .carousel-arrow.prev{left:24px}
 .hero-slider-wrap .carousel-arrow.next{right:24px}
 .hero-slider-single .hero-slider-dots,.hero-slider-single .carousel-arrow{display:none!important}

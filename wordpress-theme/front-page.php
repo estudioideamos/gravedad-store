@@ -29,7 +29,8 @@ if ($hero_mode !== 'slider' || !$hero_slides) {
 <section class="hero hero-slider-wrap<?php echo count($hero_slides) > 1 ? '' : ' hero-slider-single'; ?>">
   <div class="hero-slider-track">
     <?php foreach ($hero_slides as $slide): ?>
-    <div class="hero-slide"<?php echo $slide['fondo'] ? ' style="--hero:url(\'' . esc_url($slide['fondo']) . '\')"' : ''; ?>>
+    <?php $slide_bg = $slide['fondo'] ? $slide['fondo'] : $uri . '/assets/img/hero-gravedad.jpg'; ?>
+    <div class="hero-slide" style="--hero:url('<?php echo esc_url($slide_bg); ?>')">
       <div class="hero-video-overlay"></div><div class="hero-grid"></div>
       <div class="hero-slide-inner">
         <div class="hero-copy">
