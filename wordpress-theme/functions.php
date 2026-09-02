@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.78.2');
+define('GRAVEDAD_VERSION', '5.78.3');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -246,9 +246,18 @@ add_action('woocommerce_product_options_pricing', function () {
     woocommerce_wp_text_input(array('id' => '_sale_price_usd', 'label' => __('Precio de oferta en USD (opcional)', 'gravedad-store'), 'data_type' => 'price'));
 });
 
+function gravedad_parse_usd_input($raw) {
+    $raw = trim((string) $raw);
+    if ($raw === '') { return ''; }
+    // Acepta tanto "4.50" como "4,50" (coma decimal, como se escribe en español).
+    return wc_format_decimal(str_replace(',', '.', $raw));
+}
+
 add_action('woocommerce_process_product_meta', function ($post_id) {
-    $usd_regular = isset($_POST['_price_usd']) ? wc_format_decimal(wp_unslash($_POST['_price_usd'])) : '';
-    $usd_sale = isset($_POST['_sale_price_usd']) ? wc_format_decimal(wp_unslash($_POST['_sale_price_usd'])) : '';
+    $usd_regular_raw = isset($_POST['_price_usd']) ? wp_unslash($_POST['_price_usd']) : '';
+    $usd_sale_raw = isset($_POST['_sale_price_usd']) ? wp_unslash($_POST['_sale_price_usd']) : '';
+    $usd_regular = gravedad_parse_usd_input($usd_regular_raw);
+    $usd_sale = gravedad_parse_usd_input($usd_sale_raw);
     update_post_meta($post_id, '_price_usd', $usd_regular);
     update_post_meta($post_id, '_sale_price_usd', $usd_sale);
     if ($usd_regular !== '' && is_numeric($usd_regular)) {
@@ -262,7 +271,18 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
         } else {
             update_post_meta($post_id, '_price', $ars_regular);
         }
+    } elseif (trim((string) $usd_regular_raw) !== '' && !is_numeric($usd_regular)) {
+        set_transient('gravedad_usd_price_error_' . $post_id, trim((string) $usd_regular_raw), 60);
     }
+});
+
+add_action('admin_notices', function () {
+    global $post;
+    if (!$post || $post->post_type !== 'product') { return; }
+    $bad_value = get_transient('gravedad_usd_price_error_' . $post->ID);
+    if ($bad_value === false) { return; }
+    delete_transient('gravedad_usd_price_error_' . $post->ID);
+    echo '<div class="notice notice-error"><p><strong>Gravedad Store:</strong> el "Precio en USD" que cargaste ("' . esc_html($bad_value) . '") no se pudo interpretar como número, así que el producto se guardó sin precio en pesos calculado. Escribilo solo con números y como mucho un punto o una coma para los decimales (ej: 4.50 o 4,50), sin otros símbolos.</p></div>';
 });
 
 function gravedad_shop_url($slug = '') {
