@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.78.3');
+define('GRAVEDAD_VERSION', '5.78.4');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -269,8 +269,10 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
             update_post_meta($post_id, '_sale_price', $ars_sale);
             update_post_meta($post_id, '_price', $ars_sale);
         } else {
+            delete_post_meta($post_id, '_sale_price');
             update_post_meta($post_id, '_price', $ars_regular);
         }
+        if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($post_id); }
     } elseif (trim((string) $usd_regular_raw) !== '' && !is_numeric($usd_regular)) {
         set_transient('gravedad_usd_price_error_' . $post_id, trim((string) $usd_regular_raw), 60);
     }
