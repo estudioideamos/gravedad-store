@@ -83,6 +83,10 @@ function gravedad_manual_sections() {
                 array('Atributos (Juego, Rareza, Idioma, etc.)', 'En la ficha del producto, sección "Atributos": ahí se elige el juego, la rareza, el idioma, el tipo de producto, etc. Esto es lo que hace que el producto aparezca al usar los filtros y los menús desplegables.'),
                 array('Cartel de "FOIL" brillante', 'Si un producto tiene el atributo "Foil / Acabado" en algo distinto de "No Foil" (Foil, Holo, Reverse Holo), le aparece automáticamente un cartel plateado brillante en la tienda, igual que el de "OFERTA". No hay que hacer nada más que cargar ese atributo.'),
                 array('Cartel de "OFERTA"', 'Aparece solo cuando cargás un "Precio rebajado" en la ficha del producto (además del precio normal).'),
+                array('Formato ideal de la foto', 'Cuadrada (mismo ancho que alto, ej: 1200×1200 px). El sitio nunca recorta las fotos, así que si subís una foto rectangular se va a ver más chica o con espacio de sobra al lado; una foto cuadrada llena mejor el espacio y queda más prolija en la grilla.'),
+                array('Tamaño recomendado', 'Entre 1000 y 1500 px de lado alcanza y sobra (se ve nítida incluso al hacer zoom). Subir fotos de 4000px o más solo hace que la página cargue más lento, sin mejorar cómo se ve.'),
+                array('Formato de archivo', '.jpg para fotos normales (el más liviano). Usá .png únicamente si la imagen necesita fondo transparente. Si tu celular o programa permite exportar en .webp, mejor todavía: misma calidad, menos peso.'),
+                array('Peso del archivo', 'Antes de subirla, comprimila apuntando a menos de 300–400 KB por foto. Podés usar una web gratuita como tinypng.com o squoosh.app: subís la foto, la descargás ya comprimida y esa es la que cargás en el producto. Fotos livianas = tienda más rápida.'),
             ),
         ),
         array(
