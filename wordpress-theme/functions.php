@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.78.5');
+define('GRAVEDAD_VERSION', '5.78.6');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -258,40 +258,15 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
     $usd_sale_raw = isset($_POST['_sale_price_usd']) ? wp_unslash($_POST['_sale_price_usd']) : '';
     $usd_regular = gravedad_parse_usd_input($usd_regular_raw);
     $usd_sale = gravedad_parse_usd_input($usd_sale_raw);
-    if ((int) $post_id === 210) {
-        $log = wp_upload_dir()['basedir'] . '/gravedad-debug.txt';
-        $line = date('c') . ' | post=' . $post_id
-            . ' | raw=' . var_export($usd_regular_raw, true)
-            . ' | parsed=' . var_export($usd_regular, true)
-            . ' | is_numeric=' . var_export(is_numeric($usd_regular), true)
-            . ' | rate=' . var_export(function_exists('gravedad_get_usd_rate') ? gravedad_get_usd_rate() : null, true)
-            . ' | POST[_regular_price]=' . var_export(isset($_POST['_regular_price']) ? $_POST['_regular_price'] : null, true)
-            . ' | POST[product-type]=' . var_export(isset($_POST['product-type']) ? $_POST['product-type'] : null, true)
-            . "\n";
-        @file_put_contents($log, $line, FILE_APPEND);
-    }
     update_post_meta($post_id, '_price_usd', $usd_regular);
     update_post_meta($post_id, '_sale_price_usd', $usd_sale);
-    if ($usd_regular !== '' && is_numeric($usd_regular)) {
-        $rate = gravedad_get_usd_rate();
-        $ars_regular = gravedad_round_ars($usd_regular * $rate);
-        update_post_meta($post_id, '_regular_price', $ars_regular);
-        if ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0) {
-            $ars_sale = gravedad_round_ars($usd_sale * $rate);
-            update_post_meta($post_id, '_sale_price', $ars_sale);
-            update_post_meta($post_id, '_price', $ars_sale);
-        } else {
-            delete_post_meta($post_id, '_sale_price');
-            update_post_meta($post_id, '_price', $ars_regular);
-        }
-        if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($post_id); }
-        if ((int) $post_id === 210) {
-            $log = wp_upload_dir()['basedir'] . '/gravedad-debug.txt';
-            @file_put_contents($log, date('c') . ' | post=' . $post_id . ' | BRANCH=applied | ars_regular=' . var_export($ars_regular, true) . ' | stored_now=' . var_export(get_post_meta($post_id, '_regular_price', true), true) . "\n", FILE_APPEND);
-        }
-    } elseif (trim((string) $usd_regular_raw) !== '' && !is_numeric($usd_regular)) {
+    if ($usd_regular !== '' && !is_numeric($usd_regular)) {
         set_transient('gravedad_usd_price_error_' . $post_id, trim((string) $usd_regular_raw), 60);
     }
+    // El precio en pesos se aplica en gravedad_finalize_usd_price(), que corre
+    // después de que WooCommerce termina de guardar el producto (ver más abajo):
+    // si lo hacíamos acá, el propio guardado del "Producto simple" de WooCommerce
+    // podía pisarlo de nuevo con el precio (vacío) que tenía en memoria.
 });
 
 add_action('admin_notices', function () {
@@ -302,6 +277,32 @@ add_action('admin_notices', function () {
     delete_transient('gravedad_usd_price_error_' . $post->ID);
     echo '<div class="notice notice-error"><p><strong>Gravedad Store:</strong> el "Precio en USD" que cargaste ("' . esc_html($bad_value) . '") no se pudo interpretar como número, así que el producto se guardó sin precio en pesos calculado. Escribilo solo con números y como mucho un punto o una coma para los decimales (ej: 4.50 o 4,50), sin otros símbolos.</p></div>';
 });
+
+function gravedad_finalize_usd_price($product_id) {
+    static $running = array();
+    if (!empty($running[$product_id])) { return; }
+    $usd_regular = get_post_meta($product_id, '_price_usd', true);
+    if ($usd_regular === '' || !is_numeric($usd_regular)) { return; }
+    $usd_sale = get_post_meta($product_id, '_sale_price_usd', true);
+    $rate = gravedad_get_usd_rate();
+    $ars_regular = gravedad_round_ars($usd_regular * $rate);
+    $has_sale = ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0);
+    $ars_sale = $has_sale ? gravedad_round_ars($usd_sale * $rate) : '';
+    $target_price = $has_sale ? $ars_sale : $ars_regular;
+    $current_regular = get_post_meta($product_id, '_regular_price', true);
+    $current_price = get_post_meta($product_id, '_price', true);
+    if ((string) $current_regular === (string) $ars_regular && (string) $current_price === (string) $target_price) { return; }
+    $product = wc_get_product($product_id);
+    if (!$product) { return; }
+    $running[$product_id] = true;
+    $product->set_regular_price($ars_regular);
+    $product->set_sale_price($ars_sale);
+    $product->save();
+    if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($product_id); }
+    unset($running[$product_id]);
+}
+add_action('woocommerce_new_product', 'gravedad_finalize_usd_price', 999);
+add_action('woocommerce_update_product', 'gravedad_finalize_usd_price', 999);
 
 function gravedad_shop_url($slug = '') {
     if (in_array($slug, array('novedades', 'ofertas'), true)) {
@@ -771,6 +772,11 @@ function gravedad_run_theme_upgrades() {
     if (version_compare($installed, '5.72.0', '<')) { gravedad_fix_hero_slide_image_paths(); }
     if (version_compare($installed, '5.76.2', '<')) { gravedad_recalculate_usd_prices(); }
     if (version_compare($installed, '5.78.0', '<')) { flush_rewrite_rules(); }
+    if (version_compare($installed, '5.78.6', '<')) {
+        $debug_log = wp_upload_dir()['basedir'] . '/gravedad-debug.txt';
+        if (file_exists($debug_log)) { @unlink($debug_log); }
+        gravedad_recalculate_usd_prices();
+    }
     update_option('gravedad_theme_version', GRAVEDAD_VERSION);
 }
 add_action('admin_init', 'gravedad_run_theme_upgrades');
