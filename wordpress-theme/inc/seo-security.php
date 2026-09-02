@@ -143,31 +143,10 @@ function gravedad_seo_jsonld() {
         );
     }
 
-    if (is_singular('product')) {
-        global $product;
-        if (!$product instanceof WC_Product) { $product = wc_get_product(get_the_ID()); }
-        if ($product) {
-            $availability = $product->is_in_stock() ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock';
-            $graph[] = array(
-                '@type' => 'Product',
-                '@id' => get_permalink() . '#product',
-                'name' => $product->get_name(),
-                'description' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
-                'sku' => $product->get_sku(),
-                'image' => gravedad_seo_get_image(),
-                'url' => get_permalink(),
-                'brand' => array('@type' => 'Brand', 'name' => 'Gravedad Store'),
-                'offers' => array(
-                    '@type' => 'Offer',
-                    'url' => get_permalink(),
-                    'priceCurrency' => 'ARS',
-                    'price' => $product->get_price(),
-                    'availability' => $availability,
-                    'seller' => array('@id' => home_url('/#organization')),
-                ),
-            );
-        }
-    }
+    // El Product/Offer de cada ficha lo emite WooCommerce nativamente
+    // (WC_Structured_Data, en el <script> aparte que ya trae el tema base).
+    // Agregarlo también acá duplicaría el mismo @id con dos bloques
+    // distintos, así que este @graph se limita a lo que WooCommerce no cubre.
 
     if (!$graph) { return; }
     $jsonld = array('@context' => 'https://schema.org', '@graph' => $graph);

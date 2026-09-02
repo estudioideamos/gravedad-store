@@ -13,7 +13,7 @@ function gravedad_evento_card($post_id) {
     $meses = array('ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC');
     echo '<a class="evento-card" href="' . esc_url(get_permalink($post_id)) . '">';
     echo '<div class="evento-flyer">';
-    if ($flyer) { echo '<img src="' . esc_url($flyer) . '" alt="" loading="lazy">'; } else { echo '<span class="evento-flyer-placeholder">' . gravedad_icon('dice') . '</span>'; }
+    if ($flyer) { echo '<img src="' . esc_url($flyer) . '" alt="' . esc_attr(get_the_title($post_id)) . '" loading="lazy">'; } else { echo '<span class="evento-flyer-placeholder">' . gravedad_icon('dice') . '</span>'; }
     if ($ts) { echo '<span class="evento-date-badge"><b>' . esc_html(date('d', $ts)) . '</b><small>' . esc_html($meses[(int) date('n', $ts) - 1]) . '</small></span>'; }
     echo '</div>';
     echo '<div class="evento-body"><h3>' . esc_html(get_the_title($post_id)) . '</h3><p class="evento-meta"><span>' . gravedad_icon('pin') . ' ' . esc_html($ubicacion) . '</span><span>' . gravedad_icon('clock') . ' ' . esc_html($hora) . '</span></p>';
