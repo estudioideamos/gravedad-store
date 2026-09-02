@@ -36,16 +36,29 @@ function gravedad_hero_mode() {
 }
 
 function gravedad_hero_slide_defaults($i) {
+    $img_uri = get_template_directory_uri() . '/assets/img/';
     $defaults = array(
         1 => array(
             'activo' => 1, 'eyebrow' => 'DESTACADO DE LA SEMANA', 'titulo_1' => 'Conseguí la', 'titulo_2' => 'carta que buscás.',
             'texto' => 'Nuevos ingresos todas las semanas en cartas sueltas y sellado.',
             'boton1_texto' => 'Ver novedades', 'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('novedades') : home_url('/'),
             'boton2_texto' => 'Ver ofertas', 'boton2_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('ofertas') : home_url('/'),
-            'imagen_producto' => '', 'fondo' => '',
+            'imagen_producto' => $img_uri . 'hero-slide-carta.jpg', 'fondo' => '',
         ),
-        2 => array('activo' => 0, 'eyebrow' => '', 'titulo_1' => '', 'titulo_2' => '', 'texto' => '', 'boton1_texto' => '', 'boton1_url' => '', 'boton2_texto' => '', 'boton2_url' => '', 'imagen_producto' => '', 'fondo' => ''),
-        3 => array('activo' => 0, 'eyebrow' => '', 'titulo_1' => '', 'titulo_2' => '', 'texto' => '', 'boton1_texto' => '', 'boton1_url' => '', 'boton2_texto' => '', 'boton2_url' => '', 'imagen_producto' => '', 'fondo' => ''),
+        2 => array(
+            'activo' => 1, 'eyebrow' => 'SELLADO DE FÁBRICA', 'titulo_1' => 'Abrí sobres,', 'titulo_2' => 'sumá cartas.',
+            'texto' => 'Booster boxes, displays y bundles de tus juegos favoritos, siempre en stock.',
+            'boton1_texto' => 'Ver sellado', 'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('tcg') : home_url('/'),
+            'boton2_texto' => 'Ver cartas sueltas', 'boton2_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('cartas-sueltas') : home_url('/'),
+            'imagen_producto' => $img_uri . 'hero-slide-sobres.jpg', 'fondo' => '',
+        ),
+        3 => array(
+            'activo' => 1, 'eyebrow' => 'PARA JUGAR EN GRUPO', 'titulo_1' => 'Sumate a la', 'titulo_2' => 'mesa.',
+            'texto' => 'Juegos de mesa y torneos todas las semanas en José C. Paz.',
+            'boton1_texto' => 'Ver juegos de mesa', 'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('juegos-de-mesa') : home_url('/'),
+            'boton2_texto' => 'Ver eventos', 'boton2_url' => home_url('/eventos/'),
+            'imagen_producto' => $img_uri . 'hero-slide-juegos.jpg', 'fondo' => '',
+        ),
     );
     return isset($defaults[$i]) ? $defaults[$i] : $defaults[2];
 }
