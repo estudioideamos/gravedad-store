@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.78.4');
+define('GRAVEDAD_VERSION', '5.78.5');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -258,6 +258,18 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
     $usd_sale_raw = isset($_POST['_sale_price_usd']) ? wp_unslash($_POST['_sale_price_usd']) : '';
     $usd_regular = gravedad_parse_usd_input($usd_regular_raw);
     $usd_sale = gravedad_parse_usd_input($usd_sale_raw);
+    if ((int) $post_id === 210) {
+        $log = wp_upload_dir()['basedir'] . '/gravedad-debug.txt';
+        $line = date('c') . ' | post=' . $post_id
+            . ' | raw=' . var_export($usd_regular_raw, true)
+            . ' | parsed=' . var_export($usd_regular, true)
+            . ' | is_numeric=' . var_export(is_numeric($usd_regular), true)
+            . ' | rate=' . var_export(function_exists('gravedad_get_usd_rate') ? gravedad_get_usd_rate() : null, true)
+            . ' | POST[_regular_price]=' . var_export(isset($_POST['_regular_price']) ? $_POST['_regular_price'] : null, true)
+            . ' | POST[product-type]=' . var_export(isset($_POST['product-type']) ? $_POST['product-type'] : null, true)
+            . "\n";
+        @file_put_contents($log, $line, FILE_APPEND);
+    }
     update_post_meta($post_id, '_price_usd', $usd_regular);
     update_post_meta($post_id, '_sale_price_usd', $usd_sale);
     if ($usd_regular !== '' && is_numeric($usd_regular)) {
@@ -273,6 +285,10 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
             update_post_meta($post_id, '_price', $ars_regular);
         }
         if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($post_id); }
+        if ((int) $post_id === 210) {
+            $log = wp_upload_dir()['basedir'] . '/gravedad-debug.txt';
+            @file_put_contents($log, date('c') . ' | post=' . $post_id . ' | BRANCH=applied | ars_regular=' . var_export($ars_regular, true) . ' | stored_now=' . var_export(get_post_meta($post_id, '_regular_price', true), true) . "\n", FILE_APPEND);
+        }
     } elseif (trim((string) $usd_regular_raw) !== '' && !is_numeric($usd_regular)) {
         set_transient('gravedad_usd_price_error_' . $post_id, trim((string) $usd_regular_raw), 60);
     }
