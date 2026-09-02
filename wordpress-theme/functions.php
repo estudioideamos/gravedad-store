@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.71.0');
+define('GRAVEDAD_VERSION', '5.72.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -675,6 +675,26 @@ function gravedad_brand_wc_emails() {
     update_option('woocommerce_email_footer_text', 'Gravedad Store · TCG &amp; Juegos de mesa<br/>José C. Paz, Buenos Aires');
 }
 
+function gravedad_fix_hero_slide_image_paths() {
+    $img_uri = get_template_directory_uri() . '/assets/img/';
+    $renames = array(
+        'hero-slide-carta.jpg'  => 'hero-slide-carta.webp',
+        'hero-slide-sobres.jpg' => 'hero-slide-sobres.webp',
+        'hero-slide-juegos.jpg' => 'hero-slide-juegos.webp',
+    );
+    for ($i = 1; $i <= 3; $i++) {
+        $key = 'gravedad_hero_slide' . $i . '_imagen_producto';
+        $current = get_option($key, '');
+        if (!$current) { continue; }
+        foreach ($renames as $old_file => $new_file) {
+            if (strpos($current, $old_file) !== false) {
+                update_option($key, $img_uri . $new_file);
+                break;
+            }
+        }
+    }
+}
+
 function gravedad_run_theme_upgrades() {
     $installed = get_option('gravedad_theme_version', '0');
     if (version_compare($installed, GRAVEDAD_VERSION, '>=')) { return; }
@@ -682,6 +702,7 @@ function gravedad_run_theme_upgrades() {
     gravedad_ensure_catalog_structure();
     gravedad_ensure_catalog_pages();
     if (version_compare($installed, '5.67.0', '<')) { gravedad_brand_wc_emails(); }
+    if (version_compare($installed, '5.72.0', '<')) { gravedad_fix_hero_slide_image_paths(); }
     update_option('gravedad_theme_version', GRAVEDAD_VERSION);
 }
 add_action('admin_init', 'gravedad_run_theme_upgrades');

@@ -3,5 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home6/vagrvmja/public_html/wp-content/themes/gravedad-store/
     - /bin/mkdir -p $DEPLOYPATH
-    - /bin/cp -R wordpress-theme/. $DEPLOYPATH
+    - rsync -a --delete wordpress-theme/. $DEPLOYPATH
     - /bin/rm -f $DEPLOYPATH/deploy-check.txt $DEPLOYPATH/deploy-check.html
