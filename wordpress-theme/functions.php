@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.78.0');
+define('GRAVEDAD_VERSION', '5.78.1');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -548,13 +548,19 @@ add_action('after_switch_theme', 'gravedad_ensure_catalog_structure');
 
 function gravedad_prefill_cartas_sueltas_attributes($product_id) {
     if (!function_exists('gravedad_autoattrs_enabled') || !gravedad_autoattrs_enabled()) { return; }
-    if (!has_term(gravedad_autoattrs_category(), 'product_cat', $product_id)) { return; }
-    $required = gravedad_autoattrs_list();
+    if (!function_exists('gravedad_autoattrs_rules')) { return; }
+    $required = array();
+    foreach (gravedad_autoattrs_rules() as $rule) {
+        if (!$rule['activa'] || !$rule['categoria']) { continue; }
+        if (!has_term($rule['categoria'], 'product_cat', $product_id)) { continue; }
+        foreach ($rule['atributos'] as $tax) { $required[$tax] = true; }
+    }
+    if (!$required) { return; }
     $attributes = get_post_meta($product_id, '_product_attributes', true);
     if (!is_array($attributes)) { $attributes = array(); }
     $changed = false;
     $position = count($attributes);
-    foreach ($required as $tax) {
+    foreach (array_keys($required) as $tax) {
         if (isset($attributes[$tax]) || !taxonomy_exists($tax)) { continue; }
         $attributes[$tax] = array(
             'name' => $tax, 'value' => '', 'position' => $position++,
