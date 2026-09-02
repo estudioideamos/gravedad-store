@@ -23,6 +23,18 @@ add_action('admin_enqueue_scripts', 'gravedad_manual_assets');
 function gravedad_manual_sections() {
     return array(
         array(
+            'icon' => '🖼️',
+            'title' => 'Hero de la home (la portada grande)',
+            'where' => 'Menú lateral → Editar Sitio → Hero de la home',
+            'items' => array(
+                array('¿Qué es?', 'La sección grande de arriba de todo en la página de inicio: el título, el texto, los dos botones y la imagen o video de fondo.'),
+                array('Contador de caracteres', 'Cada campo de texto muestra cuántos caracteres escribiste y cuántos se recomiendan (se pone en rojo si te pasás). No te bloquea el guardado, es solo una guía para que el título no se corte o se vea apretado — el título es muy grande, así que conviene que cada línea sea corta.'),
+                array('Imagen de fondo', 'Se ve siempre. Subila horizontal, mínimo 1920×1080 px, en .jpg y comprimida (menos de 500 KB) — es la primera imagen que carga el sitio, así que su peso afecta lo rápido que abre toda la home.'),
+                array('Video de fondo', 'Es opcional: si no cargás uno, se ve solo la imagen de fondo y queda igual de bien. Si cargás uno, tiene que ser .mp4, sin audio, idealmente de 5 a 15 segundos, y menos de 5-8 MB. Podés sacarlo en cualquier momento con "Quitar video".'),
+                array('Botones', 'El texto de cada botón y el link a donde lleva se editan por separado. Al botón principal (el relleno) no hace falta escribirle la flecha "→", se agrega sola.'),
+            ),
+        ),
+        array(
             'icon' => '🧭',
             'title' => 'Editar Sitio: pantalla principal',
             'where' => 'Menú lateral → Editar Sitio',
@@ -100,6 +112,7 @@ function gravedad_manual_sections() {
                 array('¿Se actualizan los precios solos cuando cambia el dólar?', 'Sí: todos los productos que tengan cargado un "Precio en USD" se recalculan automáticamente cada vez que se actualiza la cotización (cada 1 hora), sin que tengas que tocar nada. Los productos con precio fijo en pesos no se ven afectados nunca por esto.'),
                 array('¿Puedo fijar yo la cotización?', 'Sí. En Editar Sitio → "Cotización manual" cargá el número que quieras y ese va a pisar al automático (útil si querés redondear o dejar un valor fijo por un tiempo). Borrá ese campo para volver a la cotización automática.'),
                 array('¿Qué ve el cliente?', 'En la ficha del producto, debajo del precio en pesos, aparece una referencia chiquita tipo "≈ USD 45,00 · cotización $1.530" solo en los productos que tienen precio en USD cargado.'),
+                array('Redondeo', 'El precio en pesos que calcula el sitio siempre redondea a la decena más cercana, así nunca queda con centavos sueltos (ej: da $45.680 en vez de $45.678,23).'),
             ),
         ),
         array(

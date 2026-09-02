@@ -1,11 +1,12 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.67.0');
+define('GRAVEDAD_VERSION', '5.68.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
 require_once get_template_directory() . '/inc/menu-editor.php';
+require_once get_template_directory() . '/inc/hero-editor.php';
 require_once get_template_directory() . '/inc/manual.php';
 require_once get_template_directory() . '/inc/seo-security.php';
 
@@ -211,6 +212,12 @@ function gravedad_get_usd_rate() {
     return 1000; // resguardo si todavía no hay cotización disponible
 }
 
+// Redondea a la decena de pesos más cercana (ej: 45.678,23 -> 45.680) para
+// que los precios calculados desde dólares no queden con centavos sueltos.
+function gravedad_round_ars($value) {
+    return (float) (round($value / 10) * 10);
+}
+
 function gravedad_recalculate_usd_prices() {
     if (!class_exists('WooCommerce')) { return; }
     $rate = gravedad_get_usd_rate();
@@ -219,10 +226,10 @@ function gravedad_recalculate_usd_prices() {
         $usd_regular = get_post_meta($id, '_price_usd', true);
         $usd_sale = get_post_meta($id, '_sale_price_usd', true);
         if ($usd_regular === '' || !is_numeric($usd_regular)) { continue; }
-        $ars_regular = round($usd_regular * $rate, 2);
+        $ars_regular = gravedad_round_ars($usd_regular * $rate);
         update_post_meta($id, '_regular_price', $ars_regular);
         if ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0) {
-            $ars_sale = round($usd_sale * $rate, 2);
+            $ars_sale = gravedad_round_ars($usd_sale * $rate);
             update_post_meta($id, '_sale_price', $ars_sale);
             update_post_meta($id, '_price', $ars_sale);
         } else {
@@ -245,10 +252,10 @@ add_action('woocommerce_process_product_meta', function ($post_id) {
     update_post_meta($post_id, '_sale_price_usd', $usd_sale);
     if ($usd_regular !== '' && is_numeric($usd_regular)) {
         $rate = gravedad_get_usd_rate();
-        $ars_regular = round($usd_regular * $rate, 2);
+        $ars_regular = gravedad_round_ars($usd_regular * $rate);
         update_post_meta($post_id, '_regular_price', $ars_regular);
         if ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0) {
-            $ars_sale = round($usd_sale * $rate, 2);
+            $ars_sale = gravedad_round_ars($usd_sale * $rate);
             update_post_meta($post_id, '_sale_price', $ars_sale);
             update_post_meta($post_id, '_price', $ars_sale);
         } else {
