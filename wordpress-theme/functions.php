@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.76.1');
+define('GRAVEDAD_VERSION', '5.76.2');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -721,6 +721,7 @@ function gravedad_run_theme_upgrades() {
     gravedad_ensure_catalog_pages();
     if (version_compare($installed, '5.67.0', '<')) { gravedad_brand_wc_emails(); }
     if (version_compare($installed, '5.72.0', '<')) { gravedad_fix_hero_slide_image_paths(); }
+    if (version_compare($installed, '5.76.2', '<')) { gravedad_recalculate_usd_prices(); }
     update_option('gravedad_theme_version', GRAVEDAD_VERSION);
 }
 add_action('admin_init', 'gravedad_run_theme_upgrades');
