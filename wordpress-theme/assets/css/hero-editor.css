@@ -14,3 +14,21 @@
 .hero-media-clear:hover{text-decoration:underline}
 .hero-media-actions small{color:#8b8e94;font-size:11.5px;line-height:1.6;max-width:420px}
 @media(max-width:782px){.hero-media-preview{width:100%;height:160px}}
+
+.hero-mode-switch{border-color:#f2a900}
+.hero-mode-options{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hero-mode-option{display:flex;flex-direction:column;gap:6px;background:#fafafb;border:2px solid #ececef;border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+.hero-mode-option:has(input:checked){border-color:#f2a900;background:#fffaf0}
+.hero-mode-option input{position:absolute;opacity:0;pointer-events:none}
+.hero-mode-option__title{font-size:14px;font-weight:800;color:#1d1e22}
+.hero-mode-option__desc{font-size:12.5px;color:#767a82;line-height:1.6}
+.hero-mode-panel[hidden]{display:none}
+
+.hero-slide-card{border-color:#ececef;opacity:.6;transition:opacity .15s ease,border-color .15s ease}
+.hero-slide-card.is-active{opacity:1;border-color:#f0dfa6}
+.hero-slide-card .gravedad-panel-card__head{align-items:center}
+.hero-slide-card .gravedad-panel-card__head>div{flex:1}
+.hero-slide-toggle{display:flex;align-items:center;gap:8px;flex-shrink:0;background:#fff;border:1px solid #e3e4e8;border-radius:20px;padding:8px 14px;cursor:pointer;font-size:12.5px;font-weight:700;color:#3a3b40}
+.hero-slide-toggle input{width:15px;height:15px;accent-color:#f2a900}
+.hero-slider-help{background:#fbf7ec;border-color:#f0dfa6}
+@media(max-width:782px){.hero-mode-options{grid-template-columns:1fr}}

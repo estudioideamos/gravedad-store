@@ -168,3 +168,30 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 .product-image .foil-badge{bottom:14px;left:14px}
 .woocommerce ul.products li.product .foil-badge{top:275px;left:15px}
 .foil-badge--inline{position:static;display:inline-flex;margin:0 0 12px;animation-duration:3s}
+/* Slider del hero (alternativa opcional al hero clásico, elegible desde
+   Editar Sitio): reutiliza el fondo "vórtice" (.hero-grid) y el overlay
+   ya existentes del hero clásico, con hasta 3 slides de texto + imagen de
+   producto al costado. Mecánica de scroll-snap, igual que los carruseles
+   de productos de la home. */
+.hero-slider-wrap{padding:0!important}
+.hero-slider-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.hero-slider-track::-webkit-scrollbar{display:none}
+.hero-slide{flex:0 0 100%;width:100%;height:100%;position:relative;scroll-snap-align:start;background:var(--hero,linear-gradient(135deg,#15161c,#090a0c));background-position:center;background-size:cover}
+.hero-slide-inner{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:space-between;gap:40px;padding:90px 4vw 0}
+.hero-slide .hero-copy{position:static;width:auto;flex:1 1 50%;padding:0;max-width:640px}
+.hero-slide-product{flex:0 1 38%;display:flex;align-items:center;justify-content:center;max-width:420px;filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
+.hero-slide-product img{width:100%;height:auto;max-height:480px;object-fit:contain}
+.hero-slider-dots{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;display:flex;gap:8px}
+.hero-slider-wrap .hero-slider-dots .carousel-dot{background:rgba(255,255,255,.3)}
+.hero-slider-wrap .hero-slider-dots .carousel-dot.is-active{background:var(--acid)}
+.hero-slider-wrap .carousel-arrow{display:grid;position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:48px;height:48px;background:rgba(9,10,12,.55);border-color:rgba(255,255,255,.18);backdrop-filter:blur(4px)}
+.hero-slider-wrap .carousel-arrow.prev{left:24px}
+.hero-slider-wrap .carousel-arrow.next{right:24px}
+.hero-slider-single .hero-slider-dots,.hero-slider-single .carousel-arrow{display:none!important}
+@media(max-width:950px){
+  .hero-slide-inner{flex-direction:column;justify-content:flex-start;padding:70px 6vw 0;gap:18px}
+  .hero-slide .hero-copy{max-width:none}
+  .hero-slide-product{flex:0 0 auto;max-width:220px}
+  .hero-slide-product img{max-height:220px}
+  .hero-slider-wrap .carousel-arrow{display:none!important}
+}

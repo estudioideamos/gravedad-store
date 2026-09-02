@@ -5,12 +5,56 @@ $games = array(
  array('digimon','Digimon','logo-digimon.png'), array('dragon-ball','Dragon Ball','logo-dragonball.png'), array('yu-gi-oh','Yu-Gi-Oh!','logo-yugioh.png'),
  array('juegos-de-mesa','Juegos de mesa','')
 );
-$hero = array();
-foreach (array('eyebrow','titulo_1','titulo_2','texto','boton1_texto','boton1_url','boton2_texto','boton2_url','imagen','video') as $hf) {
-    $hero[$hf] = gravedad_hero_opt($hf);
+$hero_mode = function_exists('gravedad_hero_mode') ? gravedad_hero_mode() : 'single';
+$hero_slides = array();
+if ($hero_mode === 'slider') {
+    for ($si = 1; $si <= 3; $si++) {
+        if (!gravedad_hero_slide_active($si)) { continue; }
+        $slide = array('index' => $si);
+        foreach (array('eyebrow','titulo_1','titulo_2','texto','boton1_texto','boton1_url','boton2_texto','boton2_url','imagen_producto','fondo') as $sf) {
+            $slide[$sf] = gravedad_hero_slide_opt($si, $sf);
+        }
+        $hero_slides[] = $slide;
+    }
+}
+if ($hero_mode !== 'slider' || !$hero_slides) {
+    $hero = array();
+    foreach (array('eyebrow','titulo_1','titulo_2','texto','boton1_texto','boton1_url','boton2_texto','boton2_url','imagen','video') as $hf) {
+        $hero[$hf] = gravedad_hero_opt($hf);
+    }
 }
 ?>
 <main>
+<?php if ($hero_mode === 'slider' && $hero_slides): ?>
+<section class="hero hero-slider-wrap<?php echo count($hero_slides) > 1 ? '' : ' hero-slider-single'; ?>">
+  <div class="hero-slider-track">
+    <?php foreach ($hero_slides as $slide): ?>
+    <div class="hero-slide"<?php echo $slide['fondo'] ? ' style="--hero:url(\'' . esc_url($slide['fondo']) . '\')"' : ''; ?>>
+      <div class="hero-video-overlay"></div><div class="hero-grid"></div>
+      <div class="hero-slide-inner">
+        <div class="hero-copy">
+          <?php if ($slide['eyebrow']): ?><span class="eyebrow"><i></i> <?php echo esc_html($slide['eyebrow']); ?></span><?php endif; ?>
+          <h1><?php echo esc_html($slide['titulo_1']); ?><br><em><?php echo esc_html($slide['titulo_2']); ?></em></h1>
+          <?php if ($slide['texto']): ?><p><?php echo esc_html($slide['texto']); ?></p><?php endif; ?>
+          <?php if ($slide['boton1_texto'] || $slide['boton2_texto']): ?>
+          <div>
+            <?php if ($slide['boton1_texto']): ?><a class="button primary" href="<?php echo esc_url($slide['boton1_url']); ?>"><?php echo esc_html($slide['boton1_texto']); ?> →</a><?php endif; ?>
+            <?php if ($slide['boton2_texto']): ?><a class="button ghost" href="<?php echo esc_url($slide['boton2_url']); ?>"><?php echo esc_html($slide['boton2_texto']); ?></a><?php endif; ?>
+          </div>
+          <?php endif; ?>
+        </div>
+        <?php if ($slide['imagen_producto']): ?>
+        <div class="hero-slide-product"><img src="<?php echo esc_url($slide['imagen_producto']); ?>" alt="" <?php echo $slide['index'] === 1 ? 'fetchpriority="high" decoding="async"' : 'loading="lazy"'; ?>></div>
+        <?php endif; ?>
+      </div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+  <?php if (count($hero_slides) > 1): ?>
+  <div class="hero-slider-dots" data-hero-slider-dots></div>
+  <?php endif; ?>
+</section>
+<?php else: ?>
 <section class="hero" style="--hero:url('<?php echo esc_url($hero['imagen']); ?>')">
   <?php if ($hero['video']): ?>
   <video class="hero-video" autoplay muted loop playsinline poster="<?php echo esc_url($hero['imagen']); ?>"><source src="<?php echo esc_url($hero['video']); ?>" type="video/mp4"></video>
@@ -27,6 +71,7 @@ foreach (array('eyebrow','titulo_1','titulo_2','texto','boton1_texto','boton1_ur
   </div>
   <span class="hero-scroll">DESLIZÁ PARA EXPLORAR</span>
 </section>
+<?php endif; ?>
 <div class="hero-tear"></div>
 
 <section class="game-picker"><p class="section-label"><b>01</b> ELEGÍ TU JUEGO</p><div class="games-grid">

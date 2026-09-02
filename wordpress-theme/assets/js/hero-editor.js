@@ -52,10 +52,26 @@
         e.preventDefault();
         var targetInput = document.getElementById(btn.getAttribute('data-target'));
         var preview = document.getElementById(btn.getAttribute('data-preview'));
+        var emptyLabel = btn.getAttribute('data-empty-label') || 'Sin archivo';
         if (targetInput) { targetInput.value = ''; }
-        if (preview) { preview.innerHTML = '<span class="hero-media-empty">Sin video</span>'; }
+        if (preview) { preview.innerHTML = '<span class="hero-media-empty">' + emptyLabel + '</span>'; }
+        var pickBtn = document.querySelector('[data-target="' + btn.getAttribute('data-target') + '"].hero-media-pick');
+        if (pickBtn) { pickBtn.textContent = pickBtn.textContent.replace(/^Cambiar/, 'Elegir'); }
       });
     });
+
+    function updateHeroModeVisibility() {
+      var checked = document.querySelector('[data-hero-mode-radio]:checked');
+      var mode = checked ? checked.value : 'single';
+      var singlePanel = document.getElementById('hero-panel-single');
+      var sliderPanel = document.getElementById('hero-panel-slider');
+      if (singlePanel) { singlePanel.hidden = mode !== 'single'; }
+      if (sliderPanel) { sliderPanel.hidden = mode !== 'slider'; }
+    }
+    document.querySelectorAll('[data-hero-mode-radio]').forEach(function (radio) {
+      radio.addEventListener('change', updateHeroModeVisibility);
+    });
+    updateHeroModeVisibility();
 
   });
 })();

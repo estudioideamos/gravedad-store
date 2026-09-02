@@ -487,3 +487,51 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(window.jQuery){ window.jQuery(document.body).on('updated_checkout',cleanNotices); }
   new MutationObserver(cleanNotices).observe(document.body,{childList:true,subtree:true});
 });
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const heroWrap=document.querySelector('.hero-slider-wrap');
+  if(!heroWrap) return;
+  const track=heroWrap.querySelector('.hero-slider-track');
+  const slides=[...track.querySelectorAll('.hero-slide')];
+  const dotsWrap=heroWrap.querySelector('[data-hero-slider-dots]');
+  if(slides.length<2||!dotsWrap) return;
+
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const slideWidth=()=>track.clientWidth;
+  const maxScroll=()=>track.scrollWidth-track.clientWidth;
+  const currentIndex=()=>Math.round(track.scrollLeft/slideWidth());
+  const goTo=(i)=>{ gravedadSmoothScrollTo(track, Math.max(0,Math.min(i*slideWidth(),maxScroll())), 700); };
+
+  let dotEls=[];
+  const syncDots=()=>{ const idx=Math.min(currentIndex(),dotEls.length-1); dotEls.forEach((d,i)=>d.classList.toggle('is-active', i===idx)); };
+  const buildDots=()=>{
+    dotsWrap.innerHTML=''; dotEls=[];
+    slides.forEach((_,i)=>{
+      const d=document.createElement('button'); d.type='button'; d.className='carousel-dot'; d.setAttribute('aria-label','Ir al slide '+(i+1));
+      d.addEventListener('click',()=>{ stop(); goTo(i); start(); });
+      dotsWrap.appendChild(d); dotEls.push(d);
+    });
+    syncDots();
+  };
+
+  let timer=null;
+  const advance=()=>{ goTo((currentIndex()+1)%slides.length); };
+  const start=()=>{ if(reduceMotion) return; stop(); timer=setInterval(advance,6500); };
+  const stop=()=>{ if(timer){ clearInterval(timer); timer=null; } };
+
+  const prevBtn=document.createElement('button'); prevBtn.type='button'; prevBtn.className='carousel-arrow prev'; prevBtn.innerHTML='‹'; prevBtn.setAttribute('aria-label','Slide anterior');
+  const nextBtn=document.createElement('button'); nextBtn.type='button'; nextBtn.className='carousel-arrow next'; nextBtn.innerHTML='›'; nextBtn.setAttribute('aria-label','Slide siguiente');
+  heroWrap.appendChild(prevBtn); heroWrap.appendChild(nextBtn);
+  prevBtn.addEventListener('click',()=>{ stop(); goTo((currentIndex()-1+slides.length)%slides.length); start(); });
+  nextBtn.addEventListener('click',()=>{ stop(); goTo((currentIndex()+1)%slides.length); start(); });
+
+  track.addEventListener('scroll',()=>{ clearTimeout(track._dotTimer); track._dotTimer=setTimeout(syncDots,80); },{passive:true});
+  window.addEventListener('resize',()=>{ clearTimeout(heroWrap._resizeTimer); heroWrap._resizeTimer=setTimeout(()=>goTo(currentIndex()),200); });
+  heroWrap.addEventListener('mouseenter',stop);
+  heroWrap.addEventListener('mouseleave',start);
+  heroWrap.addEventListener('touchstart',stop,{passive:true});
+  heroWrap.addEventListener('touchend',start);
+
+  buildDots();
+  start();
+});
