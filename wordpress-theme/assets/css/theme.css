@@ -9,7 +9,7 @@
 .fav-toggle.is-active .fav-icon-on{display:block}
 .fav-toggle.is-bumping{animation:cart-bump .4s ease}
 .gravity-product{position:relative}
-.gravity-product .fav-toggle{top:14px;right:14px}
+.gravity-product .fav-toggle{top:auto;bottom:14px;left:14px;right:auto}
 .favorites-loading{padding:80px 3.5vw;text-align:center;color:#8d8e95;font-size:13px}
 .favorites-empty{padding:100px 3.5vw;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;color:#a2a3aa}
 .favorites-empty p{font:700 20px var(--display);text-transform:uppercase;color:#fff;margin:0}
@@ -165,7 +165,7 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 @media(max-width:950px){.search-suggest{position:absolute;left:0;right:0;top:100%;border-radius:0 0 10px 10px}}
 .foil-badge{position:absolute;z-index:4;display:inline-flex;align-items:center;gap:4px;background:linear-gradient(120deg,#d9d9e6,#9a9ac2,#f0e0ff,#a8cbe8,#d9d9e6);background-size:250% 250%;animation:foilShimmer 5s ease-in-out infinite;color:#1a1a24;padding:5px 10px;font:800 9.5px var(--body);letter-spacing:.05em;text-transform:uppercase;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,.45);pointer-events:none;white-space:nowrap}
 @keyframes foilShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.product-image .foil-badge{bottom:14px;left:14px}
+.product-image .foil-badge{bottom:14px;right:14px}
 .woocommerce ul.products li.product .foil-badge{top:275px;left:15px}
 .foil-badge--inline{position:static;display:inline-flex;margin:0 0 12px;animation-duration:3s}
 /* Slider del hero (alternativa opcional al hero clásico, elegible desde
