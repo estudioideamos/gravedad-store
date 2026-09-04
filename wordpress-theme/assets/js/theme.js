@@ -536,3 +536,20 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildDots();
   start();
 });
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // La estrellita de favoritos, en la grilla estándar de WooCommerce
+  // (categorías, tienda, búsqueda), comparte el mismo <a> gigante que
+  // envuelve imagen + título + precio, así que no se puede anclar solo
+  // a la imagen con CSS. La envolvemos en su propio contenedor.
+  document.querySelectorAll('ul.products li.product .fav-toggle').forEach(btn=>{
+    const link=btn.closest('a.woocommerce-loop-product__link, a.woocommerce-LoopProduct-link');
+    const img=link?link.querySelector('img'):null;
+    if(!img||img.parentElement.classList.contains('loop-product-image')) return;
+    const wrap=document.createElement('span');
+    wrap.className='loop-product-image';
+    img.parentNode.insertBefore(wrap,img);
+    wrap.appendChild(img);
+    wrap.appendChild(btn);
+  });
+});

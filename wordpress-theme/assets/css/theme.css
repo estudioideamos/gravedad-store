@@ -10,6 +10,8 @@
 .fav-toggle.is-bumping{animation:cart-bump .4s ease}
 .gravity-product{position:relative}
 .gravity-product .fav-toggle{top:auto;bottom:14px;left:14px;right:auto}
+.woocommerce ul.products li.product .loop-product-image{position:relative;display:block}
+.woocommerce ul.products li.product .fav-toggle{top:auto;bottom:14px;left:14px;right:auto}
 .favorites-loading{padding:80px 3.5vw;text-align:center;color:#8d8e95;font-size:13px}
 .favorites-empty{padding:100px 3.5vw;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;color:#a2a3aa}
 .favorites-empty p{font:700 20px var(--display);text-transform:uppercase;color:#fff;margin:0}
