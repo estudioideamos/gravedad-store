@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.79.0');
+define('GRAVEDAD_VERSION', '5.79.1');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -222,7 +222,7 @@ function gravedad_round_ars($value) {
 function gravedad_recalculate_usd_prices() {
     if (!class_exists('WooCommerce')) { return; }
     $rate = gravedad_get_usd_rate();
-    $ids = get_posts(array('post_type' => 'product', 'posts_per_page' => -1, 'fields' => 'ids', 'meta_key' => '_price_usd', 'post_status' => 'any'));
+    $ids = get_posts(array('post_type' => array('product', 'product_variation'), 'posts_per_page' => -1, 'fields' => 'ids', 'meta_key' => '_price_usd', 'post_status' => 'any'));
     foreach ($ids as $id) {
         $usd_regular = get_post_meta($id, '_price_usd', true);
         $usd_sale = get_post_meta($id, '_sale_price_usd', true);
@@ -303,6 +303,54 @@ function gravedad_finalize_usd_price($product_id) {
 }
 add_action('woocommerce_new_product', 'gravedad_finalize_usd_price', 999);
 add_action('woocommerce_update_product', 'gravedad_finalize_usd_price', 999);
+
+// Lo mismo, pero por variación (cada variación de un producto variable
+// tiene su propio precio y por lo tanto su propio "Precio en USD").
+add_action('woocommerce_product_after_variable_attributes', function ($loop, $variation_data, $variation) {
+    woocommerce_wp_text_input(array(
+        'id' => 'variable_price_usd' . $loop,
+        'name' => "variable_price_usd[{$loop}]",
+        'value' => get_post_meta($variation->ID, '_price_usd', true),
+        'label' => __('Precio en USD (opcional)', 'gravedad-store'),
+        'desc_tip' => true,
+        'description' => __('Si cargás un valor acá, el precio en pesos de esta variación se calcula solo con la cotización del dólar y pisa el precio regular.', 'gravedad-store'),
+        'data_type' => 'price',
+        'wrapper_class' => 'form-row form-row-full',
+    ));
+    woocommerce_wp_text_input(array(
+        'id' => 'variable_sale_price_usd' . $loop,
+        'name' => "variable_sale_price_usd[{$loop}]",
+        'value' => get_post_meta($variation->ID, '_sale_price_usd', true),
+        'label' => __('Precio de oferta en USD (opcional)', 'gravedad-store'),
+        'data_type' => 'price',
+        'wrapper_class' => 'form-row form-row-full',
+    ));
+}, 10, 3);
+
+add_action('woocommerce_save_product_variation', function ($variation_id, $loop) {
+    $usd_regular_raw = isset($_POST['variable_price_usd'][$loop]) ? wp_unslash($_POST['variable_price_usd'][$loop]) : '';
+    $usd_sale_raw = isset($_POST['variable_sale_price_usd'][$loop]) ? wp_unslash($_POST['variable_sale_price_usd'][$loop]) : '';
+    $usd_regular = gravedad_parse_usd_input($usd_regular_raw);
+    $usd_sale = gravedad_parse_usd_input($usd_sale_raw);
+    update_post_meta($variation_id, '_price_usd', $usd_regular);
+    update_post_meta($variation_id, '_sale_price_usd', $usd_sale);
+    if ($usd_regular === '' || !is_numeric($usd_regular)) {
+        if (trim((string) $usd_regular_raw) !== '') {
+            set_transient('gravedad_usd_price_error_' . wp_get_post_parent_id($variation_id), trim((string) $usd_regular_raw), 60);
+        }
+        return;
+    }
+    $rate = gravedad_get_usd_rate();
+    $ars_regular = gravedad_round_ars($usd_regular * $rate);
+    $has_sale = ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0);
+    $ars_sale = $has_sale ? gravedad_round_ars($usd_sale * $rate) : '';
+    $variation = wc_get_product($variation_id);
+    if (!$variation) { return; }
+    $variation->set_regular_price($ars_regular);
+    $variation->set_sale_price($ars_sale);
+    $variation->save();
+    if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($variation_id); }
+}, 20, 2);
 
 function gravedad_shop_url($slug = '') {
     if (in_array($slug, array('novedades', 'ofertas'), true)) {
