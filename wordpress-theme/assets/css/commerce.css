@@ -27,7 +27,7 @@
 #comment{width:100%;min-height:120px;background:#0d0e11;color:#fff;border:1px solid #35363d;border-radius:6px;padding:14px;font:inherit;font-size:13px;resize:vertical;outline:none}
 #comment:focus{border-color:var(--acid);box-shadow:0 0 0 3px rgba(242,169,0,.12)}
 .form-submit{margin-top:18px}
-.form-submit #submit{min-height:48px;padding:0 28px;border:0;border-radius:5px;background:var(--acid);color:#08090b;font:700 10px var(--body);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
+.form-submit #submit{appearance:none;-webkit-appearance:none;-moz-appearance:none;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border:0;border-radius:5px;background:var(--acid);color:#08090b;font:700 10px var(--body);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
 .form-submit #submit:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(242,169,0,.3)}
 .comment-notes,.comment-form-cookies-consent{color:#8d8e95;font-size:11px}
 .comment-form-cookies-consent{display:flex;align-items:center;gap:8px;margin:14px 0}
