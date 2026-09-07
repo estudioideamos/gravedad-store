@@ -237,3 +237,17 @@
 /* Miniatura del carrito lateral: sin el alto fijo la foto vertical crecía
    más que la fila y se montaba sobre la línea que separa los productos. */
 .cart-drawer .woocommerce-mini-cart img,.cart-drawer .mini-cart img{width:56px!important;height:56px!important;object-fit:contain!important;max-width:56px!important;max-height:56px!important}
+
+/* La flecha de los desplegables de envío (Select2 del plugin de Correo
+   Argentino) no es un borde sino una imagen SVG oscura propia del plugin:
+   por eso cambiarle el color de borde no surtía efecto. La reemplazamos
+   por un chevron blanco. */
+.woocommerce-shipping-methods .select2-selection__arrow b,
+.woocommerce-checkout .corrarfo-select2 .select2-selection__arrow b,
+.woocommerce-cart .corrarfo-select2 .select2-selection__arrow b{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:18px!important;
+  border:0!important;
+}
