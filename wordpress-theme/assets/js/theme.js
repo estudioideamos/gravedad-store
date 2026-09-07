@@ -272,7 +272,14 @@ document.addEventListener('DOMContentLoaded',()=>{
       const seq=++swapSeq;
       if(swapAbort) swapAbort.abort();
       swapAbort=new AbortController();
-      layout.style.opacity='.5';
+      // Buscamos la grilla y la barra EN CADA pedido: quedaron guardadas al
+      // inicializar, pero cada recambio las reemplaza por nodos nuevos, así
+      // que a partir del segundo filtro se escribía sobre elementos que ya
+      // no estaban en la página y la grilla/contador se quedaban clavados
+      // en el primer resultado.
+      const layoutNow=document.querySelector('.singles-layout');
+      const toolbarNow=document.querySelector('.singles-toolbar');
+      if(layoutNow) layoutNow.style.opacity='.5';
       fetch(url,{headers:{'X-Requested-With':'XMLHttpRequest'},signal:swapAbort.signal})
         .then(r=>r.text())
         .then(html=>{
@@ -292,9 +299,9 @@ document.addEventListener('DOMContentLoaded',()=>{
           if(newRefine&&oldRefine){ oldRefine.value=newRefine.value; }
 
           const newLayout=doc.querySelector('.singles-layout');
-          if(newLayout){ layout.replaceWith(newLayout); }
+          if(newLayout&&layoutNow){ layoutNow.replaceWith(newLayout); }
           const newToolbar=doc.querySelector('.singles-toolbar');
-          if(newToolbar&&toolbar){ toolbar.replaceWith(newToolbar); }
+          if(newToolbar&&toolbarNow){ toolbarNow.replaceWith(newToolbar); }
           const newChips=doc.querySelector('.active-filters');
           const oldChips=document.querySelector('.active-filters');
           if(newChips&&oldChips){ oldChips.replaceWith(newChips); }
