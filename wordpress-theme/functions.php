@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.88.0');
+define('GRAVEDAD_VERSION', '5.88.1');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -428,7 +428,11 @@ function gravedad_shop_url($slug = '') {
 }
 
 function gravedad_fav_button($product_id) {
-    return '<button type="button" class="fav-toggle" data-product-id="' . esc_attr($product_id) . '" aria-label="Agregar a favoritos"><span class="fav-icon-off">' . gravedad_icon('heart') . '</span><span class="fav-icon-on">' . gravedad_icon('heart-filled') . '</span></button>';
+    // Mismo ícono (la estrella "gordita") en los dos estados: antes el
+    // marcado usaba una estrella genérica de 5 puntas mucho más fina que la
+    // de contorno, y se veía desprolijo el cambio entre una y otra.
+    $star = gravedad_icon('heart');
+    return '<button type="button" class="fav-toggle" data-product-id="' . esc_attr($product_id) . '" aria-label="Agregar a favoritos"><span class="fav-icon-off">' . $star . '</span><span class="fav-icon-on">' . $star . '</span></button>';
 }
 
 function gravedad_hover_image_html($product) {
