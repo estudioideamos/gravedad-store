@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.82.4');
+define('GRAVEDAD_VERSION', '5.83.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -411,7 +411,11 @@ function gravedad_render_gravity_product($product, $filter_dims = array()) {
     echo $product->get_image('woocommerce_thumbnail');
     echo gravedad_hover_image_html($product);
     echo gravedad_fav_button($product->get_id());
-    echo '</a><div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
+    // En la portada mostramos a qué juego pertenece (Magic, Pokémon, etc.),
+    // igual que en la grilla de categorías; si el producto no tiene juego
+    // cargado, se cae a la categoría como antes.
+    $game_label = gravedad_product_game_name($product->get_id());
+    echo '</a><div><small>' . ($game_label ? esc_html($game_label) : wp_kses_post(wc_get_product_category_list($product->get_id(), ', '))) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
 }
 
 function gravedad_home_quick_filters($dims) {
@@ -1052,6 +1056,11 @@ function gravedad_faceted_terms($taxonomy, $filters, $exclude_param, $base_tax_q
     }
     usort($out, function ($a, $b) { return strcasecmp($a->name, $b->name); });
     return $out;
+}
+
+function gravedad_product_game_name($product_id) {
+    $terms = get_the_terms($product_id, 'pa_juego');
+    return ($terms && !is_wp_error($terms)) ? $terms[0]->name : '';
 }
 
 function gravedad_loop_game_label() {
