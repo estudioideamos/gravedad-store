@@ -628,57 +628,60 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 
-window.addEventListener('load',()=>{
+(function(){
   // Arrastrar la foto del producto con el mouse para pasar a la otra: FlexSlider
   // ya soporta el gesto táctil de fábrica (touch:true por defecto), así que esto
   // suma únicamente el arrastre con mouse, que la librería no trae en escritorio.
-  // Va en window.load (no DOMContentLoaded): el carril de miniaturas lo arma el
-  // propio script de WooCommerce, que puede terminar después del DOMContentLoaded,
-  // y si en ese momento todavía no había 2 miniaturas el arrastre no se activaba.
-  const gallery=document.querySelector('.woocommerce-product-gallery');
-  const viewport=gallery?gallery.querySelector('.flex-viewport'):null;
-  const thumbs=()=>gallery?[...gallery.querySelectorAll('.flex-control-nav li img')]:[];
-  if(!viewport||thumbs().length<2) return;
-
+  // Todo por delegación de eventos sobre document (sin buscar el carril una sola
+  // vez al cargar): FlexSlider reconstruye su propio marcado en algún momento
+  // después de que la página carga, y guardar esa referencia de entrada hacía que
+  // el arrastre dejara de funcionar apenas la librería rearmaba el carril.
   const THRESHOLD=40;
-  let startX=0,dragging=false,moved=false;
+  let drag=null;
 
-  function activeIndex(){
+  function activeIndex(gallery){
     const slides=[...gallery.querySelectorAll('.woocommerce-product-gallery__image')];
     return Math.max(0,slides.findIndex(s=>s.classList.contains('flex-active-slide')));
   }
-  function goTo(index){
-    const list=thumbs();
+  function goTo(gallery,index){
+    const list=[...gallery.querySelectorAll('.flex-control-nav li img')];
+    if(list.length<2) return;
     const clamped=Math.max(0,Math.min(list.length-1,index));
-    if(clamped!==activeIndex()) list[clamped].click();
+    if(clamped!==activeIndex(gallery)) list[clamped].click();
   }
 
-  viewport.style.cursor='grab';
-  viewport.addEventListener('mousedown',e=>{
-    dragging=true; moved=false; startX=e.clientX;
+  document.addEventListener('mouseover',e=>{
+    if(drag) return;
+    const viewport=e.target.closest('.woocommerce-product-gallery .flex-viewport');
+    if(viewport) viewport.style.cursor='grab';
+  });
+  document.addEventListener('mousedown',e=>{
+    const viewport=e.target.closest('.woocommerce-product-gallery .flex-viewport');
+    if(!viewport) return;
+    drag={startX:e.clientX,viewport,moved:false};
     viewport.style.cursor='grabbing';
   });
-  window.addEventListener('mousemove',e=>{
-    if(!dragging) return;
-    if(Math.abs(e.clientX-startX)>6) moved=true;
+  document.addEventListener('mousemove',e=>{
+    if(!drag) return;
+    if(Math.abs(e.clientX-drag.startX)>6) drag.moved=true;
   });
-  window.addEventListener('mouseup',e=>{
-    if(!dragging) return;
-    dragging=false;
+  document.addEventListener('mouseup',e=>{
+    if(!drag) return;
+    const {startX,viewport,moved}=drag;
     viewport.style.cursor='grab';
+    const gallery=viewport.closest('.woocommerce-product-gallery');
     const dx=e.clientX-startX;
-    if(dx<=-THRESHOLD) goTo(activeIndex()+1);
-    else if(dx>=THRESHOLD) goTo(activeIndex()-1);
-  });
-  viewport.addEventListener('mouseleave',()=>{
-    if(dragging){ dragging=false; viewport.style.cursor='grab'; }
-  });
-  // Si hubo arrastre, que el click no dispare la lupa (el link que agranda
-  // la foto), para que soltar después de arrastrar no abra el visor.
-  gallery.addEventListener('click',e=>{
-    if(moved&&e.target.closest('.woocommerce-product-gallery__image a')){
-      e.preventDefault(); e.stopPropagation();
+    if(gallery){
+      if(dx<=-THRESHOLD) goTo(gallery,activeIndex(gallery)+1);
+      else if(dx>=THRESHOLD) goTo(gallery,activeIndex(gallery)-1);
     }
-    moved=false;
-  },true);
-});
+    if(moved){
+      const blockNextClick=ce=>{
+        if(ce.target.closest('.woocommerce-product-gallery__image a')){ ce.preventDefault(); ce.stopPropagation(); }
+        document.removeEventListener('click',blockNextClick,true);
+      };
+      document.addEventListener('click',blockNextClick,true);
+    }
+    drag=null;
+  });
+})();
