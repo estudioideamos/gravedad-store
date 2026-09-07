@@ -554,6 +554,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     // dentro del mismo contenedor para poder superponerse a la principal.
     const hover=link.querySelector('.product-image-hover');
     if(hover) wrap.appendChild(hover);
+    // La cápsula FOIL también va adentro, para poder anclarla a la esquina
+    // de la imagen y que no se superponga con la estrella de favoritos.
+    const foil=link.querySelector('.foil-badge');
+    if(foil) wrap.appendChild(foil);
     wrap.appendChild(btn);
   });
 });
