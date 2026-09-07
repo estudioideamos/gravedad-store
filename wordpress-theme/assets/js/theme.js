@@ -628,10 +628,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 });
 
-document.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('load',()=>{
   // Arrastrar la foto del producto con el mouse para pasar a la otra: FlexSlider
   // ya soporta el gesto táctil de fábrica (touch:true por defecto), así que esto
   // suma únicamente el arrastre con mouse, que la librería no trae en escritorio.
+  // Va en window.load (no DOMContentLoaded): el carril de miniaturas lo arma el
+  // propio script de WooCommerce, que puede terminar después del DOMContentLoaded,
+  // y si en ese momento todavía no había 2 miniaturas el arrastre no se activaba.
   const gallery=document.querySelector('.woocommerce-product-gallery');
   const viewport=gallery?gallery.querySelector('.flex-viewport'):null;
   const thumbs=()=>gallery?[...gallery.querySelectorAll('.flex-control-nav li img')]:[];
