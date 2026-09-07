@@ -33,4 +33,5 @@
 .woocommerce div.product .summary .fav-toggle{width:44px;height:44px;background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.16)!important;color:#c7c8ce;transition:color .25s,background .25s,border-color .25s,transform .25s}
 .woocommerce div.product .summary .fav-toggle svg{width:20px;height:20px}
 .woocommerce div.product .summary .fav-toggle:hover{background:#17181d!important;border-color:var(--acid)!important;color:var(--acid);transform:translateY(-2px) scale(1.05)}
-.woocommerce div.product .summary .fav-toggle.is-active{border-color:var(--acid)!important;background:rgba(242,169,0,.12)!important}
+.woocommerce div.product .summary .fav-toggle.is-active{border-color:var(--acid)!important;background:var(--acid)!important}
+.woocommerce div.product .summary .fav-toggle.is-active:hover{background:var(--acid)!important;transform:translateY(-2px) scale(1.05)}

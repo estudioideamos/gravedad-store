@@ -627,3 +627,55 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.documentElement.style.scrollBehavior='auto';
   }
 });
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // Arrastrar la foto del producto con el mouse para pasar a la otra: FlexSlider
+  // ya soporta el gesto táctil de fábrica (touch:true por defecto), así que esto
+  // suma únicamente el arrastre con mouse, que la librería no trae en escritorio.
+  const gallery=document.querySelector('.woocommerce-product-gallery');
+  const viewport=gallery?gallery.querySelector('.flex-viewport'):null;
+  const thumbs=()=>gallery?[...gallery.querySelectorAll('.flex-control-nav li img')]:[];
+  if(!viewport||thumbs().length<2) return;
+
+  const THRESHOLD=40;
+  let startX=0,dragging=false,moved=false;
+
+  function activeIndex(){
+    const slides=[...gallery.querySelectorAll('.woocommerce-product-gallery__image')];
+    return Math.max(0,slides.findIndex(s=>s.classList.contains('flex-active-slide')));
+  }
+  function goTo(index){
+    const list=thumbs();
+    const clamped=Math.max(0,Math.min(list.length-1,index));
+    if(clamped!==activeIndex()) list[clamped].click();
+  }
+
+  viewport.style.cursor='grab';
+  viewport.addEventListener('mousedown',e=>{
+    dragging=true; moved=false; startX=e.clientX;
+    viewport.style.cursor='grabbing';
+  });
+  window.addEventListener('mousemove',e=>{
+    if(!dragging) return;
+    if(Math.abs(e.clientX-startX)>6) moved=true;
+  });
+  window.addEventListener('mouseup',e=>{
+    if(!dragging) return;
+    dragging=false;
+    viewport.style.cursor='grab';
+    const dx=e.clientX-startX;
+    if(dx<=-THRESHOLD) goTo(activeIndex()+1);
+    else if(dx>=THRESHOLD) goTo(activeIndex()-1);
+  });
+  viewport.addEventListener('mouseleave',()=>{
+    if(dragging){ dragging=false; viewport.style.cursor='grab'; }
+  });
+  // Si hubo arrastre, que el click no dispare la lupa (el link que agranda
+  // la foto), para que soltar después de arrastrar no abra el visor.
+  gallery.addEventListener('click',e=>{
+    if(moved&&e.target.closest('.woocommerce-product-gallery__image a')){
+      e.preventDefault(); e.stopPropagation();
+    }
+    moved=false;
+  },true);
+});
