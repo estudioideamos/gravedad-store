@@ -286,6 +286,7 @@ document.addEventListener('DOMContentLoaded',()=>{
           if(pushState) window.history.pushState({gravedadFilter:true},'',url);
           document.title=doc.title;
           bindFilterEvents();
+          if(typeof gravedadWrapLoopImages==='function') gravedadWrapLoopImages();
         })
         .catch(()=>{ window.location.href=url; });
     }
@@ -537,11 +538,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   start();
 });
 
-document.addEventListener('DOMContentLoaded',()=>{
-  // La estrellita de favoritos, en la grilla estándar de WooCommerce
-  // (categorías, tienda, búsqueda), comparte el mismo <a> gigante que
-  // envuelve imagen + título + precio, así que no se puede anclar solo
-  // a la imagen con CSS. La envolvemos en su propio contenedor.
+// La estrellita de favoritos, en la grilla estándar de WooCommerce
+// (categorías, tienda, búsqueda), comparte el mismo <a> gigante que
+// envuelve imagen + título + precio, así que no se puede anclar solo
+// a la imagen con CSS. La envolvemos en su propio contenedor. Se expone
+// como función porque los filtros de "Cartas sueltas" vuelven a dibujar
+// las tarjetas por AJAX y hay que aplicarlo también a las nuevas.
+function gravedadWrapLoopImages(){
   document.querySelectorAll('ul.products li.product .fav-toggle').forEach(btn=>{
     const link=btn.closest('a.woocommerce-loop-product__link, a.woocommerce-LoopProduct-link');
     const img=link?link.querySelector('img'):null;
@@ -560,7 +563,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(foil) wrap.appendChild(foil);
     wrap.appendChild(btn);
   });
-});
+}
+document.addEventListener('DOMContentLoaded',gravedadWrapLoopImages);
 
 window.addEventListener('load',()=>{
   // Botón de lupa sobre la foto del producto: al tocarlo abre la imagen
