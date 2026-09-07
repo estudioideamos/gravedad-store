@@ -200,12 +200,22 @@
    dentro de la misma opción. Como la fila es flex, se ubicaban al lado del
    texto y lo tapaban: cualquier cosa que no sea el selector o su texto pasa
    a una línea propia, a lo ancho y alineada con el texto de arriba. */
-.woocommerce-checkout .woocommerce-shipping-methods li>*:not(input):not(label),.woocommerce-cart .woocommerce-shipping-methods li>*:not(input):not(label){flex:0 0 100%;width:100%;max-width:100%;margin:8px 0 0 24px;box-sizing:border-box}
+.woocommerce-checkout .woocommerce-shipping-methods li>*:not(input):not(label),.woocommerce-cart .woocommerce-shipping-methods li>*:not(input):not(label){flex:0 0 calc(100% - 24px);width:calc(100% - 24px);max-width:calc(100% - 24px);margin:8px 0 0 24px;box-sizing:border-box}
+/* Select2 (el buscador de sucursal) se dibuja con ancho propio y se salía
+   del resumen; y la primera opción, que es la leyenda "Seleccioná la
+   sucursal destino", quedaba gris sobre gris y no se leía. */
+.woocommerce-checkout .woocommerce-shipping-methods .select2-container,.woocommerce-cart .woocommerce-shipping-methods .select2-container{width:100%!important;max-width:100%!important}
+.select2-container--open .select2-dropdown{max-width:calc(100vw - 32px)}
+.select2-results__option[aria-disabled=true],.select2-results__option[data-selected=true]{color:#9a9ba2!important;background:#17181d!important}
+.select2-results__option[aria-disabled=true]{font-style:italic}
 .woocommerce-checkout .woocommerce-shipping-methods li select,.woocommerce-cart .woocommerce-shipping-methods li select{width:100%;max-width:100%;box-sizing:border-box;background:#15161b;color:#f0f0f2;border:1px solid #35363d;border-radius:6px;padding:9px 12px;font-size:12.5px}
 .woocommerce-checkout .woocommerce-shipping-methods li select option,.woocommerce-cart .woocommerce-shipping-methods li select option{background:#15161b;color:#f0f0f2}
 .woocommerce-checkout .woocommerce-shipping-methods li:last-child,.woocommerce-cart .woocommerce-shipping-methods li:last-child{margin-bottom:0}
 .woocommerce-checkout .woocommerce-shipping-methods li input.shipping_method,.woocommerce-cart .woocommerce-shipping-methods li input.shipping_method{flex:0 0 auto;margin:3px 0 0;width:15px;height:15px;accent-color:var(--acid)}
 .woocommerce-checkout .woocommerce-shipping-methods li label,.woocommerce-cart .woocommerce-shipping-methods li label{flex:1;min-width:0;display:block;font-size:12.5px!important;line-height:1.55!important;color:#c7c8ce}
 .woocommerce-checkout .woocommerce-shipping-methods li label .amount,.woocommerce-cart .woocommerce-shipping-methods li label .amount{color:var(--acid);font-weight:800}
-/* Puntita del cartel de información del medio de pago, en blanco. */
-.woocommerce-checkout #payment div.payment_box:before{border-bottom-color:#ffffff!important}
+/* La puntita del cartel del medio de pago tiene que seguir el color de SU
+   caja: las nuestras son oscuras (#202126, ya definido más arriba) y solo la
+   de Mercado Pago la dibuja blanca la propia pasarela. Poner blanco para
+   todos dejaba la puntita en blanco sobre las cajas oscuras. */
+.woocommerce-checkout #payment li[class*="mercado"] div.payment_box:before{border-bottom-color:#ffffff!important}
