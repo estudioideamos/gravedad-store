@@ -256,3 +256,9 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 /* Las etiquetas (NUEVO / OFERTA / FOIL) caían sobre el nombre impreso de la
    carta; las bajamos un poco para que ese nombre se lea. */
 .product-image .foil-badge{top:56px!important;bottom:auto!important;left:-7px!important;right:auto!important}
+
+/* WooCommerce trae .woocommerce ul.products li.product a img{height:auto},
+   que por incluir la <a> le gana a nuestra regla de 300px: la foto tomaba su
+   alto natural y estiraba la tarjeta (se veía sobre todo en Favoritos, donde
+   las tarjetas llegan por AJAX). Igualamos la especificidad. */
+.woocommerce ul.products li.product a img,.woocommerce ul.products li.product img{height:300px!important}

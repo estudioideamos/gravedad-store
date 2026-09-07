@@ -75,7 +75,7 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
     fetch(window.gravedadAjax.url,{method:'POST', body:formData})
       .then(r=>r.json())
       .then(res=>{
-        if(res&&res.success&&res.data&&res.data.html){ favGrid.outerHTML='<div data-favorites-grid>'+res.data.html+'</div>'; updateFavUI(); }
+        if(res&&res.success&&res.data&&res.data.html){ favGrid.outerHTML='<div data-favorites-grid>'+res.data.html+'</div>'; updateFavUI(); if(typeof gravedadWrapLoopImages==='function') gravedadWrapLoopImages(); }
         else { favGrid.className='favorites-empty'; favGrid.innerHTML='<p>Esos productos ya no están disponibles.</p>'; }
       })
       .catch(()=>{ favGrid.innerHTML='<p>No se pudieron cargar los favoritos.</p>'; });
