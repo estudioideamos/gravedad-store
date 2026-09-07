@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.81.2');
+define('GRAVEDAD_VERSION', '5.82.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -372,6 +372,21 @@ function gravedad_fav_button($product_id) {
     return '<button type="button" class="fav-toggle" data-product-id="' . esc_attr($product_id) . '" aria-label="Agregar a favoritos"><span class="fav-icon-off">' . gravedad_icon('heart') . '</span><span class="fav-icon-on">' . gravedad_icon('heart-filled') . '</span></button>';
 }
 
+function gravedad_hover_image_html($product) {
+    // Segunda foto de la galería: se muestra al pasar el mouse por encima
+    // de la tarjeta, encima de la principal y con una transición suave.
+    if (!$product) { return ''; }
+    $gallery = $product->get_gallery_image_ids();
+    if (empty($gallery)) { return ''; }
+    $html = wp_get_attachment_image($gallery[0], 'woocommerce_thumbnail', false, array(
+        'class'   => 'product-image-hover',
+        'alt'     => '',
+        'loading' => 'lazy',
+        'aria-hidden' => 'true',
+    ));
+    return $html ? $html : '';
+}
+
 function gravedad_render_gravity_product($product, $filter_dims = array()) {
     $permalink = get_permalink($product->get_id());
     $data_attrs = '';
@@ -389,6 +404,7 @@ function gravedad_render_gravity_product($product, $filter_dims = array()) {
     }
     echo gravedad_foil_badge_html($product->get_id());
     echo $product->get_image('woocommerce_thumbnail');
+    echo gravedad_hover_image_html($product);
     echo gravedad_fav_button($product->get_id());
     echo '</a><div><small>' . wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
 }
@@ -665,6 +681,11 @@ add_action('set_object_terms', function ($object_id, $terms, $tt_ids, $taxonomy)
         gravedad_prefill_cartas_sueltas_attributes($object_id);
     }
 }, 20, 4);
+
+add_action('woocommerce_before_shop_loop_item_title', function () {
+    global $product;
+    if ($product) { echo gravedad_hover_image_html($product); }
+}, 14);
 
 add_action('woocommerce_before_shop_loop_item_title', function () {
     global $product;

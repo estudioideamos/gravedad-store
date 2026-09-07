@@ -550,6 +550,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     wrap.className='loop-product-image';
     img.parentNode.insertBefore(wrap,img);
     wrap.appendChild(img);
+    // La segunda foto (la que aparece al pasar el mouse) tiene que quedar
+    // dentro del mismo contenedor para poder superponerse a la principal.
+    const hover=link.querySelector('.product-image-hover');
+    if(hover) wrap.appendChild(hover);
     wrap.appendChild(btn);
   });
 });
