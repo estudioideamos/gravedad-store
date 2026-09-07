@@ -25,3 +25,12 @@
 .woocommerce nav.woocommerce-pagination ul li a,.woocommerce nav.woocommerce-pagination ul li span{margin:0!important;padding:0!important}
 .singles-results .woocommerce-pagination .current{box-shadow:none!important}
 .singles-results .woocommerce-pagination a:hover{box-shadow:none!important;transform:translateY(-2px)}
+
+/* Estrella de favoritos en la ficha del producto: el círculo existía, pero
+   su fondo translúcido oscuro es casi el mismo color que el fondo de la
+   página, así que se veía la estrella "suelta". Le damos borde y un fondo
+   propio, como los iconos del encabezado. */
+.woocommerce div.product .summary .fav-toggle{width:44px;height:44px;background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.16)!important;color:#c7c8ce;transition:color .25s,background .25s,border-color .25s,transform .25s}
+.woocommerce div.product .summary .fav-toggle svg{width:20px;height:20px}
+.woocommerce div.product .summary .fav-toggle:hover{background:#17181d!important;border-color:var(--acid)!important;color:var(--acid);transform:translateY(-2px) scale(1.05)}
+.woocommerce div.product .summary .fav-toggle.is-active{border-color:var(--acid)!important;background:rgba(242,169,0,.12)!important}
