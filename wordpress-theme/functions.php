@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.83.2');
+define('GRAVEDAD_VERSION', '5.84.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -1032,28 +1032,45 @@ function gravedad_filter_terms($taxonomy) {
  */
 function gravedad_faceted_terms($taxonomy, $filters, $exclude_param, $base_tax_query = array()) {
     if (!taxonomy_exists($taxonomy)) { return array(); }
+
+    // Restricciones actuales: la categoría (si estamos en una), los OTROS
+    // filtros ya elegidos, el texto buscado y el precio/disponibilidad.
+    // Así cada desplegable ofrece solo lo que realmente queda disponible,
+    // y con el número de productos que corresponde a esa selección (y no
+    // al total del catálogo, que era lo que se mostraba antes).
     $tax_query = $base_tax_query;
-    $has_other_filter = false;
     foreach ($filters as $param => $data) {
         if ($param === $exclude_param) { continue; }
         if (!empty($_GET[$param])) {
-            $has_other_filter = true;
             $tax_query[] = array('taxonomy' => $data[1], 'field' => 'slug', 'terms' => sanitize_title(wp_unslash($_GET[$param])));
         }
     }
-    if (!$has_other_filter) { return gravedad_filter_terms($taxonomy); }
     if (count($tax_query) > 1) { $tax_query['relation'] = 'AND'; }
-    $ids = get_posts(array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'tax_query' => $tax_query));
+
+    $args = array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids');
+    if ($tax_query) { $args['tax_query'] = $tax_query; }
+    $meta_query = gravedad_catalog_meta_query_from_get();
+    if ($meta_query) { $args['meta_query'] = $meta_query; }
+    $search_term = get_search_query();
+    if ($search_term !== '') { $args['s'] = $search_term; }
+
+    $ids = get_posts($args);
     if (!$ids) { return array(); }
-    $terms = wp_get_object_terms($ids, $taxonomy, array('fields' => 'all'));
-    if (is_wp_error($terms)) { return array(); }
-    $seen = array();
+
+    // 'all_with_object_id' devuelve una fila por (producto, término), así
+    // podemos contar cuántos productos del resultado actual tiene cada opción.
+    $rows = wp_get_object_terms($ids, $taxonomy, array('fields' => 'all_with_object_id'));
+    if (is_wp_error($rows)) { return array(); }
     $out = array();
-    foreach ($terms as $t) {
-        if (isset($seen[$t->term_id])) { continue; }
-        $seen[$t->term_id] = true;
-        $out[] = $t;
+    foreach ($rows as $row) {
+        if (!isset($out[$row->term_id])) {
+            $term = clone $row;
+            $term->count = 0;
+            $out[$row->term_id] = $term;
+        }
+        $out[$row->term_id]->count++;
     }
+    $out = array_values($out);
     usort($out, function ($a, $b) { return strcasecmp($a->name, $b->name); });
     return $out;
 }
