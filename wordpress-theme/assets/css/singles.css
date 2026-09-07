@@ -16,3 +16,12 @@
    alto y efecto al pasar el mouse). */
 .woocommerce #review_form #respond input#submit{background:var(--acid)!important;color:#08090b!important;border:0!important;border-radius:5px!important;min-height:48px!important;padding:0 28px!important;font:700 10px var(--body)!important;letter-spacing:.08em!important;text-transform:uppercase!important;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}
 .woocommerce #review_form #respond input#submit:hover{background:var(--acid)!important;transform:translateY(-2px);box-shadow:0 12px 30px rgba(242,169,0,.35)}
+
+/* Paginación: WooCommerce fuerza display:inline-block y float en el <ul>/<li>,
+   lo que anulaba el gap y dejaba los números pegados. Y el resplandor del
+   número activo se veía derramado fuera del círculo. */
+.woocommerce nav.woocommerce-pagination ul{display:flex!important;align-items:center;justify-content:center;gap:14px!important;border:0!important;margin:0!important;padding:0!important}
+.woocommerce nav.woocommerce-pagination ul li{float:none!important;border:0!important;margin:0!important;padding:0!important;overflow:visible!important}
+.woocommerce nav.woocommerce-pagination ul li a,.woocommerce nav.woocommerce-pagination ul li span{margin:0!important;padding:0!important}
+.singles-results .woocommerce-pagination .current{box-shadow:none!important}
+.singles-results .woocommerce-pagination a:hover{box-shadow:none!important;transform:translateY(-2px)}

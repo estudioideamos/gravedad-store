@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.82.0');
+define('GRAVEDAD_VERSION', '5.82.1');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -377,6 +377,11 @@ function gravedad_hover_image_html($product) {
     // de la tarjeta, encima de la principal y con una transición suave.
     if (!$product) { return ''; }
     $gallery = $product->get_gallery_image_ids();
+    if (empty($gallery)) { return ''; }
+    // Si la "segunda" foto es el mismo archivo que la principal (pasa cuando
+    // se sube la misma imagen a la galería), no tiene sentido el cruce.
+    $featured = (int) $product->get_image_id();
+    $gallery = array_values(array_filter($gallery, function ($id) use ($featured) { return (int) $id !== $featured; }));
     if (empty($gallery)) { return ''; }
     $html = wp_get_attachment_image($gallery[0], 'woocommerce_thumbnail', false, array(
         'class'   => 'product-image-hover',

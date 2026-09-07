@@ -244,7 +244,8 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 /* Segunda foto al pasar el mouse: se cruza suavemente por opacidad con la
    principal, en vez del acercamiento que había antes. Solo aparece si el
    producto tiene una segunda foto cargada en la galería. */
-.product-image-hover{opacity:0;transition:opacity .45s ease;pointer-events:none;z-index:2}
+.product-image-hover{opacity:0;pointer-events:none;z-index:2}
+.product-image .product-image-hover,.loop-product-image .product-image-hover{transition:opacity .45s ease!important}
 .product-image .product-image-hover{position:absolute;inset:0;margin:auto;max-width:92%;max-height:92%;width:auto;height:auto;object-fit:contain}
 .gravity-product:hover .product-image .product-image-hover{opacity:1}
 .woocommerce ul.products li.product .loop-product-image{position:relative;display:block}
