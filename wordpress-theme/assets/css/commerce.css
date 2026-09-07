@@ -195,7 +195,14 @@
    el texto largo de Correo Argentino quedaban desbordadas. Las alineamos al
    tamaño del resumen y acomodamos el punto de selección al inicio del texto. */
 .woocommerce-checkout .woocommerce-shipping-methods,.woocommerce-cart .woocommerce-shipping-methods{margin:0;padding:0;list-style:none}
-.woocommerce-checkout .woocommerce-shipping-methods li,.woocommerce-cart .woocommerce-shipping-methods li{display:flex;align-items:flex-start;gap:9px;margin:0 0 12px;padding:0}
+.woocommerce-checkout .woocommerce-shipping-methods li,.woocommerce-cart .woocommerce-shipping-methods li{display:flex;flex-wrap:wrap;align-items:flex-start;gap:9px;margin:0 0 12px;padding:0}
+/* El plugin de Correo Argentino agrega desplegables (provincia / sucursal)
+   dentro de la misma opción. Como la fila es flex, se ubicaban al lado del
+   texto y lo tapaban: cualquier cosa que no sea el selector o su texto pasa
+   a una línea propia, a lo ancho y alineada con el texto de arriba. */
+.woocommerce-checkout .woocommerce-shipping-methods li>*:not(input):not(label),.woocommerce-cart .woocommerce-shipping-methods li>*:not(input):not(label){flex:0 0 100%;width:100%;max-width:100%;margin:8px 0 0 24px;box-sizing:border-box}
+.woocommerce-checkout .woocommerce-shipping-methods li select,.woocommerce-cart .woocommerce-shipping-methods li select{width:100%;max-width:100%;box-sizing:border-box;background:#15161b;color:#f0f0f2;border:1px solid #35363d;border-radius:6px;padding:9px 12px;font-size:12.5px}
+.woocommerce-checkout .woocommerce-shipping-methods li select option,.woocommerce-cart .woocommerce-shipping-methods li select option{background:#15161b;color:#f0f0f2}
 .woocommerce-checkout .woocommerce-shipping-methods li:last-child,.woocommerce-cart .woocommerce-shipping-methods li:last-child{margin-bottom:0}
 .woocommerce-checkout .woocommerce-shipping-methods li input.shipping_method,.woocommerce-cart .woocommerce-shipping-methods li input.shipping_method{flex:0 0 auto;margin:3px 0 0;width:15px;height:15px;accent-color:var(--acid)}
 .woocommerce-checkout .woocommerce-shipping-methods li label,.woocommerce-cart .woocommerce-shipping-methods li label{flex:1;min-width:0;display:block;font-size:12.5px!important;line-height:1.55!important;color:#c7c8ce}
