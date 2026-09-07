@@ -270,6 +270,17 @@ document.addEventListener('DOMContentLoaded',()=>{
           const doc=new DOMParser().parseFromString(html,'text/html');
           const wasOpen=document.querySelector('.singles-filters')?.classList.contains('is-open');
 
+          // La cabecera también se actualiza: si no, al buscar de nuevo desde
+          // el panel lateral los resultados cambiaban pero el título grande
+          // seguía mostrando el término anterior y parecía que no había pasado
+          // nada. Lo mismo con el buscador de la barra superior.
+          const newHero=doc.querySelector('.singles-hero');
+          const oldHero=document.querySelector('.singles-hero');
+          if(newHero&&oldHero){ oldHero.replaceWith(newHero); }
+          const newRefine=doc.querySelector('.search-refine input[name="s"]');
+          const oldRefine=document.querySelector('.search-refine input[name="s"]');
+          if(newRefine&&oldRefine){ oldRefine.value=newRefine.value; }
+
           const newLayout=doc.querySelector('.singles-layout');
           if(newLayout){ layout.replaceWith(newLayout); }
           const newToolbar=doc.querySelector('.singles-toolbar');
