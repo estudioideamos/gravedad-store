@@ -553,3 +553,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     wrap.appendChild(btn);
   });
 });
+
+window.addEventListener('load',()=>{
+  // El slider de la galería de producto (FlexSlider) mide el ancho
+  // disponible en píxeles y lo deja fijo por JS al iniciar. Nuestro CSS
+  // le cambia el ancho real del carril de miniaturas después de esa
+  // medición, así que sin este empujón la imagen principal queda con
+  // medidas viejas (se ve cortada/desalineada). Forzamos un resize
+  // apenas termina de cargar para que vuelva a medir bien.
+  if(document.querySelector('.woocommerce-product-gallery')){
+    setTimeout(()=>window.dispatchEvent(new Event('resize')),50);
+  }
+});
