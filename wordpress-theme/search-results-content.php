@@ -33,6 +33,7 @@ $search_clear_url = add_query_arg(array('s' => $term, 'post_type' => 'product'),
   <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-busqueda.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Búsqueda</nav><p class="section-label"><i class="label-dash"></i>RESULTADOS DE BÚSQUEDA</p><h1>"<?php echo esc_html($term); ?>"</h1><p><?php echo $query->found_posts ? esc_html($query->found_posts . ' resultado' . ($query->found_posts === 1 ? '' : 's') . ' encontrados en la tienda.') : 'No encontramos productos que coincidan con tu búsqueda.'; ?></p></div></header>
   <?php gravedad_marquee(); ?>
   <div class="singles-toolbar search-toolbar">
+    <button class="singles-filter-toggle" type="button" aria-expanded="false">FILTROS <span>＋</span></button>
     <form class="search-refine" method="get" action="<?php echo esc_url(home_url('/')); ?>"><input type="search" name="s" value="<?php echo esc_attr($term); ?>" placeholder="Buscá otra cosa..."><input type="hidden" name="post_type" value="product"><button type="submit" aria-label="Buscar"><?php echo gravedad_icon('search'); ?></button></form>
     <div class="singles-count"><?php echo esc_html($query->found_posts); ?> resultados</div>
     <div class="singles-order"><?php
