@@ -553,3 +553,26 @@ document.addEventListener('DOMContentLoaded',()=>{
     wrap.appendChild(btn);
   });
 });
+
+window.addEventListener('load',()=>{
+  // Botón de lupa sobre la foto del producto: al tocarlo abre la imagen
+  // ampliada reenviando el clic al enlace de la foto activa, que es lo que
+  // WooCommerce ya tiene conectado a su visor. Va dentro de .flex-viewport
+  // (la ventana visible), no del carril que se desliza, para que no se
+  // mueva al cambiar de foto.
+  const host=document.querySelector('.woocommerce div.product .flex-viewport')
+          || document.querySelector('.woocommerce div.product .woocommerce-product-gallery');
+  if(!host||host.querySelector('.gravedad-zoom-btn')) return;
+  const btn=document.createElement('button');
+  btn.type='button';
+  btn.className='gravedad-zoom-btn';
+  btn.setAttribute('aria-label','Ver la imagen más grande');
+  btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>';
+  btn.addEventListener('click',e=>{
+    e.preventDefault();
+    const link=document.querySelector('.woocommerce-product-gallery__image.flex-active-slide a')
+            || document.querySelector('.woocommerce-product-gallery__image a');
+    if(link) link.click();
+  });
+  host.appendChild(btn);
+});
