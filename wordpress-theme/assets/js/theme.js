@@ -262,11 +262,21 @@ document.addEventListener('DOMContentLoaded',()=>{
       return form.action+(qs?(form.action.includes('?')?'&':'?')+qs:'');
     }
 
+    let swapSeq=0, swapAbort=null;
     function swapTo(url,pushState){
+      // Cada pedido lleva su número de orden: si se eligen filtros rápido,
+      // una respuesta vieja puede llegar después de una nueva y dejar la
+      // pantalla desincronizada (los chips con los filtros elegidos pero la
+      // grilla y el contador con el resultado anterior). Solo aplicamos la
+      // respuesta del último pedido, y cancelamos los anteriores.
+      const seq=++swapSeq;
+      if(swapAbort) swapAbort.abort();
+      swapAbort=new AbortController();
       layout.style.opacity='.5';
-      fetch(url,{headers:{'X-Requested-With':'XMLHttpRequest'}})
+      fetch(url,{headers:{'X-Requested-With':'XMLHttpRequest'},signal:swapAbort.signal})
         .then(r=>r.text())
         .then(html=>{
+          if(seq!==swapSeq) return;
           const doc=new DOMParser().parseFromString(html,'text/html');
           const wasOpen=document.querySelector('.singles-filters')?.classList.contains('is-open');
 
@@ -299,7 +309,7 @@ document.addEventListener('DOMContentLoaded',()=>{
           bindFilterEvents();
           if(typeof gravedadWrapLoopImages==='function') gravedadWrapLoopImages();
         })
-        .catch(()=>{ window.location.href=url; });
+        .catch((err)=>{ if(err&&err.name==='AbortError') return; window.location.href=url; });
     }
 
     function bindFilterEvents(){
