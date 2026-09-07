@@ -101,7 +101,9 @@ body.cart-drawer-open{overflow:hidden}
    en object-fit:contain adentro, así todas las fotos miden lo mismo aunque
    tengan proporciones distintas -- que es lo que hacía que la segunda foto
    se viera cortada o con un pedazo de la anterior. */
-.woocommerce div.product div.images{border-radius:10px;background:radial-gradient(circle,rgba(204,20,20,.28),#16171c 62%);border:1px solid var(--line);padding:28px}
+.woocommerce div.product div.images{border-radius:10px;background:radial-gradient(circle,rgba(204,20,20,.28),#16171c 62%);border:1px solid var(--line);padding:28px;position:relative;box-shadow:0 0 90px -10px rgba(242,169,0,.35),0 0 140px 10px rgba(204,20,20,.22)}
+/* box-shadow (no un pseudo-elemento) para el resplandor: así no lo recorta
+   el overflow:hidden de la propia caja, que hace falta para la galería. */
 .woocommerce div.product div.images .woocommerce-product-gallery__wrapper{padding:0!important;background:none;border:0}
 .woocommerce-product-gallery__image{border-radius:6px;overflow:hidden;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center}
 .woocommerce-product-gallery__image>a{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
