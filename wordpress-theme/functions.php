@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.86.2');
+define('GRAVEDAD_VERSION', '5.86.3');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -160,7 +160,7 @@ add_filter('woocommerce_billing_fields', function ($fields) {
         'placeholder' => 'Sin puntos ni espacios',
         'required'    => true,
         'class'       => array('form-row-wide'),
-        'priority'    => 96,
+        'priority'    => 105,
         'clear'       => true,
     );
     return $fields;

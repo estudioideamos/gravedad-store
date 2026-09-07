@@ -228,6 +228,8 @@
    porque la clase puesta desde PHP la termina pisando el armado de campos
    por país de WooCommerce, así que el ancho no llegaba a aplicarse. */
 @media(min-width:769px){
+  /* Región/Provincia | Teléfono  y  DNI | Email, en dos columnas. */
   .woocommerce-checkout #billing_phone_field,.woocommerce-checkout #shipping_phone_field{float:right!important;clear:none!important;width:47%!important}
-  .woocommerce-checkout #billing_dni_field,.woocommerce-checkout #shipping_dni_field{clear:both!important}
+  .woocommerce-checkout #billing_dni_field{float:left!important;clear:both!important;width:47%!important}
+  .woocommerce-checkout #billing_email_field{float:right!important;clear:none!important;width:47%!important}
 }
