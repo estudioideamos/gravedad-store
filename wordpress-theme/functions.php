@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.86.0');
+define('GRAVEDAD_VERSION', '5.86.1');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -137,21 +137,20 @@ add_filter('woocommerce_get_country_locale', function ($locale) {
 });
 
 // Región/Provincia y Teléfono comparten fila en escritorio, igual que
-// Localidad y Código postal.
-add_filter('woocommerce_billing_fields', function ($fields) {
-    if (isset($fields['billing_phone'])) {
-        $fields['billing_phone']['class'] = array('form-row-last');
-        $fields['billing_phone']['priority'] = 95;
+// Localidad y Código postal. Va en woocommerce_checkout_fields (prioridad
+// tardía) porque es el último filtro: las reglas por país se aplican
+// después de woocommerce_billing_fields y pisaban la clase.
+add_filter('woocommerce_checkout_fields', function ($fields) {
+    if (isset($fields['billing']['billing_phone'])) {
+        $fields['billing']['billing_phone']['class'] = array('form-row-last');
+        $fields['billing']['billing_phone']['priority'] = 95;
+    }
+    if (isset($fields['shipping']['shipping_phone'])) {
+        $fields['shipping']['shipping_phone']['class'] = array('form-row-last');
+        $fields['shipping']['shipping_phone']['priority'] = 95;
     }
     return $fields;
-}, 20);
-add_filter('woocommerce_shipping_fields', function ($fields) {
-    if (isset($fields['shipping_phone'])) {
-        $fields['shipping_phone']['class'] = array('form-row-last');
-        $fields['shipping_phone']['priority'] = 95;
-    }
-    return $fields;
-}, 20);
+}, 100);
 
 // Campo DNI: obligatorio, se guarda en el pedido y se muestra en el panel
 // de administración y en los mails del pedido.
