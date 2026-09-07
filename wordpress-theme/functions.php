@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.85.3');
+define('GRAVEDAD_VERSION', '5.86.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -131,10 +131,70 @@ add_filter('woocommerce_get_country_locale', function ($locale) {
     $locale['AR']['city']['priority'] = 70;
     $locale['AR']['postcode']['class'] = array('form-row-last');
     $locale['AR']['postcode']['priority'] = 80;
-    $locale['AR']['state']['class'] = array('form-row-wide');
+    $locale['AR']['state']['class'] = array('form-row-first');
     $locale['AR']['state']['priority'] = 90;
     return $locale;
 });
+
+// Región/Provincia y Teléfono comparten fila en escritorio, igual que
+// Localidad y Código postal.
+add_filter('woocommerce_billing_fields', function ($fields) {
+    if (isset($fields['billing_phone'])) {
+        $fields['billing_phone']['class'] = array('form-row-last');
+        $fields['billing_phone']['priority'] = 95;
+    }
+    return $fields;
+}, 20);
+add_filter('woocommerce_shipping_fields', function ($fields) {
+    if (isset($fields['shipping_phone'])) {
+        $fields['shipping_phone']['class'] = array('form-row-last');
+        $fields['shipping_phone']['priority'] = 95;
+    }
+    return $fields;
+}, 20);
+
+// Campo DNI: obligatorio, se guarda en el pedido y se muestra en el panel
+// de administración y en los mails del pedido.
+add_filter('woocommerce_billing_fields', function ($fields) {
+    $fields['billing_dni'] = array(
+        'label'       => 'DNI',
+        'placeholder' => 'Sin puntos ni espacios',
+        'required'    => true,
+        'class'       => array('form-row-wide'),
+        'priority'    => 96,
+        'clear'       => true,
+    );
+    return $fields;
+}, 21);
+
+add_action('woocommerce_checkout_process', function () {
+    if (empty($_POST['billing_dni'])) {
+        wc_add_notice('Por favor completá tu <strong>DNI</strong> para poder emitir el envío.', 'error');
+        return;
+    }
+    $dni = preg_replace('/\D/', '', wp_unslash($_POST['billing_dni']));
+    if (strlen($dni) < 7 || strlen($dni) > 8) {
+        wc_add_notice('El <strong>DNI</strong> tiene que tener 7 u 8 números, sin puntos ni espacios.', 'error');
+    }
+});
+
+add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
+    if (!empty($_POST['billing_dni'])) {
+        $dni = preg_replace('/\D/', '', wp_unslash($_POST['billing_dni']));
+        update_post_meta($order_id, '_billing_dni', sanitize_text_field($dni));
+    }
+});
+
+add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
+    $dni = get_post_meta($order->get_id(), '_billing_dni', true);
+    if ($dni) { echo '<p><strong>DNI:</strong> ' . esc_html($dni) . '</p>'; }
+});
+
+add_filter('woocommerce_email_order_meta_fields', function ($fields, $sent_to_admin, $order) {
+    $dni = get_post_meta($order->get_id(), '_billing_dni', true);
+    if ($dni) { $fields['billing_dni'] = array('label' => 'DNI', 'value' => $dni); }
+    return $fields;
+}, 10, 3);
 
 function gravedad_favicon() {
     if (has_site_icon()) { return; }

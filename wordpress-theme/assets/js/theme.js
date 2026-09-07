@@ -599,3 +599,14 @@ window.addEventListener('load',()=>{
   });
   host.appendChild(btn);
 });
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // En el checkout, WooCommerce mueve el scroll por su cuenta al cambiar de
+  // medio de pago (y la página cambia de alto cuando se despliega el cartel
+  // del medio elegido). Con el desplazamiento suave del sitio ese movimiento
+  // se exagera y termina llevando la vista al final de la página, así que
+  // acá lo dejamos instantáneo.
+  if(document.body.classList.contains('woocommerce-checkout')){
+    document.documentElement.style.scrollBehavior='auto';
+  }
+});
