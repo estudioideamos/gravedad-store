@@ -41,10 +41,10 @@ La validación automática comprueba sintaxis PHP y JavaScript, consistencia de 
 
 ## Publicación
 
-Un cambio en `wordpress-theme/` sobre `main` ejecuta este circuito:
+Un cambio en `wordpress-theme/` o `plugins/` sobre `main` ejecuta este circuito:
 
 ```text
-GitHub Actions → validación → API HTTPS de cPanel → actualización Git → .cpanel.yml → tema activo
+GitHub Actions → validación → API HTTPS de cPanel → actualización Git → .cpanel.yml → tema y plugin activos
 ```
 
 El secreto `CPANEL_TOKEN` se guarda exclusivamente en GitHub Actions. No debe copiarse al código, a issues ni a archivos del repositorio.

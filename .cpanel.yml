@@ -2,6 +2,9 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home6/vagrvmja/public_html/wp-content/themes/gravedad-store/
+    - export PLUGINPATH=/home6/vagrvmja/public_html/wp-content/plugins/gravedad-menu-lock/
     - /bin/mkdir -p $DEPLOYPATH
+    - /bin/mkdir -p $PLUGINPATH
     - rsync -a --delete wordpress-theme/. $DEPLOYPATH
+    - rsync -a --delete plugins/gravedad-menu-lock/. $PLUGINPATH
     - /bin/rm -f $DEPLOYPATH/deploy-check.txt $DEPLOYPATH/deploy-check.html

@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "wordpress-theme/**"
+      - "plugins/**"
       - ".cpanel.yml"
       - ".github/workflows/deploy-wordpress-theme.yml"
   workflow_dispatch:
@@ -26,7 +27,7 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Validar sintaxis PHP
-        run: find wordpress-theme -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: find wordpress-theme plugins -type f -name '*.php' -print0 | xargs -0 -n1 php -l
 
       - name: Validar JavaScript
         run: find wordpress-theme/assets/js -type f -name '*.js' -print0 | xargs -0 -n1 node --check
