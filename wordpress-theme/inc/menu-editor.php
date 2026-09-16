@@ -230,7 +230,7 @@ function gravedad_mm_render() {
     <div class="gravedad-panel-wrap">
       <header class="gravedad-panel-header">
         <div class="gravedad-panel-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp'); ?>" alt="Gravedad Store">
           <div><h1>Menús desplegables</h1><p>Elegí qué categorías de la tienda aparecen en cada menú y en qué orden. Arrastrá desde el ⠿⠿ para reordenar.</p></div>
         </div>
       </header>

@@ -131,7 +131,7 @@ function gravedad_admin_panel_render() {
     <div class="gravedad-panel-wrap">
       <header class="gravedad-panel-header">
         <div class="gravedad-panel-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp'); ?>" alt="Gravedad Store">
           <div><h1>Editar Sitio</h1><p>Cambiá los contenidos del sitio sin tocar código. Guardá y los cambios ya quedan online.</p></div>
         </div>
       </header>

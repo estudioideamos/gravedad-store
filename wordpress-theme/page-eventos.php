@@ -27,7 +27,7 @@ $proximos = new WP_Query(array('post_type' => 'evento', 'post_status' => 'publis
 $pasados = new WP_Query(array('post_type' => 'evento', 'post_status' => 'publish', 'posts_per_page' => 12, 'meta_key' => '_evento_fecha', 'orderby' => 'meta_value', 'order' => 'DESC', 'meta_query' => array(array('key' => '_evento_fecha', 'value' => $today, 'compare' => '<', 'type' => 'DATE'))));
 ?>
 <main class="singles-page">
-  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-eventos.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Eventos</nav><p class="section-label"><i class="label-dash"></i>LA COMUNIDAD TAMBIÉN JUEGA</p><h1>Eventos.</h1><p>Torneos, lanzamientos y encuentros en nuestro local. Sumate.</p></div></header>
+  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-eventos.webp'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Eventos</nav><p class="section-label"><i class="label-dash"></i>LA COMUNIDAD TAMBIÉN JUEGA</p><h1>Eventos.</h1><p>Torneos, lanzamientos y encuentros en nuestro local. Sumate.</p></div></header>
   <?php gravedad_marquee(); ?>
   <div class="content-shell info-shell">
     <div class="info-block">

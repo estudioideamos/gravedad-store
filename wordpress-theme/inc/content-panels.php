@@ -233,7 +233,7 @@ function gravedad_content_panel_render($key, $def) {
     <div class="gravedad-panel-wrap">
       <header class="gravedad-panel-header">
         <div class="gravedad-panel-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp'); ?>" alt="Gravedad Store">
           <div><h1><?php echo esc_html($def['page_title']); ?></h1><p><?php echo esc_html($def['ayuda']); ?></p></div>
         </div>
       </header>

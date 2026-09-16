@@ -4,7 +4,7 @@ get_header();
 $cc_def = gravedad_content_panel_definitions()['como-comprar'];
 ?>
 <main class="singles-page">
-  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-como-comprar.jpg'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Cómo comprar</nav><p class="section-label"><i class="label-dash"></i>ES MÁS FÁCIL DE LO QUE PENSÁS</p><h1>Cómo comprar.</h1><p>Cuatro pasos entre vos y tu próxima carta, sobre o juego de mesa.</p></div></header>
+  <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-como-comprar.webp'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Cómo comprar</nav><p class="section-label"><i class="label-dash"></i>ES MÁS FÁCIL DE LO QUE PENSÁS</p><h1>Cómo comprar.</h1><p>Cuatro pasos entre vos y tu próxima carta, sobre o juego de mesa.</p></div></header>
   <?php gravedad_marquee(); ?>
   <div class="content-shell info-shell">
     <div class="info-steps">

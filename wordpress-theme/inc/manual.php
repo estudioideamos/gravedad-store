@@ -190,7 +190,7 @@ function gravedad_manual_render() {
     <div class="gravedad-panel-wrap">
       <header class="gravedad-panel-header">
         <div class="gravedad-panel-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp'); ?>" alt="Gravedad Store">
           <div><h1>Manual de uso</h1><p>Guía rápida de todo lo que podés cambiar vos mismo en el sitio, sin depender de un desarrollador.</p></div>
         </div>
       </header>

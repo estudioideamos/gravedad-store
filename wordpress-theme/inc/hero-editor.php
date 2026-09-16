@@ -19,7 +19,7 @@ function gravedad_hero_defaults() {
         'boton1_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('novedades') : home_url('/'),
         'boton2_texto' => 'Ver cartas sueltas',
         'boton2_url' => function_exists('gravedad_shop_url') ? gravedad_shop_url('cartas-sueltas') : home_url('/'),
-        'imagen' => get_template_directory_uri() . '/assets/img/hero-gravedad.jpg',
+        'imagen' => get_template_directory_uri() . '/assets/img/hero-gravedad.webp',
         'video' => get_template_directory_uri() . '/assets/img/video/hero-loop.mp4',
     );
 }
@@ -172,7 +172,7 @@ function gravedad_hero_render() {
     <div class="gravedad-panel-wrap">
       <header class="gravedad-panel-header">
         <div class="gravedad-panel-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp'); ?>" alt="Gravedad Store">
           <div><h1>Hero de la home</h1><p>La portada grande de la página de inicio: título, texto, botones e imagen/video de fondo.</p></div>
         </div>
       </header>

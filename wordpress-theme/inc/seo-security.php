@@ -45,7 +45,7 @@ function gravedad_seo_get_image() {
         $thumb_id = get_post_thumbnail_id();
         if ($thumb_id) { $src = wp_get_attachment_image_src($thumb_id, 'large'); if ($src) { return $src[0]; } }
     }
-    return get_template_directory_uri() . '/assets/img/logo-gravedad-store.png';
+    return get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp';
 }
 
 function gravedad_seo_get_canonical() {
@@ -106,7 +106,7 @@ function gravedad_seo_jsonld() {
         '@id' => home_url('/#organization'),
         'name' => 'Gravedad Store',
         'url' => home_url('/'),
-        'logo' => get_template_directory_uri() . '/assets/img/logo-gravedad-store.png',
+        'logo' => get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp',
         'email' => gravedad_option('gravedad_email', 'info@gravedad.com.ar'),
         'sameAs' => array_filter(array(gravedad_option('gravedad_instagram', ''))),
     );
@@ -115,7 +115,7 @@ function gravedad_seo_jsonld() {
         '@type' => 'LocalBusiness',
         '@id' => home_url('/#store'),
         'name' => 'Gravedad Store',
-        'image' => get_template_directory_uri() . '/assets/img/logo-gravedad-store.png',
+        'image' => get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp',
         'url' => home_url('/'),
         'telephone' => '+' . preg_replace('/\D/', '', gravedad_option('gravedad_whatsapp', '542320673750')),
         'priceRange' => '$$',
@@ -227,4 +227,20 @@ add_filter('rest_endpoints', function ($endpoints) {
 // de login (mensajes de error genéricos).
 add_filter('login_errors', function () {
     return 'Usuario o contraseña incorrectos.';
+});
+
+// Cabeceras de seguridad básicas que el hosting no manda por su cuenta.
+// No incluye Content-Security-Policy: con Mercado Pago, Correo Argentino
+// y Google Fonts cargando scripts de terceros, una CSP mal calibrada corta
+// el pago o el envío en vez de protegerlo -- necesitaría probarse a fondo
+// página por página antes de activarla.
+add_action('send_headers', function () {
+    if (is_admin()) { return; }
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: SAMEORIGIN');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    header('Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(self)');
+    if (is_ssl()) {
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+    }
 });

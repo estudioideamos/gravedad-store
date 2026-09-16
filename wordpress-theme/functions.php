@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.91.0');
+define('GRAVEDAD_VERSION', '5.92.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -556,7 +556,7 @@ function gravedad_megamenu($key) {
             echo '<a class="mega-view-all" href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug))) . '">Ver todo →</a></div>';
         }
         echo '</div>';
-        gravedad_mega_promo('TRADING CARD GAMES', 'Sellado y singles', 'Ver todo TCG →', gravedad_shop_url('tcg'), 'hero-tcg.jpg');
+        gravedad_mega_promo('TRADING CARD GAMES', 'Sellado y singles', 'Ver todo TCG →', gravedad_shop_url('tcg'), 'hero-tcg.webp');
         echo '</div>';
     } elseif ($key === 'cartas-sueltas') {
         $cs = gravedad_mm_get('cartas-sueltas');
@@ -569,7 +569,7 @@ function gravedad_megamenu($key) {
         foreach ($cs['idioma'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_idioma' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_idioma', $slug)) . '</a>'; } }
         echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('cartas-sueltas')) . '">Ver todas →</a></div>';
         echo '</div>';
-        gravedad_mega_promo('ENCONTRÁ ESA CARTA', 'Cartas sueltas', 'Explorar →', gravedad_shop_url('cartas-sueltas'), 'hero-cartas-sueltas.jpg');
+        gravedad_mega_promo('ENCONTRÁ ESA CARTA', 'Cartas sueltas', 'Explorar →', gravedad_shop_url('cartas-sueltas'), 'hero-cartas-sueltas.webp');
         echo '</div>';
     } elseif ($key === 'juegos-de-mesa') {
         $jm = gravedad_mm_get('juegos-de-mesa');
@@ -581,7 +581,7 @@ function gravedad_megamenu($key) {
         foreach ($jm['tipo-juego'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_tipo_juego' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-juego', $slug)) . '</a>'; } }
         echo '</div></div>';
         echo '</div>';
-        gravedad_mega_promo('PARA COMPARTIR LA MESA', 'Juegos de mesa', 'Explorar →', gravedad_shop_url('juegos-de-mesa'), 'hero-juegos-de-mesa.jpg');
+        gravedad_mega_promo('PARA COMPARTIR LA MESA', 'Juegos de mesa', 'Explorar →', gravedad_shop_url('juegos-de-mesa'), 'hero-juegos-de-mesa.webp');
         echo '</div>';
     } elseif ($key === 'accesorios') {
         $ac = gravedad_mm_get('accesorios');
@@ -593,7 +593,7 @@ function gravedad_megamenu($key) {
         foreach ($ac['marca'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_marca' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_marca', $slug)) . '</a>'; } }
         echo '</div>';
         echo '</div>';
-        gravedad_mega_promo('CUIDÁ TU COLECCIÓN', 'Accesorios', 'Explorar →', gravedad_shop_url('accesorios'), 'hero-accesorios.jpg');
+        gravedad_mega_promo('CUIDÁ TU COLECCIÓN', 'Accesorios', 'Explorar →', gravedad_shop_url('accesorios'), 'hero-accesorios.webp');
         echo '</div>';
     }
     return ob_get_clean();
@@ -997,11 +997,11 @@ function gravedad_section_copy() {
 
 function gravedad_section_hero_image($section) {
     $images = array(
-        'cartas-sueltas' => 'hero-cartas-sueltas.jpg',
-        'tcg' => 'hero-tcg.jpg',
-        'juegos-de-mesa' => 'hero-juegos-de-mesa.jpg',
-        'accesorios' => 'hero-accesorios.jpg',
-        'preventas' => 'hero-preventas.jpg',
+        'cartas-sueltas' => 'hero-cartas-sueltas.webp',
+        'tcg' => 'hero-tcg.webp',
+        'juegos-de-mesa' => 'hero-juegos-de-mesa.webp',
+        'accesorios' => 'hero-accesorios.webp',
+        'preventas' => 'hero-preventas.webp',
     );
     return isset($images[$section]) ? get_template_directory_uri() . '/assets/img/' . $images[$section] : '';
 }

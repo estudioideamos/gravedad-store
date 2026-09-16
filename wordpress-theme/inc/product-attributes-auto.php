@@ -109,7 +109,7 @@ function gravedad_autoattrs_render() {
     <div class="gravedad-panel-wrap">
       <header class="gravedad-panel-header">
         <div class="gravedad-panel-brand">
-          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.png'); ?>" alt="Gravedad Store">
+          <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-gravedad-store.webp'); ?>" alt="Gravedad Store">
           <div><h1>Atributos automáticos</h1><p>Creá una o varias reglas: "si el producto está en esta categoría, agregale estos atributos". Se agregan solos —vacíos, listos para elegir el valor— al guardar el producto, sin tener que sumarlos a mano cada vez.</p></div>
         </div>
       </header>
