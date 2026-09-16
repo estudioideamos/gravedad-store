@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.94.0');
+define('GRAVEDAD_VERSION', '5.95.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -10,6 +10,7 @@ require_once get_template_directory() . '/inc/hero-editor.php';
 require_once get_template_directory() . '/inc/manual.php';
 require_once get_template_directory() . '/inc/product-attributes-auto.php';
 require_once get_template_directory() . '/inc/seo-security.php';
+require_once get_template_directory() . '/inc/anti-spam.php';
 
 add_filter('use_block_editor_for_post_type', '__return_false');
 
