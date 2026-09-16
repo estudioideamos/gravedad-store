@@ -71,6 +71,7 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
     if(!window.gravedadAjax){ favGrid.innerHTML='<p>No se pudieron cargar los favoritos.</p>'; return; }
     const formData=new FormData();
     formData.append('action','gravedad_get_favorites');
+    formData.append('nonce',window.gravedadAjax.nonce||'');
     ids.forEach(id=>formData.append('ids[]', id));
     fetch(window.gravedadAjax.url,{method:'POST', body:formData})
       .then(r=>r.json())
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     function runSearch(term){
       if(searchAbort) searchAbort.abort();
       searchAbort=new AbortController();
-      const url=window.gravedadAjax.url+'?action=gravedad_search_products&term='+encodeURIComponent(term);
+      const url=window.gravedadAjax.url+'?action=gravedad_search_products&nonce='+encodeURIComponent(window.gravedadAjax.nonce||'')+'&term='+encodeURIComponent(term);
       fetch(url,{signal:searchAbort.signal})
         .then(r=>r.json())
         .then(res=>{

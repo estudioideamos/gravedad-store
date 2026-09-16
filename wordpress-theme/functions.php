@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.93.0');
+define('GRAVEDAD_VERSION', '5.94.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -73,7 +73,11 @@ function gravedad_assets() {
     wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);
     wp_enqueue_script('gravedad-theme', get_template_directory_uri() . '/assets/js/theme.js', array(), GRAVEDAD_VERSION, true);
-    wp_localize_script('gravedad-theme', 'gravedadAjax', array('url' => admin_url('admin-ajax.php'), 'shopUrl' => gravedad_shop_url()));
+    wp_localize_script('gravedad-theme', 'gravedadAjax', array(
+        'url'     => admin_url('admin-ajax.php'),
+        'shopUrl' => gravedad_shop_url(),
+        'nonce'   => wp_create_nonce('gravedad_public_ajax'),
+    ));
 }
 add_action('wp_enqueue_scripts', 'gravedad_assets');
 
@@ -801,7 +805,9 @@ add_action('woocommerce_single_product_summary', function () {
 add_action('wp_ajax_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
 add_action('wp_ajax_nopriv_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
 function gravedad_ajax_get_favorites() {
+    check_ajax_referer('gravedad_public_ajax', 'nonce');
     $ids = isset($_POST['ids']) ? array_map('absint', (array) $_POST['ids']) : array();
+    $ids = array_slice(array_values(array_unique(array_filter($ids))), 0, 100);
     if (!$ids) { wp_send_json_success(array('html' => '', 'count' => 0)); }
     $query = new WP_Query(array('post_type' => 'product', 'post_status' => 'publish', 'post__in' => $ids, 'orderby' => 'post__in', 'posts_per_page' => 100));
     $count = $query->post_count;
@@ -814,8 +820,10 @@ function gravedad_ajax_get_favorites() {
 add_action('wp_ajax_gravedad_search_products', 'gravedad_ajax_search_products');
 add_action('wp_ajax_nopriv_gravedad_search_products', 'gravedad_ajax_search_products');
 function gravedad_ajax_search_products() {
+    check_ajax_referer('gravedad_public_ajax', 'nonce');
     $term = isset($_GET['term']) ? sanitize_text_field(wp_unslash($_GET['term'])) : '';
-    if (mb_strlen(trim($term)) < 2) { wp_send_json_success(array('html' => '', 'count' => 0)); }
+    $term = mb_substr(trim($term), 0, 80);
+    if (mb_strlen($term) < 2) { wp_send_json_success(array('html' => '', 'count' => 0)); }
 
     $query = new WP_Query(array(
         'post_type' => 'product',

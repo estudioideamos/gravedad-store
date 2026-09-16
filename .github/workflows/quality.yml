@@ -1,0 +1,68 @@
+name: Calidad del tema
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - "wordpress-theme/**"
+      - "plugins/**"
+      - ".cpanel.yml"
+      - ".github/workflows/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: PHP, JavaScript y seguridad
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Validar sintaxis PHP
+        run: find wordpress-theme plugins -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Validar sintaxis JavaScript
+        run: find wordpress-theme/assets/js -type f -name '*.js' -print0 | xargs -0 -n1 node --check
+
+      - name: Comprobar versión y estructura
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f wordpress-theme/style.css
+          test -f wordpress-theme/functions.php
+          test -f wordpress-theme/index.php
+          test -f wordpress-theme/screenshot.jpg
+          STYLE_VERSION="$(sed -n 's/^Version:[[:space:]]*//p' wordpress-theme/style.css | head -1)"
+          CODE_VERSION="$(sed -n "s/.*GRAVEDAD_VERSION', '\([^']*\)'.*/\1/p" wordpress-theme/functions.php | head -1)"
+          test -n "$STYLE_VERSION"
+          test "$STYLE_VERSION" = "$CODE_VERSION"
+
+      - name: Evitar archivos sensibles
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -E '(^|/)(\.env($|\.)|wp-config\.php$|.*\.(pem|key|sql|sqlite|log|zip)$)'; then
+            echo "Se detectaron archivos que no deben publicarse."
+            exit 1
+          fi
+
+      - name: Controlar peso de activos
+        shell: bash
+        run: |
+          set -euo pipefail
+          oversized="$(find wordpress-theme/assets -type f -size +12M -print)"
+          if [ -n "$oversized" ]; then
+            echo "Activos de más de 12 MB:"
+            echo "$oversized"
+            exit 1
+          fi

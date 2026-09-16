@@ -1,63 +1,70 @@
 # Gravedad Store
 
-Tema premium de WordPress y WooCommerce para **Gravedad Store**, orientado a TCG, cartas sueltas, juegos de mesa, accesorios, preventas y eventos.
+Tema a medida de WordPress + WooCommerce para [Gravedad Store](https://gravedad.com.ar/), orientado a TCG, cartas sueltas, juegos de mesa, accesorios, preventas y eventos.
+
+[![Calidad](https://github.com/estudioideamos/gravedad-store/actions/workflows/quality.yml/badge.svg)](https://github.com/estudioideamos/gravedad-store/actions/workflows/quality.yml)
+[![Producción](https://github.com/estudioideamos/gravedad-store/actions/workflows/deploy-wordpress-theme.yml/badge.svg)](https://github.com/estudioideamos/gravedad-store/actions/workflows/deploy-wordpress-theme.yml)
 
 ## Requisitos
 
 - WordPress 6.4 o superior.
 - PHP 8.0 o superior.
 - WooCommerce activo.
-- Rama de publicación: `main`.
-- Versión actual del tema: consultar `wordpress-theme/style.css`.
+- Rama de producción: `main`.
+- Versión actual: declarada en `wordpress-theme/style.css` y `GRAVEDAD_VERSION`.
 
-## Funcionalidades
-
-- Integración completa con WooCommerce.
-- Catálogo, búsqueda y fichas de producto.
-- Carrito, checkout, favoritos y cuenta.
-- Páginas informativas de envíos, devoluciones, preguntas frecuentes y compra.
-- Preventas, novedades, ofertas y eventos.
-- Paneles de contenido y editor de menú.
-- SEO y medidas de seguridad integradas.
-- Galerías de producto, navegación mobile y diseño responsive.
-
-## Estructura
+## Contenido
 
 ```text
-wordpress-theme/
-├── style.css
-├── functions.php
-├── front-page.php
-├── header.php
-├── footer.php
-├── archive-product.php
-├── single.php
-├── page-*.php
-├── inc/
-└── assets/
+wordpress-theme/                  Tema activo de la tienda
+├── assets/                       CSS, JavaScript e imágenes propias
+├── inc/                          Paneles, SEO, seguridad y automatizaciones
+├── page-*.php                    Plantillas de páginas
+├── functions.php                Integraciones y comportamiento del tema
+└── style.css                     Metadatos y versión
+plugins/gravedad-menu-lock/       Plugin auxiliar para ordenar el admin
+.github/workflows/                Validación y despliegue
+.cpanel.yml                       Destino de producción en cPanel
 ```
 
-## Instalación manual
+Las imágenes cargadas desde WordPress pertenecen a la Biblioteca de medios y no se guardan en este repositorio.
 
-1. Comprimir el contenido de `wordpress-theme/` como una carpeta de tema.
-2. En WordPress ir a **Apariencia → Temas → Añadir nuevo → Subir tema**.
-3. Instalar, activar y comprobar que WooCommerce esté activo.
-4. Configurar menús, logo, páginas y opciones del tema.
+## Desarrollo seguro
 
-No se debe comprimir la raíz completa del repositorio: WordPress necesita encontrar `style.css` en la raíz del ZIP del tema.
+1. Crear una rama desde `main`.
+2. Hacer cambios dentro de `wordpress-theme/` o `plugins/`.
+3. Mantener alineada la versión de `style.css` con `GRAVEDAD_VERSION`.
+4. Abrir un pull request y esperar que pase **Calidad del tema**.
+5. Integrar a `main` únicamente cambios revisados.
 
-## Desarrollo
-
-Los estilos están en `assets/css/`, las interacciones en `assets/js/` y los paneles administrativos en `inc/`. Al cambiar la versión se deben mantener alineados `style.css` y `GRAVEDAD_VERSION` en `functions.php`.
+La validación automática comprueba sintaxis PHP y JavaScript, consistencia de versión, archivos obligatorios, credenciales accidentales y tamaño de activos.
 
 ## Publicación
 
-El repositorio incluye `.cpanel.yml` y un workflow en `.github/workflows/deploy-wordpress-theme.yml`. Antes de desplegar se recomienda validar PHP, revisar el ZIP resultante y hacer una copia de seguridad del sitio.
+Un cambio en `wordpress-theme/` sobre `main` ejecuta este circuito:
+
+```text
+GitHub Actions → validación → API HTTPS de cPanel → actualización Git → .cpanel.yml → tema activo
+```
+
+El secreto `CPANEL_TOKEN` se guarda exclusivamente en GitHub Actions. No debe copiarse al código, a issues ni a archivos del repositorio.
+
+Para una publicación manual: **Actions → Publicar tema en WordPress → Run workflow**.
+
+## Rollback
+
+1. Identificar el último commit estable en GitHub.
+2. Crear un revert del commit defectuoso; no reescribir el historial de `main`.
+3. Al llegar el revert a `main`, el workflow valida y vuelve a desplegar automáticamente.
+
+## Instalación manual
+
+Comprimir el contenido de `wordpress-theme/` dejando `style.css` en la raíz del ZIP. En WordPress ir a **Apariencia → Temas → Añadir nuevo → Subir tema**.
 
 ## Seguridad
 
-Los datos guardados se sanitizan con funciones de WordPress y las salidas deben escaparse según su contexto. No deben incluirse credenciales, claves ni copias de producción.
+No se versionan credenciales, bases de datos ni copias de producción. Para reportar un problema sensible, seguir [SECURITY.md](SECURITY.md) y no abrir un issue público.
 
-## Créditos
+## Licencia y créditos
 
-Tema diseñado y desarrollado por [Estudio Ideamos](https://ideamos.com.ar/). Licencia GPL-2.0-or-later.
+Código bajo GPL-2.0-or-later. Diseño y desarrollo por [Estudio Ideamos](https://ideamos.com.ar/).
