@@ -1,8 +1,8 @@
 <?php get_header();
 $uri = get_template_directory_uri();
 $games = array(
- array('magic','Magic','logo-magic.png'), array('pokemon','Pokémon','logo-pokemon.svg'), array('one-piece','One Piece','logo-onepiece.jpg'),
- array('digimon','Digimon','logo-digimon.png'), array('dragon-ball','Dragon Ball','logo-dragonball.png'), array('yu-gi-oh','Yu-Gi-Oh!','logo-yugioh.png'),
+ array('magic','Magic','logo-magic.webp'), array('pokemon','Pokémon','logo-pokemon.svg'), array('one-piece','One Piece','logo-onepiece.webp'),
+ array('digimon','Digimon','logo-digimon.webp'), array('dragon-ball','Dragon Ball','logo-dragonball.webp'), array('yu-gi-oh','Yu-Gi-Oh!','logo-yugioh.webp'),
  array('juegos-de-mesa','Juegos de mesa','')
 );
 $hero_mode = function_exists('gravedad_hero_mode') ? gravedad_hero_mode() : 'single';

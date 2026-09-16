@@ -19,6 +19,19 @@ add_filter('wp_resource_hints', function ($hints, $relation_type) {
     return $hints;
 }, 10, 2);
 
+// Cada foto de producto (u otra imagen) que se suba de acá en adelante
+// genera sus versiones de miniatura/mediana/grande en WebP en vez de en
+// JPG o PNG -- mismo aspecto, bastante menos peso -- sin tener que
+// acordarse de convertirlas a mano antes de subirlas. El archivo original
+// que se sube queda tal cual, esto solo afecta a los tamaños que WordPress
+// genera automáticamente y que son los que realmente se muestran en el
+// sitio.
+add_filter('image_editor_output_format', function ($formats) {
+    $formats['image/jpeg'] = 'image/webp';
+    $formats['image/png'] = 'image/webp';
+    return $formats;
+});
+
 /* ---------------------------------------------------------------------
  * SEO: meta description, canonical, Open Graph / Twitter Card
  * ------------------------------------------------------------------- */
@@ -243,4 +256,26 @@ add_action('send_headers', function () {
     if (is_ssl()) {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
     }
+});
+
+// Freno a fuerza bruta contra wp-login.php: WordPress no trae ningún límite
+// de intentos de fábrica. Después de 5 fallos desde la misma IP se bloquea
+// el login (aunque la contraseña sea correcta) por 15 minutos.
+function gravedad_login_lockout_key() {
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+    return 'gravedad_login_fails_' . md5($ip);
+}
+add_filter('authenticate', function ($user, $username, $password) {
+    if ($username === '' || $password === '') { return $user; }
+    if ((int) get_transient(gravedad_login_lockout_key()) >= 5) {
+        return new WP_Error('gravedad_too_many_attempts', 'Demasiados intentos fallidos. Esperá 15 minutos y probá de nuevo.');
+    }
+    return $user;
+}, 100, 3);
+add_action('wp_login_failed', function () {
+    $key = gravedad_login_lockout_key();
+    set_transient($key, (int) get_transient($key) + 1, 15 * MINUTE_IN_SECONDS);
+});
+add_action('wp_login', function () {
+    delete_transient(gravedad_login_lockout_key());
 });
