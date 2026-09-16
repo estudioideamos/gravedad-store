@@ -685,3 +685,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     drag=null;
   });
 })();
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // El botón flotante de WhatsApp no debe tapar el crédito de Ideamos en
+  // el pie: lo ocultamos apenas ese texto entra en pantalla.
+  const wa=document.querySelector('.floating-wa');
+  const credit=document.querySelector('.footer-credit');
+  if(!wa||!credit||!('IntersectionObserver' in window)) return;
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{ wa.classList.toggle('is-hidden',entry.isIntersecting); });
+  },{rootMargin:'0px 0px -20px 0px'});
+  io.observe(credit);
+});

@@ -46,7 +46,7 @@
   <div class="footer-bottom">
     <span class="footer-copyright">© <?php echo esc_html(date('Y')); ?> GRAVEDAD STORE</span>
     <div class="footer-seal" aria-label="Gravedad Store"><?php echo gravedad_icon('dice'); ?><small>GRAVEDAD STORE · TCG &amp; JUEGOS DE MESA</small></div>
-    <span class="footer-credit">Diseño &amp; desarrollo con <i aria-hidden="true">♥</i> por <a href="https://ideamos.com.ar" target="_blank" rel="noopener">Estudio Ideamos</a></span>
+    <span class="footer-credit">Diseño &amp; desarrollo con <i aria-hidden="true">♥</i> por <a class="footer-credit-link" href="https://ideamos.com.ar" target="_blank" rel="noopener">Estudio Ideamos <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/ideamos-logo.webp'); ?>" alt="Estudio Ideamos" loading="lazy" width="80" height="20"></a></span>
   </div>
 </footer>
 <div class="floating-actions" aria-label="Accesos rápidos">
