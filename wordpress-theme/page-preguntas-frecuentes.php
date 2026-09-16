@@ -3,6 +3,21 @@ defined('ABSPATH') || exit;
 get_header();
 $faq_def = gravedad_content_panel_definitions()['faq'];
 $faq_group_icons = array('g1' => 'tag', 'g2' => 'truck', 'g3' => 'refresh', 'g4' => 'box');
+$faq_jsonld_items = array();
+foreach ($faq_def['groups'] as $gkey => $group) {
+    $items_count = gravedad_content_panel_count('faq', $gkey . '_items', count($group['items']));
+    for ($n = 1; $n <= $items_count; $n++) {
+        $default_item = isset($group['items'][$n - 1]) ? $group['items'][$n - 1] : array('q' => '', 'a' => '');
+        $q = gravedad_content_panel_opt('faq', $gkey . '_q' . $n, $default_item['q']);
+        $a = gravedad_content_panel_opt('faq', $gkey . '_a' . $n, $default_item['a']);
+        if (!$q || !$a) { continue; }
+        $faq_jsonld_items[] = array(
+            '@type' => 'Question',
+            'name' => wp_strip_all_tags($q),
+            'acceptedAnswer' => array('@type' => 'Answer', 'text' => wp_strip_all_tags($a)),
+        );
+    }
+}
 ?>
 <main class="singles-page">
   <header class="singles-hero has-image" style="--hero:url('<?php echo esc_url(get_template_directory_uri() . '/assets/img/hero-preguntas-frecuentes.webp'); ?>')"><div class="singles-orbit"></div><div><nav class="hero-breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Inicio</a> / Preguntas frecuentes</nav><p class="section-label"><i class="label-dash"></i>ESTAMOS PARA AYUDARTE</p><h1>Preguntas frecuentes.</h1><p>Todo lo que necesitás saber sobre pagos, envíos y cambios antes de tu próxima compra.</p></div></header>
@@ -37,4 +52,7 @@ $faq_group_icons = array('g1' => 'tag', 'g2' => 'truck', 'g3' => 'refresh', 'g4'
     </div>
   </div>
 </main>
+<?php if ($faq_jsonld_items): ?>
+<script type="application/ld+json"><?php echo wp_json_encode(array('@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $faq_jsonld_items), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
+<?php endif; ?>
 <?php get_footer(); ?>
