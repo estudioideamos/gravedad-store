@@ -13,6 +13,62 @@ function gravedadSmoothScrollTo(el,targetLeft,duration){
 }
 
 (function(){
+  // Scroll con la rueda del mouse, suave y continuo (como werender.framer.website)
+  // en vez del salto a los tirones del scroll normal del navegador. Se
+  // acumula un destino y se lo persigue de a poco cada cuadro (lerp), así
+  // nunca hay un salto brusco aunque se gire la rueda fuerte y rápido.
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+
+  const EASE=.085; // más bajo = más lento/suave para alcanzar el destino
+  const SPEED=.7;  // más bajo = cada "click" de rueda mueve menos
+  let current=window.scrollY;
+  let target=current;
+  let rafId=null;
+
+  function maxScroll(){ return Math.max(0,document.documentElement.scrollHeight-window.innerHeight); }
+
+  function isInsideScrollable(el){
+    let node=el;
+    while(node&&node!==document.body&&node!==document.documentElement){
+      if(node.nodeType===1){
+        const style=getComputedStyle(node);
+        if(/(auto|scroll)/.test(style.overflowY)&&node.scrollHeight>node.clientHeight+1) return true;
+      }
+      node=node.parentNode;
+    }
+    return false;
+  }
+
+  function step(){
+    current+=(target-current)*EASE;
+    if(Math.abs(target-current)<.5){
+      current=target;
+      window.scrollTo({top:current,left:0,behavior:'instant'});
+      rafId=null;
+      return;
+    }
+    window.scrollTo({top:current,left:0,behavior:'instant'});
+    rafId=requestAnimationFrame(step);
+  }
+
+  window.addEventListener('wheel',(e)=>{
+    if(e.ctrlKey) return; // dejar el zoom con ctrl+rueda intacto
+    if(isInsideScrollable(e.target)) return; // paneles con scroll propio (carrito, filtros) sin tocar
+    e.preventDefault();
+    if(!rafId){ current=window.scrollY; target=current; }
+    target=Math.max(0,Math.min(maxScroll(),target+e.deltaY*SPEED));
+    if(!rafId) rafId=requestAnimationFrame(step);
+  },{passive:false});
+
+  // Si el scroll se movió por otro medio (teclado, barra, link con #ancla),
+  // resincronizar para que la próxima rueda arranque desde ahí y no "salte".
+  window.addEventListener('scroll',()=>{
+    if(!rafId){ current=window.scrollY; target=current; }
+  },{passive:true});
+})();
+
+(function(){
   const FAV_KEY='gravedad_favorites';
   function getFavorites(){ try{ const v=JSON.parse(localStorage.getItem(FAV_KEY)); return Array.isArray(v)?v:[]; }catch(e){ return []; } }
   function setFavorites(ids){ try{ localStorage.setItem(FAV_KEY, JSON.stringify(ids)); }catch(e){} updateFavUI(); }
