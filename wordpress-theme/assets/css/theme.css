@@ -229,7 +229,7 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 .hero-slide-inner{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:space-between;gap:40px;padding:90px 4vw 0}
 .hero-slide-inner h1{font-size:clamp(46px,5vw,80px);line-height:1.05}
 .hero-slide .hero-copy{position:static;width:auto;flex:1 1 50%;padding:0;max-width:640px}
-.hero-slide-product{flex:0 1 38%;display:flex;align-items:center;justify-content:center;max-width:420px;transform:translateX(-4vw);filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
+.hero-slide-product{flex:0 1 38%;display:flex;align-items:center;justify-content:center;max-width:420px;transform:translateX(-6vw);filter:drop-shadow(0 30px 60px rgba(0,0,0,.55))}
 .hero-slide-product img{width:100%;height:auto;max-height:480px;object-fit:contain}
 .hero-slider-dots{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;display:flex;gap:8px}
 .hero-slider-wrap .hero-slider-dots .carousel-dot{background:rgba(255,255,255,.3)}
