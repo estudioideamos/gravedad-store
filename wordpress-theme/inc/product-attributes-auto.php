@@ -23,7 +23,7 @@ function gravedad_autoattrs_rule($n) {
     // La regla 1 hereda, como valor por defecto, la configuración original
     // (Cartas sueltas + Colección/Idioma/Rareza/Condición/Juego).
     $default_cat = $n === 1 ? get_option('gravedad_autoattrs_category', 'cartas-sueltas') : '';
-    $default_list = $n === 1 ? get_option('gravedad_autoattrs_list', array('pa_coleccion', 'pa_idioma', 'pa_rareza', 'pa_condicion', 'pa_juego')) : array();
+    $default_list = $n === 1 ? get_option('gravedad_autoattrs_list', array('pa_coleccion', 'pa_idioma', 'pa_rareza', 'pa_condicion', 'pa_juego', 'pa_color', 'pa_tipo-carta')) : array();
     $atributos = get_option('gravedad_autoattrs_regla' . $n . '_atributos', $default_list);
     return array(
         'n' => $n,
@@ -37,6 +37,39 @@ function gravedad_autoattrs_rules() {
     $rules = array();
     for ($n = 1; $n <= gravedad_autoattrs_rules_count(); $n++) { $rules[] = gravedad_autoattrs_rule($n); }
     return $rules;
+}
+
+/**
+ * Instala una sola vez las reglas pedidas para Cartas sueltas y Accesorios.
+ * Si el cliente ya tenía una regla para la categoría, conserva lo existente
+ * y suma únicamente los atributos nuevos.
+ */
+function gravedad_autoattrs_install_requested_filters() {
+    $requested = array(
+        'cartas-sueltas' => array('pa_coleccion', 'pa_idioma', 'pa_rareza', 'pa_condicion', 'pa_juego', 'pa_color', 'pa_tipo-carta'),
+        'accesorios' => array('pa_tipo-accesorio', 'pa_tamano-accesorio', 'pa_marca', 'pa_color', 'pa_cantidad-paquete'),
+    );
+    $count = gravedad_autoattrs_rules_count();
+
+    foreach ($requested as $category => $taxonomies) {
+        $matched = false;
+        for ($n = 1; $n <= $count; $n++) {
+            if (get_option('gravedad_autoattrs_regla' . $n . '_categoria', $n === 1 ? 'cartas-sueltas' : '') !== $category) { continue; }
+            $current = get_option('gravedad_autoattrs_regla' . $n . '_atributos', array());
+            if (!is_array($current)) { $current = array(); }
+            update_option('gravedad_autoattrs_regla' . $n . '_atributos', array_values(array_unique(array_merge($current, $taxonomies))));
+            update_option('gravedad_autoattrs_regla' . $n . '_activa', '1');
+            $matched = true;
+            break;
+        }
+        if ($matched) { continue; }
+
+        $count++;
+        update_option('gravedad_autoattrs_regla' . $count . '_activa', '1');
+        update_option('gravedad_autoattrs_regla' . $count . '_categoria', $category);
+        update_option('gravedad_autoattrs_regla' . $count . '_atributos', $taxonomies);
+        update_option('gravedad_autoattrs_rules_count', $count);
+    }
 }
 
 function gravedad_autoattrs_menu() {

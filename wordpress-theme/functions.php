@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.96.0');
+define('GRAVEDAD_VERSION', '5.97.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -716,6 +716,7 @@ function gravedad_ensure_catalog_structure() {
             'tipo-juego' => 'Tipo de juego', 'jugadores' => 'Cantidad de jugadores',
             'edad' => 'Edad recomendada', 'duracion' => 'Duración de partida',
             'dificultad' => 'Dificultad', 'tipo-accesorio' => 'Tipo de accesorio', 'marca' => 'Marca',
+            'tamano-accesorio' => 'Tamaño', 'cantidad-paquete' => 'Cantidad por paquete',
         );
         foreach ($attributes as $slug => $label) {
             if (!wc_attribute_taxonomy_id_by_name($slug)) {
@@ -919,6 +920,9 @@ function gravedad_run_theme_upgrades() {
     gravedad_ensure_woocommerce_pages();
     gravedad_ensure_catalog_structure();
     gravedad_ensure_catalog_pages();
+    if (version_compare($installed, '5.97.0', '<') && function_exists('gravedad_autoattrs_install_requested_filters')) {
+        gravedad_autoattrs_install_requested_filters();
+    }
     if (version_compare($installed, '5.67.0', '<')) { gravedad_brand_wc_emails(); }
     if (version_compare($installed, '5.72.0', '<')) { gravedad_fix_hero_slide_image_paths(); }
     if (version_compare($installed, '5.76.2', '<')) { gravedad_recalculate_usd_prices(); }
@@ -939,6 +943,8 @@ function gravedad_seed_filter_terms() {
         'pa_idioma' => array('Español','Inglés','Japonés','Portugués'),
         'pa_condicion' => array('Nueva','Near Mint','Excellent','Good','Played'),
         'pa_acabado' => array('Foil','No Foil','Reverse Holo','Holo'),
+        'pa_tipo-carta' => array('Creature / Criatura','Land / Tierra','Artifact / Artefacto','Enchantment / Encantamiento','Planeswalker','Instant / Instantáneo','Sorcery / Conjuro'),
+        'pa_color' => array('Blanco','Azul','Negro','Rojo','Verde','Incoloro','Multicolor','Transparente','Amarillo','Violeta'),
         'pa_tipo-producto' => array('Sobres','Booster Box','Bundles','Collector Booster','Mazos / Commander','Kits y colecciones','Starter Decks','Double Packs','Productos especiales'),
         'pa_editorial' => array('Devir','Buró','Popullar','Otras editoriales'),
         'pa_tipo-juego' => array('Familiares','Party Games','Estrategia','Cooperativos','Para 2 jugadores','Infantiles','Juegos de cartas','Rol / Aventura'),
@@ -948,6 +954,8 @@ function gravedad_seed_filter_terms() {
         'pa_dificultad' => array('Fácil','Media','Difícil'),
         'pa_tipo-accesorio' => array('Folios / Sleeves','Deck Boxes','Carpetas','Playmats','Dados y Contadores','Almacenamiento','Otros'),
         'pa_marca' => array('Dragon Shield','Ultra Pro','Ultimate Guard','KMC','Otras marcas'),
+        'pa_tamano-accesorio' => array('Small','Standard'),
+        'pa_cantidad-paquete' => array('40 unidades','50 unidades','60 unidades','80 unidades','100 unidades'),
     );
     foreach ($groups as $taxonomy => $terms) {
         if (!taxonomy_exists($taxonomy)) { continue; }
@@ -974,7 +982,9 @@ function gravedad_section_filters() {
             'f_duracion' => array('Duración de partida','pa_duracion'), 'f_dificultad' => array('Dificultad','pa_dificultad'),
         ),
         'accesorios' => array(
-            'f_tipo_accesorio' => array('Tipo de accesorio','pa_tipo-accesorio'), 'f_marca' => array('Marca','pa_marca'),
+            'f_tipo_accesorio' => array('Categoría','pa_tipo-accesorio'), 'f_tamano_accesorio' => array('Tamaño','pa_tamano-accesorio'),
+            'f_marca' => array('Marca','pa_marca'), 'f_color' => array('Color','pa_color'),
+            'f_cantidad_paquete' => array('Cantidad por paquete','pa_cantidad-paquete'),
         ),
         'preventas' => array(
             'f_juego' => array('Juego','pa_juego'), 'f_editorial' => array('Editorial','pa_editorial'),
