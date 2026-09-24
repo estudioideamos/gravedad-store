@@ -221,7 +221,7 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
    ya existentes del hero clásico, con hasta 3 slides de texto + imagen de
    producto al costado. Mecánica de scroll-snap, igual que los carruseles
    de productos de la home. */
-.hero-slider-wrap{padding:0!important}
+.hero-slider-wrap{height:560px;padding:0!important}
 .hero-slider-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .hero-slider-track::-webkit-scrollbar{display:none}
 .hero-slide{flex:0 0 100%;width:100%;height:100%;position:relative;scroll-snap-align:start;background:var(--hero);background-position:center;background-size:cover}
@@ -239,6 +239,7 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 .hero-slider-wrap .carousel-arrow.next{right:24px}
 .hero-slider-single .hero-slider-dots,.hero-slider-single .carousel-arrow{display:none!important}
 @media(max-width:950px){
+  .hero-slider-wrap{height:620px}
   .hero-slide-inner{flex-direction:column;justify-content:flex-start;padding:70px 6vw 0;gap:18px}
   .hero-slide .hero-copy{max-width:none}
   .hero-slide-product{flex:0 0 auto;max-width:220px;transform:none}
