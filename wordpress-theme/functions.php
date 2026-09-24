@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.97.0');
+define('GRAVEDAD_VERSION', '5.98.0');
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -27,1300 +27,961 @@ function gravedad_icon($name) {
         'sparkle' => '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2c.7 4.4 2.6 6.3 7 7-4.4.7-6.3 2.6-7 7-.7-4.4-2.6-6.3-7-7 4.4-.7 6.3-2.6 7-7z"></path></svg>',
         'box' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21 7.5-9-4.5-9 4.5 9 4.5 9-4.5z"></path><path d="M3 7.5v9l9 4.5 9-4.5v-9"></path><path d="M12 12v9"></path></svg>',
         'hexagon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7.5v9L12 22l9-5.5v-9z"></path><path d="M12 8v8"></path><path d="m8.5 10 7 4"></path><path d="m15.5 10-7 4"></path></svg>',
-        'tarot' => '<svg viewBox="0 0 499.054 499.054" fill="currentColor"><g><g><path d="m418.518 213.011-14.096-5.13 5.129-14.096 14.096 5.13zm-28.19-10.26-14.096-5.13 5.129-14.096 14.096 5.13zm-28.193-10.261-14.095-5.13 5.131-14.096 14.095 5.13z"/></g><g><path d="m380.882 215.691-.328 15.217c-.096 4.444-.914 8.813-2.433 12.983-3.699 10.166-11.137 18.282-20.941 22.854-9.803 4.571-20.804 5.053-30.968 1.353-4.171-1.518-8.043-3.699-11.509-6.482l-11.866-9.53-.328 15.217c-.513 23.772 14.157 45.21 36.503 53.343 6.195 2.255 12.614 3.377 19.016 3.377 7.994 0 15.961-1.751 23.422-5.229 13.436-6.266 23.627-17.388 28.698-31.318 8.133-22.345 1.141-47.362-17.399-62.252zm15.17 66.652c-3.7 10.166-11.138 18.282-20.941 22.854-9.805 4.572-20.804 5.053-30.968 1.352-11.725-4.267-20.553-13.553-24.45-24.882.461.182.923.356 1.389.526 28.757 10.465 60.669-4.414 71.136-33.171.169-.466.332-.934.489-1.402 6.173 10.267 7.612 23 3.345 34.723z"/><path d="m483.697 215.09 15.357-42.193-189.497-68.972-2.07 5.687h-158.524v6.051l-36.548 13.302 5.13 14.096 31.418-11.435v86.222l-3.248 1.983-27.296-20.128-7.971 32.965-33.535 5.068 17.673 28.946-20.129 27.296 32.965 7.972 5.068 33.535 28.947-17.674 7.526 5.55v60.456h21.115l-20.836 7.584c-11.956-23.004-38.109-35.2-63.416-29.572l-49.675-136.482c11.202-5.802 20.14-15.068 25.56-26.69 5.419-11.622 6.772-24.424 4.016-36.735l36.756-13.378-5.13-14.096-97.353 35.434 93.784 257.668 120.163-43.732h62.882l128.441 46.749 55.093-151.364-14.096-5.131-33.037 90.768c-12.31-2.755-25.113-1.404-36.735 4.016-11.623 5.419-20.888 14.357-26.691 25.56l-68.311-24.863c5.628-25.307-6.568-51.461-29.571-63.417l49.671-136.469c4.126.924 8.308 1.386 12.482 1.386 8.28 0 16.53-1.813 24.258-5.416 11.623-5.419 20.888-14.357 26.691-25.559l68.311 24.863c-5.628 25.307 6.568 51.46 29.571 63.417l-11.491 31.571 14.096 5.131 11.318-31.096zm-348.698 181.495-32.25 11.738-11.738-32.25c17.436-3.032 35.1 5.203 43.988 20.512zm-86.883-204.267c-3.722 7.981-9.682 14.467-17.149 18.785l-11.741-32.257 32.257-11.74c1.491 8.497.354 17.231-3.367 25.212zm115.847-67.706h34.32c-3.116 17.428-16.893 31.204-34.32 34.32zm0 209.885c17.427 3.116 31.205 16.893 34.32 34.32h-34.32zm49.479 34.32c-3.367-25.706-23.772-46.111-49.478-49.478v-27.203h-15v12.588l-6.738-4.969-18.278 11.16-3.2-21.176-20.815-5.032 12.71-17.235-11.16-18.278 21.175-3.201 5.034-20.814 17.236 12.71 4.036-2.464v41.712h15v-103.047c25.706-3.367 46.111-23.772 49.478-49.478h88.586l-14.697 40.378h.001l-14.328 39.367c-5.269-2.284-10.519-3.804-15.71-4.555v-23.049h-15v23.052c-6.886.996-13.411 3.281-19.431 6.294l-12.155-22.23-13.161 7.197 12.524 22.904c-15.622 11.416-25.703 25.465-26.401 26.453l-3.06 4.329 3.06 4.329c1.102 1.56 25.554 35.629 58.29 40.57l-26.185 71.942 19.844 7.223h-22.177zm42.322-117.095-8.528 23.432c-21.521-1.501-40.441-21.435-47.917-30.409 2.825-3.398 7.297-8.368 12.987-13.347 8.939-7.821 22.699-17.145 37.488-17.145 5.793 0 11.849 1.435 18.064 4.243l-11.064 30.399v-12.173h-15v15zm127.069 130.727c7.982-3.722 16.718-4.855 25.212-3.366l-11.741 32.257-32.257-11.74c4.32-7.468 10.805-13.428 18.786-17.151zm-115.583-18.082-32.25-11.737 11.738-32.251c15.307 8.89 23.544 26.548 20.512 43.988zm64.744-212.324c-7.982 3.722-16.718 4.856-25.212 3.366l11.74-32.257 32.257 11.74c-4.319 7.468-10.804 13.428-18.785 17.151zm115.584 18.082 20.683 7.527 11.567 4.21-11.738 32.25c-15.31-8.888-23.545-26.546-20.512-43.987z"/><path d="m242.026 27.308h15v44.875h-15z"/><path d="m270.718 49.935h44.875v15h-44.875z" transform="matrix(.342 -.94 .94 .342 138.912 313.263)"/><path d="m198.397 35.006h15v44.874h-15z" transform="matrix(.94 -.342 .342 .94 -7.23 73.887)"/><path d="m242.026 426.871h15v44.875h-15z"/><path d="m285.656 419.183h15v44.875h-15z" transform="matrix(.94 -.342 .342 .94 -133.36 126.893)"/><path d="m183.46 434.111h44.875v15h-44.875z" transform="matrix(.342 -.94 .94 .342 -279.504 484.039)"/></g></g></svg>',
-        'dice' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"></rect><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"></circle><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"></circle><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"></circle><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"></circle><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"></circle></svg>',
-        'pin' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>',
-        'clock' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.5 2"></path></svg>',
-        'hourglass' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12"></path><path d="M6 22h12"></path><path d="M6 2c0 5 4 6.5 6 8 2-1.5 6-3 6-8"></path><path d="M6 22c0-5 4-6.5 6-8 2 1.5 6 3 6 8"></path></svg>',
-        'tag' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 12 22l-10-10V3h9l9.59 9.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"></circle></svg>',
-        'game-magic' => '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 1.5l2.7 7.2 7.3.3-5.8 4.6 2.1 7.1L12 16.6l-6.3 4.1 2.1-7.1L2 8.9l7.3-.2z"></path></svg>',
-        'game-pokemon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"></circle><path d="M2.5 12h6.2a3.3 3.3 0 0 0 6.6 0h6.2" stroke-width="1.8"></path><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke-width="1.4"></circle></svg>',
-        'game-onepiece' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"></circle><path d="M12 3v3.4M12 17.6V21M21 12h-3.4M6.4 12H3M18.4 5.6l-2.4 2.4M8 13.6l-2.4 2.4M18.4 18.4l-2.4-2.4M8 10.4 5.6 8"></path></svg>',
-        'game-digimon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 3 7.5v9L12 22l9-5.5v-9z"></path><path d="M12 8l2.8 2.8L12 13.6 9.2 10.8z" fill="currentColor" stroke="none"></path></svg>',
-        'game-dragonball' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9.5" fill="none"></circle><circle cx="12" cy="7.2" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="8.2" cy="9.6" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="9.6" cy="14" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="14.4" cy="14" r="1.15" fill="currentColor" stroke="none"></circle><circle cx="15.8" cy="9.6" r="1.15" fill="currentColor" stroke="none"></circle></svg>',
-        'game-yugioh' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.5 14.6 9.4 22 10 16.3 14.6 18.1 21.5 12 17.6 5.9 21.5 7.7 14.6 2 10 9.4 9.4Z"></path></svg>',
-        'heart' => '<svg viewBox="0 0 511.992 511.992" fill="currentColor" stroke="none"><path d="m510.616 196.061c-3.944-12.14-15.729-20.486-32.329-22.898l-131.649-19.131-58.876-119.293c-7.424-15.044-19.003-23.671-31.767-23.671s-24.342 8.628-31.766 23.671l-58.873 119.292-131.65 19.132c-16.602 2.412-28.385 10.757-32.33 22.897-3.944 12.14.683 25.818 12.695 37.526l95.262 92.857-22.489 131.12c-2.957 17.247 2.066 27.561 6.8 33.176 5.538 6.568 13.617 10.186 22.749 10.186 6.905 0 14.257-2.025 21.85-6.019l117.753-61.906 117.752 61.905c7.595 3.994 14.946 6.019 21.853 6.019h.001c9.133 0 17.212-3.618 22.75-10.186 4.734-5.615 9.757-15.929 6.799-33.177l-22.493-131.118 95.263-92.856c12.011-11.709 16.639-25.386 12.695-37.526zm-33.636 16.043-100.91 98.361c-3.536 3.446-5.149 8.411-4.314 13.277l23.826 138.89c.767 4.473.378 7.155.016 8.291-.905-.001-3.479-.254-7.888-2.572l-124.733-65.575c-2.186-1.149-4.583-1.723-6.98-1.723s-4.795.574-6.98 1.723l-124.734 65.576c-4.404 2.316-6.977 2.57-7.883 2.571-.363-1.136-.752-3.818.015-8.291l23.822-138.891c.834-4.866-.779-9.831-4.314-13.277l-100.91-98.362c-3.254-3.172-4.515-5.572-4.887-6.702.965-.695 3.396-1.896 7.895-2.55l139.456-20.266c4.886-.71 9.109-3.779 11.294-8.206l62.364-126.365c2.01-4.074 3.903-6.015 4.863-6.719.96.704 2.854 2.645 4.864 6.72l62.365 126.364c2.186 4.427 6.408 7.496 11.294 8.206l139.454 20.266c4.498.653 6.929 1.854 7.894 2.55-.374 1.131-1.635 3.532-4.889 6.704z"></path></svg>',
-        'heart-filled' => '<svg viewBox="0 0 511.992 511.992" fill="currentColor" stroke="none"><path d="M256,21 L308.9,183.2 L479.5,183.4 L341.6,283.8 L394.1,446.1 L256,346 L117.9,446.1 L170.4,283.8 L32.5,183.4 L203.1,183.2 Z"></path></svg>',
-        'whatsapp' => '<svg viewBox="-23 -21 682 682.66669" fill="currentColor" fill-rule="evenodd"><path d="m544.386719 93.007812c-59.875-59.945312-139.503907-92.9726558-224.335938-93.007812-174.804687 0-317.070312 142.261719-317.140625 317.113281-.023437 55.894531 14.578125 110.457031 42.332032 158.550781l-44.992188 164.335938 168.121094-44.101562c46.324218 25.269531 98.476562 38.585937 151.550781 38.601562h.132813c174.785156 0 317.066406-142.273438 317.132812-317.132812.035156-84.742188-32.921875-164.417969-92.800781-224.359376zm-224.335938 487.933594h-.109375c-47.296875-.019531-93.683594-12.730468-134.160156-36.742187l-9.621094-5.714844-99.765625 26.171875 26.628907-97.269531-6.269532-9.972657c-26.386718-41.96875-40.320312-90.476562-40.296875-140.28125.054688-145.332031 118.304688-263.570312 263.699219-263.570312 70.40625.023438 136.589844 27.476562 186.355469 77.300781s77.15625 116.050781 77.132812 186.484375c-.0625 145.34375-118.304687 263.59375-263.59375 263.59375zm144.585938-197.417968c-7.921875-3.96875-46.882813-23.132813-54.148438-25.78125-7.257812-2.644532-12.546875-3.960938-17.824219 3.96875-5.285156 7.929687-20.46875 25.78125-25.09375 31.066406-4.625 5.289062-9.242187 5.953125-17.167968 1.984375-7.925782-3.964844-33.457032-12.335938-63.726563-39.332031-23.554687-21.011719-39.457031-46.960938-44.082031-54.890626-4.617188-7.9375-.039062-11.8125 3.476562-16.171874 8.578126-10.652344 17.167969-21.820313 19.808594-27.105469 2.644532-5.289063 1.320313-9.917969-.664062-13.882813-1.976563-3.964844-17.824219-42.96875-24.425782-58.839844-6.4375-15.445312-12.964843-13.359374-17.832031-13.601562-4.617187-.230469-9.902343-.277344-15.1875-.277344-5.28125 0-13.867187 1.980469-21.132812 9.917969-7.261719 7.933594-27.730469 27.101563-27.730469 66.105469s28.394531 76.683594 32.355469 81.972656c3.960937 5.289062 55.878906 85.328125 135.367187 119.648438 18.90625 8.171874 33.664063 13.042968 45.175782 16.695312 18.984374 6.03125 36.253906 5.179688 49.910156 3.140625 15.226562-2.277344 46.878906-19.171875 53.488281-37.679687 6.601563-18.511719 6.601563-34.375 4.617187-37.683594-1.976562-3.304688-7.261718-5.285156-15.183593-9.253906zm0 0"/></svg>',
-    );
-    return isset($icons[$name]) ? $icons[$name] : '';
-}
-
-function gravedad_setup() {
-    load_theme_textdomain('gravedad-store', get_template_directory() . '/languages');
-    add_theme_support('title-tag');
-    add_theme_support('post-thumbnails');
-    add_theme_support('custom-logo', array('height' => 120, 'width' => 420, 'flex-height' => true, 'flex-width' => true));
-    add_theme_support('html5', array('search-form', 'gallery', 'caption', 'style', 'script'));
-    add_theme_support('woocommerce');
-    add_theme_support('wc-product-gallery-lightbox');
-    add_theme_support('wc-product-gallery-slider');
-    register_nav_menus(array('primary' => __('Men√∫ principal', 'gravedad-store'), 'footer' => __('Men√∫ del pie', 'gravedad-store')));
-}
-add_action('after_setup_theme', 'gravedad_setup');
-
-function gravedad_force_search_template($template) {
-    if (is_search()) {
-        $custom = get_template_directory() . '/archive-product.php';
-        if (file_exists($custom)) { return $custom; }
-    }
-    return $template;
-}
-add_filter('template_include', 'gravedad_force_search_template', 99);
-
-function gravedad_assets() {
-    wp_enqueue_style('gravedad-fonts', 'https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Manrope:wght@400;500;600;700;800&display=swap', array(), null);
-    wp_enqueue_style('gravedad-theme', get_template_directory_uri() . '/assets/css/theme.css', array(), GRAVEDAD_VERSION);
-    wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
-    wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);
-    wp_enqueue_script('gravedad-theme', get_template_directory_uri() . '/assets/js/theme.js', array(), GRAVEDAD_VERSION, true);
-    wp_localize_script('gravedad-theme', 'gravedadAjax', array(
-        'url'     => admin_url('admin-ajax.php'),
-        'shopUrl' => gravedad_shop_url(),
-        'nonce'   => wp_create_nonce('gravedad_public_ajax'),
-    ));
-}
-add_action('wp_enqueue_scripts', 'gravedad_assets');
-
-function gravedad_uncropped_thumbnails($size) {
-    $size['width'] = max((int) $size['width'], 640);
-    $size['height'] = max((int) $size['height'], 640);
-    $size['crop'] = 0;
-    return $size;
-}
-add_filter('woocommerce_get_image_size_thumbnail', 'gravedad_uncropped_thumbnails');
-add_filter('woocommerce_get_image_size_gallery_thumbnail', 'gravedad_uncropped_thumbnails');
-
-// Salud del sitio marcaba como error cr√≠tico de seguridad que se puede
-// navegar/listar el directorio de subidas. Se protege escribiendo los
-// mismos archivos que WooCommerce deber√≠a crear: un index.html vac√≠o en
-// uploads (bloquea el listado, nunca el acceso a las fotos que s√≠ son
-// p√∫blicas) y, si existe, un .htaccess que adem√°s bloquea el acceso
-// directo a la carpeta de descargas protegidas de WooCommerce.
-function gravedad_protect_uploads_dir() {
-    $upload = wp_upload_dir();
-    if (empty($upload['basedir']) || !is_dir($upload['basedir'])) { return; }
-    $base = trailingslashit($upload['basedir']);
-
-    if (!file_exists($base . 'index.html')) {
-        @file_put_contents($base . 'index.html', '');
-    }
-
-    $wc_dir = $base . 'woocommerce_uploads/';
-    if (is_dir($wc_dir)) {
-        if (!file_exists($wc_dir . 'index.html')) { @file_put_contents($wc_dir . 'index.html', ''); }
-        if (!file_exists($wc_dir . '.htaccess')) {
-            $rules = "Options -Indexes\n<IfModule mod_authz_core.c>\n\tRequire all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n\tDeny from all\n</IfModule>\n";
-            @file_put_contents($wc_dir . '.htaccess', $rules);
-        }
-    }
-}
-add_action('admin_init', 'gravedad_protect_uploads_dir');
-
-// El plugin de Correo Argentino trae algunos textos sin traducir al espa√±ol.
-// Se traducen ac√° en vez de tocar el c√≥digo del plugin.
-add_filter('gettext', function ($translated, $text, $domain) {
-    if (strpos($text, 'To get the shipping cost by Correo Argentino') !== false) {
-        return 'Para calcular el costo de env√≠o con Correo Argentino, complet√° los datos de tu direcci√≥n';
-    }
-    return $translated;
-}, 10, 3);
-
-// El campo "city" de WooCommerce se traduce por defecto como "Poblaci√≥n",
-// que no es como se le dice en Argentina. Adem√°s: Localidad y C√≥digo postal
-// van en la misma fila (son cortos) y Regi√≥n/Provincia queda ancho completo
-// porque hay valores largos como "Ciudad Aut√≥noma de Buenos Aires".
-add_filter('woocommerce_get_country_locale', function ($locale) {
-    $locale['AR']['city']['label'] = 'Localidad';
-    $locale['AR']['city']['class'] = array('form-row-first');
-    $locale['AR']['city']['priority'] = 70;
-    $locale['AR']['postcode']['class'] = array('form-row-last');
-    $locale['AR']['postcode']['priority'] = 80;
-    $locale['AR']['state']['class'] = array('form-row-first');
-    $locale['AR']['state']['priority'] = 90;
-    return $locale;
-});
-
-// Regi√≥n/Provincia y Tel√©fono comparten fila en escritorio, igual que
-// Localidad y C√≥digo postal. Va en woocommerce_checkout_fields (prioridad
-// tard√≠a) porque es el √∫ltimo filtro: las reglas por pa√≠s se aplican
-// despu√©s de woocommerce_billing_fields y pisaban la clase.
-add_filter('woocommerce_checkout_fields', function ($fields) {
-    if (isset($fields['billing']['billing_phone'])) {
-        $fields['billing']['billing_phone']['class'] = array('form-row-last');
-        $fields['billing']['billing_phone']['priority'] = 95;
-    }
-    if (isset($fields['shipping']['shipping_phone'])) {
-        $fields['shipping']['shipping_phone']['class'] = array('form-row-last');
-        $fields['shipping']['shipping_phone']['priority'] = 95;
-    }
-    return $fields;
-}, 100);
-
-// Campo DNI: obligatorio, se guarda en el pedido y se muestra en el panel
-// de administraci√≥n y en los mails del pedido.
-add_filter('woocommerce_billing_fields', function ($fields) {
-    $fields['billing_dni'] = array(
-        'label'       => 'DNI',
-        'placeholder' => 'Sin puntos ni espacios',
-        'required'    => true,
-        'class'       => array('form-row-wide'),
-        'priority'    => 105,
-        'clear'       => true,
-    );
-    return $fields;
-}, 21);
-
-add_action('woocommerce_checkout_process', function () {
-    if (empty($_POST['billing_dni'])) {
-        wc_add_notice('Por favor complet√° tu <strong>DNI</strong> para poder emitir el env√≠o.', 'error');
-        return;
-    }
-    $dni = preg_replace('/\D/', '', wp_unslash($_POST['billing_dni']));
-    if (strlen($dni) < 7 || strlen($dni) > 8) {
-        wc_add_notice('El <strong>DNI</strong> tiene que tener 7 u 8 n√∫meros, sin puntos ni espacios.', 'error');
-    }
-});
-
-add_action('woocommerce_checkout_update_order_meta', function ($order_id) {
-    if (!empty($_POST['billing_dni'])) {
-        $dni = preg_replace('/\D/', '', wp_unslash($_POST['billing_dni']));
-        update_post_meta($order_id, '_billing_dni', sanitize_text_field($dni));
-    }
-});
-
-add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
-    $dni = get_post_meta($order->get_id(), '_billing_dni', true);
-    if ($dni) { echo '<p><strong>DNI:</strong> ' . esc_html($dni) . '</p>'; }
-});
-
-add_filter('woocommerce_email_order_meta_fields', function ($fields, $sent_to_admin, $order) {
-    $dni = get_post_meta($order->get_id(), '_billing_dni', true);
-    if ($dni) { $fields['billing_dni'] = array('label' => 'DNI', 'value' => $dni); }
-    return $fields;
-}, 10, 3);
-
-function gravedad_favicon() {
-    if (has_site_icon()) { return; }
-    $uri = get_template_directory_uri();
-    echo '<link rel="icon" href="' . esc_url($uri . '/assets/img/favicon.ico') . '" sizes="any">';
-    echo '<link rel="icon" type="image/png" href="' . esc_url($uri . '/assets/img/favicon-32.png') . '" sizes="32x32">';
-    echo '<link rel="icon" type="image/png" href="' . esc_url($uri . '/assets/img/favicon-192.png') . '" sizes="192x192">';
-    echo '<link rel="apple-touch-icon" href="' . esc_url($uri . '/assets/img/apple-touch-icon.png') . '">';
-}
-add_action('wp_head', 'gravedad_favicon', 1);
-
-function gravedad_customize($wp_customize) {
-    $wp_customize->add_section('gravedad_store', array('title' => __('Gravedad Store', 'gravedad-store'), 'priority' => 30));
-    $fields = array(
-        'gravedad_announcement' => array('Aviso superior', 'ENV√çOS A TODO EL PA√çS'),
-        'gravedad_promo' => array('Promoci√≥n superior', '3 CUOTAS SIN INTER√âS EN PRODUCTOS SELECCIONADOS'),
-        'gravedad_whatsapp' => array('WhatsApp', '542320673750'),
-        'gravedad_email' => array('Email de contacto', 'info@gravedad.com.ar'),
-        'gravedad_instagram' => array('Instagram', 'https://www.instagram.com/gravedadstore'),
-        'gravedad_event_date' => array('Fecha del pr√≥ximo evento', '24 AGO'),
-        'gravedad_event_location' => array('Lugar del pr√≥ximo evento', 'Roque S√°enz Pe√±a 5086, Jos√© C. Paz, Buenos Aires'),
-    );
-    foreach ($fields as $id => $field) {
-        $wp_customize->add_setting($id, array('default' => $field[1], 'sanitize_callback' => 'sanitize_text_field'));
-        $wp_customize->add_control($id, array('label' => __($field[0], 'gravedad-store'), 'section' => 'gravedad_store', 'type' => 'text'));
-    }
-    $wp_customize->add_setting('gravedad_usd_rate_manual', array('default' => '', 'sanitize_callback' => 'sanitize_text_field'));
-    $wp_customize->add_control('gravedad_usd_rate_manual', array(
-        'label' => __('Cotizaci√≥n manual del d√≥lar (opcional)', 'gravedad-store'),
-        'description' => __('Dejar vac√≠o para usar la cotizaci√≥n oficial autom√°tica. Si carg√°s un valor ac√°, se usa ese en vez del autom√°tico.', 'gravedad-store'),
-        'section' => 'gravedad_store', 'type' => 'number',
-    ));
-}
-add_action('customize_register', 'gravedad_customize');
-add_action('customize_save_after', function () { gravedad_recalculate_usd_prices(); });
-
-function gravedad_option($key, $default = '') { return get_theme_mod($key, $default); }
-
-/* ---- Cotizaci√≥n del d√≥lar y precios en USD ---- */
-
-function gravedad_fetch_official_usd_rate() {
-    $response = wp_remote_get('https://dolarapi.com/v1/dolares/oficial', array('timeout' => 12));
-    if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) { return false; }
-    $body = json_decode(wp_remote_retrieve_body($response), true);
-    if (!is_array($body) || empty($body['venta'])) { return false; }
-    return (float) $body['venta'];
-}
-
-add_action('gravedad_fetch_usd_rate_event', 'gravedad_update_usd_rate');
-function gravedad_update_usd_rate() {
-    $rate = gravedad_fetch_official_usd_rate();
-    if (!$rate) { return; }
-    $previous = (float) get_option('gravedad_usd_rate_auto', 0);
-    update_option('gravedad_usd_rate_auto', $rate);
-    update_option('gravedad_usd_rate_auto_updated', current_time('mysql'));
-    if (abs($previous - $rate) > 0.009) { gravedad_recalculate_usd_prices(); }
-}
-
-add_action('after_setup_theme', function () {
-    if (!wp_next_scheduled('gravedad_fetch_usd_rate_event')) {
-        wp_schedule_event(time(), 'hourly', 'gravedad_fetch_usd_rate_event');
-    }
-});
-
-function gravedad_get_usd_rate() {
-    $manual = get_theme_mod('gravedad_usd_rate_manual', '');
-    if ($manual !== '' && is_numeric($manual) && (float) $manual > 0) { return (float) $manual; }
-    $auto = (float) get_option('gravedad_usd_rate_auto', 0);
-    if ($auto > 0) { return $auto; }
-    $fetched = gravedad_fetch_official_usd_rate();
-    if ($fetched) {
-        update_option('gravedad_usd_rate_auto', $fetched);
-        update_option('gravedad_usd_rate_auto_updated', current_time('mysql'));
-        return $fetched;
-    }
-    return 1000; // resguardo si todav√≠a no hay cotizaci√≥n disponible
-}
-
-// Redondea a la decena de pesos m√°s cercana (ej: 45.678,23 -> 45.680) para
-// que los precios calculados desde d√≥lares no queden con centavos sueltos.
-function gravedad_round_ars($value) {
-    return (float) (round($value / 10) * 10);
-}
-
-function gravedad_recalculate_usd_prices() {
-    if (!class_exists('WooCommerce')) { return; }
-    $rate = gravedad_get_usd_rate();
-    $ids = get_posts(array('post_type' => array('product', 'product_variation'), 'posts_per_page' => -1, 'fields' => 'ids', 'meta_key' => '_price_usd', 'post_status' => 'any'));
-    foreach ($ids as $id) {
-        $usd_regular = get_post_meta($id, '_price_usd', true);
-        $usd_sale = get_post_meta($id, '_sale_price_usd', true);
-        if ($usd_regular === '' || !is_numeric($usd_regular)) { continue; }
-        $ars_regular = gravedad_round_ars($usd_regular * $rate);
-        update_post_meta($id, '_regular_price', $ars_regular);
-        if ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0) {
-            $ars_sale = gravedad_round_ars($usd_sale * $rate);
-            update_post_meta($id, '_sale_price', $ars_sale);
-            update_post_meta($id, '_price', $ars_sale);
-        } else {
-            update_post_meta($id, '_price', $ars_regular);
-        }
-        wc_delete_product_transients($id);
-    }
-}
-
-add_action('woocommerce_product_options_pricing', function () {
-    global $post;
-    woocommerce_wp_text_input(array('id' => '_price_usd', 'label' => __('Precio en USD (opcional)', 'gravedad-store'), 'description' => __('Si carg√°s un valor ac√°, el precio en pesos se calcula solo con la cotizaci√≥n del d√≥lar y pisa el precio regular.', 'gravedad-store'), 'desc_tip' => true, 'data_type' => 'price'));
-    woocommerce_wp_text_input(array('id' => '_sale_price_usd', 'label' => __('Precio de oferta en USD (opcional)', 'gravedad-store'), 'data_type' => 'price'));
-});
-
-function gravedad_parse_usd_input($raw) {
-    $raw = trim((string) $raw);
-    if ($raw === '') { return ''; }
-    // Acepta tanto "4.50" como "4,50" (coma decimal, como se escribe en espa√±ol).
-    return wc_format_decimal(str_replace(',', '.', $raw));
-}
-
-add_action('woocommerce_process_product_meta', function ($post_id) {
-    $usd_regular_raw = isset($_POST['_price_usd']) ? wp_unslash($_POST['_price_usd']) : '';
-    $usd_sale_raw = isset($_POST['_sale_price_usd']) ? wp_unslash($_POST['_sale_price_usd']) : '';
-    $usd_regular = gravedad_parse_usd_input($usd_regular_raw);
-    $usd_sale = gravedad_parse_usd_input($usd_sale_raw);
-    update_post_meta($post_id, '_price_usd', $usd_regular);
-    update_post_meta($post_id, '_sale_price_usd', $usd_sale);
-    if ($usd_regular !== '' && !is_numeric($usd_regular)) {
-        set_transient('gravedad_usd_price_error_' . $post_id, trim((string) $usd_regular_raw), 60);
-    }
-    // El precio en pesos se aplica en gravedad_finalize_usd_price(), que corre
-    // despu√©s de que WooCommerce termina de guardar el producto (ver m√°s abajo):
-    // si lo hac√≠amos ac√°, el propio guardado del "Producto simple" de WooCommerce
-    // pod√≠a pisarlo de nuevo con el precio (vac√≠o) que ten√≠a en memoria.
-});
-
-add_action('admin_notices', function () {
-    global $post;
-    if (!$post || $post->post_type !== 'product') { return; }
-    $bad_value = get_transient('gravedad_usd_price_error_' . $post->ID);
-    if ($bad_value === false) { return; }
-    delete_transient('gravedad_usd_price_error_' . $post->ID);
-    echo '<div class="notice notice-error"><p><strong>Gravedad Store:</strong> el "Precio en USD" que cargaste ("' . esc_html($bad_value) . '") no se pudo interpretar como n√∫mero, as√≠ que el producto se guard√≥ sin precio en pesos calculado. Escribilo solo con n√∫meros y como mucho un punto o una coma para los decimales (ej: 4.50 o 4,50), sin otros s√≠mbolos.</p></div>';
-});
-
-function gravedad_finalize_usd_price($product_id) {
-    static $running = array();
-    if (!empty($running[$product_id])) { return; }
-    $usd_regular = get_post_meta($product_id, '_price_usd', true);
-    if ($usd_regular === '' || !is_numeric($usd_regular)) { return; }
-    $usd_sale = get_post_meta($product_id, '_sale_price_usd', true);
-    $rate = gravedad_get_usd_rate();
-    $ars_regular = gravedad_round_ars($usd_regular * $rate);
-    $has_sale = ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0);
-    $ars_sale = $has_sale ? gravedad_round_ars($usd_sale * $rate) : '';
-    $target_price = $has_sale ? $ars_sale : $ars_regular;
-    $current_regular = get_post_meta($product_id, '_regular_price', true);
-    $current_price = get_post_meta($product_id, '_price', true);
-    if ((string) $current_regular === (string) $ars_regular && (string) $current_price === (string) $target_price) { return; }
-    $product = wc_get_product($product_id);
-    if (!$product) { return; }
-    $running[$product_id] = true;
-    $product->set_regular_price($ars_regular);
-    $product->set_sale_price($ars_sale);
-    $product->save();
-    if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($product_id); }
-    unset($running[$product_id]);
-}
-add_action('woocommerce_new_product', 'gravedad_finalize_usd_price', 999);
-add_action('woocommerce_update_product', 'gravedad_finalize_usd_price', 999);
-
-// Lo mismo, pero por variaci√≥n (cada variaci√≥n de un producto variable
-// tiene su propio precio y por lo tanto su propio "Precio en USD").
-add_action('woocommerce_product_after_variable_attributes', function ($loop, $variation_data, $variation) {
-    woocommerce_wp_text_input(array(
-        'id' => 'variable_price_usd' . $loop,
-        'name' => "variable_price_usd[{$loop}]",
-        'value' => get_post_meta($variation->ID, '_price_usd', true),
-        'label' => __('Precio en USD (opcional)', 'gravedad-store'),
-        'desc_tip' => true,
-        'description' => __('Si carg√°s un valor ac√°, el precio en pesos de esta variaci√≥n se calcula solo con la cotizaci√≥n del d√≥lar y pisa el precio regular.', 'gravedad-store'),
-        'data_type' => 'price',
-        'wrapper_class' => 'form-row form-row-full',
-    ));
-    woocommerce_wp_text_input(array(
-        'id' => 'variable_sale_price_usd' . $loop,
-        'name' => "variable_sale_price_usd[{$loop}]",
-        'value' => get_post_meta($variation->ID, '_sale_price_usd', true),
-        'label' => __('Precio de oferta en USD (opcional)', 'gravedad-store'),
-        'data_type' => 'price',
-        'wrapper_class' => 'form-row form-row-full',
-    ));
-}, 10, 3);
-
-add_action('woocommerce_save_product_variation', function ($variation_id, $loop) {
-    $usd_regular_raw = isset($_POST['variable_price_usd'][$loop]) ? wp_unslash($_POST['variable_price_usd'][$loop]) : '';
-    $usd_sale_raw = isset($_POST['variable_sale_price_usd'][$loop]) ? wp_unslash($_POST['variable_sale_price_usd'][$loop]) : '';
-    $usd_regular = gravedad_parse_usd_input($usd_regular_raw);
-    $usd_sale = gravedad_parse_usd_input($usd_sale_raw);
-    update_post_meta($variation_id, '_price_usd', $usd_regular);
-    update_post_meta($variation_id, '_sale_price_usd', $usd_sale);
-    if ($usd_regular === '' || !is_numeric($usd_regular)) {
-        if (trim((string) $usd_regular_raw) !== '') {
-            set_transient('gravedad_usd_price_error_' . wp_get_post_parent_id($variation_id), trim((string) $usd_regular_raw), 60);
-        }
-        return;
-    }
-    $rate = gravedad_get_usd_rate();
-    $ars_regular = gravedad_round_ars($usd_regular * $rate);
-    $has_sale = ($usd_sale !== '' && is_numeric($usd_sale) && (float) $usd_sale > 0);
-    $ars_sale = $has_sale ? gravedad_round_ars($usd_sale * $rate) : '';
-    $variation = wc_get_product($variation_id);
-    if (!$variation) { return; }
-    $variation->set_regular_price($ars_regular);
-    $variation->set_sale_price($ars_sale);
-    $variation->save();
-    if (function_exists('wc_delete_product_transients')) { wc_delete_product_transients($variation_id); }
-}, 20, 2);
-
-function gravedad_shop_url($slug = '') {
-    if (in_array($slug, array('novedades', 'ofertas'), true)) {
-        $page = get_page_by_path($slug);
-        if ($page) { return get_permalink($page); }
-    }
-    if (function_exists('wc_get_page_id')) {
-        if ($slug) {
-            $term = get_term_by('slug', $slug, 'product_cat');
-            if ($term && !is_wp_error($term)) { return get_term_link($term); }
-        }
-        $shop = wc_get_page_permalink('shop');
-        if ($shop) { return $shop; }
-    }
-    return home_url('/tienda/');
-}
-
-function gravedad_fav_button($product_id) {
-    // Mismo √≠cono (la estrella "gordita") en los dos estados: antes el
-    // marcado usaba una estrella gen√©rica de 5 puntas mucho m√°s fina que la
-    // de contorno, y se ve√≠a desprolijo el cambio entre una y otra.
-    $star = gravedad_icon('heart');
-    return '<button type="button" class="fav-toggle" data-product-id="' . esc_attr($product_id) . '" aria-label="Agregar a favoritos"><span class="fav-icon-off">' . $star . '</span><span class="fav-icon-on">' . $star . '</span></button>';
-}
-
-function gravedad_hover_image_html($product) {
-    // Segunda foto de la galer√≠a: se muestra al pasar el mouse por encima
-    // de la tarjeta, encima de la principal y con una transici√≥n suave.
-    if (!$product) { return ''; }
-    $gallery = $product->get_gallery_image_ids();
-    if (empty($gallery)) { return ''; }
-    // Si la "segunda" foto es el mismo archivo que la principal (pasa cuando
-    // se sube la misma imagen a la galer√≠a), no tiene sentido el cruce.
-    $featured = (int) $product->get_image_id();
-    $gallery = array_values(array_filter($gallery, function ($id) use ($featured) { return (int) $id !== $featured; }));
-    if (empty($gallery)) { return ''; }
-    $html = wp_get_attachment_image($gallery[0], 'woocommerce_thumbnail', false, array(
-        'class'   => 'product-image-hover',
-        'alt'     => '',
-        'loading' => 'lazy',
-        'aria-hidden' => 'true',
-    ));
-    return $html ? $html : '';
-}
-
-function gravedad_render_gravity_product($product, $filter_dims = array()) {
-    $permalink = get_permalink($product->get_id());
-    $data_attrs = '';
-    foreach ($filter_dims as $param => $data) {
-        $taxonomy = $data[1];
-        $terms = get_the_terms($product->get_id(), $taxonomy);
-        $slugs = ($terms && !is_wp_error($terms)) ? wp_list_pluck($terms, 'slug') : array();
-        $data_attrs .= ' data-' . esc_attr($param) . '="' . esc_attr(implode(' ', $slugs)) . '"';
-    }
-    echo '<article class="gravity-product"' . $data_attrs . '><a class="product-image" href="' . esc_url($permalink) . '">';
-    if ($product->is_on_sale()) {
-        echo '<span>OFERTA</span>';
-    } elseif ((time() - strtotime(get_the_date('c', $product->get_id()))) < 30 * DAY_IN_SECONDS) {
-        echo '<span class="is-new">NUEVO</span>';
-    }
-    echo gravedad_foil_badge_html($product->get_id());
-    echo $product->get_image('woocommerce_thumbnail');
-    echo gravedad_hover_image_html($product);
-    echo gravedad_fav_button($product->get_id());
-    // En la portada mostramos a qu√© juego pertenece (Magic, Pok√©mon, etc.),
-    // igual que en la grilla de categor√≠as; si el producto no tiene juego
-    // cargado, se cae a la categor√≠a como antes.
-    $game_label = gravedad_product_game_name($product->get_id());
-    echo '</a><div><small>' . ($game_label ? esc_html($game_label) : wp_kses_post(wc_get_product_category_list($product->get_id(), ', '))) . '</small><h3><a href="' . esc_url($permalink) . '">' . esc_html($product->get_name()) . '</a></h3><div class="product-price">' . wp_kses_post($product->get_price_html()) . '<a class="plus" href="' . esc_url($product->add_to_cart_url()) . '" data-product_id="' . esc_attr($product->get_id()) . '">+</a></div></div></article>';
-}
-
-function gravedad_home_quick_filters($dims) {
-    $groups = array();
-    foreach ($dims as $param => $data) {
-        list($label, $taxonomy) = $data;
-        $terms = gravedad_filter_terms($taxonomy);
-        if ($terms) { $groups[] = array($param, $label, array_slice($terms, 0, 8)); }
-    }
-    if (!$groups) { return; }
-    echo '<div class="home-quick-filters" data-carousel-filters>';
-    foreach ($groups as $g) {
-        list($param, $label, $terms) = $g;
-        echo '<select data-filter-key="' . esc_attr($param) . '"><option value="">' . esc_html($label) . ': todos</option>';
-        foreach ($terms as $t) { echo '<option value="' . esc_attr($t->slug) . '">' . esc_html($t->name) . '</option>'; }
-        echo '</select>';
-    }
-    echo '</div>';
-}
-
-function gravedad_home_carousel($kicker, $title_html, $desc, $query_args, $view_all_url, $section_id = '', $quick_filter_dims = array()) {
-    if (!class_exists('WooCommerce')) { return; }
-    $defaults = array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => 12, 'orderby' => 'date', 'order' => 'DESC');
-    $query = new WP_Query(array_merge($defaults, $query_args));
-    if (!$query->have_posts()) { wp_reset_postdata(); return; }
-    echo '<section class="featured-products"' . ($section_id ? ' id="' . esc_attr($section_id) . '"' : '') . '><div class="section-head"><div><p class="section-label">' . esc_html($kicker) . '</p><h2>' . $title_html . '</h2>' . ($desc ? '<p class="section-desc">' . esc_html($desc) . '</p>' : '') . '</div><a href="' . esc_url($view_all_url) . '">VER TODO ‚Üí</a></div>';
-    if ($quick_filter_dims) { gravedad_home_quick_filters($quick_filter_dims); }
-    echo '<div class="product-cards" data-filterable-cards><p class="qf-no-results" hidden>No hay productos que coincidan con esos filtros.</p>';
-    while ($query->have_posts()) { $query->the_post(); gravedad_render_gravity_product(wc_get_product(get_the_ID()), $quick_filter_dims); }
-    echo '</div></section>';
-    wp_reset_postdata();
-}
-
-function gravedad_marquee($items = array()) {
-    if (!$items) {
-        $items = array('ENV√çOS A TODO EL PA√çS', 'COMPRA PROTEGIDA', 'RETIR√Å EN TIENDA SIN CARGO', 'ATENCI√ìN PERSONALIZADA', 'NUEVOS INGRESOS TODAS LAS SEMANAS');
-    }
-    echo '<div class="section-marquee"><div class="section-marquee-track">';
-    for ($i = 0; $i < 2; $i++) {
-        foreach ($items as $item) { echo '<span>' . esc_html($item) . '</span><i>‚óÜ</i>'; }
-    }
-    echo '</div></div>';
-}
-
-function gravedad_filter_link($section_slug, $args = array()) {
-    $url = gravedad_shop_url($section_slug);
-    return $args ? add_query_arg($args, $url) : $url;
-}
-
-function gravedad_mega_promo($kicker, $title, $cta, $url, $image) {
-    $img_url = get_template_directory_uri() . '/assets/img/' . $image;
-    echo '<a class="mega-promo" href="' . esc_url($url) . '" style="--mega-img:url(\'' . esc_url($img_url) . '\')"><span class="mega-promo-kicker">' . esc_html($kicker) . '</span><strong>' . esc_html($title) . '</strong><span class="button primary">' . esc_html($cta) . '</span></a>';
-}
-
-function gravedad_megamenu($key) {
-    ob_start();
-    $game_icons = array(
-        'magic-the-gathering' => 'game-magic', 'pokemon' => 'game-pokemon', 'one-piece' => 'game-onepiece',
-        'digimon' => 'game-digimon', 'dragon-ball' => 'game-dragonball', 'yu-gi-oh' => 'game-yugioh',
-    );
-    if ($key === 'tcg') {
-        $games = gravedad_mm_get('tcg');
-        echo '<div class="mega-menu"><div class="mega-columns mega-columns-6">';
-        foreach ($games as $g) {
-            $slug = $g['juego'];
-            if (!$slug) { continue; }
-            $label = gravedad_mm_term_label('pa_juego', $slug);
-            $icon = isset($game_icons[$slug]) ? $game_icons[$slug] : 'hexagon';
-            echo '<div class="mega-col"><h4>' . gravedad_icon($icon) . esc_html($label) . '</h4>';
-            if (!empty($g['sueltas'])) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">Cartas sueltas</a>'; }
-            foreach ($g['tipos'] as $t) {
-                if (!$t) { continue; }
-                echo '<a href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug, 'f_tipo_producto' => $t))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-producto', $t)) . '</a>';
-            }
-            echo '<a class="mega-view-all" href="' . esc_url(gravedad_filter_link('tcg', array('f_juego' => $slug))) . '">Ver todo ‚Üí</a></div>';
-        }
-        echo '</div>';
-        gravedad_mega_promo('TRADING CARD GAMES', 'Sellado y singles', 'Ver todo TCG ‚Üí', gravedad_shop_url('tcg'), 'hero-tcg.webp');
-        echo '</div>';
-    } elseif ($key === 'cartas-sueltas') {
-        $cs = gravedad_mm_get('cartas-sueltas');
-        echo '<div class="mega-menu"><div class="mega-columns mega-columns-3">';
-        echo '<div class="mega-col"><h4>Elegir juego</h4>';
-        foreach ($cs['juego'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_juego' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_juego', $slug)) . '</a>'; } }
-        echo '</div><div class="mega-col"><h4>Por rareza</h4>';
-        foreach ($cs['rareza'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_rareza' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_rareza', $slug)) . '</a>'; } }
-        echo '</div><div class="mega-col"><h4>Por idioma</h4>';
-        foreach ($cs['idioma'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('cartas-sueltas', array('f_idioma' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_idioma', $slug)) . '</a>'; } }
-        echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('cartas-sueltas')) . '">Ver todas ‚Üí</a></div>';
-        echo '</div>';
-        gravedad_mega_promo('ENCONTR√Å ESA CARTA', 'Cartas sueltas', 'Explorar ‚Üí', gravedad_shop_url('cartas-sueltas'), 'hero-cartas-sueltas.webp');
-        echo '</div>';
-    } elseif ($key === 'juegos-de-mesa') {
-        $jm = gravedad_mm_get('juegos-de-mesa');
-        echo '<div class="mega-menu"><div class="mega-columns mega-columns-3">';
-        echo '<div class="mega-col"><h4>Por editorial</h4>';
-        foreach ($jm['editorial'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_editorial' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_editorial', $slug)) . '</a>'; } }
-        echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('juegos-de-mesa')) . '">Ver todos ‚Üí</a></div>';
-        echo '<div class="mega-col mega-col-wide"><h4>Por tipo de juego</h4><div class="mega-col-grid">';
-        foreach ($jm['tipo-juego'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('juegos-de-mesa', array('f_tipo_juego' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-juego', $slug)) . '</a>'; } }
-        echo '</div></div>';
-        echo '</div>';
-        gravedad_mega_promo('PARA COMPARTIR LA MESA', 'Juegos de mesa', 'Explorar ‚Üí', gravedad_shop_url('juegos-de-mesa'), 'hero-juegos-de-mesa.webp');
-        echo '</div>';
-    } elseif ($key === 'accesorios') {
-        $ac = gravedad_mm_get('accesorios');
-        echo '<div class="mega-menu"><div class="mega-columns mega-columns-2">';
-        echo '<div class="mega-col"><h4>Por tipo</h4>';
-        foreach ($ac['tipo-accesorio'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_tipo_accesorio' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_tipo-accesorio', $slug)) . '</a>'; } }
-        echo '<a class="mega-view-all" href="' . esc_url(gravedad_shop_url('accesorios')) . '">Ver todos ‚Üí</a></div>';
-        echo '<div class="mega-col"><h4>Por marca</h4>';
-        foreach ($ac['marca'] as $slug) { if ($slug) { echo '<a href="' . esc_url(gravedad_filter_link('accesorios', array('f_marca' => $slug))) . '">' . esc_html(gravedad_mm_term_label('pa_marca', $slug)) . '</a>'; } }
-        echo '</div>';
-        echo '</div>';
-        gravedad_mega_promo('CUID√Å TU COLECCI√ìN', 'Accesorios', 'Explorar ‚Üí', gravedad_shop_url('accesorios'), 'hero-accesorios.webp');
-        echo '</div>';
-    }
-    return ob_get_clean();
-}
-
-function gravedad_default_menu() {
-    $menu_def = gravedad_content_panel_definitions()['menu'];
-    echo '<ul>';
-    foreach ($menu_def['fixed_items'] as $slug => $default_label) {
-        $label = gravedad_content_panel_opt('menu', 'label_' . $slug, $default_label);
-        if ($slug === 'inicio') {
-            echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html($label) . '</a></li>';
-            continue;
-        }
-        $mega_class = $slug === 'tcg' ? ' has-mega-tcg' : '';
-        echo '<li class="has-mega' . $mega_class . '"><a href="' . esc_url(gravedad_shop_url($slug)) . '">' . esc_html($label) . '</a>' . gravedad_megamenu($slug) . '</li>';
-    }
-    $items_count = gravedad_content_panel_count('menu', 'items', count($menu_def['items']));
-    for ($n = 1; $n <= $items_count; $n++) {
-        $default_item = isset($menu_def['items'][$n - 1]) ? $menu_def['items'][$n - 1] : array('label' => '', 'url' => '');
-        $label = gravedad_content_panel_opt('menu', 'item' . $n . '_label', $default_item['label']);
-        $url = gravedad_content_panel_opt('menu', 'item' . $n . '_url', $default_item['url']);
-        if (!$label || !$url) { continue; }
-        echo '<li><a href="' . esc_url($url) . '">' . esc_html($label) . '</a></li>';
-    }
-    echo '</ul>';
-}
-
-function gravedad_cart_count_fragment($fragments) {
-    ob_start(); ?>
-    <span class="cart-count"><?php echo function_exists('WC') && WC()->cart ? esc_html(WC()->cart->get_cart_contents_count()) : '0'; ?></span>
-    <?php $fragments['.cart-count'] = ob_get_clean(); return $fragments;
-}
-add_filter('woocommerce_add_to_cart_fragments', 'gravedad_cart_count_fragment');
-
-function gravedad_widgets() {
-    register_sidebar(array('name' => __('Filtros de tienda', 'gravedad-store'), 'id' => 'shop-filters', 'before_widget' => '<section class="shop-widget">', 'after_widget' => '</section>', 'before_title' => '<h3>', 'after_title' => '</h3>'));
-}
-add_action('widgets_init', 'gravedad_widgets');
-
-function gravedad_ensure_woocommerce_pages() {
-    if (!class_exists('WooCommerce')) { return; }
-    $pages = array(
-        'woocommerce_cart_page_id' => array('Carrito', 'carrito', '[woocommerce_cart]'),
-        'woocommerce_checkout_page_id' => array('Finalizar compra', 'finalizar-compra', '[woocommerce_checkout]'),
-        'woocommerce_myaccount_page_id' => array('Mi cuenta', 'mi-cuenta', '[woocommerce_my_account]'),
-    );
-    foreach ($pages as $option => $data) {
-        $current = absint(get_option($option));
-        if ($current && get_post_status($current)) { continue; }
-        $existing = get_page_by_path($data[1]);
-        $page_id = $existing ? $existing->ID : wp_insert_post(array(
-            'post_title' => $data[0],
-            'post_name' => $data[1],
-            'post_content' => $data[2],
-            'post_status' => 'publish',
-            'post_type' => 'page',
-        ));
-        if ($page_id && !is_wp_error($page_id)) { update_option($option, $page_id); }
-    }
-}
-add_action('after_switch_theme', 'gravedad_ensure_woocommerce_pages');
-
-function gravedad_ensure_catalog_structure() {
-    if (!class_exists('WooCommerce')) { return; }
-    $categories = array(
-        'cartas-sueltas' => array('Cartas sueltas', 0, 'Cartas individuales de TCG, filtrables por juego, colecci√≥n, rareza, idioma, condici√≥n y acabado.'),
-        'tcg' => array('TCG', 0, 'Sobres, booster boxes, bundles, mazos y ediciones especiales de tus juegos favoritos.'),
-        'magic' => array('Magic: The Gathering', 'tcg', ''),
-        'pokemon' => array('Pok√©mon', 'tcg', ''),
-        'one-piece' => array('One Piece', 'tcg', ''),
-        'digimon' => array('Digimon', 'tcg', ''),
-        'dragon-ball' => array('Dragon Ball', 'tcg', ''),
-        'otros-tcg' => array('Otros TCG', 'tcg', 'Espacio para nuevos juegos y l√≠neas de TCG.'),
-        'juegos-de-mesa' => array('Juegos de mesa', 0, 'Estrategia, party games, cooperativos, familiares y mucho m√°s.'),
-        'devir' => array('Devir', 'juegos-de-mesa', ''),
-        'buro' => array('Bur√≥', 'juegos-de-mesa', ''),
-        'popullar' => array('Popullar', 'juegos-de-mesa', ''),
-        'otras-editoriales' => array('Otras editoriales', 'juegos-de-mesa', ''),
-        'accesorios' => array('Accesorios', 0, 'Sleeves, deck boxes, carpetas, playmats y todo lo necesario para jugar y proteger tus cartas.'),
-        'folios-sleeves' => array('Folios / Sleeves', 'accesorios', ''),
-        'deck-boxes' => array('Deck Boxes', 'accesorios', ''),
-        'carpetas' => array('Carpetas', 'accesorios', ''),
-        'playmats' => array('Playmats', 'accesorios', ''),
-        'dados-y-contadores' => array('Dados y Contadores', 'accesorios', ''),
-        'almacenamiento' => array('Almacenamiento', 'accesorios', ''),
-        'otros-accesorios' => array('Otros accesorios', 'accesorios', ''),
-        'preventas' => array('Preventas', 0, 'Pr√≥ximos lanzamientos disponibles para reservar antes que se agoten.'),
-    );
-    foreach ($categories as $slug => $data) {
-        if (term_exists($slug, 'product_cat')) { continue; }
-        list($name, $parent_slug, $description) = $data;
-        $parent_id = 0;
-        if ($parent_slug) {
-            $parent = get_term_by('slug', $parent_slug, 'product_cat');
-            $parent_id = $parent && !is_wp_error($parent) ? $parent->term_id : 0;
-        }
-        wp_insert_term($name, 'product_cat', array('slug' => $slug, 'description' => $description, 'parent' => $parent_id));
-    }
-    foreach ($categories as $slug => $data) {
-        $parent_slug = $data[1];
-        if (!$parent_slug) { continue; }
-        $term = get_term_by('slug', $slug, 'product_cat');
-        $parent = get_term_by('slug', $parent_slug, 'product_cat');
-        if ($term && $parent && !is_wp_error($term) && !is_wp_error($parent) && (int) $term->parent !== (int) $parent->term_id) {
-            wp_update_term($term->term_id, 'product_cat', array('parent' => $parent->term_id));
-        }
-    }
-    if (function_exists('wc_create_attribute') && function_exists('wc_attribute_taxonomy_id_by_name')) {
-        $attributes = array(
-            'juego' => 'Juego', 'coleccion' => 'Colecci√≥n / Set', 'rareza' => 'Rareza',
-            'color' => 'Color', 'tipo-carta' => 'Tipo', 'idioma' => 'Idioma',
-            'condicion' => 'Condici√≥n', 'acabado' => 'Foil / Acabado',
-            'tipo-producto' => 'Tipo de producto', 'editorial' => 'Editorial',
-            'tipo-juego' => 'Tipo de juego', 'jugadores' => 'Cantidad de jugadores',
-            'edad' => 'Edad recomendada', 'duracion' => 'Duraci√≥n de partida',
-            'dificultad' => 'Dificultad', 'tipo-accesorio' => 'Tipo de accesorio', 'marca' => 'Marca',
-            'tamano-accesorio' => 'Tama√±o', 'cantidad-paquete' => 'Cantidad por paquete',
-        );
-        foreach ($attributes as $slug => $label) {
-            if (!wc_attribute_taxonomy_id_by_name($slug)) {
-                wc_create_attribute(array('name'=>$label,'slug'=>$slug,'type'=>'select','order_by'=>'name','has_archives'=>true));
-            }
-        }
-    }
-    flush_rewrite_rules();
-}
-add_action('after_switch_theme', 'gravedad_ensure_catalog_structure');
-
-function gravedad_prefill_cartas_sueltas_attributes($product_id) {
-    if (!function_exists('gravedad_autoattrs_enabled') || !gravedad_autoattrs_enabled()) { return; }
-    if (!function_exists('gravedad_autoattrs_rules')) { return; }
-    $required = array();
-    foreach (gravedad_autoattrs_rules() as $rule) {
-        if (!$rule['activa'] || !$rule['categoria']) { continue; }
-        if (!has_term($rule['categoria'], 'product_cat', $product_id)) { continue; }
-        foreach ($rule['atributos'] as $tax) { $required[$tax] = true; }
-    }
-    if (!$required) { return; }
-    $attributes = get_post_meta($product_id, '_product_attributes', true);
-    if (!is_array($attributes)) { $attributes = array(); }
-    $changed = false;
-    $position = count($attributes);
-    foreach (array_keys($required) as $tax) {
-        if (isset($attributes[$tax]) || !taxonomy_exists($tax)) { continue; }
-        $attributes[$tax] = array(
-            'name' => $tax, 'value' => '', 'position' => $position++,
-            'is_visible' => 1, 'is_variation' => 0, 'is_taxonomy' => 1,
-        );
-        $changed = true;
-    }
-    if ($changed) { update_post_meta($product_id, '_product_attributes', $attributes); }
-}
-add_action('woocommerce_new_product', 'gravedad_prefill_cartas_sueltas_attributes', 20);
-add_action('woocommerce_update_product', 'gravedad_prefill_cartas_sueltas_attributes', 20);
-add_action('set_object_terms', function ($object_id, $terms, $tt_ids, $taxonomy) {
-    if ($taxonomy === 'product_cat' && get_post_type($object_id) === 'product') {
-        gravedad_prefill_cartas_sueltas_attributes($object_id);
-    }
-}, 20, 4);
-
-add_action('woocommerce_before_shop_loop_item_title', function () {
-    global $product;
-    if ($product) { echo gravedad_hover_image_html($product); }
-}, 14);
-
-add_action('woocommerce_before_shop_loop_item_title', function () {
-    global $product;
-    if ($product) { echo gravedad_fav_button($product->get_id()); }
-}, 15);
-
-add_action('woocommerce_single_product_summary', function () {
-    global $product;
-    if ($product) { echo gravedad_fav_button($product->get_id()); }
-}, 31);
-
-// Cartel "FOIL" (o Holo / Reverse Holo) para diferenciar de un vistazo las
-// versiones brillantes de una carta de las normales, en cualquier lugar
-// donde se muestre el producto: grilla de tienda, carruseles y ficha.
-function gravedad_product_foil_label($product_id) {
-    $terms = get_the_terms($product_id, 'pa_acabado');
-    if (!$terms || is_wp_error($terms)) { return ''; }
-    foreach ($terms as $term) {
-        if ($term->slug === 'no-foil') { continue; }
-        return $term->name;
-    }
-    return '';
-}
-
-function gravedad_foil_badge_html($product_id, $class = 'foil-badge') {
-    $label = gravedad_product_foil_label($product_id);
-    if (!$label) { return ''; }
-    return '<span class="' . esc_attr($class) . '">‚ú¶ ' . esc_html(mb_strtoupper($label, 'UTF-8')) . '</span>';
-}
-
-add_action('woocommerce_before_shop_loop_item_title', function () {
-    global $product;
-    if ($product) { echo gravedad_foil_badge_html($product->get_id()); }
-}, 11);
-
-add_action('woocommerce_single_product_summary', function () {
-    global $product;
-    if ($product) { echo gravedad_foil_badge_html($product->get_id(), 'foil-badge foil-badge--inline'); }
-}, 4);
-
-add_action('wp_ajax_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
-add_action('wp_ajax_nopriv_gravedad_get_favorites', 'gravedad_ajax_get_favorites');
-function gravedad_ajax_get_favorites() {
-    check_ajax_referer('gravedad_public_ajax', 'nonce');
-    $ids = isset($_POST['ids']) ? array_map('absint', (array) $_POST['ids']) : array();
-    $ids = array_slice(array_values(array_unique(array_filter($ids))), 0, 100);
-    if (!$ids) { wp_send_json_success(array('html' => '', 'count' => 0)); }
-    $query = new WP_Query(array('post_type' => 'product', 'post_status' => 'publish', 'post__in' => $ids, 'orderby' => 'post__in', 'posts_per_page' => 100));
-    $count = $query->post_count;
-    ob_start();
-    gravedad_render_product_grid($query);
-    $html = ob_get_clean();
-    wp_send_json_success(array('html' => $html, 'count' => $count));
-}
-
-add_action('wp_ajax_gravedad_search_products', 'gravedad_ajax_search_products');
-add_action('wp_ajax_nopriv_gravedad_search_products', 'gravedad_ajax_search_products');
-function gravedad_ajax_search_products() {
-    check_ajax_referer('gravedad_public_ajax', 'nonce');
-    $term = isset($_GET['term']) ? sanitize_text_field(wp_unslash($_GET['term'])) : '';
-    $term = mb_substr(trim($term), 0, 80);
-    if (mb_strlen($term) < 2) { wp_send_json_success(array('html' => '', 'count' => 0)); }
-
-    $query = new WP_Query(array(
-        'post_type' => 'product',
-        'post_status' => 'publish',
-        's' => $term,
-        'posts_per_page' => 6,
-        'no_found_rows' => false,
-    ));
-    $count = $query->found_posts;
-
-    ob_start();
-    if ($query->have_posts()) {
-        echo '<ul class="search-suggest-list">';
-        while ($query->have_posts()) {
-            $query->the_post();
-            $product = wc_get_product(get_the_ID());
-            if (!$product) { continue; }
-            echo '<li><a href="' . esc_url(get_permalink()) . '">';
-            echo '<span class="search-suggest-thumb">' . get_the_post_thumbnail(get_the_ID(), 'thumbnail') . '</span>';
-            echo '<span class="search-suggest-info"><span class="search-suggest-name">' . esc_html(get_the_title()) . '</span><span class="search-suggest-price">' . wp_kses_post($product->get_price_html()) . '</span></span>';
-            echo '</a></li>';
-        }
-        echo '</ul>';
-        wp_reset_postdata();
-    } else {
-        echo '<p class="search-suggest-empty">No encontramos productos para "' . esc_html($term) . '".</p>';
-    }
-    $html = ob_get_clean();
-
-    wp_send_json_success(array('html' => $html, 'count' => $count, 'term' => $term));
-}
-
-function gravedad_ensure_catalog_pages() {
-    $defs = array(
-        'novedades' => array('Novedades', 'page-novedades.php'),
-        'ofertas' => array('Ofertas', 'page-ofertas.php'),
-        'favoritos' => array('Favoritos', 'page-favoritos.php'),
-    );
-    foreach ($defs as $slug => $data) {
-        list($title, $template) = $data;
-        $existing = get_page_by_path($slug);
-        $page_id = $existing ? $existing->ID : wp_insert_post(array(
-            'post_title' => $title, 'post_name' => $slug, 'post_status' => 'publish', 'post_type' => 'page',
-        ));
-        if ($page_id && !is_wp_error($page_id)) { update_post_meta($page_id, '_wp_page_template', $template); }
-    }
-}
-add_action('after_switch_theme', 'gravedad_ensure_catalog_pages');
-
-// Colores y logo de los mails de WooCommerce (pedidos, facturas, etc.) para
-// que coincidan con la marca del sitio en vez de quedar con el violeta
-// gen√©rico por defecto. Fondo oscuro exterior + tarjeta blanca de contenido
-// (m√°s confiable entre clientes de correo que un mail 100% oscuro) con
-// acentos dorados y logo del sitio.
-function gravedad_brand_wc_emails() {
-    if (!class_exists('WooCommerce')) { return; }
-    update_option('woocommerce_email_auto_sync_with_theme', 'no');
-    update_option('woocommerce_email_background_color', '#0d0e11');
-    update_option('woocommerce_email_body_background_color', '#ffffff');
-    update_option('woocommerce_email_base_color', '#f2a900');
-    update_option('woocommerce_email_text_color', '#1d1e22');
-    update_option('woocommerce_email_footer_text_color', '#8b8e94');
-    update_option('woocommerce_email_header_image', get_template_directory_uri() . '/assets/img/logo-gravedad-store.png');
-    update_option('woocommerce_email_header_image_width', '160');
-    update_option('woocommerce_email_header_alignment', 'left');
-    update_option('woocommerce_email_footer_text', 'Gravedad Store ¬∑ TCG &amp; Juegos de mesa<br/>Jos√© C. Paz, Buenos Aires');
-}
-
-function gravedad_fix_hero_slide_image_paths() {
-    $img_uri = get_template_directory_uri() . '/assets/img/';
-    $renames = array(
-        'hero-slide-carta.jpg'  => 'hero-slide-carta.webp',
-        'hero-slide-sobres.jpg' => 'hero-slide-sobres.webp',
-        'hero-slide-juegos.jpg' => 'hero-slide-juegos.webp',
-    );
-    for ($i = 1; $i <= 3; $i++) {
-        $key = 'gravedad_hero_slide' . $i . '_imagen_producto';
-        $current = get_option($key, '');
-        if (!$current) { continue; }
-        foreach ($renames as $old_file => $new_file) {
-            if (strpos($current, $old_file) !== false) {
-                update_option($key, $img_uri . $new_file);
-                break;
-            }
-        }
-    }
-}
-
-function gravedad_run_theme_upgrades() {
-    $installed = get_option('gravedad_theme_version', '0');
-    if (version_compare($installed, GRAVEDAD_VERSION, '>=')) { return; }
-    gravedad_ensure_woocommerce_pages();
-    gravedad_ensure_catalog_structure();
-    gravedad_ensure_catalog_pages();
-    if (version_compare($installed, '5.97.0', '<') && function_exists('gravedad_autoattrs_install_requested_filters')) {
-        gravedad_autoattrs_install_requested_filters();
-    }
-    if (version_compare($installed, '5.67.0', '<')) { gravedad_brand_wc_emails(); }
-    if (version_compare($installed, '5.72.0', '<')) { gravedad_fix_hero_slide_image_paths(); }
-    if (version_compare($installed, '5.76.2', '<')) { gravedad_recalculate_usd_prices(); }
-    if (version_compare($installed, '5.78.0', '<')) { flush_rewrite_rules(); }
-    if (version_compare($installed, '5.78.6', '<')) {
-        $debug_log = wp_upload_dir()['basedir'] . '/gravedad-debug.txt';
-        if (file_exists($debug_log)) { @unlink($debug_log); }
-        gravedad_recalculate_usd_prices();
-    }
-    update_option('gravedad_theme_version', GRAVEDAD_VERSION);
-}
-add_action('admin_init', 'gravedad_run_theme_upgrades');
-
-function gravedad_seed_filter_terms() {
-    $groups = array(
-        'pa_juego' => array('Magic: The Gathering','Pok√©mon','One Piece','Digimon','Dragon Ball','Otros'),
-        'pa_rareza' => array('Com√∫n','Infrecuente','Rara','M√≠tica','Promo','Especial'),
-        'pa_idioma' => array('Espa√±ol','Ingl√©s','Japon√©s','Portugu√©s'),
-        'pa_condicion' => array('Nueva','Near Mint','Excellent','Good','Played'),
-        'pa_acabado' => array('Foil','No Foil','Reverse Holo','Holo'),
-        'pa_tipo-carta' => array('Creature / Criatura','Land / Tierra','Artifact / Artefacto','Enchantment / Encantamiento','Planeswalker','Instant / Instant√°neo','Sorcery / Conjuro'),
-        'pa_color' => array('Blanco','Azul','Negro','Rojo','Verde','Incoloro','Multicolor','Transparente','Amarillo','Violeta'),
-        'pa_tipo-producto' => array('Sobres','Booster Box','Bundles','Collector Booster','Mazos / Commander','Kits y colecciones','Starter Decks','Double Packs','Productos especiales'),
-        'pa_editorial' => array('Devir','Bur√≥','Popullar','Otras editoriales'),
-        'pa_tipo-juego' => array('Familiares','Party Games','Estrategia','Cooperativos','Para 2 jugadores','Infantiles','Juegos de cartas','Rol / Aventura'),
-        'pa_jugadores' => array('1 jugador','2 jugadores','3-4 jugadores','5 o m√°s'),
-        'pa_edad' => array('+3','+6','+8','+12','+14','+18'),
-        'pa_duracion' => array('-30 min','30-60 min','60-90 min','+90 min'),
-        'pa_dificultad' => array('F√°cil','Media','Dif√≠cil'),
-        'pa_tipo-accesorio' => array('Folios / Sleeves','Deck Boxes','Carpetas','Playmats','Dados y Contadores','Almacenamiento','Otros'),
-        'pa_marca' => array('Dragon Shield','Ultra Pro','Ultimate Guard','KMC','Otras marcas'),
-        'pa_tamano-accesorio' => array('Small','Standard'),
-        'pa_cantidad-paquete' => array('40 unidades','50 unidades','60 unidades','80 unidades','100 unidades'),
-    );
-    foreach ($groups as $taxonomy => $terms) {
-        if (!taxonomy_exists($taxonomy)) { continue; }
-        foreach ($terms as $term) { if (!term_exists($term, $taxonomy)) { wp_insert_term($term, $taxonomy); } }
-    }
-}
-add_action('init', 'gravedad_seed_filter_terms', 30);
-
-function gravedad_section_filters() {
-    return array(
-        'cartas-sueltas' => array(
-            'f_juego' => array('Juego','pa_juego'), 'f_coleccion' => array('Colecci√≥n / Set','pa_coleccion'),
-            'f_rareza' => array('Rareza','pa_rareza'), 'f_color' => array('Color','pa_color'),
-            'f_tipo_carta' => array('Tipo de carta','pa_tipo-carta'), 'f_idioma' => array('Idioma','pa_idioma'),
-            'f_condicion' => array('Condici√≥n','pa_condicion'), 'f_acabado' => array('Foil / Acabado','pa_acabado'),
-        ),
-        'tcg' => array(
-            'f_juego' => array('Juego','pa_juego'), 'f_tipo_producto' => array('Tipo de producto','pa_tipo-producto'),
-            'f_coleccion' => array('Colecci√≥n / Set','pa_coleccion'), 'f_idioma' => array('Idioma','pa_idioma'),
-        ),
-        'juegos-de-mesa' => array(
-            'f_editorial' => array('Editorial','pa_editorial'), 'f_tipo_juego' => array('Tipo de juego','pa_tipo-juego'),
-            'f_jugadores' => array('Cantidad de jugadores','pa_jugadores'), 'f_edad' => array('Edad recomendada','pa_edad'),
-            'f_duracion' => array('Duraci√≥n de partida','pa_duracion'), 'f_dificultad' => array('Dificultad','pa_dificultad'),
-        ),
-        'accesorios' => array(
-            'f_tipo_accesorio' => array('Categor√≠a','pa_tipo-accesorio'), 'f_tamano_accesorio' => array('Tama√±o','pa_tamano-accesorio'),
-            'f_marca' => array('Marca','pa_marca'), 'f_color' => array('Color','pa_color'),
-            'f_cantidad_paquete' => array('Cantidad por paquete','pa_cantidad-paquete'),
-        ),
-        'preventas' => array(
-            'f_juego' => array('Juego','pa_juego'), 'f_editorial' => array('Editorial','pa_editorial'),
-            'f_tipo_producto' => array('Tipo de producto','pa_tipo-producto'),
-        ),
-    );
-}
-
-function gravedad_section_for_term($term) {
-    if (!$term) { return ''; }
-    $known = array('cartas-sueltas', 'tcg', 'juegos-de-mesa', 'accesorios', 'preventas');
-    if (in_array($term->slug, $known, true)) { return $term->slug; }
-    foreach (get_ancestors($term->term_id, 'product_cat') as $ancestor_id) {
-        $ancestor = get_term($ancestor_id, 'product_cat');
-        if ($ancestor && !is_wp_error($ancestor) && in_array($ancestor->slug, $known, true)) { return $ancestor->slug; }
-    }
-    return '';
-}
-
-function gravedad_section_copy() {
-    return array(
-        'cartas-sueltas' => array('ENCONTR√Å ESA CARTA', 'Cartas sueltas.', 'Busc√° entre todas las cartas disponibles y afin√° los resultados hasta encontrar exactamente la que necesit√°s.', 'Nombre de la carta', 'Ej: Black Lotus'),
-        'tcg' => array('TRADING CARD GAMES', 'Sellado y singles.', 'Sobres, booster boxes, bundles, mazos y ediciones especiales de tus juegos favoritos.', 'Buscar producto', 'Ej: Booster Box'),
-        'juegos-de-mesa' => array('PARA COMPARTIR LA MESA', 'Juegos de mesa.', 'Estrategia, party games, cooperativos y familiares de las mejores editoriales.', 'Buscar juego', 'Ej: Catan'),
-        'accesorios' => array('CUID√Å TU COLECCI√ìN', 'Accesorios.', 'Sleeves, deck boxes, carpetas, playmats y todo lo necesario para jugar y proteger tus cartas.', 'Buscar accesorio', 'Ej: Dragon Shield'),
-        'preventas' => array('RESERV√Å EL TUYO', 'Preventas.', 'Pr√≥ximos lanzamientos disponibles para reservar antes que se agoten.', 'Buscar preventa', 'Ej: nombre del producto'),
-    );
-}
-
-function gravedad_section_hero_image($section) {
-    $images = array(
-        'cartas-sueltas' => 'hero-cartas-sueltas.webp',
-        'tcg' => 'hero-tcg.webp',
-        'juegos-de-mesa' => 'hero-juegos-de-mesa.webp',
-        'accesorios' => 'hero-accesorios.webp',
-        'preventas' => 'hero-preventas.webp',
-    );
-    return isset($images[$section]) ? get_template_directory_uri() . '/assets/img/' . $images[$section] : '';
-}
-
-function gravedad_filter_taxonomy_map() {
-    $map = array();
-    foreach (gravedad_section_filters() as $filters) {
-        foreach ($filters as $param => $data) { $map[$param] = $data[1]; }
-    }
-    return $map;
-}
-
-function gravedad_catalog_tax_query_from_get() {
-    $tax_query = array();
-    foreach (gravedad_filter_taxonomy_map() as $param => $taxonomy) {
-        if (!empty($_GET[$param]) && taxonomy_exists($taxonomy)) {
-            $tax_query[] = array('taxonomy' => $taxonomy, 'field' => 'slug', 'terms' => sanitize_title(wp_unslash($_GET[$param])));
-        }
-    }
-    if (count($tax_query) > 1) { $tax_query['relation'] = 'AND'; }
-    return $tax_query;
-}
-
-function gravedad_catalog_meta_query_from_get() {
-    $meta_query = array();
-    $min = isset($_GET['precio_min']) ? floatval(wp_unslash($_GET['precio_min'])) : 0;
-    $max = isset($_GET['precio_max']) ? floatval(wp_unslash($_GET['precio_max'])) : 0;
-    if ($min && $max) { $meta_query[] = array('key' => '_price', 'value' => array($min, $max), 'compare' => 'BETWEEN', 'type' => 'NUMERIC'); }
-    elseif ($min) { $meta_query[] = array('key' => '_price', 'value' => $min, 'compare' => '>=', 'type' => 'NUMERIC'); }
-    elseif ($max) { $meta_query[] = array('key' => '_price', 'value' => $max, 'compare' => '<=', 'type' => 'NUMERIC'); }
-    if (!empty($_GET['f_stock']) && in_array($_GET['f_stock'], array('instock', 'outofstock'), true)) {
-        $meta_query[] = array('key' => '_stock_status', 'value' => sanitize_key($_GET['f_stock']));
-    }
-    return $meta_query;
-}
-
-function gravedad_active_filter_chips($filters_map) {
-    $chips = array();
-    foreach ($filters_map as $param => $data) {
-        if (empty($_GET[$param])) { continue; }
-        $slug = sanitize_title(wp_unslash($_GET[$param]));
-        $term = get_term_by('slug', $slug, $data[1]);
-        if ($term && !is_wp_error($term)) {
-            $chips[] = array($param, $data[0] . ': ' . $term->name);
-        }
-    }
-    if (!empty($_GET['precio_min']) || !empty($_GET['precio_max'])) {
-        $min = !empty($_GET['precio_min']) ? '$' . number_format((float) wp_unslash($_GET['precio_min']), 0, ',', '.') : '';
-        $max = !empty($_GET['precio_max']) ? '$' . number_format((float) wp_unslash($_GET['precio_max']), 0, ',', '.') : '';
-        $label = 'Precio: ' . ($min && $max ? $min . ' - ' . $max : ($min ? 'desde ' . $min : 'hasta ' . $max));
-        $chips[] = array('precio', $label);
-    }
-    if (!empty($_GET['f_stock'])) {
-        $chips[] = array('f_stock', 'Disponibilidad: ' . ($_GET['f_stock'] === 'instock' ? 'En stock' : 'Sin stock'));
-    }
-    if (!empty($_GET['s'])) {
-        $chips[] = array('s', 'B√∫squeda: "' . sanitize_text_field(wp_unslash($_GET['s'])) . '"');
-    }
-    if (!$chips) { return; }
-    echo '<div class="active-filters">';
-    foreach ($chips as $chip) {
-        list($param, $label) = $chip;
-        $remove_args = $param === 'precio' ? array('precio_min', 'precio_max') : array($param);
-        echo '<span class="filter-chip">' . esc_html($label) . '<a href="' . esc_url(remove_query_arg($remove_args)) . '" aria-label="Quitar filtro">√ó</a></span>';
-    }
-    $clear_args = array_merge(array_keys($filters_map), array('precio_min', 'precio_max', 'f_stock', 's'));
-    echo '<a class="filter-chip-clear" href="' . esc_url(remove_query_arg($clear_args)) . '">Limpiar todo</a>';
-    echo '</div>';
-}
-
-function gravedad_apply_catalog_filters($query) {
-    if (is_admin() || !$query->is_main_query() || !function_exists('is_product_taxonomy') || !is_product_taxonomy()) { return; }
-    $tax_query = array_merge((array) $query->get('tax_query'), gravedad_catalog_tax_query_from_get());
-    if (count($tax_query) > 1 && !isset($tax_query['relation'])) { $tax_query['relation'] = 'AND'; }
-    if ($tax_query) { $query->set('tax_query', $tax_query); }
-    $meta_query = array_merge((array) $query->get('meta_query'), gravedad_catalog_meta_query_from_get());
-    if ($meta_query) { $query->set('meta_query', $meta_query); }
-}
-add_action('pre_get_posts', 'gravedad_apply_catalog_filters');
-
-function gravedad_filter_terms($taxonomy) {
-    if (!taxonomy_exists($taxonomy)) { return array(); }
-    $terms = get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => true, 'orderby' => 'name'));
-    return is_wp_error($terms) ? array() : $terms;
-}
-
-/**
- * Terms available for one filter dropdown, narrowed down by the category
- * plus whatever OTHER filters are already active (chained/faceted filters):
- * e.g. with f_juego=digimon selected, f_coleccion only lists Digimon sets.
- */
-function gravedad_faceted_terms($taxonomy, $filters, $exclude_param, $base_tax_query = array()) {
-    if (!taxonomy_exists($taxonomy)) { return array(); }
-
-    // Restricciones actuales: la categor√≠a (si estamos en una), los OTROS
-    // filtros ya elegidos, el texto buscado y el precio/disponibilidad.
-    // As√≠ cada desplegable ofrece solo lo que realmente queda disponible,
-    // y con el n√∫mero de productos que corresponde a esa selecci√≥n (y no
-    // al total del cat√°logo, que era lo que se mostraba antes).
-    $tax_query = $base_tax_query;
-    foreach ($filters as $param => $data) {
-        if ($param === $exclude_param) { continue; }
-        if (!empty($_GET[$param])) {
-            $tax_query[] = array('taxonomy' => $data[1], 'field' => 'slug', 'terms' => sanitize_title(wp_unslash($_GET[$param])));
-        }
-    }
-    if (count($tax_query) > 1) { $tax_query['relation'] = 'AND'; }
-
-    $args = array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids');
-    if ($tax_query) { $args['tax_query'] = $tax_query; }
-    $meta_query = gravedad_catalog_meta_query_from_get();
-    if ($meta_query) { $args['meta_query'] = $meta_query; }
-    $search_term = get_search_query();
-    if ($search_term !== '') { $args['s'] = $search_term; }
-
-    $ids = get_posts($args);
-    if (!$ids) { return array(); }
-
-    // 'all_with_object_id' devuelve una fila por (producto, t√©rmino), as√≠
-    // podemos contar cu√°ntos productos del resultado actual tiene cada opci√≥n.
-    $rows = wp_get_object_terms($ids, $taxonomy, array('fields' => 'all_with_object_id'));
-    if (is_wp_error($rows)) { return array(); }
-    $out = array();
-    foreach ($rows as $row) {
-        if (!isset($out[$row->term_id])) {
-            $term = clone $row;
-            $term->count = 0;
-            $out[$row->term_id] = $term;
-        }
-        $out[$row->term_id]->count++;
-    }
-    $out = array_values($out);
-    usort($out, function ($a, $b) { return strcasecmp($a->name, $b->name); });
-    return $out;
-}
-
-function gravedad_product_game_name($product_id) {
-    $terms = get_the_terms($product_id, 'pa_juego');
-    return ($terms && !is_wp_error($terms)) ? $terms[0]->name : '';
-}
-
-function gravedad_loop_game_label() {
-    global $product;
-    if (!$product) { return; }
-    $terms = get_the_terms($product->get_id(), 'pa_juego');
-    if ($terms && !is_wp_error($terms)) {
-        echo '<span class="loop-game-label">' . esc_html($terms[0]->name) . '</span>';
-    }
-}
-add_action('woocommerce_after_shop_loop_item_title', 'gravedad_loop_game_label', 5);
-
-function gravedad_render_product_grid($query) {
-    echo '<div class="woocommerce">';
-    if ($query->have_posts()) {
-        echo '<ul class="products columns-4">';
-        while ($query->have_posts()) { $query->the_post(); wc_get_template_part('content', 'product'); }
-        echo '</ul>';
-        wp_reset_postdata();
-    } else {
-        do_action('woocommerce_no_products_found');
-    }
-    echo '</div>';
-}
-
-function gravedad_single_product_badge() {
-    global $product;
-    if (!$product) { return; }
-    if ($product->is_on_sale()) { echo '<span class="single-badge single-badge-sale">OFERTA</span>'; }
-    elseif ((time() - strtotime(get_the_date('c'))) < 30 * DAY_IN_SECONDS) { echo '<span class="single-badge">NUEVO</span>'; }
-}
-add_action('woocommerce_before_single_product_summary', 'gravedad_single_product_badge', 5);
-
-function gravedad_single_product_trust_badges() {
-    echo '<ul class="trust-badges">';
-    echo '<li>' . gravedad_icon('truck') . '<span><strong>Env√≠o a todo el pa√≠s</strong><small>Correo Argentino</small></span></li>';
-    echo '<li>' . gravedad_icon('shield') . '<span><strong>Pago protegido</strong><small>Mercado Pago y tarjetas</small></span></li>';
-    echo '<li>' . gravedad_icon('refresh') . '<span><strong>Cambios sin drama</strong><small>Hasta 10 d√≠as</small></span></li>';
-    echo '</ul>';
-}
-add_action('woocommerce_single_product_summary', 'gravedad_single_product_trust_badges', 31);
-
-add_filter('woocommerce_output_related_products_args', function ($args) {
-    $args['posts_per_page'] = 10;
-    return $args;
-});
-
-remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
-remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
-
-/* ---- Eventos (CPT) ---- */
-
-function gravedad_register_evento_cpt() {
-    register_post_type('evento', array(
-        'labels' => array(
-            'name' => 'Eventos',
-            'singular_name' => 'Evento',
-            'add_new' => 'A√±adir evento',
-            'add_new_item' => 'A√±adir nuevo evento',
-            'edit_item' => 'Editar evento',
-            'new_item' => 'Nuevo evento',
-            'view_item' => 'Ver evento',
-            'search_items' => 'Buscar eventos',
-            'not_found' => 'No se encontraron eventos',
-            'not_found_in_trash' => 'No hay eventos en la papelera',
-            'all_items' => 'Todos los eventos',
-            'menu_name' => 'Eventos',
-        ),
-        'public' => true,
-        'has_archive' => false,
-        'rewrite' => array('slug' => 'evento'),
-        'menu_icon' => 'dashicons-calendar-alt',
-        'menu_position' => 26,
-        'supports' => array('title', 'editor', 'thumbnail'),
-        'show_in_rest' => true,
-    ));
-}
-add_action('init', 'gravedad_register_evento_cpt');
-
-function gravedad_register_evento_meta() {
-    foreach (array('fecha', 'hora', 'ubicacion', 'enlace') as $f) {
-        register_post_meta('evento', '_evento_' . $f, array('type' => 'string', 'single' => true, 'show_in_rest' => true));
-    }
-}
-add_action('init', 'gravedad_register_evento_meta');
-
-function gravedad_evento_meta_box() {
-    add_meta_box('gravedad_evento_datos', 'Datos del evento', 'gravedad_evento_meta_box_html', 'evento', 'side', 'high');
-}
-add_action('add_meta_boxes', 'gravedad_evento_meta_box');
-
-function gravedad_evento_meta_box_html($post) {
-    wp_nonce_field('gravedad_evento_save', 'gravedad_evento_nonce');
-    $fecha = get_post_meta($post->ID, '_evento_fecha', true);
-    $hora = get_post_meta($post->ID, '_evento_hora', true);
-    if (!$hora) { $hora = '14:00 hs'; }
-    $ubicacion = get_post_meta($post->ID, '_evento_ubicacion', true);
-    if (!$ubicacion) { $ubicacion = gravedad_option('gravedad_event_location', 'Roque S√°enz Pe√±a 5086, Jos√© C. Paz, Buenos Aires'); }
-    $enlace = get_post_meta($post->ID, '_evento_enlace', true);
-    ?>
-    <p><label for="gravedad_evento_fecha"><strong>Fecha</strong></label><br>
-    <input type="date" id="gravedad_evento_fecha" name="gravedad_evento_fecha" value="<?php echo esc_attr($fecha); ?>" style="width:100%"></p>
-    <p><label for="gravedad_evento_hora"><strong>Hora</strong></label><br>
-    <input type="text" id="gravedad_evento_hora" name="gravedad_evento_hora" value="<?php echo esc_attr($hora); ?>" style="width:100%" placeholder="14:00 hs"></p>
-    <p><label for="gravedad_evento_ubicacion"><strong>Ubicaci√≥n</strong></label><br>
-    <input type="text" id="gravedad_evento_ubicacion" name="gravedad_evento_ubicacion" value="<?php echo esc_attr($ubicacion); ?>" style="width:100%"></p>
-    <p><label for="gravedad_evento_enlace"><strong>Enlace de inscripci√≥n</strong></label><br>
-    <input type="url" id="gravedad_evento_enlace" name="gravedad_evento_enlace" value="<?php echo esc_attr($enlace); ?>" style="width:100%" placeholder="https://wa.me/... (opcional)"></p>
-    <p style="color:#787c82;font-size:12px;margin-top:14px">üìå Sub√≠ el flyer del evento como <strong>Imagen destacada</strong>, en el panel de la derecha. Us√° la <strong>Descripci√≥n</strong> (arriba) para los detalles del evento.</p>
-    <?php
-}
-
-function gravedad_evento_save($post_id) {
-    if (!isset($_POST['gravedad_evento_nonce']) || !wp_verify_nonce($_POST['gravedad_evento_nonce'], 'gravedad_evento_save')) { return; }
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) { return; }
-    if (!current_user_can('edit_post', $post_id)) { return; }
-    $fields = array('fecha', 'hora', 'ubicacion', 'enlace');
-    foreach ($fields as $f) {
-        $key = 'gravedad_evento_' . $f;
-        if (isset($_POST[$key])) {
-            $value = $f === 'enlace' ? esc_url_raw(wp_unslash($_POST[$key])) : sanitize_text_field(wp_unslash($_POST[$key]));
-            update_post_meta($post_id, '_evento_' . $f, $value);
-        }
-    }
-}
-add_action('save_post_evento', 'gravedad_evento_save');
-
-add_filter('manage_evento_posts_columns', function ($columns) {
-    $new = array();
-    foreach ($columns as $key => $label) {
-        $new[$key] = $label;
-        if ($key === 'title') { $new['evento_fecha'] = 'Fecha'; $new['evento_estado'] = 'Estado'; }
-    }
-    return $new;
-});
-add_action('manage_evento_posts_custom_column', function ($column, $post_id) {
-    if ($column === 'evento_fecha') {
-        $fecha = get_post_meta($post_id, '_evento_fecha', true);
-        echo $fecha ? esc_html(date_i18n('d/m/Y', strtotime($fecha))) : '‚Äî';
-    }
-    if ($column === 'evento_estado') {
-        $fecha = get_post_meta($post_id, '_evento_fecha', true);
-        if (!$fecha) { echo '‚Äî'; return; }
-        echo strtotime($fecha) >= strtotime('today') ? '<span style="color:#1a8a3c;font-weight:600">Pr√≥ximo</span>' : '<span style="color:#9a9ba2">Pasado</span>';
-    }
-}, 10, 2);
-add_filter('manage_edit-evento_sortable_columns', function ($columns) {
-    $columns['evento_fecha'] = 'evento_fecha';
-    return $columns;
-});
-add_action('pre_get_posts', function ($query) {
-    if (!is_admin() || !$query->is_main_query()) { return; }
-    if ($query->get('post_type') !== 'evento') { return; }
-    if ($query->get('orderby') === 'evento_fecha') {
-        $query->set('meta_query', array('relation' => 'OR', array('key' => '_evento_fecha', 'compare' => 'EXISTS'), array('key' => '_evento_fecha', 'compare' => 'NOT EXISTS')));
-        $query->set('meta_key', '_evento_fecha');
-        $query->set('orderby', 'meta_value');
-    }
-});
-
-function gravedad_evento_meta($id, $key, $default = '') {
-    $v = get_post_meta($id, '_evento_' . $key, true);
-    return $v !== '' ? $v : $default;
-}
+        'tarot' => '<svg viewBox="0 0 499.054 499.054" fill="currentColor"><g><g><path d="m418.518 213.011-14.096-5.13 5.129-14.096 14.096 5.13zm-28.19-10.26-14.096-5.13 5.129-14.096 14.096 5.13zm-28.193-10.261-14.095-5.13 5.131-14.096 14.095 5.13z"/></g><g><path d="m380.882 215.691-.328 15.217c-.096 4.444-.914 8.813-2.433 12.983-3.699 10.166-11.137 18.282-20.941 22.854-9.803 4.571-20.804 5.053-30.968 1.353-4.171-1.518-8.043-3.699-11.509-6.482l-11.866-9.53-.328 15.217c-.513 23.772 14.157 45.21 36.503 53.343 6.195 2.255 12.614 3.377 19.016 3.377 7.994 0 15.961-1.751 23.422-5.229 13.436-6.266 23.627-17.388 28.698-31.318 8.133-22.345 1.141-47.362-17.399-62.252zm15.17 66.652c-3.7 10.166-11.138 18.282-20.941 22.854-9.805 4.572-20.804 5.053-30.968 1.352-11.725-4.267-20.553-13.553-24.45-24.882.461.182.923.356 1.389.526 28.757 10.465 60.669-4.414 71.136-33.171.169-.466.332-.934.489-1.402 6.173 10.267 7.612 23 3.345 34.723z"/><path d="m483.697 215.09 15.357-42.193-189.497-68.972-2.07 5.687h-158.524v6.051l-36.548 13.302 5.13 14.096 31.418-11.435v86.222l-3.248 1.983-27.296-20.128-7.971 32.965-33.535 5.068 17.673 28.946-20.129 27.296 32.965 7.972 5.068 33.535 28.947-17.674 7.526 5.55v60.456h21.115l-20.836 7.584c-11.956-23.004-38.109-35.2-63.416-29.572l-49.675-136.482c11.202-5.802 20.14-15.068 25.56-26.69 5.419-11.622 6.772-24.424 4.016-36.735l36.756-13.378-5.13-14.096-97.353 35.434 93.784 257.668 120.163-43.732h62.882l128.441 46.749 55.093-151.364-14.096-5.131-33.037 90.768c-12.31-2.755-25.113-1.404-36.735 4.016-11.623 5.419-20.888 14.357-26.691 25.56l-68.311-24.863c5.628-25.307-6.568-51.461-29.571-63.417l49.671-136.469c4.126.924 8.308 1.386 12.482 1.386 8.28 0 16.53-1.813 24.258-5.416 11.623-5.419 20.888-14.357 26.691-25.559l68.311 24.863c-5.628 25.307 6.568 51.46 29.571 63.417l-11.491 31.571 14.096 5.131 11.318-31.096zm-348.698 181.495-32.25 11.738-11.738-32.25c17.436-3.032 35.1 5.203 43.988 20.512zm-86.883-204.267c-3.722 7.981-9.682 14.467-17.149 18.785l-11.741-32.257 32.257-11.74c1.491 8.497.354 17.231-3.367 25.212zm115.847-67.706h34.32c-3.116 17.428-16.893 31.204-34.32 34.32zm0 209.885c17.427 3.116 31.205 16.893 34.32 34.32h-34.32zm49.479 34.32c-3.367-25.706-23.772-46.111-49.478-49.478v-27.203h-15v12.588l-6.738-4.969-18.278 11.16-3.2-21.176-20.815-5.032 12.71-17.235-11.16-18.278 21.175-3.201 5.034-20.814 17.236 12.71 4.036-2.464v41.712h15v-103.047c25.706-3.367 46.111-23.772 49.478-49.478h88.586l-14.697 40.378h.001l-14.328 39.367c-5.269-2.284-10.519-3.804-15.71-4.555v-23.049h-15v23.052c-6.886.996-13.411 3.281-19.431 6.294l-12.155-22.23-13.161 7.197 12.524 22.904c-15.622 11.416-25.703 25.465-26.401 26.453l-3.06 4.329 3.06 4.329c1.102 1.56 25.554 35.629 58.29 40.57l-26.185 71.942 19.844 7.223h-22.177zm42.322-117.095-8.528 23.432c-21.521-1.501-40.441-21.435-47.917-30.409 2.825-3.398 7.297-8.368 12.987-13.347 8.939-7.821 22.699-17.145 37.488-17.145 5.793 0 11.849 1.435 18.064 4.243l-11.064 30.399v-12.173h-15v15zm127.069 130.727c7.982-3.722 16.718-4.855 25.212-3.366l-11.741 32.257-32.257-11.74c4.32-7.468 10.805-13.428 18.786-17.151zm-115.583-18.082-t˜ªhëÈÏ∂ªßq´^vçNçLãçLãçNLçKçàèè‹]è‹›ôœâÀà	Ÿÿ[YKYY⁄[[€â»Oà	œ›ô»öY]–õﬁHåççàö[Hõõ€ôHà›õ⁄ŸOHò›\úô[ù€€‹àà›õ⁄ŸK]⁄YHåKéà›õ⁄ŸK[[ôZõ⁄[èHúõ›[ôèè]HìLLàà»Àç]éSLàåõKMKç]ãN^àèè‹]è]HìLLàãéãéLàLÀçàKåàLéààö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèè‹]è‹›ôœâÀà	Ÿÿ[YKYòY€€òò[	»Oà	œ›ô»öY]–õﬁHåççàö[Hõõ€ôHà›õ⁄ŸOHò›\úô[ù€€‹àà›õ⁄ŸK]⁄YHåKçàèè⁄\ò€HﬁHåLààﬁOHåLààèHéKçHàö[Hõõ€ôHèèÿ⁄\ò€Oè⁄\ò€HﬁHåLààﬁOHçÀåààèHåKåMHàö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèèÿ⁄\ò€Oè⁄\ò€HﬁHéåààﬁOHéKçààèHåKåMHàö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèèÿ⁄\ò€Oè⁄\ò€HﬁHéKçààﬁOHåMàèHåKåMHàö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèèÿ⁄\ò€Oè⁄\ò€HﬁHåMçàﬁOHåMàèHåKåMHàö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèèÿ⁄\ò€Oè⁄\ò€HﬁHåMKéàﬁOHéKçààèHåKåMHàö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèèÿ⁄\ò€Oè‹›ôœâÀà	Ÿÿ[YK^]Y⁄[⁄	»Oà	œ›ô»öY]–õﬁHåççàö[Hõõ€ôHà›õ⁄ŸOHò›\úô[ù€€‹àà›õ⁄ŸK]⁄YHåKçàà›õ⁄ŸK[[ôZõ⁄[èHúõ›[ôèè]HìLLàãçHMçàKçåàLMãå»MçàNåHåKçHLàMÀçàKéHåKçHÀç»MçààLKçKçàèè‹]è‹›ôœâÀà	⁄X\ù	»Oà	œ›ô»öY]–õﬁHåLLKéNLàLLKéNLààö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèè]HõMLLçåMàNMãååXÀLÀéMLLãåMLMKçÃéKLåçãLÃãåÃéKLåãéNLLÃKççKLNKåLÃKMNéÕãLLNKåéLÿÀMÀççLMKåLNKåÀLåÀççÃKLÃKçÕçÀLåÀççÃ\ÀLçåÕàçåéLÃKçÕçàåÀççÃ[MNéÃ»LNKåéLãLLÃKççHNKåLÃòÀLMãçåàãçLãLéåŒHLçÕMÀLÃãåÃ»åãéMÀLÀéMLãåMçé»çKéNLãçéMHÕÀçLçõMKåçåàLãéMÀLåãçHLÃKåLòÀLãéMM»MÀåç»ãåçàçÀçMåHãéÃÀåMÕàKçLŒãçMéLÀçåM»LåNàåãçÕHLåNàãéLHMåçMÀLãåçHåKéKMãåN[LMÀçÕLÀMåKéLàLMÀçÕLàåKéLXÕÀçNMHÀéNMMéMàãåNHåKéL»ãåNZåXŒKåLÃ»MÀååLãLÀçåNåãçÕKLLåNàçÃÕMKçåMHKçÕMÀLMKéLéHãçŒNKLÃÀåMÕ€LåãçLÀLLÃKåLNMKåçåÀNLãéMòÃLãåLKLLKçÃHMãçåŒKLçKåŒàLãçéMKLÕÀçLçûõKLÃÀçåÕàMãåÀLLéLHNåÕåXÀLÀçLÕàÀçãMKåMHçLKMåÃMLÀåçÕ€åÀéçàLŒéXÀçÕç»çÃÀåÕŒÀåMMKåMàåéLKKéLKKåKLÀçŒKKåçMMÀéLãçMÃõLLççÃÃÀMçKçMÕXÀLãåNãLKåMKMçNÀLKçÃåÀMãéNLKçÃå‹ÀMçŒMKçMÕMãéNKçÃå€LLççÃÕçKçMÕòÀMçãåÃMãMãéMÕ»ãçMÀMÀé»ãçMÃKKåÕåÀLKåLÕãKçÕLãLÀéNåMKNåéL[åÀéåãLLŒéLXÀéÕMéçãKçÕŒKNKéÃKMåÃMLLÀåçÕ€LLéLKNNåÕåòÀLÀåçMLÀåMÃãMçLMKMKçMÃãMéÀMãçÃãéMçKKçéMHÀåŒMãLKéMàÀéMKLãçM[LŒKçMãLååççòÕéãKçÃHKåLKLÀçÕŒHLKåéMNååõåãåÕçLLçãåÕçXÃãåKMåÕÀéLÀMãåMHéåÀMãçÃNKéMãçÃãéMãççHéçãçÃõåãåÕçHLçãåÕçÃãåNàçç»ãçÀçMàLKåéMååõLŒKçMååççòÕçNççL»ãéLéHKéMÀéMãçMKKåÕÕKåLÃKLKçåÕHÀçLÃãMéHãçÃàèè‹]è‹›ôœâÀà	⁄X\ùYö[Y	»Oà	œ›ô»öY]–õﬁHåLLKéNLàLLKéNLààö[Hò›\úô[ù€€‹àà›õ⁄ŸOHõõ€ôHèè]HìLçMãåHÃéKNÀåàŒKçKNÀçÕKçãéÀéŒMåKãåHçMãÕàLMÀéKãåHMÃçéÀéÃãçKNÀçåÀåKNÀåààèè‹]è‹›ôœâÀà	›⁄]ÿ\	»Oà	œ›ô»öY]–õﬁHãLå»LåHéàéãççççéHàö[Hò›\úô[ù€€‹ààö[\ù[OHô]ô[õŸèè]HõMMåŒçÃNHLÀåŒLòÀMNKéÕKMNKéMLÃLãLLŒKçLŒLÀNLãéMÃççMNLåçåÃÕNLŒNLÀåŒLãLMÕéé»LÃMÀåÃÃLàMãåçåMÃNKLÃMÀåMåçHÃMÀåLLÃéKKååÕÕ»MKéMLÃHMçMŒLçHLLçMÃÃHãåÃÃåÃàMNçMLŒ[MéNLåNMçåÃÕNLŒMéåLåLMMåLMMåòÕãåÃçåNçKåçéMLÃHNçÕçMåàŒçNNLÕ»MLKçMLŒHŒçåMMåöåLÃéLÿÃMÕçŒLMMàÃMÀåççãLMãåçÃÕŒÃMÀåLÃéLãLÃMÀåLÃéLãåÕLMMãNçÕåNLÃãéLåNÕKLMççMŒMéKNLãéŒKLåçåÕNLÕÕûõKLåçåÃÕNLŒÀéLÃÕNMKåLLÕÕXÀMÀåéMéÕKKåNMLÃKNLÀçéÕNMLLãçÃÃéLLÕåMåMMãLÕãçÕåN€NKçååLMMKçÃMNNKçÕçMåçHçãåMÃNÕHçãçåéLÀNMÀåçéMLÃKMãåçéMLÃãNKéMÃççMÿÀLçãåŒçÃNMKéMéÕKMåÃåÃLãNLçÕçMåãMåéMéÕKLMåéLçKåMéLMKåÃÃåÃHLNåÃéLçåÀçMÃÃLàçåÀçéNLåNKLçåÀçMÃÃLàÃçåçKååÕŒLÕãçNNçÀçÕçMåàNãåÕMMéHÕÀåÃŒ\ÕÕÀåMMåçHLMãåLŒHÕÀåLÃéLàNãçÕÕXÀKååçHMKåÕÕÕKLLNåÃé»çåÀçNLÕÕKLçåÀçNLÕÕHçåÀçNLÕÕ^õLMçNNLŒLNMÀçMŒMéÀMÀéLåNÕKLÀéMéÕKMãééLÀLåÀåLÃéLÀMMåMŒLçKçŒLçKMÀåçMŒLãLãççLÃãLLãçMéÕKLÀéMåLŒLMÀéçåNHÀéMéÕKMKåéLMMàÀéLéMéÀLåçéÕHçKçŒLçKLçKåLÕÕHÃKåççãMçåçHKåéLåãNKåçåN»KéMLÃLçKLMÀåMçŒMéKéNÕÕKMÀéLçMŒãLÀéMçLÃÀçMÃÃãLLãåÃÕNLŒMåÀçÃççMåÀLŒKåÃÃåÃKLåÀçMMéÀLåKåLMÃNKLŒKçMÃÃKMãéMåLŒMååÃKMMéLåçãMçåMÃNMÀéLÕÕKKåŒLåãLLKéLçHÀçÕçMåãLMãåMÃNÕçMŒLçãLLççLåÕMÀåMçŒMéKLåKéåÃL»NKéNMLçÀåLMéHãççLÃãMKåéLå»KåÃåÃLÀNKéLMŒMéKKçççåãLLÀééLÀLKéMÕçMåÀLÀéMçLMÀéçåNKMãéMéÕKLçççMŒãMNéŒNMãçÕÕKLMKçLÃLãLLãéMçÀLLÀåÕNLÕÕLMÀéÃåÃKLLÀçåMMåãMçåMÃNÀKååÃéKNKéLåÕÀKåçÕÃÕLMKåNÕKKåçÕÃÕMKåéLçHLLÀéçÃN»KéNéKLåKåLÃéLàKéLMŒMéKMÀåçåMÃNHÀéLÃÕNMLçÀçÃÃéHçÀåLMMåÀLçÀçÃÃéHçãåLMé\ÃéåŒMLÃHÕãçéÕNMÃãåÕMMéHKéMÃççMòÃÀéMåLÕ»KåéLåàMKéŒLàKåÃéLçHLÕKåÕçÃN»LNKççŒNéLåçHåMÃNÕÃÀçççå»LÀåéMéKåMÕMŒàMãçéMLÃLàNéNÕÕãåÃLçHÕãåçLŒLàKåMŒMéKéLLMMàÀåMåçHMKååççMåãLãåçÕÃÕãéŒLãLNKåMÃNÕHLÀçéKLÕÀççŒMé»ãçåMMåÀLNçLLMÃNHãçåMMåÀLÕåÕÕHçåMÃNÀLÕÀçéÕNMLKéMÕçMåãLÀåÃéMÀåçåMÃNMKåéLMMãLMKåNÕNLÀNKåçLŒLûõLãœè‹›ôœâÀà
+N¬àô]\õà\‹Ÿ]
+	X€€ú÷…ò[YWJH»	X€€ú÷…ò[YWHà	…Œ¬üBÇôù[ò›[€à‹ò]ôYY‹Ÿ]\
+
+H¬àÿY›[YW›^€XZ[ä	Ÿ‹ò]ôYY\›‹ôIÀŸ]›[\]WŸ\ôX›‹ûJ
+Hà	À€[ô›XYŸ\… N¬àY›[YW‹›\‹ù
+	›]K]Y… N¬àY›[YW‹›\‹ù
+	‹‹›][XõòZ[… N¬àY›[YW‹›\‹ù
+	ÿ›\›€K[Ÿ€…À\úò^J	⁄ZY⁄	»OàLå	›⁄Y	»Oàå	Ÿõ^ZZY⁄	»OàùYK	Ÿõ^]⁄Y	»OàùYJJN¬àY›[YW‹›\‹ù
+	⁄[IÀ\úò^J	‹ŸX\ò⁄Yõ‹õIÀ	Ÿÿ[\ûIÀ	ÿÿ\[€âÀ	‹›[IÀ	‹ÿ‹ö\	 JN¬àY›[YW‹›\‹ù
+	›€€ÿ€€[Y\òŸI N¬àY›[YW‹›\‹ù
+	›ÿÀ\õŸX›Yÿ[\ûK[Y⁄õﬁ	 N¬àY›[YW‹›\‹ù
+	›ÿÀ\õŸX›Yÿ[\ûK\€Y\â N¬àôY⁄\›\ó€ò]ó€Y[ù\ \úò^J	‹ö[X\ûI»Oà◊ 	”Y[∞Óàö[ò⁄\[	À	Ÿ‹ò]ôYY\›‹ôI K	Ÿõ€›\â»Oà◊ 	”Y[∞Óà[YIÀ	Ÿ‹ò]ôYY\›‹ôI JJN¬üBòYÿX›[€ä	ÿYù\ó‹Ÿ]\›[YIÀ	Ÿ‹ò]ôYY‹Ÿ]\	 N¬Çôù[ò›[€à‹ò]ôYYŸõ‹òŸW‹ŸX\ò⁄›[\]J	[\]JH¬àYà
+\◊‹ŸX\ò⁄
+
+JH¬à	›\›€HHŸ]›[\]WŸ\ôX›‹ûJ
+Hà	Àÿ\ò⁄]ôK\õŸX›ú	Œ¬àYà
+ö[WŸ^\› 	›\›€JJH»ô]\õà	›\›€N»BàBàô]\õà	[\]N¬üBòYŸö[\ä	›[\]W⁄[ò€YIÀ	Ÿ‹ò]ôYYŸõ‹òŸW‹ŸX\ò⁄›[\]IÀNJN¬Çôù[ò›[€à‹ò]ôYYÿ\‹Ÿ] 
+H¬à‹Ÿ[ú]Y]YW‹›[J	Ÿ‹ò]ôYYYõ€ù…À	⁄ŒãÀŸõ€ùÀô€€Ÿ€X\\Àò€€Kÿ‹‹ÃèŸò[Z[OTòX⁄[ô ‘ÿ[ú ”€ôIôò[Z[OSX[úõ‹NùŸ⁄ÕLÕåÕÃŒ	ô\‹^O\›ÿ\	À\úò^J
+Kù[
+N¬à‹Ÿ[ú]Y]YW‹›[J	Ÿ‹ò]ôYY][YIÀŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]Àÿ‹‹À›[YKò‹‹…À\úò^J
+K‘êUëQQ’ëTî“S”äN¬à‹Ÿ[ú]Y]YW‹›[J	Ÿ‹ò]ôYYX€€[Y\òŸIÀŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]Àÿ‹‹Àÿ€€[Y\òŸKò‹‹…À\úò^J	Ÿ‹ò]ôYY][YI K‘êUëQQ’ëTî“S”äN¬à‹Ÿ[ú]Y]YW‹›[J	Ÿ‹ò]ôYY\⁄[ô€\…ÀŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]Àÿ‹‹À‹⁄[ô€\Àò‹‹…À\úò^J	Ÿ‹ò]ôYYX€€[Y\òŸI K‘êUëQQ’ëTî“S”äN¬à‹Ÿ[ú]Y]YW‹ÿ‹ö\
+	Ÿ‹ò]ôYY][YIÀŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]À⁄úÀ›[YKöú…À\úò^J
+K‘êUëQQ’ëTî“S”ãùYJN¬à‹€ÿÿ[^ôW‹ÿ‹ö\
+	Ÿ‹ò]ôYY][YIÀ	Ÿ‹ò]ôYYZò^	À\úò^Jà	›\õ	»OàYZ[ó›\õ
+	ÿYZ[ãXZò^ú	 Kà	‹⁄‹\õ	»Oà‹ò]ôYY‹⁄‹›\õ
+
+Kà	€õ€òŸI»Oà‹ÿ‹ôX]W€õ€òŸJ	Ÿ‹ò]ôYY‹XõX◊ÿZò^	 Kà
+JN¬üBòYÿX›[€ä	›‹Ÿ[ú]Y]YW‹ÿ‹ö\…À	Ÿ‹ò]ôYYÿ\‹Ÿ]… N¬Çôù[ò›[€à‹ò]ôYY›[ò‹õ‹Y›[XõòZ[ 	⁄^ôJH¬à	⁄^ôV…›⁄Y	◊HHX^
+
+[ù
+H	⁄^ôV…›⁄Y	◊Kç
+N¬à	⁄^ôV…⁄ZY⁄	◊HHX^
+
+[ù
+H	⁄^ôV…⁄ZY⁄	◊Kç
+N¬à	⁄^ôV…ÿ‹õ‹	◊HH¬àô]\õà	⁄^ôN¬üBòYŸö[\ä	›€€ÿ€€[Y\òŸWŸŸ]⁄[XYŸW‹⁄^ôW›[XõòZ[	À	Ÿ‹ò]ôYY›[ò‹õ‹Y›[XõòZ[… N¬òYŸö[\ä	›€€ÿ€€[Y\òŸWŸŸ]⁄[XYŸW‹⁄^ôWŸÿ[\ûW›[XõòZ[	À	Ÿ‹ò]ôYY›[ò‹õ‹Y›[XõòZ[… N¬ÇãÀ»ÿ[Y[⁄][»X\òÿXòH€€[»\úõ‹à‹∞Î]X€»HŸY›\öYY]YHŸHYYBãÀ»ò]ôYÿ\ã€\›\à[\ôX›‹ö[»H›XöY\ÀàŸHõ›YŸH\ÿ‹öXöY[ô»‹¬ãÀ»Z\€[‹»\ò⁄]õ‹»]YH€€–€€[Y\òŸHXô\∞ÎXH‹ôX\éà[à[ô^ö[òXÎ[»[ÇãÀ»\ÿY»
+õ‹]YXH[\›YÀù[òÿH[XÿŸ\€»H\»õ›‹»]YHÎH€€ÇãÀ»0ÓòõXÿ\ HK⁄H^\›K[àöXÿŸ\‹»]YHY[pË\»õ‹]YXH[XÿŸ\€¬ãÀ»\ôX›»HHÿ\ú]HH\ÿÿ\ôÿ\»õ›Y⁄Y\»H€€–€€[Y\òŸKÇôù[ò›[€à‹ò]ôYY‹õ›X››\ÿY◊Ÿ\ä
+H¬à	\ÿYH‹›\ÿYŸ\ä
+N¬àYà
+[\J	\ÿY…ÿò\ŸY\â◊JHZ\◊Ÿ\ä	\ÿY…ÿò\ŸY\â◊JJH»ô]\õé»Bà	ò\ŸHHòZ[[ô‹€\⁄]
+	\ÿY…ÿò\ŸY\â◊JN¬ÇàYà
+Yö[WŸ^\› 	ò\ŸHà	⁄[ô^ö[	 JH¬àö[W‹]ÿ€€ù[ù 	ò\ŸHà	⁄[ô^ö[	À	… N¬àBÇà	ÿ◊Ÿ\àH	ò\ŸHà	›€€ÿ€€[Y\òŸW›\ÿYÀ…Œ¬àYà
+\◊Ÿ\ä	ÿ◊Ÿ\äJH¬àYà
+Yö[WŸ^\› 	ÿ◊Ÿ\àà	⁄[ô^ö[	 JH»ö[W‹]ÿ€€ù[ù 	ÿ◊Ÿ\àà	⁄[ô^ö[	À	… N»BàYà
+Yö[WŸ^\› 	ÿ◊Ÿ\àà	ÀöXÿŸ\‹… JH¬à	ù[\»Hì‹[€ú»R[ô^\◊èYì[Ÿ[H[Ÿÿ]]óÿ€‹ôKòœóóô\]Z\ôH[[öYYè“Yì[Ÿ[OóèYì[Ÿ[H[[Ÿÿ]]óÿ€‹ôKòœóó[ûHúõ€H[è“Yì[Ÿ[Oóàé¬àö[W‹]ÿ€€ù[ù 	ÿ◊Ÿ\àà	ÀöXÿŸ\‹…À	ù[\ N¬àBàBüBòYÿX›[€ä	ÿYZ[ó⁄[ö]	À	Ÿ‹ò]ôYY‹õ›X››\ÿY◊Ÿ\â N¬ÇãÀ»[Y⁄[àH€‹úô[»\ôŸ[ù[õ»òYH[›[õ‹»^‹»⁄[àòYX⁄\à[\‹pÏ[€ÇãÀ»ŸHòYXŸ[àXËH[àô^àHÿÿ\à[ÏŸY€»[Y⁄[ãÇòYŸö[\ä	ŸŸ]^	Àù[ò›[€à
+	ò[ú€]Y	^	€XZ[äH¬àYà
+›ú‹ 	^	’»Ÿ]H⁄\[ô»€‹›ûH€‹úô[»\ôŸ[ù[õ… HOOHò[ŸJH¬àô]\õà	‘\òHÿ[›[\à[€‹›»H[ù∞Î[»€€à€‹úô[»\ôŸ[ù[õÀ€€\]0ËH‹»]‹»HH\ôXÿ⁄pÏ€âŒ¬àBàô]\õà	ò[ú€]Y¬üKL N¬ÇãÀ»[ÿ[\»ò⁄]HàH€€–€€[Y\òŸHŸHòYXŸH‹àYôX›»€€[»îÿõX⁄pÏ€àããÀ»]YHõ»\»€€[»ŸHHXŸH[à\ôŸ[ù[òKàY[pË\Œàÿÿ[YYHÏŸY€»‹›[ãÀ»ò[à[àHZ\€XHö[H
+€€à€‹ù‹ HHôY⁄pÏ€ã‘õ›ö[ò⁄XH]YYH[ò⁄»€€\]¬ãÀ»‹ú]YH^Hò[‹ô\»\ô€‹»€€[»ê⁄]YY]]0Ï€õ€XHHùY[õ‹»Z\ô\»ãÇòYŸö[\ä	›€€ÿ€€[Y\òŸWŸŸ]ÿ€›[ùûW€ÿÿ[IÀù[ò›[€à
+	ÿÿ[JH¬à	ÿÿ[V…–Tâ◊V…ÿ⁄]I◊V…€Xô[	◊HH	”ÿÿ[YY	Œ¬à	ÿÿ[V…–Tâ◊V…ÿ⁄]I◊V…ÿ€\‹…◊HH\úò^J	Ÿõ‹õK\õ›ÀYö\ú›	 N¬à	ÿÿ[V…–Tâ◊V…ÿ⁄]I◊V…‹ö[‹ö]I◊HHÃ¬à	ÿÿ[V…–Tâ◊V…‹‹›€ŸI◊V…ÿ€\‹…◊HH\úò^J	Ÿõ‹õK\õ›À[\›	 N¬à	ÿÿ[V…–Tâ◊V…‹‹›€ŸI◊V…‹ö[‹ö]I◊HH¬à	ÿÿ[V…–Tâ◊V…‹›]I◊V…ÿ€\‹…◊HH\úò^J	Ÿõ‹õK\õ›ÀYö\ú›	 N¬à	ÿÿ[V…–Tâ◊V…‹›]I◊V…‹ö[‹ö]I◊HHL¬àô]\õà	ÿÿ[N¬üJN¬ÇãÀ»ôY⁄pÏ€ã‘õ›ö[ò⁄XHH[0ÍYõ€õ»€€\\ù[àö[H[à\ÿ‹ö]‹ö[ÀY›X[]YBãÀ»ÿÿ[YYHÏŸY€»‹›[àòH[à€€ÿ€€[Y\òŸWÿ⁄X⁄€›]ŸöY[»
+ö[‹öYYãÀ»\ô0ÎXJH‹ú]YH\»[0Óõ[[»ö[õŒà\»ôY€\»‹àpÎ\»ŸH\Xÿ[ÇãÀ»\‹pÍ\»H€€ÿ€€[Y\òŸWÿö[[ô◊ŸöY[»H\ÿXò[àH€\ŸKÇòYŸö[\ä	›€€ÿ€€[Y\òŸWÿ⁄X⁄€›]ŸöY[…Àù[ò›[€à
+	öY[ H¬àYà
+\‹Ÿ]
+	öY[÷…ÿö[[ô…◊V…ÿö[[ô◊‹€ôI◊JJH¬à	öY[÷…ÿö[[ô…◊V…ÿö[[ô◊‹€ôI◊V…ÿ€\‹…◊HH\úò^J	Ÿõ‹õK\õ›À[\›	 N¬à	öY[÷…ÿö[[ô…◊V…ÿö[[ô◊‹€ôI◊V…‹ö[‹ö]I◊HHMN¬àBàYà
+\‹Ÿ]
+	öY[÷…‹⁄\[ô…◊V…‹⁄\[ô◊‹€ôI◊JJH¬à	öY[÷…‹⁄\[ô…◊V…‹⁄\[ô◊‹€ôI◊V…ÿ€\‹…◊HH\úò^J	Ÿõ‹õK\õ›À[\›	 N¬à	öY[÷…‹⁄\[ô…◊V…‹⁄\[ô◊‹€ôI◊V…‹ö[‹ö]I◊HHMN¬àBàô]\õà	öY[Œ¬üKL
+N¬ÇãÀ»ÿ[\»íNàÿõYÿ]‹ö[ÀŸH›X\ôH[à[YY»HŸH]Y\›òH[à[[ô[ãÀ»HYZ[ö\›òX⁄pÏ€àH[à‹»XZ[»[YYÀÇòYŸö[\ä	›€€ÿ€€[Y\òŸWÿö[[ô◊ŸöY[…Àù[ò›[€à
+	öY[ H¬à	öY[÷…ÿö[[ô◊ŸöI◊HH\úò^Jà	€Xô[	»Oà	—íIÀà	‹XŸZ€\â»Oà	‘⁄[à[ù‹»öH\‹X⁄[‹…Àà	‹ô\]Z\ôY	»OàùYKà	ÿ€\‹…»Oà\úò^J	Ÿõ‹õK\õ›À]⁄YI Kà	‹ö[‹ö]I»OàLKà	ÿ€X\â»OàùYKà
+N¬àô]\õà	öY[Œ¬üKåJN¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿ⁄X⁄€›]‹õÿŸ\‹…Àù[ò›[€à
+
+H¬àYà
+[\J	‘‘’…ÿö[[ô◊ŸöI◊JJH¬àÿ◊ÿY€õ›XŸJ	‘‹àò]õ‹à€€\]0ËHH›õ€ôœëíO‹›õ€ôœà\òHŸ\à[Z]\à[[ù∞Î[ÀâÀ	Ÿ\úõ‹â N¬àô]\õé¬àBà	öHHôY◊‹ô\XŸJ	À◊…À	…À‹›[ú€\⁄
+	‘‘’…ÿö[[ô◊ŸöI◊JJN¬àYà
+›õ[ä	öJH»›õ[ä	öJHà
+H¬àÿ◊ÿY€õ›XŸJ	—[›õ€ôœëíO‹›õ€ôœàY[ôH]YH[ô\à»H∞ÓõY\õ‹À⁄[à[ù‹»öH\‹X⁄[‹ÀâÀ	Ÿ\úõ‹â N¬àBüJN¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿ⁄X⁄€›]›\]W€‹ô\ó€Y]IÀù[ò›[€à
+	‹ô\ó⁄Y
+H¬àYà
+Y[\J	‘‘’…ÿö[[ô◊ŸöI◊JJH¬à	öHHôY◊‹ô\XŸJ	À◊…À	…À‹›[ú€\⁄
+	‘‘’…ÿö[[ô◊ŸöI◊JJN¬à\]W‹‹›€Y]J	‹ô\ó⁄Y	◊ÿö[[ô◊ŸöIÀÿ[ö]^ôW›^ŸöY[
+	öJJN¬àBüJN¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿYZ[ó€‹ô\óŸ]WÿYù\óÿö[[ô◊ÿYô\‹…Àù[ò›[€à
+	‹ô\äH¬à	öHHŸ]‹‹›€Y]J	‹ô\ãOôŸ]⁄Y
+
+K	◊ÿö[[ô◊ŸöIÀùYJN¬àYà
+	öJH»X⁄»	œè›õ€ôœëíNè‹›õ€ôœà	»à\ÿ◊⁄[
+	öJHà	œ‹âŒ»BüJN¬ÇòYŸö[\ä	›€€ÿ€€[Y\òŸWŸ[XZ[€‹ô\ó€Y]WŸöY[…Àù[ò›[€à
+	öY[À	Ÿ[ù›◊ÿYZ[ã	‹ô\äH¬à	öHHŸ]‹‹›€Y]J	‹ô\ãOôŸ]⁄Y
+
+K	◊ÿö[[ô◊ŸöIÀùYJN¬àYà
+	öJH»	öY[÷…ÿö[[ô◊ŸöI◊HH\úò^J	€Xô[	»Oà	—íIÀ	›ò[YI»Oà	öJN»Bàô]\õà	öY[Œ¬üKL N¬Çôù[ò›[€à‹ò]ôYYŸò]öX€€ä
+H¬àYà
+\◊‹⁄]W⁄X€€ä
+JH»ô]\õé»Bà	\öHHŸ]›[\]WŸ\ôX›‹ûW›\öJ
+N¬àX⁄»	œ[ö»ô[HöX€€ààôYèHâ»à\ÿ◊›\õ
+	\öHà	Àÿ\‹Ÿ]À⁄[YÀŸò]öX€€ãöX€… Hà	»à⁄^ô\œHò[ûHèâŒ¬àX⁄»	œ[ö»ô[HöX€€àà\OHö[XYŸK‹ô»àôYèHâ»à\ÿ◊›\õ
+	\öHà	Àÿ\‹Ÿ]À⁄[YÀŸò]öX€€ãLÃãúô… Hà	»à⁄^ô\œHåÃûÃàèâŒ¬àX⁄»	œ[ö»ô[HöX€€àà\OHö[XYŸK‹ô»àôYèHâ»à\ÿ◊›\õ
+	\öHà	Àÿ\‹Ÿ]À⁄[YÀŸò]öX€€ãLNLãúô… Hà	»à⁄^ô\œHåNLûNLàèâŒ¬àX⁄»	œ[ö»ô[Hò\K]›X⁄ZX€€ààôYèHâ»à\ÿ◊›\õ
+	\öHà	Àÿ\‹Ÿ]À⁄[YÀÿ\K]›X⁄ZX€€ãúô… Hà	»èâŒ¬üBòYÿX›[€ä	›‹⁄XY	À	Ÿ‹ò]ôYYŸò]öX€€âÀJN¬Çôù[ò›[€à‹ò]ôYYÿ›\›€Z^ôJ	‹ÿ›\›€Z^ôJH¬à	‹ÿ›\›€Z^ôKOòY‹ŸX›[€ä	Ÿ‹ò]ôYY‹›‹ôIÀ\úò^J	›]I»Oà◊ 	—‹ò]ôYY›‹ôIÀ	Ÿ‹ò]ôYY\›‹ôI K	‹ö[‹ö]I»OàÃ
+JN¬à	öY[»H\úò^Jà	Ÿ‹ò]ôYYÿ[õõ›[òŸ[Y[ù	»Oà\úò^J	–]ö\€»›\\ö[‹âÀ	—Sï∞„S‘»H—»Sp„T… Kà	Ÿ‹ò]ôYY‹õ€[…»Oà\úò^J	‘õ€[ÿ⁄pÏ€à›\\ö[‹âÀ	Ã»’S’T»“SàSïT∞‚T»Sàì—P’‘»—SP–“S”êQ‘… Kà	Ÿ‹ò]ôYY›⁄]ÿ\	»Oà\úò^J	’⁄]–\	À	ÕMåÃåçÃÕÕL	 Kà	Ÿ‹ò]ôYYŸ[XZ[	»Oà\úò^J	—[XZ[H€€ùX›…À	⁄[ôõ–‹ò]ôYYò€€Kò\â Kà	Ÿ‹ò]ôYY⁄[ú›Y‹ò[I»Oà\úò^J	“[ú›Y‹ò[IÀ	⁄ŒãÀ›››Àö[ú›Y‹ò[Kò€€KŸ‹ò]ôYY›‹ôI Kà	Ÿ‹ò]ôYYŸ]ô[ùŸ]I»Oà\úò^J	—ôX⁄H[∞Ïﬁ[[»]ô[ù…À	ÃçQ”… Kà	Ÿ‹ò]ôYYŸ]ô[ù€ÿÿ][€â»Oà\úò^J	”Yÿ\à[∞Ïﬁ[[»]ô[ù…À	‘õ‹]YHËY[ûàpÏXHLãõ‹ÍHÀà^ãùY[õ‹»Z\ô\… Kà
+N¬àõ‹ôXX⁄
+	öY[»\»	YOà	öY[
+H¬à	‹ÿ›\›€Z^ôKOòY‹Ÿ][ô 	Y\úò^J	ŸYò][	»Oà	öY[ÃWK	‹ÿ[ö]^ôWÿÿ[òX⁄…»Oà	‹ÿ[ö]^ôW›^ŸöY[	 JN¬à	‹ÿ›\›€Z^ôKOòYÿ€€ùõ€
+	Y\úò^J	€Xô[	»Oà◊ 	öY[ÃK	Ÿ‹ò]ôYY\›‹ôI K	‹ŸX›[€â»Oà	Ÿ‹ò]ôYY‹›‹ôIÀ	›\I»Oà	›^	 JN¬àBà	‹ÿ›\›€Z^ôKOòY‹Ÿ][ô 	Ÿ‹ò]ôYY›\Ÿ‹ò]W€X[ùX[	À\úò^J	ŸYò][	»Oà	…À	‹ÿ[ö]^ôWÿÿ[òX⁄…»Oà	‹ÿ[ö]^ôW›^ŸöY[	 JN¬à	‹ÿ›\›€Z^ôKOòYÿ€€ùõ€
+	Ÿ‹ò]ôYY›\Ÿ‹ò]W€X[ùX[	À\úò^Jà	€Xô[	»Oà◊ 	–€›^òX⁄pÏ€àX[ùX[[0Ï€\à
+‹⁄[€ò[
+IÀ	Ÿ‹ò]ôYY\›‹ôI Kà	Ÿ\ÿ‹ö\[€â»Oà◊ 	—Zò\àòXÎ[»\òH\ÿ\àH€›^òX⁄pÏ€àŸöX⁄X[]]€pË]XÿKà⁄Hÿ\ôË\»[àò[‹àXËKŸH\ÿH\ŸH[àô^à[]]€pË]X€ÀâÀ	Ÿ‹ò]ôYY\›‹ôI Kà	‹ŸX›[€â»Oà	Ÿ‹ò]ôYY‹›‹ôIÀ	›\I»Oà	€ù[Xô\âÀà
+JN¬üBòYÿX›[€ä	ÿ›\›€Z^ôW‹ôY⁄\›\âÀ	Ÿ‹ò]ôYYÿ›\›€Z^ôI N¬òYÿX›[€ä	ÿ›\›€Z^ôW‹ÿ]ôWÿYù\âÀù[ò›[€à
+
+H»‹ò]ôYY‹ôXÿ[›[]W›\Ÿ‹öXŸ\ 
+N»JN¬Çôù[ò›[€à‹ò]ôYY€‹[€ä	Ÿ^K	Yò][H	… H»ô]\õàŸ]›[YW€[Ÿ
+	Ÿ^K	Yò][
+N»BÇã àKKKH€›^òX⁄pÏ€à[0Ï€\àHôX⁄[‹»[àT—KKKH
+ã¬Çôù[ò›[€à‹ò]ôYYŸô]⁄€ŸôöX⁄X[›\Ÿ‹ò]J
+H¬à	ô\‹€úŸHH‹‹ô[[›WŸŸ]
+	⁄ŒãÀŸ€\ò\Kò€€K›åKŸ€\ô\À€ŸöX⁄X[	À\úò^J	›[Y[›]	»OàLäJN¬àYà
+\◊›‹Ÿ\úõ‹ä	ô\‹€úŸJH‹‹ô[[›W‹ô]öY]ôW‹ô\‹€úŸWÿ€ŸJ	ô\‹€úŸJHOOHå
+H»ô]\õàò[ŸN»Bà	õŸHHú€€óŸX€ŸJ‹‹ô[[›W‹ô]öY]ôWÿõŸJ	ô\‹€úŸJKùYJN¬àYà
+Z\◊ÿ\úò^J	õŸJH[\J	õŸV…›ô[ùI◊JJH»ô]\õàò[ŸN»Bàô]\õà
+õÿ]
+H	õŸV…›ô[ùI◊N¬üBÇòYÿX›[€ä	Ÿ‹ò]ôYYŸô]⁄›\Ÿ‹ò]WŸ]ô[ù	À	Ÿ‹ò]ôYY›\]W›\Ÿ‹ò]I N¬ôù[ò›[€à‹ò]ôYY›\]W›\Ÿ‹ò]J
+H¬à	ò]HH‹ò]ôYYŸô]⁄€ŸôöX⁄X[›\Ÿ‹ò]J
+N¬àYà
+Iò]JH»ô]\õé»Bà	ô]ö[›\»H
+õÿ]
+HŸ]€‹[€ä	Ÿ‹ò]ôYY›\Ÿ‹ò]Wÿ]]…À
+N¬à\]W€‹[€ä	Ÿ‹ò]ôYY›\Ÿ‹ò]Wÿ]]…À	ò]JN¬à\]W€‹[€ä	Ÿ‹ò]ôYY›\Ÿ‹ò]Wÿ]]◊›\]Y	À›\úô[ù›[YJ	€^\‹[	 JN¬àYà
+Xú 	ô]ö[›\»H	ò]JHàåJH»‹ò]ôYY‹ôXÿ[›[]W›\Ÿ‹öXŸ\ 
+N»BüBÇòYÿX›[€ä	ÿYù\ó‹Ÿ]\›[YIÀù[ò›[€à
+
+H¬àYà
+]‹€ô^‹ÿ⁄Y[Y
+	Ÿ‹ò]ôYYŸô]⁄›\Ÿ‹ò]WŸ]ô[ù	 JH¬à‹‹ÿ⁄Y[WŸ]ô[ù
+[YJ
+K	⁄›\õIÀ	Ÿ‹ò]ôYYŸô]⁄›\Ÿ‹ò]WŸ]ô[ù	 N¬àBüJN¬Çôù[ò›[€à‹ò]ôYYŸŸ]›\Ÿ‹ò]J
+H¬à	X[ùX[HŸ]›[YW€[Ÿ
+	Ÿ‹ò]ôYY›\Ÿ‹ò]W€X[ùX[	À	… N¬àYà
+	X[ùX[OOH	…»	âà\◊€ù[Y\öX 	X[ùX[
+H	âà
+õÿ]
+H	X[ùX[à
+H»ô]\õà
+õÿ]
+H	X[ùX[»Bà	]]»H
+õÿ]
+HŸ]€‹[€ä	Ÿ‹ò]ôYY›\Ÿ‹ò]Wÿ]]…À
+N¬àYà
+	]]»à
+H»ô]\õà	]]Œ»Bà	ô]⁄YH‹ò]ôYYŸô]⁄€ŸôöX⁄X[›\Ÿ‹ò]J
+N¬àYà
+	ô]⁄Y
+H¬à\]W€‹[€ä	Ÿ‹ò]ôYY›\Ÿ‹ò]Wÿ]]…À	ô]⁄Y
+N¬à\]W€‹[€ä	Ÿ‹ò]ôYY›\Ÿ‹ò]Wÿ]]◊›\]Y	À›\úô[ù›[YJ	€^\‹[	 JN¬àô]\õà	ô]⁄Y¬àBàô]\õàL»À»ô\Ÿ›X\ô»⁄HŸ]∞ÎXHõ»^H€›^òX⁄pÏ€à\‹€öXõBüBÇãÀ»ôY€ôXHHHXŸ[òHH\€‹»pË\»Ÿ\òÿ[òH
+ZéàKççŒå»OàKçé
+H\òBãÀ»]YH‹»ôX⁄[‹»ÿ[›[Y‹»\ŸH0Ï€\ô\»õ»]YY[à€€àŸ[ù]õ‹»›Y[‹ÀÇôù[ò›[€à‹ò]ôYY‹õ›[ôÿ\ú 	ò[YJH¬àô]\õà
+õÿ]
+H
+õ›[ô
+	ò[YH»L
+H
+àL
+N¬üBÇôù[ò›[€à‹ò]ôYY‹ôXÿ[›[]W›\Ÿ‹öXŸ\ 
+H¬àYà
+X€\‹◊Ÿ^\› 	’€€–€€[Y\òŸI JH»ô]\õé»Bà	ò]HH‹ò]ôYYŸŸ]›\Ÿ‹ò]J
+N¬à	Y»HŸ]‹‹› \úò^J	‹‹››\I»Oà\úò^J	‹õŸX›	À	‹õŸX››ò\öX][€â K	‹‹›◊‹\ó‹YŸI»OàLK	ŸöY[…»Oà	⁄Y…À	€Y]W⁄Ÿ^I»Oà	◊‹öXŸW›\Ÿ	À	‹‹›‹›]\…»Oà	ÿ[ûI JN¬àõ‹ôXX⁄
+	Y»\»	Y
+H¬à	\Ÿ‹ôY›[\àHŸ]‹‹›€Y]J	Y	◊‹öXŸW›\Ÿ	ÀùYJN¬à	\Ÿ‹ÿ[HHŸ]‹‹›€Y]J	Y	◊‹ÿ[W‹öXŸW›\Ÿ	ÀùYJN¬àYà
+	\Ÿ‹ôY›[\àOOH	…»Z\◊€ù[Y\öX 	\Ÿ‹ôY›[\äJH»€€ù[ùYN»Bà	\ú◊‹ôY›[\àH‹ò]ôYY‹õ›[ôÿ\ú 	\Ÿ‹ôY›[\à
+à	ò]JN¬à\]W‹‹›€Y]J	Y	◊‹ôY›[\ó‹öXŸIÀ	\ú◊‹ôY›[\äN¬àYà
+	\Ÿ‹ÿ[HOOH	…»	âà\◊€ù[Y\öX 	\Ÿ‹ÿ[JH	âà
+õÿ]
+H	\Ÿ‹ÿ[Hà
+H¬à	\ú◊‹ÿ[HH‹ò]ôYY‹õ›[ôÿ\ú 	\Ÿ‹ÿ[H
+à	ò]JN¬à\]W‹‹›€Y]J	Y	◊‹ÿ[W‹öXŸIÀ	\ú◊‹ÿ[JN¬à\]W‹‹›€Y]J	Y	◊‹öXŸIÀ	\ú◊‹ÿ[JN¬àH[ŸH¬à\]W‹‹›€Y]J	Y	◊‹öXŸIÀ	\ú◊‹ôY›[\äN¬àBàÿ◊Ÿ[]W‹õŸX››ò[ú⁄Y[ù 	Y
+N¬àBüBÇòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹õŸX›€‹[€ú◊‹öX⁄[ô…Àù[ò›[€à
+
+H¬à€ÿò[	‹›¬à€€ÿ€€[Y\òŸW›‹›^⁄[ú]
+\úò^J	⁄Y	»Oà	◊‹öXŸW›\Ÿ	À	€Xô[	»Oà◊ 	‘ôX⁄[»[àT—
+‹⁄[€ò[
+IÀ	Ÿ‹ò]ôYY\›‹ôI K	Ÿ\ÿ‹ö\[€â»Oà◊ 	‘⁄Hÿ\ôË\»[àò[‹àXËK[ôX⁄[»[à\€‹»ŸHÿ[›[H€€»€€àH€›^òX⁄pÏ€à[0Ï€\àH\ÿH[ôX⁄[»ôY›[\ãâÀ	Ÿ‹ò]ôYY\›‹ôI K	Ÿ\ÿ◊›\	»OàùYK	Ÿ]W›\I»Oà	‹öXŸI JN¬à€€ÿ€€[Y\òŸW›‹›^⁄[ú]
+\úò^J	⁄Y	»Oà	◊‹ÿ[W‹öXŸW›\Ÿ	À	€Xô[	»Oà◊ 	‘ôX⁄[»HŸô\ùH[àT—
+‹⁄[€ò[
+IÀ	Ÿ‹ò]ôYY\›‹ôI K	Ÿ]W›\I»Oà	‹öXŸI JN¬üJN¬Çôù[ò›[€à‹ò]ôYY‹\úŸW›\Ÿ⁄[ú]
+	ò] H¬à	ò]»Hö[J
+›ö[ô H	ò] N¬àYà
+	ò]»OOH	… H»ô]\õà	…Œ»BàÀ»XŸ\H[ù»ççLà€€[»çLà
+€€XHX⁄[X[€€[»ŸH\ÿ‹öXôH[à\‹pÏ[€
+KÇàô]\õàÿ◊Ÿõ‹õX]ŸX⁄[X[
+›ó‹ô\XŸJ	À	À	ÀâÀ	ò] JN¬üBÇòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹õÿŸ\‹◊‹õŸX›€Y]IÀù[ò›[€à
+	‹›⁄Y
+H¬à	\Ÿ‹ôY›[\ó‹ò]»H\‹Ÿ]
+	‘‘’…◊‹öXŸW›\Ÿ	◊JH»‹›[ú€\⁄
+	‘‘’…◊‹öXŸW›\Ÿ	◊JHà	…Œ¬à	\Ÿ‹ÿ[W‹ò]»H\‹Ÿ]
+	‘‘’…◊‹ÿ[W‹öXŸW›\Ÿ	◊JH»‹›[ú€\⁄
+	‘‘’…◊‹ÿ[W‹öXŸW›\Ÿ	◊JHà	…Œ¬à	\Ÿ‹ôY›[\àH‹ò]ôYY‹\úŸW›\Ÿ⁄[ú]
+	\Ÿ‹ôY›[\ó‹ò] N¬à	\Ÿ‹ÿ[HH‹ò]ôYY‹\úŸW›\Ÿ⁄[ú]
+	\Ÿ‹ÿ[W‹ò] N¬à\]W‹‹›€Y]J	‹›⁄Y	◊‹öXŸW›\Ÿ	À	\Ÿ‹ôY›[\äN¬à\]W‹‹›€Y]J	‹›⁄Y	◊‹ÿ[W‹öXŸW›\Ÿ	À	\Ÿ‹ÿ[JN¬àYà
+	\Ÿ‹ôY›[\àOOH	…»	âàZ\◊€ù[Y\öX 	\Ÿ‹ôY›[\äJH¬àŸ]›ò[ú⁄Y[ù
+	Ÿ‹ò]ôYY›\Ÿ‹öXŸWŸ\úõ‹ó…»à	‹›⁄Yö[J
+›ö[ô H	\Ÿ‹ôY›[\ó‹ò] Kå
+N¬àBàÀ»[ôX⁄[»[à\€‹»ŸH\XÿH[à‹ò]ôYYŸö[ò[^ôW›\Ÿ‹öXŸJ
+K]YH€‹úôBàÀ»\‹pÍ\»H]YH€€–€€[Y\òŸH\õZ[òHH›X\ô\à[õŸX›»
+ô\àpË\»XòZõ NÇàÀ»⁄H»XÎX[[‹»XËK[õ‹[»›X\ôY»[îõŸX›»⁄[\HàH€€–€€[Y\òŸBàÀ»Ÿ0ÎXH\ÿ\õ»HùY]õ»€€à[ôX⁄[»
+òXÎ[ H]YH[∞ÎXH[àY[[‹öXKÇüJN¬ÇòYÿX›[€ä	ÿYZ[ó€õ›XŸ\…Àù[ò›[€à
+
+H¬à€ÿò[	‹›¬àYà
+I‹›	‹›Oú‹››\HOOH	‹õŸX›	 H»ô]\õé»Bà	òY›ò[YHHŸ]›ò[ú⁄Y[ù
+	Ÿ‹ò]ôYY›\Ÿ‹öXŸWŸ\úõ‹ó…»à	‹›OíQ
+N¬àYà
+	òY›ò[YHOOHò[ŸJH»ô]\õé»Bà[]W›ò[ú⁄Y[ù
+	Ÿ‹ò]ôYY›\Ÿ‹öXŸWŸ\úõ‹ó…»à	‹›OíQ
+N¬àX⁄»	œ]à€\‹œHõõ›XŸHõ›XŸKY\úõ‹àèèè›õ€ôœë‹ò]ôYY›‹ôNè‹›õ€ôœà[îôX⁄[»[àT—à]YHÿ\ôÿ\›H
+â»à\ÿ◊⁄[
+	òY›ò[YJHà	»äHõ»ŸHY»[ù\úô]\à€€[»∞ÓõY\õÀ\ÎH]YH[õŸX›»ŸH›X\ô0Ï»⁄[àôX⁄[»[à\€‹»ÿ[›[YÀà\ÿ‹öXö[»€€»€€à∞ÓõY\õ‹»H€€[»]X⁄»[à[ù»»[òH€€XH\òH‹»X⁄[X[\»
+ZéàçL»L
+K⁄[à›õ‹»Î[Xõ€‹Àè‹èŸ]èâŒ¬üJN¬Çôù[ò›[€à‹ò]ôYYŸö[ò[^ôW›\Ÿ‹öXŸJ	õŸX›⁄Y
+H¬à›]X»	ù[õö[ô»H\úò^J
+N¬àYà
+Y[\J	ù[õö[ô÷…õŸX›⁄YJJH»ô]\õé»Bà	\Ÿ‹ôY›[\àHŸ]‹‹›€Y]J	õŸX›⁄Y	◊‹öXŸW›\Ÿ	ÀùYJN¬àYà
+	\Ÿ‹ôY›[\àOOH	…»Z\◊€ù[Y\öX 	\Ÿ‹ôY›[\äJH»ô]\õé»Bà	\Ÿ‹ÿ[HHŸ]‹‹›€Y]J	õŸX›⁄Y	◊‹ÿ[W‹öXŸW›\Ÿ	ÀùYJN¬à	ò]HH‹ò]ôYYŸŸ]›\Ÿ‹ò]J
+N¬à	\ú◊‹ôY›[\àH‹ò]ôYY‹õ›[ôÿ\ú 	\Ÿ‹ôY›[\à
+à	ò]JN¬à	\◊‹ÿ[HH
+	\Ÿ‹ÿ[HOOH	…»	âà\◊€ù[Y\öX 	\Ÿ‹ÿ[JH	âà
+õÿ]
+H	\Ÿ‹ÿ[Hà
+N¬à	\ú◊‹ÿ[HH	\◊‹ÿ[H»‹ò]ôYY‹õ›[ôÿ\ú 	\Ÿ‹ÿ[H
+à	ò]JHà	…Œ¬à	\ôŸ]‹öXŸHH	\◊‹ÿ[H»	\ú◊‹ÿ[Hà	\ú◊‹ôY›[\é¬à	›\úô[ù‹ôY›[\àHŸ]‹‹›€Y]J	õŸX›⁄Y	◊‹ôY›[\ó‹öXŸIÀùYJN¬à	›\úô[ù‹öXŸHHŸ]‹‹›€Y]J	õŸX›⁄Y	◊‹öXŸIÀùYJN¬àYà
+
+›ö[ô H	›\úô[ù‹ôY›[\àOOH
+›ö[ô H	\ú◊‹ôY›[\à	âà
+›ö[ô H	›\úô[ù‹öXŸHOOH
+›ö[ô H	\ôŸ]‹öXŸJH»ô]\õé»Bà	õŸX›Hÿ◊ŸŸ]‹õŸX›
+	õŸX›⁄Y
+N¬àYà
+IõŸX›
+H»ô]\õé»Bà	ù[õö[ô÷…õŸX›⁄YHHùYN¬à	õŸX›OúŸ]‹ôY›[\ó‹öXŸJ	\ú◊‹ôY›[\äN¬à	õŸX›OúŸ]‹ÿ[W‹öXŸJ	\ú◊‹ÿ[JN¬à	õŸX›Oúÿ]ôJ
+N¬àYà
+ù[ò›[€óŸ^\› 	›ÿ◊Ÿ[]W‹õŸX››ò[ú⁄Y[ù… JH»ÿ◊Ÿ[]W‹õŸX››ò[ú⁄Y[ù 	õŸX›⁄Y
+N»Bà[úŸ]
+	ù[õö[ô÷…õŸX›⁄YJN¬üBòYÿX›[€ä	›€€ÿ€€[Y\òŸW€ô]◊‹õŸX›	À	Ÿ‹ò]ôYYŸö[ò[^ôW›\Ÿ‹öXŸIÀNNJN¬òYÿX›[€ä	›€€ÿ€€[Y\òŸW›\]W‹õŸX›	À	Ÿ‹ò]ôYYŸö[ò[^ôW›\Ÿ‹öXŸIÀNNJN¬ÇãÀ»»Z\€[À\õ»‹àò\öXX⁄pÏ€à
+ÿYHò\öXX⁄pÏ€àH[àõŸX›»ò\öXXõBãÀ»Y[ôH›Hõ‹[»ôX⁄[»H‹à»[ù»›Hõ‹[»îôX⁄[»[àT—äKÇòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹õŸX›ÿYù\ó›ò\öXXõWÿ]öXù]\…Àù[ò›[€à
+	€‹	ò\öX][€óŸ]K	ò\öX][€äH¬à€€ÿ€€[Y\òŸW›‹›^⁄[ú]
+\úò^Jà	⁄Y	»Oà	›ò\öXXõW‹öXŸW›\Ÿ	»à	€‹à	€ò[YI»Oàùò\öXXõW‹öXŸW›\Ÿﬁ…€‹WHãà	›ò[YI»OàŸ]‹‹›€Y]J	ò\öX][€ãOíQ	◊‹öXŸW›\Ÿ	ÀùYJKà	€Xô[	»Oà◊ 	‘ôX⁄[»[àT—
+‹⁄[€ò[
+IÀ	Ÿ‹ò]ôYY\›‹ôI Kà	Ÿ\ÿ◊›\	»OàùYKà	Ÿ\ÿ‹ö\[€â»Oà◊ 	‘⁄Hÿ\ôË\»[àò[‹àXËK[ôX⁄[»[à\€‹»H\›Hò\öXX⁄pÏ€àŸHÿ[›[H€€»€€àH€›^òX⁄pÏ€à[0Ï€\àH\ÿH[ôX⁄[»ôY›[\ãâÀ	Ÿ‹ò]ôYY\›‹ôI Kà	Ÿ]W›\I»Oà	‹öXŸIÀà	›‹ò\\óÿ€\‹…»Oà	Ÿõ‹õK\õ›»õ‹õK\õ›ÀYù[	Àà
+JN¬à€€ÿ€€[Y\òŸW›‹›^⁄[ú]
+\úò^Jà	⁄Y	»Oà	›ò\öXXõW‹ÿ[W‹öXŸW›\Ÿ	»à	€‹à	€ò[YI»Oàùò\öXXõW‹ÿ[W‹öXŸW›\Ÿﬁ…€‹WHãà	›ò[YI»OàŸ]‹‹›€Y]J	ò\öX][€ãOíQ	◊‹ÿ[W‹öXŸW›\Ÿ	ÀùYJKà	€Xô[	»Oà◊ 	‘ôX⁄[»HŸô\ùH[àT—
+‹⁄[€ò[
+IÀ	Ÿ‹ò]ôYY\›‹ôI Kà	Ÿ]W›\I»Oà	‹öXŸIÀà	›‹ò\\óÿ€\‹…»Oà	Ÿõ‹õK\õ›»õ‹õK\õ›ÀYù[	Àà
+JN¬üKL N¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹ÿ]ôW‹õŸX››ò\öX][€âÀù[ò›[€à
+	ò\öX][€ó⁄Y	€‹
+H¬à	\Ÿ‹ôY›[\ó‹ò]»H\‹Ÿ]
+	‘‘’…›ò\öXXõW‹öXŸW›\Ÿ	◊V…€‹JH»‹›[ú€\⁄
+	‘‘’…›ò\öXXõW‹öXŸW›\Ÿ	◊V…€‹JHà	…Œ¬à	\Ÿ‹ÿ[W‹ò]»H\‹Ÿ]
+	‘‘’…›ò\öXXõW‹ÿ[W‹öXŸW›\Ÿ	◊V…€‹JH»‹›[ú€\⁄
+	‘‘’…›ò\öXXõW‹ÿ[W‹öXŸW›\Ÿ	◊V…€‹JHà	…Œ¬à	\Ÿ‹ôY›[\àH‹ò]ôYY‹\úŸW›\Ÿ⁄[ú]
+	\Ÿ‹ôY›[\ó‹ò] N¬à	\Ÿ‹ÿ[HH‹ò]ôYY‹\úŸW›\Ÿ⁄[ú]
+	\Ÿ‹ÿ[W‹ò] N¬à\]W‹‹›€Y]J	ò\öX][€ó⁄Y	◊‹öXŸW›\Ÿ	À	\Ÿ‹ôY›[\äN¬à\]W‹‹›€Y]J	ò\öX][€ó⁄Y	◊‹ÿ[W‹öXŸW›\Ÿ	À	\Ÿ‹ÿ[JN¬àYà
+	\Ÿ‹ôY›[\àOOH	…»Z\◊€ù[Y\öX 	\Ÿ‹ôY›[\äJH¬àYà
+ö[J
+›ö[ô H	\Ÿ‹ôY›[\ó‹ò] HOOH	… H¬àŸ]›ò[ú⁄Y[ù
+	Ÿ‹ò]ôYY›\Ÿ‹öXŸWŸ\úõ‹ó…»à‹ŸŸ]‹‹›‹\ô[ù⁄Y
+	ò\öX][€ó⁄Y
+Kö[J
+›ö[ô H	\Ÿ‹ôY›[\ó‹ò] Kå
+N¬àBàô]\õé¬àBà	ò]HH‹ò]ôYYŸŸ]›\Ÿ‹ò]J
+N¬à	\ú◊‹ôY›[\àH‹ò]ôYY‹õ›[ôÿ\ú 	\Ÿ‹ôY›[\à
+à	ò]JN¬à	\◊‹ÿ[HH
+	\Ÿ‹ÿ[HOOH	…»	âà\◊€ù[Y\öX 	\Ÿ‹ÿ[JH	âà
+õÿ]
+H	\Ÿ‹ÿ[Hà
+N¬à	\ú◊‹ÿ[HH	\◊‹ÿ[H»‹ò]ôYY‹õ›[ôÿ\ú 	\Ÿ‹ÿ[H
+à	ò]JHà	…Œ¬à	ò\öX][€àHÿ◊ŸŸ]‹õŸX›
+	ò\öX][€ó⁄Y
+N¬àYà
+Iò\öX][€äH»ô]\õé»Bà	ò\öX][€ãOúŸ]‹ôY›[\ó‹öXŸJ	\ú◊‹ôY›[\äN¬à	ò\öX][€ãOúŸ]‹ÿ[W‹öXŸJ	\ú◊‹ÿ[JN¬à	ò\öX][€ãOúÿ]ôJ
+N¬àYà
+ù[ò›[€óŸ^\› 	›ÿ◊Ÿ[]W‹õŸX››ò[ú⁄Y[ù… JH»ÿ◊Ÿ[]W‹õŸX››ò[ú⁄Y[ù 	ò\öX][€ó⁄Y
+N»BüKåäN¬Çôù[ò›[€à‹ò]ôYY‹⁄‹›\õ
+	€Y»H	… H¬àYà
+[óÿ\úò^J	€YÀ\úò^J	€õ›ôYY\…À	€Ÿô\ù\… KùYJJH¬à	YŸHHŸ]‹YŸWÿûW‹]
+	€Y N¬àYà
+	YŸJH»ô]\õàŸ]‹\õX[[ö 	YŸJN»BàBàYà
+ù[ò›[€óŸ^\› 	›ÿ◊ŸŸ]‹YŸW⁄Y	 JH¬àYà
+	€Y H¬à	\õHHŸ]›\õWÿûJ	‹€Y…À	€YÀ	‹õŸX›ÿÿ]	 N¬àYà
+	\õH	âàZ\◊›‹Ÿ\úõ‹ä	\õJJH»ô]\õàŸ]›\õW€[ö 	\õJN»BàBà	⁄‹Hÿ◊ŸŸ]‹YŸW‹\õX[[ö 	‹⁄‹	 N¬àYà
+	⁄‹
+H»ô]\õà	⁄‹»BàBàô]\õà€YW›\õ
+	À›Y[ôK… N¬üBÇôù[ò›[€à‹ò]ôYYŸò]óÿù]€ä	õŸX›⁄Y
+H¬àÀ»Z\€[»0ÎX€€õ»
+H\›ô[Hô€‹ô]HäH[à‹»‹»\›Y‹Œà[ù\»[àÀ»X\òÿY»\ÿXòH[òH\›ô[HŸ[∞Í\öXÿHHH[ù\»]X⁄»pË\»ö[òH]YHBàÀ»H€€ù‹õõÀHŸHôpÎXH\‹õ€Zõ»[ÿ[Xö[»[ùôH[òHH›òKÇà	›\àH‹ò]ôYY⁄X€€ä	⁄X\ù	 N¬àô]\õà	œù]€à\OHòù]€àà€\‹œHôò]ã]ŸŸ€Hà]K\õŸX›ZYHâ»à\ÿ◊ÿ]ä	õŸX›⁄Y
+Hà	»à\öXK[Xô[HêY‹ôYÿ\àHò]õ‹ö]‹»èè‹[à€\‹œHôò]ãZX€€ã[Ÿôàèâ»à	›\àà	œ‹‹[èè‹[à€\‹œHôò]ãZX€€ã[€àèâ»à	›\àà	œ‹‹[èèÿù]€èâŒ¬üBÇôù[ò›[€à‹ò]ôYY⁄›ô\ó⁄[XYŸW⁄[
+	õŸX›
+H¬àÀ»ŸY›[ôHõ›»HHÿ[\∞ÎXNàŸH]Y\›òH[\ÿ\à[[›\ŸH‹à[ò⁄[XBàÀ»HH\öô]K[ò⁄[XHHHö[ò⁄\[H€€à[òHò[ú⁄X⁄pÏ€à›X]ôKÇàYà
+IõŸX›
+H»ô]\õà	…Œ»Bà	ÿ[\ûHH	õŸX›OôŸ]Ÿÿ[\ûW⁄[XYŸW⁄Y 
+N¬àYà
+[\J	ÿ[\ûJJH»ô]\õà	…Œ»BàÀ»⁄HHúŸY›[ôHàõ›»\»[Z\€[»\ò⁄]õ»]YHHö[ò⁄\[
+\ÿH›X[ô¬àÀ»ŸH›XôHHZ\€XH[XYŸ[àHHÿ[\∞ÎXJKõ»Y[ôHŸ[ùY»[‹ùXŸKÇà	ôX]\ôYH
+[ù
+H	õŸX›OôŸ]⁄[XYŸW⁄Y
+
+N¬à	ÿ[\ûHH\úò^W›ò[Y\ \úò^WŸö[\ä	ÿ[\ûKù[ò›[€à
+	Y
+H\ŸH
+	ôX]\ôY
+H»ô]\õà
+[ù
+H	YOOH	ôX]\ôY»JJN¬àYà
+[\J	ÿ[\ûJJH»ô]\õà	…Œ»Bà	[H‹ŸŸ]ÿ]X⁄Y[ù⁄[XYŸJ	ÿ[\ûVÃK	›€€ÿ€€[Y\òŸW›[XõòZ[	Àò[ŸK\úò^Jà	ÿ€\‹…»Oà	‹õŸX›Z[XYŸKZ›ô\âÀà	ÿ[	»Oà	…Àà	€ÿY[ô…»Oà	€^ûIÀà	ÿ\öXKZY[â»Oà	›ùYIÀà
+JN¬àô]\õà	[»	[à	…Œ¬üBÇôù[ò›[€à‹ò]ôYY‹ô[ô\óŸ‹ò]ö]W‹õŸX›
+	õŸX›	ö[\óŸ[\»H\úò^J
+JH¬à	\õX[[ö»HŸ]‹\õX[[ö 	õŸX›OôŸ]⁄Y
+
+JN¬à	]Wÿ]ú»H	…Œ¬àõ‹ôXX⁄
+	ö[\óŸ[\»\»	\ò[HOà	]JH¬à	^€õ€^HH	]VÃWN¬à	\õ\»HŸ]›W›\õ\ 	õŸX›OôŸ]⁄Y
+
+K	^€õ€^JN¬à	€Y‹»H
+	\õ\»	âàZ\◊›‹Ÿ\úõ‹ä	\õ\ JH»‹€\›‹X⁄ 	\õ\À	‹€Y… Hà\úò^J
+N¬à	]Wÿ]ú»èH	»]KI»à\ÿ◊ÿ]ä	\ò[JHà	œHâ»à\ÿ◊ÿ]ä[\ŸJ	»	À	€Y‹ JHà	»âŒ¬àBàX⁄»	œ\ùX€H€\‹œHô‹ò]ö]K\õŸX›â»à	]Wÿ]ú»à	œèH€\‹œHúõŸX›Z[XYŸHàôYèHâ»à\ÿ◊›\õ
+	\õX[[ö Hà	»èâŒ¬àYà
+	õŸX›Oö\◊€€ó‹ÿ[J
+JH¬àX⁄»	œ‹[èì—ëTïO‹‹[èâŒ¬àH[ŸZYà
+
+[YJ
+HH›ù›[YJŸ]›WŸ]J	ÿ…À	õŸX›OôŸ]⁄Y
+
+JJJHÃ
+àVW“Só‘—P””ë H¬àX⁄»	œ‹[à€\‹œHö\À[ô]»èìïQUìœ‹‹[èâŒ¬àBàX⁄»‹ò]ôYYŸõ⁄[ÿòYŸW⁄[
+	õŸX›OôŸ]⁄Y
+
+JN¬àX⁄»	õŸX›OôŸ]⁄[XYŸJ	›€€ÿ€€[Y\òŸW›[XõòZ[	 N¬àX⁄»‹ò]ôYY⁄›ô\ó⁄[XYŸW⁄[
+	õŸX›
+N¬àX⁄»‹ò]ôYYŸò]óÿù]€ä	õŸX›OôŸ]⁄Y
+
+JN¬àÀ»[àH‹ùYH[‹›ò[[‹»H]pÍHùYY€»\ù[ôXŸH
+XY⁄XÀ⁄Í[[€ã]ÀäKàÀ»Y›X[]YH[àH‹ö[HHÿ]Y€‹∞ÎX\Œ»⁄H[õŸX›»õ»Y[ôHùYY€¬àÀ»ÿ\ôÿYÀŸHÿYHHHÿ]Y€‹∞ÎXH€€[»[ù\ÀÇà	ÿ[YW€Xô[H‹ò]ôYY‹õŸX›Ÿÿ[YW€ò[YJ	õŸX›OôŸ]⁄Y
+
+JN¬àX⁄»	œÿOè]èè€X[â»à
+	ÿ[YW€Xô[»\ÿ◊⁄[
+	ÿ[YW€Xô[
+Hà‹⁄‹Ÿ\◊‹‹›
+ÿ◊ŸŸ]‹õŸX›ÿÿ]Y€‹ûW€\›
+	õŸX›OôŸ]⁄Y
+
+K	À	 JJHà	œ‹€X[èœèHôYèHâ»à\ÿ◊›\õ
+	\õX[[ö Hà	»èâ»à\ÿ◊⁄[
+	õŸX›OôŸ]€ò[YJ
+JHà	œÿOè⁄œè]à€\‹œHúõŸX›\öXŸHèâ»à‹⁄‹Ÿ\◊‹‹›
+	õŸX›OôŸ]‹öXŸW⁄[
+
+JHà	œH€\‹œHú\»àôYèHâ»à\ÿ◊›\õ
+	õŸX›OòY›◊ÿÿ\ù›\õ
+
+JHà	»à]K\õŸX›⁄YHâ»à\ÿ◊ÿ]ä	õŸX›OôŸ]⁄Y
+
+JHà	»èäœÿOèŸ]èèŸ]èèÿ\ùX€OâŒ¬üBÇôù[ò›[€à‹ò]ôYY⁄€YW‹]ZX⁄◊Ÿö[\ú 	[\ H¬à	‹õ›\»H\úò^J
+N¬àõ‹ôXX⁄
+	[\»\»	\ò[HOà	]JH¬à\›
+	Xô[	^€õ€^JHH	]N¬à	\õ\»H‹ò]ôYYŸö[\ó›\õ\ 	^€õ€^JN¬àYà
+	\õ\ H»	‹õ›\÷◊HH\úò^J	\ò[K	Xô[\úò^W‹€XŸJ	\õ\À
+JN»BàBàYà
+I‹õ›\ H»ô]\õé»BàX⁄»	œ]à€\‹œHö€YK\]ZX⁄ÀYö[\ú»à]KXÿ\õ›\Ÿ[Yö[\úœâŒ¬àõ‹ôXX⁄
+	‹õ›\»\»	 H¬à\›
+	\ò[K	Xô[	\õ\ HH	Œ¬àX⁄»	œŸ[X›]KYö[\ãZŸ^OHâ»à\ÿ◊ÿ]ä	\ò[JHà	»èè‹[€àò[YOHàèâ»à\ÿ◊⁄[
+	Xô[
+Hà	ŒàŸ‹œ€‹[€èâŒ¬àõ‹ôXX⁄
+	\õ\»\»	
+H»X⁄»	œ‹[€àò[YOHâ»à\ÿ◊ÿ]ä	Oú€Y Hà	»èâ»à\ÿ◊⁄[
+	Oõò[YJHà	œ€‹[€èâŒ»BàX⁄»	œ‹Ÿ[X›âŒ¬àBàX⁄»	œŸ]èâŒ¬üBÇôù[ò›[€à‹ò]ôYY⁄€YWÿÿ\õ›\Ÿ[
+	⁄X⁄Ÿ\ã	]W⁄[	\ÿÀ	]Y\ûWÿ\ô‹À	öY]◊ÿ[›\õ	ŸX›[€ó⁄YH	…À	]ZX⁄◊Ÿö[\óŸ[\»H\úò^J
+JH¬àYà
+X€\‹◊Ÿ^\› 	’€€–€€[Y\òŸI JH»ô]\õé»Bà	Yò][»H\úò^J	‹‹››\I»Oà	‹õŸX›	À	‹‹›‹›]\…»Oà	‹Xõ\⁄	À	‹‹›◊‹\ó‹YŸI»OàLã	€‹ô\òûI»Oà	Ÿ]IÀ	€‹ô\â»Oà	—T–… N¬à	]Y\ûHHô]»‘‘]Y\ûJ\úò^W€Y\ôŸJ	Yò][À	]Y\ûWÿ\ô‹ JN¬àYà
+I]Y\ûKOö]ôW‹‹› 
+JH»‹‹ô\Ÿ]‹‹›]J
+N»ô]\õé»BàX⁄»	œŸX›[€à€\‹œHôôX]\ôY\õŸX›»â»à
+	ŸX›[€ó⁄Y»	»YHâ»à\ÿ◊ÿ]ä	ŸX›[€ó⁄Y
+Hà	»â»à	… Hà	œè]à€\‹œHúŸX›[€ãZXYèè]èè€\‹œHúŸX›[€ã[Xô[èâ»à\ÿ◊⁄[
+	⁄X⁄Ÿ\äHà	œ‹èèâ»à	]W⁄[à	œ⁄èâ»à
+	\ÿ»»	œ€\‹œHúŸX›[€ãY\ÿ»èâ»à\ÿ◊⁄[
+	\ÿ Hà	œ‹â»à	… Hà	œŸ]èèHôYèHâ»à\ÿ◊›\õ
+	öY]◊ÿ[›\õ
+Hà	»èïëTà—»8°§èÿOèŸ]èâŒ¬àYà
+	]ZX⁄◊Ÿö[\óŸ[\ H»‹ò]ôYY⁄€YW‹]ZX⁄◊Ÿö[\ú 	]ZX⁄◊Ÿö[\óŸ[\ N»BàX⁄»	œ]à€\‹œHúõŸX›Xÿ\ô»à]KYö[\òXõKXÿ\ôœè€\‹œHúYã[õÀ\ô\›[»àY[èìõ»^HõŸX›‹»]YH€⁄[ò⁄Y[à€€à\€‹»ö[õ‹Àè‹âŒ¬à⁄[H
+	]Y\ûKOö]ôW‹‹› 
+JH»	]Y\ûKOùW‹‹›
+
+N»‹ò]ôYY‹ô[ô\óŸ‹ò]ö]W‹õŸX›
+ÿ◊ŸŸ]‹õŸX›
+Ÿ]›W“Q
+
+JK	]ZX⁄◊Ÿö[\óŸ[\ N»BàX⁄»	œŸ]èè‹ŸX›[€èâŒ¬à‹‹ô\Ÿ]‹‹›]J
+N¬üBÇôù[ò›[€à‹ò]ôYY€X\ú]YYJ	][\»H\úò^J
+JH¬àYà
+I][\ H¬à	][\»H\úò^J	—Sï∞„S‘»H—»Sp„T…À	–””TêHì’Q“QIÀ	‘ëUT∞‡HSàQSëH“Sà–Të”…À	–USê“p‰”àTî””êSVêQIÀ	”ïQUì‘»Së‘ëT”‘»—T»T»—SPSêT… N¬àBàX⁄»	œ]à€\‹œHúŸX›[€ã[X\ú]YYHèè]à€\‹œHúŸX›[€ã[X\ú]YYK]òX⁄»èâŒ¬àõ‹à
+	HH»	Hé»	J  H¬àõ‹ôXX⁄
+	][\»\»	][JH»X⁄»	œ‹[èâ»à\ÿ◊⁄[
+	][JHà	œ‹‹[èèO∏•·è⁄OâŒ»BàBàX⁄»	œŸ]èèŸ]èâŒ¬üBÇôù[ò›[€à‹ò]ôYYŸö[\ó€[ö 	ŸX›[€ó‹€YÀ	\ô‹»H\úò^J
+JH¬à	\õH‹ò]ôYY‹⁄‹›\õ
+	ŸX›[€ó‹€Y N¬àô]\õà	\ô‹»»Y‹]Y\ûWÿ\ô 	\ô‹À	\õ
+Hà	\õ¬üBÇôù[ò›[€à‹ò]ôYY€YYÿW‹õ€[ 	⁄X⁄Ÿ\ã	]K	›K	\õ	[XYŸJH¬à	[Y◊›\õHŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]À⁄[YÀ…»à	[XYŸN¬àX⁄»	œH€\‹œHõYYÿK\õ€[»àôYèHâ»à\ÿ◊›\õ
+	\õ
+Hà	»à›[OHãK[YYÿKZ[YŒù\õ
+	…»à\ÿ◊›\õ
+	[Y◊›\õ
+Hà	◊	 Hèè‹[à€\‹œHõYYÿK\õ€[ÀZ⁄X⁄Ÿ\àèâ»à\ÿ◊⁄[
+	⁄X⁄Ÿ\äHà	œ‹‹[èè›õ€ôœâ»à\ÿ◊⁄[
+	]JHà	œ‹›õ€ôœè‹[à€\‹œHòù]€àö[X\ûHèâ»à\ÿ◊⁄[
+	›JHà	œ‹‹[èèÿOâŒ¬üBÇôù[ò›[€à‹ò]ôYY€YYÿ[Y[ùJ	Ÿ^JH¬àÿó‹›\ù
+
+N¬à	ÿ[YW⁄X€€ú»H\úò^Jà	€XY⁄XÀ]KYÿ]\ö[ô…»Oà	Ÿÿ[YK[XY⁄X…À	‹⁄Ÿ[[€â»Oà	Ÿÿ[YK\⁄Ÿ[[€âÀ	€€ôK\YXŸI»Oà	Ÿÿ[YK[€ô\YXŸIÀà	ŸY⁄[[€â»Oà	Ÿÿ[YKYY⁄[[€âÀ	ŸòY€€ãXò[	»Oà	Ÿÿ[YKYòY€€òò[	À	ﬁ]KY⁄K[⁄	»Oà	Ÿÿ[YK^]Y⁄[⁄	Àà
+N¬àYà
+	Ÿ^HOOH	›Ÿ… H¬à	ÿ[Y\»H‹ò]ôYY€[WŸŸ]
+	›Ÿ… N¬àX⁄»	œ]à€\‹œHõYYÿK[Y[ùHèè]à€\‹œHõYYÿKX€€[[ú»YYÿKX€€[[úÀMàèâŒ¬àõ‹ôXX⁄
+	ÿ[Y\»\»	 H¬à	€Y»H	÷…⁄ùYY€…◊N¬àYà
+I€Y H»€€ù[ùYN»Bà	Xô[H‹ò]ôYY€[W›\õW€Xô[
+	‹W⁄ùYY€…À	€Y N¬à	X€€àH\‹Ÿ]
+	ÿ[YW⁄X€€ú÷…€Y◊JH»	ÿ[YW⁄X€€ú÷…€Y◊Hà	⁄^Y€€âŒ¬àX⁄»	œ]à€\‹œHõYYÿKX€€èèâ»à‹ò]ôYY⁄X€€ä	X€€äHà\ÿ◊⁄[
+	Xô[
+Hà	œ⁄âŒ¬àYà
+Y[\J	÷…‹›Y[\…◊JJH»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	ÿÿ\ù\À\›Y[\…À\úò^J	Ÿó⁄ùYY€…»Oà	€Y JJHà	»èêÿ\ù\»›Y[\œÿOâŒ»Bàõ‹ôXX⁄
+	÷…›\‹…◊H\»	
+H¬àYà
+I
+H»€€ù[ùYN»BàX⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	›Ÿ…À\úò^J	Ÿó⁄ùYY€…»Oà	€YÀ	Ÿó›\◊‹õŸX›…»Oà	
+JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W›\À\õŸX›…À	
+JHà	œÿOâŒ¬àBàX⁄»	œH€\‹œHõYYÿK]öY]ÀX[àôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	›Ÿ…À\úò^J	Ÿó⁄ùYY€…»Oà	€Y JJHà	»èïô\àŸ»8°§èÿOèŸ]èâŒ¬àBàX⁄»	œŸ]èâŒ¬à‹ò]ôYY€YYÿW‹õ€[ 	’êQSë»–Të–SQT…À	‘Ÿ[Y»H⁄[ô€\…À	’ô\àŸ»—»8°§âÀ‹ò]ôYY‹⁄‹›\õ
+	›Ÿ… K	⁄\õÀ]ŸÀùŸXú	 N¬àX⁄»	œŸ]èâŒ¬àH[ŸZYà
+	Ÿ^HOOH	ÿÿ\ù\À\›Y[\… H¬à	‹»H‹ò]ôYY€[WŸŸ]
+	ÿÿ\ù\À\›Y[\… N¬àX⁄»	œ]à€\‹œHõYYÿK[Y[ùHèè]à€\‹œHõYYÿKX€€[[ú»YYÿKX€€[[úÀL»èâŒ¬àX⁄»	œ]à€\‹œHõYYÿKX€€èèë[Y⁄\àùYY€œ⁄âŒ¬àõ‹ôXX⁄
+	‹÷…⁄ùYY€…◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	ÿÿ\ù\À\›Y[\…À\úò^J	Ÿó⁄ùYY€…»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W⁄ùYY€…À	€Y JHà	œÿOâŒ»HBàX⁄»	œŸ]èè]à€\‹œHõYYÿKX€€èèî‹àò\ô^òO⁄âŒ¬àõ‹ôXX⁄
+	‹÷…‹ò\ô^òI◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	ÿÿ\ù\À\›Y[\…À\úò^J	Ÿó‹ò\ô^òI»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W‹ò\ô^òIÀ	€Y JHà	œÿOâŒ»HBàX⁄»	œŸ]èè]à€\‹œHõYYÿKX€€èèî‹àY[€XO⁄âŒ¬àõ‹ôXX⁄
+	‹÷…⁄Y[€XI◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	ÿÿ\ù\À\›Y[\…À\úò^J	Ÿó⁄Y[€XI»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W⁄Y[€XIÀ	€Y JHà	œÿOâŒ»HBàX⁄»	œH€\‹œHõYYÿK]öY]ÀX[àôYèHâ»à\ÿ◊›\õ
+‹ò]ôYY‹⁄‹›\õ
+	ÿÿ\ù\À\›Y[\… JHà	»èïô\àŸ\»8°§èÿOèŸ]èâŒ¬àX⁄»	œŸ]èâŒ¬à‹ò]ôYY€YYÿW‹õ€[ 	—Sê””ï∞‡HT–H–TïIÀ	–ÿ\ù\»›Y[\…À	—^‹ò\à8°§âÀ‹ò]ôYY‹⁄‹›\õ
+	ÿÿ\ù\À\›Y[\… K	⁄\õÀXÿ\ù\À\›Y[\ÀùŸXú	 N¬àX⁄»	œŸ]èâŒ¬àH[ŸZYà
+	Ÿ^HOOH	⁄ùYY€‹ÀYK[Y\ÿI H¬à	õHH‹ò]ôYY€[WŸŸ]
+	⁄ùYY€‹ÀYK[Y\ÿI N¬àX⁄»	œ]à€\‹œHõYYÿK[Y[ùHèè]à€\‹œHõYYÿKX€€[[ú»YYÿKX€€[[úÀL»èâŒ¬àX⁄»	œ]à€\‹œHõYYÿKX€€èèî‹àY]‹öX[⁄âŒ¬àõ‹ôXX⁄
+	õV…ŸY]‹öX[	◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	⁄ùYY€‹ÀYK[Y\ÿIÀ\úò^J	ŸóŸY]‹öX[	»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹WŸY]‹öX[	À	€Y JHà	œÿOâŒ»HBàX⁄»	œH€\‹œHõYYÿK]öY]ÀX[àôYèHâ»à\ÿ◊›\õ
+‹ò]ôYY‹⁄‹›\õ
+	⁄ùYY€‹ÀYK[Y\ÿI JHà	»èïô\àŸ‹»8°§èÿOèŸ]èâŒ¬àX⁄»	œ]à€\‹œHõYYÿKX€€YYÿKX€€]⁄YHèèî‹à\»HùYY€œ⁄è]à€\‹œHõYYÿKX€€Y‹öYèâŒ¬àõ‹ôXX⁄
+	õV…›\ÀZùYY€…◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	⁄ùYY€‹ÀYK[Y\ÿIÀ\úò^J	Ÿó›\◊⁄ùYY€…»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W›\ÀZùYY€…À	€Y JHà	œÿOâŒ»HBàX⁄»	œŸ]èèŸ]èâŒ¬àX⁄»	œŸ]èâŒ¬à‹ò]ôYY€YYÿW‹õ€[ 	‘TêH””TTïTàHQT–IÀ	“ùYY€‹»HY\ÿIÀ	—^‹ò\à8°§âÀ‹ò]ôYY‹⁄‹›\õ
+	⁄ùYY€‹ÀYK[Y\ÿI K	⁄\õÀZùYY€‹ÀYK[Y\ÿKùŸXú	 N¬àX⁄»	œŸ]èâŒ¬àH[ŸZYà
+	Ÿ^HOOH	ÿXÿŸ\€‹ö[‹… H¬à	X»H‹ò]ôYY€[WŸŸ]
+	ÿXÿŸ\€‹ö[‹… N¬àX⁄»	œ]à€\‹œHõYYÿK[Y[ùHèè]à€\‹œHõYYÿKX€€[[ú»YYÿKX€€[[úÀLàèâŒ¬àX⁄»	œ]à€\‹œHõYYÿKX€€èèî‹à\œ⁄âŒ¬àõ‹ôXX⁄
+	X÷…›\ÀXXÿŸ\€‹ö[…◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	ÿXÿŸ\€‹ö[‹…À\úò^J	Ÿó›\◊ÿXÿŸ\€‹ö[…»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W›\ÀXXÿŸ\€‹ö[…À	€Y JHà	œÿOâŒ»HBàX⁄»	œH€\‹œHõYYÿK]öY]ÀX[àôYèHâ»à\ÿ◊›\õ
+‹ò]ôYY‹⁄‹›\õ
+	ÿXÿŸ\€‹ö[‹… JHà	»èïô\àŸ‹»8°§èÿOèŸ]èâŒ¬àX⁄»	œ]à€\‹œHõYYÿKX€€èèî‹àX\òÿO⁄âŒ¬àõ‹ôXX⁄
+	X÷…€X\òÿI◊H\»	€Y H»Yà
+	€Y H»X⁄»	œHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYYŸö[\ó€[ö 	ÿXÿŸ\€‹ö[‹…À\úò^J	Ÿó€X\òÿI»Oà	€Y JJHà	»èâ»à\ÿ◊⁄[
+‹ò]ôYY€[W›\õW€Xô[
+	‹W€X\òÿIÀ	€Y JHà	œÿOâŒ»HBàX⁄»	œŸ]èâŒ¬àX⁄»	œŸ]èâŒ¬à‹ò]ôYY€YYÿW‹õ€[ 	–’RQ0‡HH””P–“p‰”âÀ	–XÿŸ\€‹ö[‹…À	—^‹ò\à8°§âÀ‹ò]ôYY‹⁄‹›\õ
+	ÿXÿŸ\€‹ö[‹… K	⁄\õÀXXÿŸ\€‹ö[‹ÀùŸXú	 N¬àX⁄»	œŸ]èâŒ¬àBàô]\õàÿóŸŸ]ÿ€X[ä
+N¬üBÇôù[ò›[€à‹ò]ôYYŸYò][€Y[ùJ
+H¬à	Y[ùWŸYàH‹ò]ôYYÿ€€ù[ù‹[ô[ŸYö[ö][€ú 
+V…€Y[ùI◊N¬àX⁄»	œ[âŒ¬àõ‹ôXX⁄
+	Y[ùWŸYñ…Ÿö^Y⁄][\…◊H\»	€Y»Oà	Yò][€Xô[
+H¬à	Xô[H‹ò]ôYYÿ€€ù[ù‹[ô[€‹
+	€Y[ùIÀ	€Xô[…»à	€YÀ	Yò][€Xô[
+N¬àYà
+	€Y»OOH	⁄[öX⁄[… H¬àX⁄»	œOèHôYèHâ»à\ÿ◊›\õ
+€YW›\õ
+	À… JHà	»èâ»à\ÿ◊⁄[
+	Xô[
+Hà	œÿOè€OâŒ¬à€€ù[ùYN¬àBà	YYÿWÿ€\‹»H	€Y»OOH	›Ÿ…»»	»\À[YYÿK]Ÿ…»à	…Œ¬àX⁄»	œH€\‹œHö\À[YYÿI»à	YYÿWÿ€\‹»à	»èèHôYèHâ»à\ÿ◊›\õ
+‹ò]ôYY‹⁄‹›\õ
+	€Y JHà	»èâ»à\ÿ◊⁄[
+	Xô[
+Hà	œÿOâ»à‹ò]ôYY€YYÿ[Y[ùJ	€Y Hà	œ€OâŒ¬àBà	][\◊ÿ€›[ùH‹ò]ôYYÿ€€ù[ù‹[ô[ÿ€›[ù
+	€Y[ùIÀ	⁄][\…À€›[ù
+	Y[ùWŸYñ…⁄][\…◊JJN¬àõ‹à
+	àHN»	àH	][\◊ÿ€›[ù»	ä  H¬à	Yò][⁄][HH\‹Ÿ]
+	Y[ùWŸYñ…⁄][\…◊V…àHWJH»	Y[ùWŸYñ…⁄][\…◊V…àHWHà\úò^J	€Xô[	»Oà	…À	›\õ	»Oà	… N¬à	Xô[H‹ò]ôYYÿ€€ù[ù‹[ô[€‹
+	€Y[ùIÀ	⁄][I»à	àà	◊€Xô[	À	Yò][⁄][V…€Xô[	◊JN¬à	\õH‹ò]ôYYÿ€€ù[ù‹[ô[€‹
+	€Y[ùIÀ	⁄][I»à	àà	◊›\õ	À	Yò][⁄][V…›\õ	◊JN¬àYà
+IXô[I\õ
+H»€€ù[ùYN»BàX⁄»	œOèHôYèHâ»à\ÿ◊›\õ
+	\õ
+Hà	»èâ»à\ÿ◊⁄[
+	Xô[
+Hà	œÿOè€OâŒ¬àBàX⁄»	œ›[âŒ¬üBÇôù[ò›[€à‹ò]ôYYÿÿ\ùÿ€›[ùŸúòY€Y[ù
+	úòY€Y[ù H¬àÿó‹›\ù
+
+N»œÇà‹[à€\‹œHòÿ\ùX€›[ùèè‹X⁄»ù[ò›[€óŸ^\› 	’–… H	âà– 
+KOòÿ\ù»\ÿ◊⁄[
+– 
+KOòÿ\ùOôŸ]ÿÿ\ùÿ€€ù[ù◊ÿ€›[ù
+
+JHà	Ã	Œ»œè‹‹[èÇà‹	úòY€Y[ù÷…Àòÿ\ùX€›[ù	◊HHÿóŸŸ]ÿ€X[ä
+N»ô]\õà	úòY€Y[ùŒ¬üBòYŸö[\ä	›€€ÿ€€[Y\òŸWÿY›◊ÿÿ\ùŸúòY€Y[ù…À	Ÿ‹ò]ôYYÿÿ\ùÿ€›[ùŸúòY€Y[ù	 N¬Çôù[ò›[€à‹ò]ôYY›⁄YŸ] 
+H¬àôY⁄\›\ó‹⁄YXò\ä\úò^J	€ò[YI»Oà◊ 	—ö[õ‹»HY[ôIÀ	Ÿ‹ò]ôYY\›‹ôI K	⁄Y	»Oà	‹⁄‹Yö[\ú…À	ÿôYõ‹ôW›⁄YŸ]	»Oà	œŸX›[€à€\‹œHú⁄‹]⁄YŸ]èâÀ	ÿYù\ó›⁄YŸ]	»Oà	œ‹ŸX›[€èâÀ	ÿôYõ‹ôW›]I»Oà	œœâÀ	ÿYù\ó›]I»Oà	œ⁄œâ JN¬üBòYÿX›[€ä	›⁄YŸ]◊⁄[ö]	À	Ÿ‹ò]ôYY›⁄YŸ]… N¬Çôù[ò›[€à‹ò]ôYYŸ[ú›\ôW›€€ÿ€€[Y\òŸW‹YŸ\ 
+H¬àYà
+X€\‹◊Ÿ^\› 	’€€–€€[Y\òŸI JH»ô]\õé»Bà	YŸ\»H\úò^Jà	›€€ÿ€€[Y\òŸWÿÿ\ù‹YŸW⁄Y	»Oà\úò^J	–ÿ\úö]…À	ÿÿ\úö]…À	÷›€€ÿ€€[Y\òŸWÿÿ\ùI Kà	›€€ÿ€€[Y\òŸWÿ⁄X⁄€›]‹YŸW⁄Y	»Oà\úò^J	—ö[ò[^ò\à€€\òIÀ	Ÿö[ò[^ò\ãX€€\òIÀ	÷›€€ÿ€€[Y\òŸWÿ⁄X⁄€›]I Kà	›€€ÿ€€[Y\òŸW€^XXÿ€›[ù‹YŸW⁄Y	»Oà\úò^J	”ZH›Y[ùIÀ	€ZKX›Y[ùIÀ	÷›€€ÿ€€[Y\òŸW€^WÿXÿ€›[ùI Kà
+N¬àõ‹ôXX⁄
+	YŸ\»\»	‹[€àOà	]JH¬à	›\úô[ùHXú⁄[ù
+Ÿ]€‹[€ä	‹[€äJN¬àYà
+	›\úô[ù	âàŸ]‹‹›‹›]\ 	›\úô[ù
+JH»€€ù[ùYN»Bà	^\›[ô»HŸ]‹YŸWÿûW‹]
+	]VÃWJN¬à	YŸW⁄YH	^\›[ô»»	^\›[ôÀOíQà‹⁄[úŸ\ù‹‹›
+\úò^Jà	‹‹››]I»Oà	]VÃKà	‹‹›€ò[YI»Oà	]VÃWKà	‹‹›ÿ€€ù[ù	»Oà	]VÃóKà	‹‹›‹›]\…»Oà	‹Xõ\⁄	Àà	‹‹››\I»Oà	‹YŸIÀà
+JN¬àYà
+	YŸW⁄Y	âàZ\◊›‹Ÿ\úõ‹ä	YŸW⁄Y
+JH»\]W€‹[€ä	‹[€ã	YŸW⁄Y
+N»BàBüBòYÿX›[€ä	ÿYù\ó‹›⁄]⁄›[YIÀ	Ÿ‹ò]ôYYŸ[ú›\ôW›€€ÿ€€[Y\òŸW‹YŸ\… N¬Çôù[ò›[€à‹ò]ôYYŸ[ú›\ôWÿÿ][Ÿ◊‹›ùX›\ôJ
+H¬àYà
+X€\‹◊Ÿ^\› 	’€€–€€[Y\òŸI JH»ô]\õé»Bà	ÿ]Y€‹öY\»H\úò^Jà	ÿÿ\ù\À\›Y[\…»Oà\úò^J	–ÿ\ù\»›Y[\…À	–ÿ\ù\»[ô]öYX[\»H—Àö[òXõ\»‹àùYY€À€€Xÿ⁄pÏ€ãò\ô^òKY[€XK€€ôX⁄pÏ€àHXÿXòYÀâ Kà	›Ÿ…»Oà\úò^J	’—…À	‘€ÿúô\Àõ€‹›\àõﬁ\Àù[ô\ÀX^õ‹»HYX⁄[€ô\»\‹X⁄X[\»H\»ùYY€‹»ò]õ‹ö]‹Àâ Kà	€XY⁄X…»Oà\úò^J	”XY⁄XŒàHÿ]\ö[ô…À	›Ÿ…À	… Kà	‹⁄Ÿ[[€â»Oà\úò^J	‘⁄Í[[€âÀ	›Ÿ…À	… Kà	€€ôK\YXŸI»Oà\úò^J	”€ôHYXŸIÀ	›Ÿ…À	… Kà	ŸY⁄[[€â»Oà\úò^J	—Y⁄[[€âÀ	›Ÿ…À	… Kà	ŸòY€€ãXò[	»Oà\úò^J	—òY€€àò[	À	›Ÿ…À	… Kà	€›õ‹À]Ÿ…»Oà\úò^J	”›õ‹»—…À	›Ÿ…À	—\‹X⁄[»\òHùY]õ‹»ùYY€‹»H0Î[ôX\»H—Àâ Kà	⁄ùYY€‹ÀYK[Y\ÿI»Oà\úò^J	“ùYY€‹»HY\ÿIÀ	—\›ò]Y⁄XK\ùHÿ[Y\À€€‹\ò]]õ‹Àò[Z[X\ô\»H]X⁄»pË\Àâ Kà	Ÿ]ö\â»Oà\úò^J	—]ö\âÀ	⁄ùYY€‹ÀYK[Y\ÿIÀ	… Kà	ÿù\õ…»Oà\úò^J	–ù\∞Ï…À	⁄ùYY€‹ÀYK[Y\ÿIÀ	… Kà	‹‹[\â»Oà\úò^J	‘‹[\âÀ	⁄ùYY€‹ÀYK[Y\ÿIÀ	… Kà	€›ò\ÀYY]‹öX[\…»Oà\úò^J	”›ò\»Y]‹öX[\…À	⁄ùYY€‹ÀYK[Y\ÿIÀ	… Kà	ÿXÿŸ\€‹ö[‹…»Oà\úò^J	–XÿŸ\€‹ö[‹…À	‘€Y]ô\ÀX⁄»õﬁ\Àÿ\ú]\À^[X]»HŸ»»ôXŸ\ÿ\ö[»\òHùYÿ\àHõ›YŸ\à\»ÿ\ù\Àâ Kà	Ÿõ€[‹À\€Y]ô\…»Oà\úò^J	—õ€[‹»»€Y]ô\…À	ÿXÿŸ\€‹ö[‹…À	… Kà	ŸX⁄ÀXõﬁ\…»Oà\úò^J	—X⁄»õﬁ\…À	ÿXÿŸ\€‹ö[‹…À	… Kà	ÿÿ\ú]\…»Oà\úò^J	–ÿ\ú]\…À	ÿXÿŸ\€‹ö[‹…À	… Kà	‹^[X]…»Oà\úò^J	‘^[X]…À	ÿXÿŸ\€‹ö[‹…À	… Kà	ŸY‹À^KX€€ùY‹ô\…»Oà\úò^J	—Y‹»H€€ùY‹ô\…À	ÿXÿŸ\€‹ö[‹…À	… Kà	ÿ[XXŸ[ò[ZY[ù…»Oà\úò^J	–[XXŸ[ò[ZY[ù…À	ÿXÿŸ\€‹ö[‹…À	… Kà	€›õ‹ÀXXÿŸ\€‹ö[‹…»Oà\úò^J	”›õ‹»XÿŸ\€‹ö[‹…À	ÿXÿŸ\€‹ö[‹…À	… Kà	‹ô]ô[ù\…»Oà\úò^J	‘ô]ô[ù\…À	‘∞Ïﬁ[[‹»[ûò[ZY[ù‹»\‹€öXõ\»\òHô\Ÿ\ùò\à[ù\»]YHŸHY€›[ãâ Kà
+N¬àõ‹ôXX⁄
+	ÿ]Y€‹öY\»\»	€Y»Oà	]JH¬àYà
+\õWŸ^\› 	€YÀ	‹õŸX›ÿÿ]	 JH»€€ù[ùYN»Bà\›
+	ò[YK	\ô[ù‹€YÀ	\ÿ‹ö\[€äHH	]N¬à	\ô[ù⁄YH¬àYà
+	\ô[ù‹€Y H¬à	\ô[ùHŸ]›\õWÿûJ	‹€Y…À	\ô[ù‹€YÀ	‹õŸX›ÿÿ]	 N¬à	\ô[ù⁄YH	\ô[ù	âàZ\◊›‹Ÿ\úõ‹ä	\ô[ù
+H»	\ô[ùOù\õW⁄Yà¬àBà‹⁄[úŸ\ù›\õJ	ò[YK	‹õŸX›ÿÿ]	À\úò^J	‹€Y…»Oà	€YÀ	Ÿ\ÿ‹ö\[€â»Oà	\ÿ‹ö\[€ã	‹\ô[ù	»Oà	\ô[ù⁄Y
+JN¬àBàõ‹ôXX⁄
+	ÿ]Y€‹öY\»\»	€Y»Oà	]JH¬à	\ô[ù‹€Y»H	]VÃWN¬àYà
+I\ô[ù‹€Y H»€€ù[ùYN»Bà	\õHHŸ]›\õWÿûJ	‹€Y…À	€YÀ	‹õŸX›ÿÿ]	 N¬à	\ô[ùHŸ]›\õWÿûJ	‹€Y…À	\ô[ù‹€YÀ	‹õŸX›ÿÿ]	 N¬àYà
+	\õH	âà	\ô[ù	âàZ\◊›‹Ÿ\úõ‹ä	\õJH	âàZ\◊›‹Ÿ\úõ‹ä	\ô[ù
+H	âà
+[ù
+H	\õKOú\ô[ùOOH
+[ù
+H	\ô[ùOù\õW⁄Y
+H¬à‹›\]W›\õJ	\õKOù\õW⁄Y	‹õŸX›ÿÿ]	À\úò^J	‹\ô[ù	»Oà	\ô[ùOù\õW⁄Y
+JN¬àBàBàYà
+ù[ò›[€óŸ^\› 	›ÿ◊ÿ‹ôX]Wÿ]öXù]I H	âàù[ò›[€óŸ^\› 	›ÿ◊ÿ]öXù]W›^€õ€^W⁄YÿûW€ò[YI JH¬à	]öXù]\»H\úò^Jà	⁄ùYY€…»Oà	“ùYY€…À	ÿ€€Xÿ⁄[€â»Oà	–€€Xÿ⁄pÏ€à»Ÿ]	À	‹ò\ô^òI»Oà	‘ò\ô^òIÀà	ÿ€€‹â»Oà	–€€‹âÀ	›\ÀXÿ\ùI»Oà	’\…À	⁄Y[€XI»Oà	“Y[€XIÀà	ÿ€€ôX⁄[€â»Oà	–€€ôX⁄pÏ€âÀ	ÿXÿXòY…»Oà	—õ⁄[»XÿXòY…Àà	›\À\õŸX›…»Oà	’\»HõŸX›…À	ŸY]‹öX[	»Oà	—Y]‹öX[	Àà	›\ÀZùYY€…»Oà	’\»HùYY€…À	⁄ùYÿY‹ô\…»Oà	–ÿ[ùYYHùYÿY‹ô\…Àà	ŸYY	»Oà	—YYôX€€Y[ôYIÀ	Ÿ\òX⁄[€â»Oà	—\òX⁄pÏ€àH\ùYIÀà	ŸYöX›[Y	»Oà	—YöX›[Y	À	›\ÀXXÿŸ\€‹ö[…»Oà	’\»HXÿŸ\€‹ö[…À	€X\òÿI»Oà	”X\òÿIÀà	›[X[õÀXXÿŸ\€‹ö[…»Oà	’[XpÏ[…À	ÿÿ[ùYY\\]Y]I»Oà	–ÿ[ùYY‹à\]Y]IÀà
+N¬àõ‹ôXX⁄
+	]öXù]\»\»	€Y»Oà	Xô[
+H¬àYà
+]ÿ◊ÿ]öXù]W›^€õ€^W⁄YÿûW€ò[YJ	€Y JH¬àÿ◊ÿ‹ôX]Wÿ]öXù]J\úò^J	€ò[YIœOâXô[	‹€Y…œOâ€YÀ	›\IœOâ‹Ÿ[X›	À	€‹ô\óÿûIœOâ€ò[YIÀ	⁄\◊ÿ\ò⁄]ô\…œOùùYJJN¬àBàBàBàõ\⁄‹ô]‹ö]W‹ù[\ 
+N¬üBòYÿX›[€ä	ÿYù\ó‹›⁄]⁄›[YIÀ	Ÿ‹ò]ôYYŸ[ú›\ôWÿÿ][Ÿ◊‹›ùX›\ôI N¬Çôù[ò›[€à‹ò]ôYY‹ôYö[ÿÿ\ù\◊‹›Y[\◊ÿ]öXù]\ 	õŸX›⁄Y
+H¬àYà
+Yù[ò›[€óŸ^\› 	Ÿ‹ò]ôYYÿ]]ÿ]ú◊Ÿ[òXõY	 HY‹ò]ôYYÿ]]ÿ]ú◊Ÿ[òXõY
+
+JH»ô]\õé»BàYà
+Yù[ò›[€óŸ^\› 	Ÿ‹ò]ôYYÿ]]ÿ]ú◊‹ù[\… JH»ô]\õé»Bà	ô\]Z\ôYH\úò^J
+N¬àõ‹ôXX⁄
+‹ò]ôYYÿ]]ÿ]ú◊‹ù[\ 
+H\»	ù[JH¬àYà
+Iù[V…ÿX›]òI◊HIù[V…ÿÿ]Y€‹öXI◊JH»€€ù[ùYN»BàYà
+Z\◊›\õJ	ù[V…ÿÿ]Y€‹öXI◊K	‹õŸX›ÿÿ]	À	õŸX›⁄Y
+JH»€€ù[ùYN»Bàõ‹ôXX⁄
+	ù[V…ÿ]öXù]‹…◊H\»	^
+H»	ô\]Z\ôY…^HHùYN»BàBàYà
+Iô\]Z\ôY
+H»ô]\õé»Bà	]öXù]\»HŸ]‹‹›€Y]J	õŸX›⁄Y	◊‹õŸX›ÿ]öXù]\…ÀùYJN¬àYà
+Z\◊ÿ\úò^J	]öXù]\ JH»	]öXù]\»H\úò^J
+N»Bà	⁄[ôŸYHò[ŸN¬à	‹⁄][€àH€›[ù
+	]öXù]\ N¬àõ‹ôXX⁄
+\úò^W⁄Ÿ^\ 	ô\]Z\ôY
+H\»	^
+H¬àYà
+\‹Ÿ]
+	]öXù]\÷…^JH]^€õ€^WŸ^\› 	^
+JH»€€ù[ùYN»Bà	]öXù]\÷…^HH\úò^Jà	€ò[YI»Oà	^	›ò[YI»Oà	…À	‹‹⁄][€â»Oà	‹⁄][€ä Àà	⁄\◊›ö\⁄XõI»OàK	⁄\◊›ò\öX][€â»Oà	⁄\◊›^€õ€^I»OàKà
+N¬à	⁄[ôŸYHùYN¬àBàYà
+	⁄[ôŸY
+H»\]W‹‹›€Y]J	õŸX›⁄Y	◊‹õŸX›ÿ]öXù]\…À	]öXù]\ N»BüBòYÿX›[€ä	›€€ÿ€€[Y\òŸW€ô]◊‹õŸX›	À	Ÿ‹ò]ôYY‹ôYö[ÿÿ\ù\◊‹›Y[\◊ÿ]öXù]\…Àå
+N¬òYÿX›[€ä	›€€ÿ€€[Y\òŸW›\]W‹õŸX›	À	Ÿ‹ò]ôYY‹ôYö[ÿÿ\ù\◊‹›Y[\◊ÿ]öXù]\…Àå
+N¬òYÿX›[€ä	‹Ÿ]€ÿöôX››\õ\…Àù[ò›[€à
+	ÿöôX›⁄Y	\õ\À	⁄YÀ	^€õ€^JH¬àYà
+	^€õ€^HOOH	‹õŸX›ÿÿ]	»	âàŸ]‹‹››\J	ÿöôX›⁄Y
+HOOH	‹õŸX›	 H¬à‹ò]ôYY‹ôYö[ÿÿ\ù\◊‹›Y[\◊ÿ]öXù]\ 	ÿöôX›⁄Y
+N¬àBüKå
+N¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿôYõ‹ôW‹⁄‹€€‹⁄][W›]IÀù[ò›[€à
+
+H¬à€ÿò[	õŸX›¬àYà
+	õŸX›
+H»X⁄»‹ò]ôYY⁄›ô\ó⁄[XYŸW⁄[
+	õŸX›
+N»BüKM
+N¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿôYõ‹ôW‹⁄‹€€‹⁄][W›]IÀù[ò›[€à
+
+H¬à€ÿò[	õŸX›¬àYà
+	õŸX›
+H»X⁄»‹ò]ôYYŸò]óÿù]€ä	õŸX›OôŸ]⁄Y
+
+JN»BüKMJN¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹⁄[ô€W‹õŸX›‹›[[X\ûIÀù[ò›[€à
+
+H¬à€ÿò[	õŸX›¬àYà
+	õŸX›
+H»X⁄»‹ò]ôYYŸò]óÿù]€ä	õŸX›OôŸ]⁄Y
+
+JN»BüKÃJN¬ÇãÀ»ÿ\ù[ëì“Sà
+»€»»ô]ô\úŸH€ H\òHYô\ô[ò⁄X\àH[àö\›^õ»\¬ãÀ»ô\ú⁄[€ô\»úö[[ù\»H[òHÿ\ùHH\»õ‹õX[\À[à›X[]ZY\àYÿ\ÇãÀ»€ôHŸH]Y\›ôH[õŸX›Œà‹ö[HHY[ôKÿ\úù\Ÿ[\»HöX⁄KÇôù[ò›[€à‹ò]ôYY‹õŸX›Ÿõ⁄[€Xô[
+	õŸX›⁄Y
+H¬à	\õ\»HŸ]›W›\õ\ 	õŸX›⁄Y	‹WÿXÿXòY… N¬àYà
+I\õ\»\◊›‹Ÿ\úõ‹ä	\õ\ JH»ô]\õà	…Œ»Bàõ‹ôXX⁄
+	\õ\»\»	\õJH¬àYà
+	\õKOú€Y»OOH	€õÀYõ⁄[	 H»€€ù[ùYN»Bàô]\õà	\õKOõò[YN¬àBàô]\õà	…Œ¬üBÇôù[ò›[€à‹ò]ôYYŸõ⁄[ÿòYŸW⁄[
+	õŸX›⁄Y	€\‹»H	Ÿõ⁄[XòYŸI H¬à	Xô[H‹ò]ôYY‹õŸX›Ÿõ⁄[€Xô[
+	õŸX›⁄Y
+N¬àYà
+IXô[
+H»ô]\õà	…Œ»Bàô]\õà	œ‹[à€\‹œHâ»à\ÿ◊ÿ]ä	€\‹ Hà	»è∏ß)à	»à\ÿ◊⁄[
+Xó‹›ù›\\ä	Xô[	’UãN	 JHà	œ‹‹[èâŒ¬üBÇòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿôYõ‹ôW‹⁄‹€€‹⁄][W›]IÀù[ò›[€à
+
+H¬à€ÿò[	õŸX›¬àYà
+	õŸX›
+H»X⁄»‹ò]ôYYŸõ⁄[ÿòYŸW⁄[
+	õŸX›OôŸ]⁄Y
+
+JN»BüKLJN¬ÇòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹⁄[ô€W‹õŸX›‹›[[X\ûIÀù[ò›[€à
+
+H¬à€ÿò[	õŸX›¬àYà
+	õŸX›
+H»X⁄»‹ò]ôYYŸõ⁄[ÿòYŸW⁄[
+	õŸX›OôŸ]⁄Y
+
+K	Ÿõ⁄[XòYŸHõ⁄[XòYŸKKZ[õ[ôI N»BüK
+N¬ÇòYÿX›[€ä	›‹ÿZò^Ÿ‹ò]ôYYŸŸ]Ÿò]õ‹ö]\…À	Ÿ‹ò]ôYYÿZò^ŸŸ]Ÿò]õ‹ö]\… N¬òYÿX›[€ä	›‹ÿZò^€õ‹ö]óŸ‹ò]ôYYŸŸ]Ÿò]õ‹ö]\…À	Ÿ‹ò]ôYYÿZò^ŸŸ]Ÿò]õ‹ö]\… N¬ôù[ò›[€à‹ò]ôYYÿZò^ŸŸ]Ÿò]õ‹ö]\ 
+H¬à⁄X⁄◊ÿZò^‹ôYô\ô\ä	Ÿ‹ò]ôYY‹XõX◊ÿZò^	À	€õ€òŸI N¬à	Y»H\‹Ÿ]
+	‘‘’…⁄Y…◊JH»\úò^W€X\
+	ÿXú⁄[ù	À
+\úò^JH	‘‘’…⁄Y…◊JHà\úò^J
+N¬à	Y»H\úò^W‹€XŸJ\úò^W›ò[Y\ \úò^W›[ö\]YJ\úò^WŸö[\ä	Y JJKL
+N¬àYà
+IY H»‹‹Ÿ[ô⁄ú€€ó‹›XÿŸ\‹ \úò^J	⁄[	»Oà	…À	ÿ€›[ù	»Oà
+JN»Bà	]Y\ûHHô]»‘‘]Y\ûJ\úò^J	‹‹››\I»Oà	‹õŸX›	À	‹‹›‹›]\…»Oà	‹Xõ\⁄	À	‹‹›◊⁄[â»Oà	YÀ	€‹ô\òûI»Oà	‹‹›◊⁄[âÀ	‹‹›◊‹\ó‹YŸI»OàL
+JN¬à	€›[ùH	]Y\ûKOú‹›ÿ€›[ù¬àÿó‹›\ù
+
+N¬à‹ò]ôYY‹ô[ô\ó‹õŸX›Ÿ‹öY
+	]Y\ûJN¬à	[HÿóŸŸ]ÿ€X[ä
+N¬à‹‹Ÿ[ô⁄ú€€ó‹›XÿŸ\‹ \úò^J	⁄[	»Oà	[	ÿ€›[ù	»Oà	€›[ù
+JN¬üBÇòYÿX›[€ä	›‹ÿZò^Ÿ‹ò]ôYY‹ŸX\ò⁄‹õŸX›…À	Ÿ‹ò]ôYYÿZò^‹ŸX\ò⁄‹õŸX›… N¬òYÿX›[€ä	›‹ÿZò^€õ‹ö]óŸ‹ò]ôYY‹ŸX\ò⁄‹õŸX›…À	Ÿ‹ò]ôYYÿZò^‹ŸX\ò⁄‹õŸX›… N¬ôù[ò›[€à‹ò]ôYYÿZò^‹ŸX\ò⁄‹õŸX› 
+H¬à⁄X⁄◊ÿZò^‹ôYô\ô\ä	Ÿ‹ò]ôYY‹XõX◊ÿZò^	À	€õ€òŸI N¬à	\õHH\‹Ÿ]
+	——U…›\õI◊JH»ÿ[ö]^ôW›^ŸöY[
+‹›[ú€\⁄
+	——U…›\õI◊JJHà	…Œ¬à	\õHHXó‹›Xú›äö[J	\õJK
+N¬àYà
+Xó‹›õ[ä	\õJHäH»‹‹Ÿ[ô⁄ú€€ó‹›XÿŸ\‹ \úò^J	⁄[	»Oà	…À	ÿ€›[ù	»Oà
+JN»BÇà	]Y\ûHHô]»‘‘]Y\ûJ\úò^Jà	‹‹››\I»Oà	‹õŸX›	Àà	‹‹›‹›]\…»Oà	‹Xõ\⁄	Àà	‹…»Oà	\õKà	‹‹›◊‹\ó‹YŸI»Oàãà	€õ◊Ÿõ›[ô‹õ›‹…»Oàò[ŸKà
+JN¬à	€›[ùH	]Y\ûKOôõ›[ô‹‹›Œ¬Çàÿó‹›\ù
+
+N¬àYà
+	]Y\ûKOö]ôW‹‹› 
+JH¬àX⁄»	œ[€\‹œHúŸX\ò⁄\›YŸŸ\›[\›èâŒ¬à⁄[H
+	]Y\ûKOö]ôW‹‹› 
+JH¬à	]Y\ûKOùW‹‹›
+
+N¬à	õŸX›Hÿ◊ŸŸ]‹õŸX›
+Ÿ]›W“Q
+
+JN¬àYà
+IõŸX›
+H»€€ù[ùYN»BàX⁄»	œOèHôYèHâ»à\ÿ◊›\õ
+Ÿ]‹\õX[[ö 
+JHà	»èâŒ¬àX⁄»	œ‹[à€\‹œHúŸX\ò⁄\›YŸŸ\›][Xàèâ»àŸ]›W‹‹››[XõòZ[
+Ÿ]›W“Q
+
+K	›[XõòZ[	 Hà	œ‹‹[èâŒ¬àX⁄»	œ‹[à€\‹œHúŸX\ò⁄\›YŸŸ\›Z[ôõ»èè‹[à€\‹œHúŸX\ò⁄\›YŸŸ\›[ò[YHèâ»à\ÿ◊⁄[
+Ÿ]›W›]J
+JHà	œ‹‹[èè‹[à€\‹œHúŸX\ò⁄\›YŸŸ\›\öXŸHèâ»à‹⁄‹Ÿ\◊‹‹›
+	õŸX›OôŸ]‹öXŸW⁄[
+
+JHà	œ‹‹[èè‹‹[èâŒ¬àX⁄»	œÿOè€OâŒ¬àBàX⁄»	œ›[âŒ¬à‹‹ô\Ÿ]‹‹›]J
+N¬àH[ŸH¬àX⁄»	œ€\‹œHúŸX\ò⁄\›YŸŸ\›Y[\Hèìõ»[ò€€ùò[[‹»õŸX›‹»\òHâ»à\ÿ◊⁄[
+	\õJHà	»ãè‹âŒ¬àBà	[HÿóŸŸ]ÿ€X[ä
+N¬Çà‹‹Ÿ[ô⁄ú€€ó‹›XÿŸ\‹ \úò^J	⁄[	»Oà	[	ÿ€›[ù	»Oà	€›[ù	›\õI»Oà	\õJJN¬üBÇôù[ò›[€à‹ò]ôYYŸ[ú›\ôWÿÿ][Ÿ◊‹YŸ\ 
+H¬à	Yú»H\úò^Jà	€õ›ôYY\…»Oà\úò^J	”õ›ôYY\…À	‹YŸK[õ›ôYY\Àú	 Kà	€Ÿô\ù\…»Oà\úò^J	”Ÿô\ù\…À	‹YŸK[Ÿô\ù\Àú	 Kà	Ÿò]õ‹ö]‹…»Oà\úò^J	—ò]õ‹ö]‹…À	‹YŸKYò]õ‹ö]‹Àú	 Kà
+N¬àõ‹ôXX⁄
+	Yú»\»	€Y»Oà	]JH¬à\›
+	]K	[\]JHH	]N¬à	^\›[ô»HŸ]‹YŸWÿûW‹]
+	€Y N¬à	YŸW⁄YH	^\›[ô»»	^\›[ôÀOíQà‹⁄[úŸ\ù‹‹›
+\úò^Jà	‹‹››]I»Oà	]K	‹‹›€ò[YI»Oà	€YÀ	‹‹›‹›]\…»Oà	‹Xõ\⁄	À	‹‹››\I»Oà	‹YŸIÀà
+JN¬àYà
+	YŸW⁄Y	âàZ\◊›‹Ÿ\úõ‹ä	YŸW⁄Y
+JH»\]W‹‹›€Y]J	YŸW⁄Y	◊›‹‹YŸW›[\]IÀ	[\]JN»BàBüBòYÿX›[€ä	ÿYù\ó‹›⁄]⁄›[YIÀ	Ÿ‹ò]ôYYŸ[ú›\ôWÿÿ][Ÿ◊‹YŸ\… N¬ÇãÀ»€€‹ô\»HŸ€»H‹»XZ[»H€€–€€[Y\òŸH
+YY‹ÀòX›\ò\À]ÀäH\òBãÀ»]YH€⁄[ò⁄Y[à€€àHX\òÿH[⁄][»[àô^àH]YY\à€€à[ö[€]BãÀ»Ÿ[∞Í\öX€»‹àYôX›Ààõ€ô»‹ÿ›\õ»^\ö[‹à
+»\öô]Hõ[òÿHH€€ù[öY¬ãÀ»
+pË\»€€ôöXXõH[ùôH€Y[ù\»H€‹úô[»]YH[àXZ[L	H‹ÿ›\õ H€€ÇãÀ»XŸ[ù‹»‹òY‹»HŸ€»[⁄][ÀÇôù[ò›[€à‹ò]ôYYÿúò[ô›ÿ◊Ÿ[XZ[ 
+H¬àYà
+X€\‹◊Ÿ^\› 	’€€–€€[Y\òŸI JH»ô]\õé»Bà\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[ÿ]]◊‹ﬁ[ò◊›⁄]›[YIÀ	€õ… N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[ÿòX⁄Ÿ‹õ›[ôÿ€€‹âÀ	»ÃLLI N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[ÿõŸWÿòX⁄Ÿ‹õ›[ôÿ€€‹âÀ	»Ÿôôôôôâ N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[ÿò\ŸWÿ€€‹âÀ	»ŸåòNL	 N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[›^ÿ€€‹âÀ	»ÃYYLåâ N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[Ÿõ€›\ó›^ÿ€€‹âÀ	»ŒéNM	 N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[⁄XY\ó⁄[XYŸIÀŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]À⁄[YÀ€Ÿ€ÀY‹ò]ôYY\›‹ôKúô… N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[⁄XY\ó⁄[XYŸW›⁄Y	À	ÃMå	 N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[⁄XY\óÿ[Y€õY[ù	À	€Yù	 N¬à\]W€‹[€ä	›€€ÿ€€[Y\òŸWŸ[XZ[Ÿõ€›\ó›^	À	—‹ò]ôYY›‹ôH0≠»—»	ò[\»ùYY€‹»HY\ÿOúãœíõ‹ÍHÀà^ãùY[õ‹»Z\ô\… N¬üBÇôù[ò›[€à‹ò]ôYYŸö^⁄\õ◊‹€YW⁄[XYŸW‹] 
+H¬à	[Y◊›\öHHŸ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]À⁄[YÀ…Œ¬à	ô[ò[Y\»H\úò^Jà	⁄\õÀ\€YKXÿ\ùKöú…»Oà	⁄\õÀ\€YKXÿ\ùKùŸXú	Àà	⁄\õÀ\€YK\€ÿúô\Àöú…»Oà	⁄\õÀ\€YK\€ÿúô\ÀùŸXú	Àà	⁄\õÀ\€YKZùYY€‹Àöú…»Oà	⁄\õÀ\€YKZùYY€‹ÀùŸXú	Àà
+N¬àõ‹à
+	HHN»	HHŒ»	J  H¬à	Ÿ^HH	Ÿ‹ò]ôYY⁄\õ◊‹€YI»à	Hà	◊⁄[XYŸ[ó‹õŸX›…Œ¬à	›\úô[ùHŸ]€‹[€ä	Ÿ^K	… N¬àYà
+I›\úô[ù
+H»€€ù[ùYN»Bàõ‹ôXX⁄
+	ô[ò[Y\»\»	€Ÿö[HOà	ô]◊Ÿö[JH¬àYà
+›ú‹ 	›\úô[ù	€Ÿö[JHOOHò[ŸJH¬à\]W€‹[€ä	Ÿ^K	[Y◊›\öHà	ô]◊Ÿö[JN¬àúôXZŒ¬àBàBàBüBÇôù[ò›[€à‹ò]ôYY‹ù[ó›[YW›\‹òY\ 
+H¬à	[ú›[YHŸ]€‹[€ä	Ÿ‹ò]ôYY›[YW›ô\ú⁄[€âÀ	Ã	 N¬àYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y‘êUëQQ’ëTî“S”ã	œèI JH»ô]\õé»Bà‹ò]ôYYŸ[ú›\ôW›€€ÿ€€[Y\òŸW‹YŸ\ 
+N¬à‹ò]ôYYŸ[ú›\ôWÿÿ][Ÿ◊‹›ùX›\ôJ
+N¬à‹ò]ôYYŸ[ú›\ôWÿÿ][Ÿ◊‹YŸ\ 
+N¬àYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y	ÕKéMÀå	À	œ	 H	âàù[ò›[€óŸ^\› 	Ÿ‹ò]ôYYÿ]]ÿ]ú◊⁄[ú›[‹ô\]Y\›YŸö[\ú… JH¬à‹ò]ôYYÿ]]ÿ]ú◊⁄[ú›[‹ô\]Y\›YŸö[\ú 
+N¬àBàYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y	ÕKççÀå	À	œ	 JH»‹ò]ôYYÿúò[ô›ÿ◊Ÿ[XZ[ 
+N»BàYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y	ÕKçÃãå	À	œ	 JH»‹ò]ôYYŸö^⁄\õ◊‹€YW⁄[XYŸW‹] 
+N»BàYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y	ÕKçÕãåâÀ	œ	 JH»‹ò]ôYY‹ôXÿ[›[]W›\Ÿ‹öXŸ\ 
+N»BàYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y	ÕKçŒå	À	œ	 JH»õ\⁄‹ô]‹ö]W‹ù[\ 
+N»BàYà
+ô\ú⁄[€óÿ€€\\ôJ	[ú›[Y	ÕKçŒçâÀ	œ	 JH¬à	XùY◊€Ÿ»H‹›\ÿYŸ\ä
+V…ÿò\ŸY\â◊Hà	ÀŸ‹ò]ôYYYXùYÀù	Œ¬àYà
+ö[WŸ^\› 	XùY◊€Ÿ JH»[õ[ö 	XùY◊€Ÿ N»Bà‹ò]ôYY‹ôXÿ[›[]W›\Ÿ‹öXŸ\ 
+N¬àBà\]W€‹[€ä	Ÿ‹ò]ôYY›[YW›ô\ú⁄[€âÀ‘êUëQQ’ëTî“S”äN¬üBòYÿX›[€ä	ÿYZ[ó⁄[ö]	À	Ÿ‹ò]ôYY‹ù[ó›[YW›\‹òY\… N¬Çôù[ò›[€à‹ò]ôYY‹ŸYYŸö[\ó›\õ\ 
+H¬à	‹õ›\»H\úò^Jà	‹W⁄ùYY€…»Oà\úò^J	”XY⁄XŒàHÿ]\ö[ô…À	‘⁄Í[[€âÀ	”€ôHYXŸIÀ	—Y⁄[[€âÀ	—òY€€àò[	À	”›õ‹… Kà	‹W‹ò\ô^òI»Oà\úò^J	–€€pÓõâÀ	“[ôúôX›Y[ùIÀ	‘ò\òIÀ	”pÎ]XÿIÀ	‘õ€[…À	—\‹X⁄X[	 Kà	‹W⁄Y[€XI»Oà\úò^J	—\‹pÏ[€	À	“[ô€0Í\…À	“ò\€∞Í\…À	‘‹ùY›pÍ\… Kà	‹Wÿ€€ôX⁄[€â»Oà\úò^J	”ùY]òIÀ	”ôX\àZ[ù	À	—^Ÿ[[ù	À	—€€Ÿ	À	‘^YY	 Kà	‹WÿXÿXòY…»Oà\úò^J	—õ⁄[	À	”õ»õ⁄[	À	‘ô]ô\úŸH€…À	“€… Kà	‹W›\ÀXÿ\ùI»Oà\úò^J	–‹ôX]\ôH»‹öX]\òIÀ	”[ô»Y\úòIÀ	–\ùYòX›»\ùYòX›…À	—[ò⁄[ùY[ù»[òÿ[ù[ZY[ù…À	‘[ô\›ÿ[Ÿ\âÀ	“[ú›[ù»[ú›[ù0Ë[ô[…À	‘€‹òŸ\ûH»€€öù\õ… Kà	‹Wÿ€€‹â»Oà\úò^J	–õ[ò€…À	–^ù[	À	”ôY‹õ…À	‘õ⁄õ…À	’ô\ôIÀ	“[ò€€‹õ…À	”][X€€‹âÀ	’ò[ú‹\ô[ùIÀ	–[X\ö[…À	’ö[€]I Kà	‹W›\À\õŸX›…»Oà\úò^J	‘€ÿúô\…À	–õ€‹›\àõﬁ	À	–ù[ô\…À	–€€X›‹àõ€‹›\âÀ	”X^õ‹»»€€[X[ô\âÀ	“⁄]»H€€Xÿ⁄[€ô\…À	‘›\ù\àX⁄‹…À	—›XõHX⁄‹…À	‘õŸX›‹»\‹X⁄X[\… Kà	‹WŸY]‹öX[	»Oà\úò^J	—]ö\âÀ	–ù\∞Ï…À	‘‹[\âÀ	”›ò\»Y]‹öX[\… Kà	‹W›\ÀZùYY€…»Oà\úò^J	—ò[Z[X\ô\…À	‘\ùHÿ[Y\…À	—\›ò]Y⁄XIÀ	–€€‹\ò]]õ‹…À	‘\òHàùYÿY‹ô\…À	“[ôò[ù[\…À	“ùYY€‹»Hÿ\ù\…À	‘õ€»]ô[ù\òI Kà	‹W⁄ùYÿY‹ô\…»Oà\úò^J	ÃHùYÿY‹âÀ	ÃàùYÿY‹ô\…À	ÃÀMùYÿY‹ô\…À	ÕH»pË\… Kà	‹WŸYY	»Oà\úò^J	 Ã…À	 ÕâÀ	 Œ	À	 ÃLâÀ	 ÃM	À	 ÃN	 Kà	‹WŸ\òX⁄[€â»Oà\úò^J	ÀLÃZ[âÀ	ÃÃMåZ[âÀ	ÕåNLZ[âÀ	 ŒLZ[â Kà	‹WŸYöX›[Y	»Oà\úò^J	—∞ËX⁄[	À	”YYXIÀ	—Y∞ÎX⁄[	 Kà	‹W›\ÀXXÿŸ\€‹ö[…»Oà\úò^J	—õ€[‹»»€Y]ô\…À	—X⁄»õﬁ\…À	–ÿ\ú]\…À	‘^[X]…À	—Y‹»H€€ùY‹ô\…À	–[XXŸ[ò[ZY[ù…À	”›õ‹… Kà	‹W€X\òÿI»Oà\úò^J	—òY€€à⁄Y[	À	’[òHõ…À	’[[X]H›X\ô	À	“”P…À	”›ò\»X\òÿ\… Kà	‹W›[X[õÀXXÿŸ\€‹ö[…»Oà\úò^J	‘€X[	À	‘›[ô\ô	 Kà	‹Wÿÿ[ùYY\\]Y]I»Oà\úò^J	Õ[öYY\…À	ÕL[öYY\…À	Õå[öYY\…À	Œ[öYY\…À	ÃL[öYY\… Kà
+N¬àõ‹ôXX⁄
+	‹õ›\»\»	^€õ€^HOà	\õ\ H¬àYà
+]^€õ€^WŸ^\› 	^€õ€^JJH»€€ù[ùYN»Bàõ‹ôXX⁄
+	\õ\»\»	\õJH»Yà
+]\õWŸ^\› 	\õK	^€õ€^JJH»‹⁄[úŸ\ù›\õJ	\õK	^€õ€^JN»HBàBüBòYÿX›[€ä	⁄[ö]	À	Ÿ‹ò]ôYY‹ŸYYŸö[\ó›\õ\…ÀÃ
+N¬Çôù[ò›[€à‹ò]ôYY‹ŸX›[€óŸö[\ú 
+H¬àô]\õà\úò^Jà	ÿÿ\ù\À\›Y[\…»Oà\úò^Jà	Ÿó⁄ùYY€…»Oà\úò^J	“ùYY€…À	‹W⁄ùYY€… K	Ÿóÿ€€Xÿ⁄[€â»Oà\úò^J	–€€Xÿ⁄pÏ€à»Ÿ]	À	‹Wÿ€€Xÿ⁄[€â Kà	Ÿó‹ò\ô^òI»Oà\úò^J	‘ò\ô^òIÀ	‹W‹ò\ô^òI K	Ÿóÿ€€‹â»Oà\úò^J	–€€‹âÀ	‹Wÿ€€‹â Kà	Ÿó›\◊ÿÿ\ùI»Oà\úò^J	’\»Hÿ\ùIÀ	‹W›\ÀXÿ\ùI K	Ÿó⁄Y[€XI»Oà\úò^J	“Y[€XIÀ	‹W⁄Y[€XI Kà	Ÿóÿ€€ôX⁄[€â»Oà\úò^J	–€€ôX⁄pÏ€âÀ	‹Wÿ€€ôX⁄[€â K	ŸóÿXÿXòY…»Oà\úò^J	—õ⁄[»XÿXòY…À	‹WÿXÿXòY… Kà
+Kà	›Ÿ…»Oà\úò^Jà	Ÿó⁄ùYY€…»Oà\úò^J	“ùYY€…À	‹W⁄ùYY€… K	Ÿó›\◊‹õŸX›…»Oà\úò^J	’\»HõŸX›…À	‹W›\À\õŸX›… Kà	Ÿóÿ€€Xÿ⁄[€â»Oà\úò^J	–€€Xÿ⁄pÏ€à»Ÿ]	À	‹Wÿ€€Xÿ⁄[€â K	Ÿó⁄Y[€XI»Oà\úò^J	“Y[€XIÀ	‹W⁄Y[€XI Kà
+Kà	⁄ùYY€‹ÀYK[Y\ÿI»Oà\úò^Jà	ŸóŸY]‹öX[	»Oà\úò^J	—Y]‹öX[	À	‹WŸY]‹öX[	 K	Ÿó›\◊⁄ùYY€…»Oà\úò^J	’\»HùYY€…À	‹W›\ÀZùYY€… Kà	Ÿó⁄ùYÿY‹ô\…»Oà\úò^J	–ÿ[ùYYHùYÿY‹ô\…À	‹W⁄ùYÿY‹ô\… K	ŸóŸYY	»Oà\úò^J	—YYôX€€Y[ôYIÀ	‹WŸYY	 Kà	ŸóŸ\òX⁄[€â»Oà\úò^J	—\òX⁄pÏ€àH\ùYIÀ	‹WŸ\òX⁄[€â K	ŸóŸYöX›[Y	»Oà\úò^J	—YöX›[Y	À	‹WŸYöX›[Y	 Kà
+Kà	ÿXÿŸ\€‹ö[‹…»Oà\úò^Jà	Ÿó›\◊ÿXÿŸ\€‹ö[…»Oà\úò^J	–ÿ]Y€‹∞ÎXIÀ	‹W›\ÀXXÿŸ\€‹ö[… K	Ÿó›[X[õ◊ÿXÿŸ\€‹ö[…»Oà\úò^J	’[XpÏ[…À	‹W›[X[õÀXXÿŸ\€‹ö[… Kà	Ÿó€X\òÿI»Oà\úò^J	”X\òÿIÀ	‹W€X\òÿI K	Ÿóÿ€€‹â»Oà\úò^J	–€€‹âÀ	‹Wÿ€€‹â Kà	Ÿóÿÿ[ùYY‹\]Y]I»Oà\úò^J	–ÿ[ùYY‹à\]Y]IÀ	‹Wÿÿ[ùYY\\]Y]I Kà
+Kà	‹ô]ô[ù\…»Oà\úò^Jà	Ÿó⁄ùYY€…»Oà\úò^J	“ùYY€…À	‹W⁄ùYY€… K	ŸóŸY]‹öX[	»Oà\úò^J	—Y]‹öX[	À	‹WŸY]‹öX[	 Kà	Ÿó›\◊‹õŸX›…»Oà\úò^J	’\»HõŸX›…À	‹W›\À\õŸX›… Kà
+Kà
+N¬üBÇôù[ò›[€à‹ò]ôYY‹ŸX›[€óŸõ‹ó›\õJ	\õJH¬àYà
+I\õJH»ô]\õà	…Œ»Bà	€õ›€àH\úò^J	ÿÿ\ù\À\›Y[\…À	›Ÿ…À	⁄ùYY€‹ÀYK[Y\ÿIÀ	ÿXÿŸ\€‹ö[‹…À	‹ô]ô[ù\… N¬àYà
+[óÿ\úò^J	\õKOú€YÀ	€õ›€ãùYJJH»ô]\õà	\õKOú€YŒ»Bàõ‹ôXX⁄
+Ÿ]ÿ[òŸ\›‹ú 	\õKOù\õW⁄Y	‹õŸX›ÿÿ]	 H\»	[òŸ\›‹ó⁄Y
+H¬à	[òŸ\›‹àHŸ]›\õJ	[òŸ\›‹ó⁄Y	‹õŸX›ÿÿ]	 N¬àYà
+	[òŸ\›‹à	âàZ\◊›‹Ÿ\úõ‹ä	[òŸ\›‹äH	âà[óÿ\úò^J	[òŸ\›‹ãOú€YÀ	€õ›€ãùYJJH»ô]\õà	[òŸ\›‹ãOú€YŒ»BàBàô]\õà	…Œ¬üBÇôù[ò›[€à‹ò]ôYY‹ŸX›[€óÿ€‹J
+H¬àô]\õà\úò^Jà	ÿÿ\ù\À\›Y[\…»Oà\úò^J	—Sê””ï∞‡HT–H–TïIÀ	–ÿ\ù\»›Y[\ÀâÀ	–ù\ÿËH[ùôHŸ\»\»ÿ\ù\»\‹€öXõ\»HYö[∞ËH‹»ô\›[Y‹»\›H[ò€€ùò\à^X›[Y[ùHH]YHôXŸ\⁄]0Ë\ÀâÀ	”õ€XúôHHHÿ\ùIÀ	—ZéàõX⁄»›\… Kà	›Ÿ…»Oà\úò^J	’êQSë»–Të–SQT…À	‘Ÿ[Y»H⁄[ô€\ÀâÀ	‘€ÿúô\Àõ€‹›\àõﬁ\Àù[ô\ÀX^õ‹»HYX⁄[€ô\»\‹X⁄X[\»H\»ùYY€‹»ò]õ‹ö]‹ÀâÀ	–ù\ÿÿ\àõŸX›…À	—Zéàõ€‹›\àõﬁ	 Kà	⁄ùYY€‹ÀYK[Y\ÿI»Oà\úò^J	‘TêH””TTïTàHQT–IÀ	“ùYY€‹»HY\ÿKâÀ	—\›ò]Y⁄XK\ùHÿ[Y\À€€‹\ò]]õ‹»Hò[Z[X\ô\»H\»YZõ‹ô\»Y]‹öX[\ÀâÀ	–ù\ÿÿ\àùYY€…À	—Zéàÿ][â Kà	ÿXÿŸ\€‹ö[‹…»Oà\úò^J	–’RQ0‡HH””P–“p‰”âÀ	–XÿŸ\€‹ö[‹ÀâÀ	‘€Y]ô\ÀX⁄»õﬁ\Àÿ\ú]\À^[X]»HŸ»»ôXŸ\ÿ\ö[»\òHùYÿ\àHõ›YŸ\à\»ÿ\ù\ÀâÀ	–ù\ÿÿ\àXÿŸ\€‹ö[…À	—ZéàòY€€à⁄Y[	 Kà	‹ô]ô[ù\…»Oà\úò^J	‘ëT—Tï∞‡HSVS…À	‘ô]ô[ù\ÀâÀ	‘∞Ïﬁ[[‹»[ûò[ZY[ù‹»\‹€öXõ\»\òHô\Ÿ\ùò\à[ù\»]YHŸHY€›[ãâÀ	–ù\ÿÿ\àô]ô[ùIÀ	—Zéàõ€XúôH[õŸX›… Kà
+N¬üBÇôù[ò›[€à‹ò]ôYY‹ŸX›[€ó⁄\õ◊⁄[XYŸJ	ŸX›[€äH¬à	[XYŸ\»H\úò^Jà	ÿÿ\ù\À\›Y[\…»Oà	⁄\õÀXÿ\ù\À\›Y[\ÀùŸXú	Àà	›Ÿ…»Oà	⁄\õÀ]ŸÀùŸXú	Àà	⁄ùYY€‹ÀYK[Y\ÿI»Oà	⁄\õÀZùYY€‹ÀYK[Y\ÿKùŸXú	Àà	ÿXÿŸ\€‹ö[‹…»Oà	⁄\õÀXXÿŸ\€‹ö[‹ÀùŸXú	Àà	‹ô]ô[ù\…»Oà	⁄\õÀ\ô]ô[ù\ÀùŸXú	Àà
+N¬àô]\õà\‹Ÿ]
+	[XYŸ\÷…ŸX›[€óJH»Ÿ]›[\]WŸ\ôX›‹ûW›\öJ
+Hà	Àÿ\‹Ÿ]À⁄[YÀ…»à	[XYŸ\÷…ŸX›[€óHà	…Œ¬üBÇôù[ò›[€à‹ò]ôYYŸö[\ó›^€õ€^W€X\
+
+H¬à	X\H\úò^J
+N¬àõ‹ôXX⁄
+‹ò]ôYY‹ŸX›[€óŸö[\ú 
+H\»	ö[\ú H¬àõ‹ôXX⁄
+	ö[\ú»\»	\ò[HOà	]JH»	X\…\ò[WHH	]VÃWN»BàBàô]\õà	X\¬üBÇôù[ò›[€à‹ò]ôYYÿÿ][Ÿ◊›^‹]Y\ûWŸúõ€WŸŸ]
+
+H¬à	^‹]Y\ûHH\úò^J
+N¬àõ‹ôXX⁄
+‹ò]ôYYŸö[\ó›^€õ€^W€X\
+
+H\»	\ò[HOà	^€õ€^JH¬àYà
+Y[\J	——U…\ò[WJH	âà^€õ€^WŸ^\› 	^€õ€^JJH¬à	^‹]Y\ûV◊HH\úò^J	›^€õ€^I»Oà	^€õ€^K	ŸöY[	»Oà	‹€Y…À	›\õ\…»Oàÿ[ö]^ôW›]J‹›[ú€\⁄
+	——U…\ò[WJJJN¬àBàBàYà
+€›[ù
+	^‹]Y\ûJHàJH»	^‹]Y\ûV…‹ô[][€â◊HH	–Së	Œ»Bàô]\õà	^‹]Y\ûN¬üBÇôù[ò›[€à‹ò]ôYYÿÿ][Ÿ◊€Y]W‹]Y\ûWŸúõ€WŸŸ]
+
+H¬à	Y]W‹]Y\ûHH\úò^J
+N¬à	Z[àH\‹Ÿ]
+	——U…‹ôX⁄[◊€Z[â◊JH»õÿ]ò[
+‹›[ú€\⁄
+	——U…‹ôX⁄[◊€Z[â◊JJHà¬à	X^H\‹Ÿ]
+	——U…‹ôX⁄[◊€X^	◊JH»õÿ]ò[
+‹›[ú€\⁄
+	——U…‹ôX⁄[◊€X^	◊JJHà¬àYà
+	Z[à	âà	X^
+H»	Y]W‹]Y\ûV◊HH\úò^J	⁄Ÿ^I»Oà	◊‹öXŸIÀ	›ò[YI»Oà\úò^J	Z[ã	X^
+K	ÿ€€\\ôI»Oà	–ëU—QSâÀ	›\I»Oà	”ïSQTíP… N»Bà[ŸZYà
+	Z[äH»	Y]W‹]Y\ûV◊HH\úò^J	⁄Ÿ^I»Oà	◊‹öXŸIÀ	›ò[YI»Oà	Z[ã	ÿ€€\\ôI»Oà	œèIÀ	›\I»Oà	”ïSQTíP… N»Bà[ŸZYà
+	X^
+H»	Y]W‹]Y\ûV◊HH\úò^J	⁄Ÿ^I»Oà	◊‹öXŸIÀ	›ò[YI»Oà	X^	ÿ€€\\ôI»Oà	œIÀ	›\I»Oà	”ïSQTíP… N»BàYà
+Y[\J	——U…Ÿó‹›ÿ⁄…◊JH	âà[óÿ\úò^J	——U…Ÿó‹›ÿ⁄…◊K\úò^J	⁄[ú›ÿ⁄…À	€›]Ÿú›ÿ⁄… KùYJJH¬à	Y]W‹]Y\ûV◊HH\úò^J	⁄Ÿ^I»Oà	◊‹›ÿ⁄◊‹›]\…À	›ò[YI»Oàÿ[ö]^ôW⁄Ÿ^J	——U…Ÿó‹›ÿ⁄…◊JJN¬àBàô]\õà	Y]W‹]Y\ûN¬üBÇôù[ò›[€à‹ò]ôYYÿX›]ôWŸö[\óÿ⁄\ 	ö[\ú◊€X\
+H¬à	⁄\»H\úò^J
+N¬àõ‹ôXX⁄
+	ö[\ú◊€X\\»	\ò[HOà	]JH¬àYà
+[\J	——U…\ò[WJJH»€€ù[ùYN»Bà	€Y»Hÿ[ö]^ôW›]J‹›[ú€\⁄
+	——U…\ò[WJJN¬à	\õHHŸ]›\õWÿûJ	‹€Y…À	€YÀ	]VÃWJN¬àYà
+	\õH	âàZ\◊›‹Ÿ\úõ‹ä	\õJJH¬à	⁄\÷◊HH\úò^J	\ò[K	]VÃHà	Œà	»à	\õKOõò[YJN¬àBàBàYà
+Y[\J	——U…‹ôX⁄[◊€Z[â◊JHY[\J	——U…‹ôX⁄[◊€X^	◊JJH¬à	Z[àHY[\J	——U…‹ôX⁄[◊€Z[â◊JH»	…	»àù[Xô\óŸõ‹õX]
+
+õÿ]
+H‹›[ú€\⁄
+	——U…‹ôX⁄[◊€Z[â◊JK	À	À	Àâ Hà	…Œ¬à	X^HY[\J	——U…‹ôX⁄[◊€X^	◊JH»	…	»àù[Xô\óŸõ‹õX]
+
+õÿ]
+H‹›[ú€\⁄
+	——U…‹ôX⁄[◊€X^	◊JK	À	À	Àâ Hà	…Œ¬à	Xô[H	‘ôX⁄[Œà	»à
+	Z[à	âà	X^»	Z[àà	»H	»à	X^à
+	Z[à»	Ÿ\ŸH	»à	Z[àà	⁄\›H	»à	X^
+JN¬à	⁄\÷◊HH\úò^J	‹ôX⁄[…À	Xô[
+N¬àBàYà
+Y[\J	——U…Ÿó‹›ÿ⁄…◊JJH¬à	⁄\÷◊HH\úò^J	Ÿó‹›ÿ⁄…À	—\‹€öXö[YYà	»à
+	——U…Ÿó‹›ÿ⁄…◊HOOH	⁄[ú›ÿ⁄…»»	—[à›ÿ⁄…»à	‘⁄[à›ÿ⁄… JN¬àBàYà
+Y[\J	——U…‹…◊JJH¬à	⁄\÷◊HH\úò^J	‹…À	–∞Óú‹]YYNàâ»àÿ[ö]^ôW›^ŸöY[
+‹›[ú€\⁄
+	——U…‹…◊JJHà	»â N¬àBàYà
+I⁄\ H»ô]\õé»BàX⁄»	œ]à€\‹œHòX›]ôKYö[\ú»èâŒ¬àõ‹ôXX⁄
+	⁄\»\»	⁄\
+H¬à\›
+	\ò[K	Xô[
+HH	⁄\¬à	ô[[›ôWÿ\ô‹»H	\ò[HOOH	‹ôX⁄[…»»\úò^J	‹ôX⁄[◊€Z[âÀ	‹ôX⁄[◊€X^	 Hà\úò^J	\ò[JN¬àX⁄»	œ‹[à€\‹œHôö[\ãX⁄\èâ»à\ÿ◊⁄[
+	Xô[
+Hà	œHôYèHâ»à\ÿ◊›\õ
+ô[[›ôW‹]Y\ûWÿ\ô 	ô[[›ôWÿ\ô‹ JHà	»à\öXK[Xô[Hî]Z]\àö[õ»è∞ÂœÿOè‹‹[èâŒ¬àBà	€X\óÿ\ô‹»H\úò^W€Y\ôŸJ\úò^W⁄Ÿ^\ 	ö[\ú◊€X\
+K\úò^J	‹ôX⁄[◊€Z[âÀ	‹ôX⁄[◊€X^	À	Ÿó‹›ÿ⁄…À	‹… JN¬àX⁄»	œH€\‹œHôö[\ãX⁄\X€X\ààôYèHâ»à\ÿ◊›\õ
+ô[[›ôW‹]Y\ûWÿ\ô 	€X\óÿ\ô‹ JHà	»èì[\X\àŸœÿOâŒ¬àX⁄»	œŸ]èâŒ¬üBÇôù[ò›[€à‹ò]ôYYÿ\Wÿÿ][Ÿ◊Ÿö[\ú 	]Y\ûJH¬àYà
+\◊ÿYZ[ä
+HI]Y\ûKOö\◊€XZ[ó‹]Y\ûJ
+HYù[ò›[€óŸ^\› 	⁄\◊‹õŸX››^€õ€^I HZ\◊‹õŸX››^€õ€^J
+JH»ô]\õé»Bà	^‹]Y\ûHH\úò^W€Y\ôŸJ
+\úò^JH	]Y\ûKOôŸ]
+	›^‹]Y\ûI K‹ò]ôYYÿÿ][Ÿ◊›^‹]Y\ûWŸúõ€WŸŸ]
+
+JN¬àYà
+€›[ù
+	^‹]Y\ûJHàH	âàZ\‹Ÿ]
+	^‹]Y\ûV…‹ô[][€â◊JJH»	^‹]Y\ûV…‹ô[][€â◊HH	–Së	Œ»BàYà
+	^‹]Y\ûJH»	]Y\ûKOúŸ]
+	›^‹]Y\ûIÀ	^‹]Y\ûJN»Bà	Y]W‹]Y\ûHH\úò^W€Y\ôŸJ
+\úò^JH	]Y\ûKOôŸ]
+	€Y]W‹]Y\ûI K‹ò]ôYYÿÿ][Ÿ◊€Y]W‹]Y\ûWŸúõ€WŸŸ]
+
+JN¬àYà
+	Y]W‹]Y\ûJH»	]Y\ûKOúŸ]
+	€Y]W‹]Y\ûIÀ	Y]W‹]Y\ûJN»BüBòYÿX›[€ä	‹ôWŸŸ]‹‹›…À	Ÿ‹ò]ôYYÿ\Wÿÿ][Ÿ◊Ÿö[\ú… N¬Çôù[ò›[€à‹ò]ôYYŸö[\ó›\õ\ 	^€õ€^JH¬àYà
+]^€õ€^WŸ^\› 	^€õ€^JJH»ô]\õà\úò^J
+N»Bà	\õ\»HŸ]›\õ\ \úò^J	›^€õ€^I»Oà	^€õ€^K	⁄YWŸ[\I»OàùYK	€‹ô\òûI»Oà	€ò[YI JN¬àô]\õà\◊›‹Ÿ\úõ‹ä	\õ\ H»\úò^J
+Hà	\õ\Œ¬üBÇã äÇà
+à\õ\»]òZ[XõHõ‹à€ôHö[\àõ‹›€ãò\úõ›ŸY›€àûHHÿ]Y€‹ûBà
+à\»⁄]]ô\à’Tàö[\ú»\ôH[ôXYHX›]ôH
+⁄Z[ôYŸòXŸ]Yö[\ú NÇà
+àKôÀà⁄]ó⁄ùYY€œYY⁄[[€àŸ[X›Yóÿ€€Xÿ⁄[€à€õH\›»Y⁄[[€àŸ]ÀÇà
+ã¬ôù[ò›[€à‹ò]ôYYŸòXŸ]Y›\õ\ 	^€õ€^K	ö[\úÀ	^€YW‹\ò[K	ò\ŸW›^‹]Y\ûHH\úò^J
+JH¬àYà
+]^€õ€^WŸ^\› 	^€õ€^JJH»ô]\õà\úò^J
+N»BÇàÀ»ô\›öXÿ⁄[€ô\»X›X[\ŒàHÿ]Y€‹∞ÎXH
+⁄H\›[[‹»[à[òJK‹»’ì‘¬àÀ»ö[õ‹»XH[Y⁄Y‹À[^»ù\ÿÿY»H[ôX⁄[ÀŸ\‹€öXö[YYÇàÀ»\ÎHÿYH\‹YÿXõHŸúôXŸH€€»»]YHôX[Y[ùH]YYH\‹€öXõKàÀ»H€€à[∞ÓõY\õ»HõŸX›‹»]YH€‹úô\‹€ôHH\ÿHŸ[Xÿ⁄pÏ€à
+Hõ¬àÀ»[›[[ÿ]0Ë[Ÿ€À]YH\òH»]YHŸH[‹›òXòH[ù\ KÇà	^‹]Y\ûHH	ò\ŸW›^‹]Y\ûN¬àõ‹ôXX⁄
+	ö[\ú»\»	\ò[HOà	]JH¬àYà
+	\ò[HOOH	^€YW‹\ò[JH»€€ù[ùYN»BàYà
+Y[\J	——U…\ò[WJJH¬à	^‹]Y\ûV◊HH\úò^J	›^€õ€^I»Oà	]VÃWK	ŸöY[	»Oà	‹€Y…À	›\õ\…»Oàÿ[ö]^ôW›]J‹›[ú€\⁄
+	——U…\ò[WJJJN¬àBàBàYà
+€›[ù
+	^‹]Y\ûJHàJH»	^‹]Y\ûV…‹ô[][€â◊HH	–Së	Œ»BÇà	\ô‹»H\úò^J	‹‹››\I»Oà	‹õŸX›	À	‹‹›‹›]\…»Oà	‹Xõ\⁄	À	‹‹›◊‹\ó‹YŸI»OàLK	ŸöY[…»Oà	⁄Y… N¬àYà
+	^‹]Y\ûJH»	\ô‹÷…›^‹]Y\ûI◊HH	^‹]Y\ûN»Bà	Y]W‹]Y\ûHH‹ò]ôYYÿÿ][Ÿ◊€Y]W‹]Y\ûWŸúõ€WŸŸ]
+
+N¬àYà
+	Y]W‹]Y\ûJH»	\ô‹÷…€Y]W‹]Y\ûI◊HH	Y]W‹]Y\ûN»Bà	ŸX\ò⁄›\õHHŸ]‹ŸX\ò⁄‹]Y\ûJ
+N¬àYà
+	ŸX\ò⁄›\õHOOH	… H»	\ô‹÷…‹…◊HH	ŸX\ò⁄›\õN»BÇà	Y»HŸ]‹‹› 	\ô‹ N¬àYà
+IY H»ô]\õà\úò^J
+N»BÇàÀ»	ÿ[›⁄]€ÿöôX›⁄Y	»]ùY[ôH[òHö[H‹à
+õŸX›À0Í\õZ[õ K\ÎBàÀ»Ÿ[[‹»€€ù\à›pË[ù‹»õŸX›‹»[ô\›[Y»X›X[Y[ôHÿYH‹⁄pÏ€ãÇà	õ›‹»H‹ŸŸ]€ÿöôX››\õ\ 	YÀ	^€õ€^K\úò^J	ŸöY[…»Oà	ÿ[›⁄]€ÿöôX›⁄Y	 JN¬àYà
+\◊›‹Ÿ\úõ‹ä	õ›‹ JH»ô]\õà\úò^J
+N»Bà	›]H\úò^J
+N¬àõ‹ôXX⁄
+	õ›‹»\»	õ› H¬àYà
+Z\‹Ÿ]
+	›]…õ›ÀOù\õW⁄YJJH¬à	\õHH€€ôH	õ›Œ¬à	\õKOò€›[ùH¬à	›]…õ›ÀOù\õW⁄YHH	\õN¬àBà	›]…õ›ÀOù\õW⁄YKOò€›[ù
+ Œ¬àBà	›]H\úò^W›ò[Y\ 	›]
+N¬à\€‹ù
+	›]ù[ò›[€à
+	K	äH»ô]\õà›òÿ\ŸX€\
+	KOõò[YK	ãOõò[YJN»JN¬àô]\õà	›]¬üBÇôù[ò›[€à‹ò]ôYY‹õŸX›Ÿÿ[YW€ò[YJ	õŸX›⁄Y
+H¬à	\õ\»HŸ]›W›\õ\ 	õŸX›⁄Y	‹W⁄ùYY€… N¬àô]\õà
+	\õ\»	âàZ\◊›‹Ÿ\úõ‹ä	\õ\ JH»	\õ\÷ÃKOõò[YHà	…Œ¬üBÇôù[ò›[€à‹ò]ôYY€€‹Ÿÿ[YW€Xô[
+
+H¬à€ÿò[	õŸX›¬àYà
+IõŸX›
+H»ô]\õé»Bà	\õ\»HŸ]›W›\õ\ 	õŸX›OôŸ]⁄Y
+
+K	‹W⁄ùYY€… N¬àYà
+	\õ\»	âàZ\◊›‹Ÿ\úõ‹ä	\õ\ JH¬àX⁄»	œ‹[à€\‹œHõ€‹Yÿ[YK[Xô[èâ»à\ÿ◊⁄[
+	\õ\÷ÃKOõò[YJHà	œ‹‹[èâŒ¬àBüBòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿYù\ó‹⁄‹€€‹⁄][W›]IÀ	Ÿ‹ò]ôYY€€‹Ÿÿ[YW€Xô[	ÀJN¬Çôù[ò›[€à‹ò]ôYY‹ô[ô\ó‹õŸX›Ÿ‹öY
+	]Y\ûJH¬àX⁄»	œ]à€\‹œHù€€ÿ€€[Y\òŸHèâŒ¬àYà
+	]Y\ûKOö]ôW‹‹› 
+JH¬àX⁄»	œ[€\‹œHúõŸX›»€€[[úÀMèâŒ¬à⁄[H
+	]Y\ûKOö]ôW‹‹› 
+JH»	]Y\ûKOùW‹‹›
+
+N»ÿ◊ŸŸ]›[\]W‹\ù
+	ÿ€€ù[ù	À	‹õŸX›	 N»BàX⁄»	œ›[âŒ¬à‹‹ô\Ÿ]‹‹›]J
+N¬àH[ŸH¬à◊ÿX›[€ä	›€€ÿ€€[Y\òŸW€õ◊‹õŸX›◊Ÿõ›[ô	 N¬àBàX⁄»	œŸ]èâŒ¬üBÇôù[ò›[€à‹ò]ôYY‹⁄[ô€W‹õŸX›ÿòYŸJ
+H¬à€ÿò[	õŸX›¬àYà
+IõŸX›
+H»ô]\õé»BàYà
+	õŸX›Oö\◊€€ó‹ÿ[J
+JH»X⁄»	œ‹[à€\‹œHú⁄[ô€KXòYŸH⁄[ô€KXòYŸK\ÿ[Hèì—ëTïO‹‹[èâŒ»Bà[ŸZYà
+
+[YJ
+HH›ù›[YJŸ]›WŸ]J	ÿ… JJHÃ
+àVW“Só‘—P””ë H»X⁄»	œ‹[à€\‹œHú⁄[ô€KXòYŸHèìïQUìœ‹‹[èâŒ»BüBòYÿX›[€ä	›€€ÿ€€[Y\òŸWÿôYõ‹ôW‹⁄[ô€W‹õŸX›‹›[[X\ûIÀ	Ÿ‹ò]ôYY‹⁄[ô€W‹õŸX›ÿòYŸIÀJN¬Çôù[ò›[€à‹ò]ôYY‹⁄[ô€W‹õŸX››ù\›ÿòYŸ\ 
+H¬àX⁄»	œ[€\‹œHùù\›XòYŸ\»èâŒ¬àX⁄»	œOâ»à‹ò]ôYY⁄X€€ä	›ùX⁄… Hà	œ‹[èè›õ€ôœë[ù∞Î[»HŸ»[pÎ\œ‹›õ€ôœè€X[ê€‹úô[»\ôŸ[ù[õœ‹€X[è‹‹[èè€OâŒ¬àX⁄»	œOâ»à‹ò]ôYY⁄X€€ä	‹⁄Y[	 Hà	œ‹[èè›õ€ôœîY€»õ›Y⁄Yœ‹›õ€ôœè€X[ìY\òÿY»Y€»H\öô]\œ‹€X[è‹‹[èè€OâŒ¬àX⁄»	œOâ»à‹ò]ôYY⁄X€€ä	‹ôYúô\⁄	 Hà	œ‹[èè›õ€ôœêÿ[Xö[‹»⁄[àò[XO‹›õ€ôœè€X[í\›HL0ÎX\œ‹€X[è‹‹[èè€OâŒ¬àX⁄»	œ›[âŒ¬üBòYÿX›[€ä	›€€ÿ€€[Y\òŸW‹⁄[ô€W‹õŸX›‹›[[X\ûIÀ	Ÿ‹ò]ôYY‹⁄[ô€W‹õŸX››ù\›ÿòYŸ\…ÀÃJN¬ÇòYŸö[\ä	›€€ÿ€€[Y\òŸW€›]]‹ô[]Y‹õŸX›◊ÿ\ô‹…Àù[ò›[€à
+	\ô‹ H¬à	\ô‹÷…‹‹›◊‹\ó‹YŸI◊HHL¬àô]\õà	\ô‹Œ¬üJN¬Çúô[[›ôWÿX›[€ä	›€€ÿ€€[Y\òŸWÿôYõ‹ôW€XZ[óÿ€€ù[ù	À	›€€ÿ€€[Y\òŸW€›]]ÿ€€ù[ù›‹ò\\âÀL
+N¬úô[[›ôWÿX›[€ä	›€€ÿ€€[Y\òŸWÿYù\ó€XZ[óÿ€€ù[ù	À	›€€ÿ€€[Y\òŸW€›]]ÿ€€ù[ù›‹ò\\óŸ[ô	ÀL
+N¬Çã àKKKH]ô[ù‹»
+‘
+HKKKH
+ã¬Çôù[ò›[€à‹ò]ôYY‹ôY⁄\›\óŸ]ô[ù◊ÿ‹
+
+H¬àôY⁄\›\ó‹‹››\J	Ÿ]ô[ù…À\úò^Jà	€Xô[…»Oà\úò^Jà	€ò[YI»Oà	—]ô[ù‹…Àà	‹⁄[ô›[\ó€ò[YI»Oà	—]ô[ù…Àà	ÿY€ô]…»Oà	–pÏXY\à]ô[ù…Àà	ÿY€ô]◊⁄][I»Oà	–pÏXY\àùY]õ»]ô[ù…Àà	ŸY]⁄][I»Oà	—Y]\à]ô[ù…Àà	€ô]◊⁄][I»Oà	”ùY]õ»]ô[ù…Àà	›öY]◊⁄][I»Oà	’ô\à]ô[ù…Àà	‹ŸX\ò⁄⁄][\…»Oà	–ù\ÿÿ\à]ô[ù‹…Àà	€õ›Ÿõ›[ô	»Oà	”õ»ŸH[ò€€ùò\õ€à]ô[ù‹…Àà	€õ›Ÿõ›[ô⁄[ó›ò\⁄	»Oà	”õ»^H]ô[ù‹»[àH\[\òIÀà	ÿ[⁄][\…»Oà	’Ÿ‹»‹»]ô[ù‹…Àà	€Y[ùW€ò[YI»Oà	—]ô[ù‹…Àà
+Kà	‹XõX…»OàùYKà	⁄\◊ÿ\ò⁄]ôI»Oàò[ŸKà	‹ô]‹ö]I»Oà\úò^J	‹€Y…»Oà	Ÿ]ô[ù… Kà	€Y[ùW⁄X€€â»Oà	Ÿ\⁄X€€úÀXÿ[[ô\ãX[	Àà	€Y[ùW‹‹⁄][€â»Oàçãà	‹›\‹ù…»Oà\úò^J	›]IÀ	ŸY]‹âÀ	›[XõòZ[	 Kà	‹⁄›◊⁄[ó‹ô\›	»OàùYKà
+JN¬üBòYÿX›[€ä	⁄[ö]	À	Ÿ‹ò]ôYY‹ôY⁄\›\óŸ]ô[ù◊ÿ‹	 N¬Çôù[ò›[€à‹ò]ôYY‹ôY⁄\›\óŸ]ô[ù◊€Y]J
+H¬àõ‹ôXX⁄
+\úò^J	ŸôX⁄IÀ	⁄‹òIÀ	›XöXÿX⁄[€âÀ	Ÿ[õXŸI H\»	äH¬àôY⁄\›\ó‹‹›€Y]J	Ÿ]ô[ù…À	◊Ÿ]ô[ù◊…»à	ã\úò^J	›\I»Oà	‹›ö[ô…À	‹⁄[ô€I»OàùYK	‹⁄›◊⁄[ó‹ô\›	»OàùYJJN¬àBüBòYÿX›[€ä	⁄[ö]	À	Ÿ‹ò]ôYY‹ôY⁄\›\óŸ]ô[ù◊€Y]I N¬Çôù[ò›[€à‹ò]ôYYŸ]ô[ù◊€Y]Wÿõﬁ
+
+H¬àY€Y]Wÿõﬁ
+	Ÿ‹ò]ôYYŸ]ô[ù◊Ÿ]‹…À	—]‹»[]ô[ù…À	Ÿ‹ò]ôYYŸ]ô[ù◊€Y]Wÿõﬁ⁄[	À	Ÿ]ô[ù…À	‹⁄YIÀ	⁄Y⁄	 N¬üBòYÿX›[€ä	ÿY€Y]Wÿõﬁ\…À	Ÿ‹ò]ôYYŸ]ô[ù◊€Y]Wÿõﬁ	 N¬Çôù[ò›[€à‹ò]ôYYŸ]ô[ù◊€Y]Wÿõﬁ⁄[
+	‹›
+H¬à‹€õ€òŸWŸöY[
+	Ÿ‹ò]ôYYŸ]ô[ù◊‹ÿ]ôIÀ	Ÿ‹ò]ôYYŸ]ô[ù◊€õ€òŸI N¬à	ôX⁄HHŸ]‹‹›€Y]J	‹›OíQ	◊Ÿ]ô[ù◊ŸôX⁄IÀùYJN¬à	‹òHHŸ]‹‹›€Y]J	‹›OíQ	◊Ÿ]ô[ù◊⁄‹òIÀùYJN¬àYà
+I‹òJH»	‹òHH	ÃMå…Œ»Bà	XöXÿX⁄[€àHŸ]‹‹›€Y]J	‹›OíQ	◊Ÿ]ô[ù◊›XöXÿX⁄[€âÀùYJN¬àYà
+IXöXÿX⁄[€äH»	XöXÿX⁄[€àH‹ò]ôYY€‹[€ä	Ÿ‹ò]ôYYŸ]ô[ù€ÿÿ][€âÀ	‘õ‹]YHËY[ûàpÏXHLãõ‹ÍHÀà^ãùY[õ‹»Z\ô\… N»Bà	[õXŸHHŸ]‹‹›€Y]J	‹›OíQ	◊Ÿ]ô[ù◊Ÿ[õXŸIÀùYJN¬àœÇàèXô[õ‹èHô‹ò]ôYYŸ]ô[ù◊ŸôX⁄Hèè›õ€ôœëôX⁄O‹›õ€ôœè€Xô[èúèÇà[ú]\OHô]HàYHô‹ò]ôYYŸ]ô[ù◊ŸôX⁄Hàò[YOHô‹ò]ôYYŸ]ô[ù◊ŸôX⁄Hàò[YOHè‹X⁄»\ÿ◊ÿ]ä	ôX⁄JN»œàà›[OHù⁄YåL	Hèè‹ÇàèXô[õ‹èHô‹ò]ôYYŸ]ô[ù◊⁄‹òHèè›õ€ôœí‹òO‹›õ€ôœè€Xô[èúèÇà[ú]\OHù^àYHô‹ò]ôYYŸ]ô[ù◊⁄‹òHàò[YOHô‹ò]ôYYŸ]ô[ù◊⁄‹òHàò[YOHè‹X⁄»\ÿ◊ÿ]ä	‹òJN»œàà›[OHù⁄YåL	HàXŸZ€\èHåMå»èè‹ÇàèXô[õ‹èHô‹ò]ôYYŸ]ô[ù◊›XöXÿX⁄[€àèè›õ€ôœïXöXÿX⁄pÏ€è‹›õ€ôœè€Xô[èúèÇà[ú]\OHù^àYHô‹ò]ôYYŸ]ô[ù◊›XöXÿX⁄[€ààò[YOHô‹ò]ôYYŸ]ô[ù◊›XöXÿX⁄[€ààò[YOHè‹X⁄»\ÿ◊ÿ]ä	XöXÿX⁄[€äN»œàà›[OHù⁄YåL	Hèè‹ÇàèXô[õ‹èHô‹ò]ôYYŸ]ô[ù◊Ÿ[õXŸHèè›õ€ôœë[õXŸHH[úÿ‹ö\⁄pÏ€è‹›õ€ôœè€Xô[èúèÇà[ú]\OHù\õàYHô‹ò]ôYYŸ]ô[ù◊Ÿ[õXŸHàò[YOHô‹ò]ôYYŸ]ô[ù◊Ÿ[õXŸHàò[YOHè‹X⁄»\ÿ◊ÿ]ä	[õXŸJN»œàà›[OHù⁄YåL	HàXŸZ€\èHöŒãÀ›ÿKõYKÀããà
+‹⁄[€ò[
+Hèè‹Çà›[OHò€€‹éàÕŒÿŒéŸõ€ù\⁄^ôNåLú€X\ô⁄[ã]‹åMèº'‰„›X∞ÎH[õY\à[]ô[ù»€€[»›õ€ôœí[XYŸ[à\›XÿYO‹›õ€ôœã[à[[ô[HH\ôX⁄Kà\ËHH›õ€ôœë\ÿ‹ö\⁄pÏ€è‹›õ€ôœà
+\úöXòJH\òH‹»][\»[]ô[ùÀè‹Çà‹üBÇôù[ò›[€à‹ò]ôYYŸ]ô[ù◊‹ÿ]ôJ	‹›⁄Y
+H¬àYà
+Z\‹Ÿ]
+	‘‘’…Ÿ‹ò]ôYYŸ]ô[ù◊€õ€òŸI◊JH]‹›ô\öYûW€õ€òŸJ	‘‘’…Ÿ‹ò]ôYYŸ]ô[ù◊€õ€òŸI◊K	Ÿ‹ò]ôYYŸ]ô[ù◊‹ÿ]ôI JH»ô]\õé»BàYà
+Yö[ôY
+	—“Së◊–UU‘–UëI H	âà“Së◊–UU‘–UëJH»ô]\õé»BàYà
+X›\úô[ù›\Ÿ\óÿÿ[ä	ŸY]‹‹›	À	‹›⁄Y
+JH»ô]\õé»Bà	öY[»H\úò^J	ŸôX⁄IÀ	⁄‹òIÀ	›XöXÿX⁄[€âÀ	Ÿ[õXŸI N¬àõ‹ôXX⁄
+	öY[»\»	äH¬à	Ÿ^HH	Ÿ‹ò]ôYYŸ]ô[ù◊…»à	é¬àYà
+\‹Ÿ]
+	‘‘’…Ÿ^WJJH¬à	ò[YHH	àOOH	Ÿ[õXŸI»»\ÿ◊›\õ‹ò] ‹›[ú€\⁄
+	‘‘’…Ÿ^WJJHàÿ[ö]^ôW›^ŸöY[
+‹›[ú€\⁄
+	‘‘’…Ÿ^WJJN¬à\]W‹‹›€Y]J	‹›⁄Y	◊Ÿ]ô[ù◊…»à	ã	ò[YJN¬àBàBüBòYÿX›[€ä	‹ÿ]ôW‹‹›Ÿ]ô[ù…À	Ÿ‹ò]ôYYŸ]ô[ù◊‹ÿ]ôI N¬ÇòYŸö[\ä	€X[òYŸWŸ]ô[ù◊‹‹›◊ÿ€€[[ú…Àù[ò›[€à
+	€€[[ú H¬à	ô]»H\úò^J
+N¬àõ‹ôXX⁄
+	€€[[ú»\»	Ÿ^HOà	Xô[
+H¬à	ô]÷…Ÿ^WHH	Xô[¬àYà
+	Ÿ^HOOH	›]I H»	ô]÷…Ÿ]ô[ù◊ŸôX⁄I◊HH	—ôX⁄IŒ»	ô]÷…Ÿ]ô[ù◊Ÿ\›Y…◊HH	—\›Y…Œ»BàBàô]\õà	ô]Œ¬üJN¬òYÿX›[€ä	€X[òYŸWŸ]ô[ù◊‹‹›◊ÿ›\›€Wÿ€€[[âÀù[ò›[€à
+	€€[[ã	‹›⁄Y
+H¬àYà
+	€€[[àOOH	Ÿ]ô[ù◊ŸôX⁄I H¬à	ôX⁄HHŸ]‹‹›€Y]J	‹›⁄Y	◊Ÿ]ô[ù◊ŸôX⁄IÀùYJN¬àX⁄»	ôX⁄H»\ÿ◊⁄[
+]W⁄LNä	Ÿ€K÷IÀ›ù›[YJ	ôX⁄JJJHà	¯†%	Œ¬àBàYà
+	€€[[àOOH	Ÿ]ô[ù◊Ÿ\›Y… H¬à	ôX⁄HHŸ]‹‹›€Y]J	‹›⁄Y	◊Ÿ]ô[ù◊ŸôX⁄IÀùYJN¬àYà
+IôX⁄JH»X⁄»	¯†%	Œ»ô]\õé»BàX⁄»›ù›[YJ	ôX⁄JHèH›ù›[YJ	›Ÿ^I H»	œ‹[à›[OHò€€‹éàÃXNLÿŒŸõ€ù]ŸZY⁄çåèî∞Ïﬁ[[œ‹‹[èâ»à	œ‹[à›[OHò€€‹éàŒXNXòLàèî\ÿYœ‹‹[èâŒ¬àBüKLäN¬òYŸö[\ä	€X[òYŸWŸY]Y]ô[ù◊‹€‹ùXõWÿ€€[[ú…Àù[ò›[€à
+	€€[[ú H¬à	€€[[ú÷…Ÿ]ô[ù◊ŸôX⁄I◊HH	Ÿ]ô[ù◊ŸôX⁄IŒ¬àô]\õà	€€[[úŒ¬üJN¬òYÿX›[€ä	‹ôWŸŸ]‹‹›…Àù[ò›[€à
+	]Y\ûJH¬àYà
+Z\◊ÿYZ[ä
+HI]Y\ûKOö\◊€XZ[ó‹]Y\ûJ
+JH»ô]\õé»BàYà
+	]Y\ûKOôŸ]
+	‹‹››\I HOOH	Ÿ]ô[ù… H»ô]\õé»BàYà
+	]Y\ûKOôŸ]
+	€‹ô\òûI HOOH	Ÿ]ô[ù◊ŸôX⁄I H¬à	]Y\ûKOúŸ]
+	€Y]W‹]Y\ûIÀ\úò^J	‹ô[][€â»Oà	”‘âÀ\úò^J	⁄Ÿ^I»Oà	◊Ÿ]ô[ù◊ŸôX⁄IÀ	ÿ€€\\ôI»Oà	—VT’… K\úò^J	⁄Ÿ^I»Oà	◊Ÿ]ô[ù◊ŸôX⁄IÀ	ÿ€€\\ôI»Oà	”ì’VT’… JJN¬à	]Y\ûKOúŸ]
+	€Y]W⁄Ÿ^IÀ	◊Ÿ]ô[ù◊ŸôX⁄I N¬à	]Y\ûKOúŸ]
+	€‹ô\òûIÀ	€Y]W›ò[YI N¬àBüJN¬Çôù[ò›[€à‹ò]ôYYŸ]ô[ù◊€Y]J	Y	Ÿ^K	Yò][H	… H¬à	àHŸ]‹‹›€Y]J	Y	◊Ÿ]ô[ù◊…»à	Ÿ^KùYJN¬àô]\õà	àOOH	…»»	àà	Yò][¬üB
