@@ -1,7 +1,12 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '5.99.2');
+define('GRAVEDAD_VERSION', '6.0.0');
+
+// La tienda se administra desde Git/GitHub. Deshabilitar los editores de
+// archivos del panel evita que una cuenta comprometida inyecte PHP en el
+// tema o en un plugin desde el navegador.
+if (!defined('DISALLOW_FILE_EDIT')) { define('DISALLOW_FILE_EDIT', true); }
 
 require_once get_template_directory() . '/inc/admin-panel.php';
 require_once get_template_directory() . '/inc/content-panels.php';
@@ -74,6 +79,7 @@ function gravedad_assets() {
     wp_enqueue_style('gravedad-commerce', get_template_directory_uri() . '/assets/css/commerce.css', array('gravedad-theme'), GRAVEDAD_VERSION);
     wp_enqueue_style('gravedad-singles', get_template_directory_uri() . '/assets/css/singles.css', array('gravedad-commerce'), GRAVEDAD_VERSION);
     wp_enqueue_script('gravedad-theme', get_template_directory_uri() . '/assets/js/theme.js', array(), GRAVEDAD_VERSION, true);
+    wp_script_add_data('gravedad-theme', 'strategy', 'defer');
     wp_localize_script('gravedad-theme', 'gravedadAjax', array(
         'url'     => admin_url('admin-ajax.php'),
         'shopUrl' => gravedad_shop_url(),
@@ -81,6 +87,24 @@ function gravedad_assets() {
     ));
 }
 add_action('wp_enqueue_scripts', 'gravedad_assets');
+
+// WordPress agrega soporte heredado para emojis y embeds en todas las páginas.
+// La tienda no los utiliza: retirarlos evita solicitudes y JavaScript globales
+// innecesarios sin afectar WooCommerce ni el contenido editorial.
+function gravedad_remove_unused_frontend_assets() {
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+}
+add_action('init', 'gravedad_remove_unused_frontend_assets');
+
+add_action('wp_enqueue_scripts', function () {
+    wp_dequeue_script('wp-embed');
+}, 100);
 
 function gravedad_uncropped_thumbnails($size) {
     $size['width'] = max((int) $size['width'], 640);

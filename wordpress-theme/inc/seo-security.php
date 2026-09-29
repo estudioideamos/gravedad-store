@@ -209,6 +209,11 @@ add_action('init', 'gravedad_serve_text_files');
 remove_action('wp_head', 'wp_generator');
 add_filter('the_generator', '__return_empty_string');
 
+// Esta instalación no consume la REST API mediante contraseñas de aplicación:
+// GitHub despliega por la API de cPanel. Cerramos esa vía de autenticación para
+// reducir credenciales persistentes que puedan quedar olvidadas.
+add_filter('wp_is_application_passwords_available', '__return_false');
+
 // XML-RPC no se usa en este sitio (sin apps móviles ni publicación remota)
 // y es un vector clásico de fuerza bruta / amplificación DDoS (pingback).
 // El filtro xmlrpc_enabled solo bloquea los métodos que requieren login,
@@ -236,6 +241,12 @@ add_filter('rest_endpoints', function ($endpoints) {
     return $endpoints;
 });
 
+// El sitemap de autores también revela usuarios aunque el endpoint REST esté
+// bloqueado. Los autores no son contenido público de esta tienda.
+add_filter('wp_sitemaps_add_provider', function ($provider, $name) {
+    return $name === 'users' ? false : $provider;
+}, 10, 2);
+
 // No confirmar si un nombre de usuario existe a través del formulario
 // de login (mensajes de error genéricos).
 add_filter('login_errors', function () {
@@ -243,16 +254,16 @@ add_filter('login_errors', function () {
 });
 
 // Cabeceras de seguridad básicas que el hosting no manda por su cuenta.
-// No incluye Content-Security-Policy: con Mercado Pago, Correo Argentino
-// y Google Fonts cargando scripts de terceros, una CSP mal calibrada corta
-// el pago o el envío en vez de protegerlo -- necesitaría probarse a fondo
-// página por página antes de activarla.
+// La CSP es deliberadamente conservadora: protege contexto, iframes y objetos.
+// Restringir scripts y conexiones requiere probar antes Mercado Pago, Correo
+// Argentino, analítica y el checkout completo para no interrumpir compras.
 add_action('send_headers', function () {
-    if (is_admin()) { return; }
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: SAMEORIGIN');
+    header("Content-Security-Policy: base-uri 'self'; frame-ancestors 'self'; object-src 'none'");
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(self)');
+    header('X-Permitted-Cross-Domain-Policies: none');
     if (is_ssl()) {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
     }
@@ -262,8 +273,8 @@ add_action('send_headers', function () {
 // de intentos de fábrica. Después de 5 fallos desde la misma IP se bloquea
 // el login (aunque la contraseña sea correcta) por 15 minutos.
 function gravedad_login_lockout_key() {
-    $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
-    return 'gravedad_login_fails_' . md5($ip);
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : 'unknown';
+    return 'gravedad_login_fails_' . substr(hash_hmac('sha256', $ip, wp_salt('auth')), 0, 32);
 }
 add_filter('authenticate', function ($user, $username, $password) {
     if ($username === '' || $password === '') { return $user; }

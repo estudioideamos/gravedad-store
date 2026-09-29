@@ -1,6 +1,8 @@
 name: Calidad del tema
 
 on:
+  schedule:
+    - cron: "17 8 * * 1"
   pull_request:
     branches: [main]
   push:
@@ -27,6 +29,8 @@ jobs:
     steps:
       - name: Descargar código
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
 
       - name: Validar sintaxis PHP
         run: find wordpress-theme plugins -type f -name '*.php' -print0 | xargs -0 -n1 php -l
@@ -53,6 +57,25 @@ jobs:
           set -euo pipefail
           if git ls-files | grep -E '(^|/)(\.env($|\.)|wp-config\.php$|.*\.(pem|key|sql|sqlite|log|zip)$)'; then
             echo "Se detectaron archivos que no deben publicarse."
+            exit 1
+          fi
+
+      - name: Detectar primitivas PHP peligrosas
+        shell: bash
+        run: |
+          set -euo pipefail
+          pattern='(^|[^[:alnum:]_])(eval|exec|shell_exec|system|passthru|proc_open|popen)[[:space:]]*\\(|unserialize[[:space:]]*\\('
+          if rg -n --glob '*.php' "$pattern" wordpress-theme plugins; then
+            echo "Se detectó una función PHP de alto riesgo. Revisar manualmente antes de publicar."
+            exit 1
+          fi
+
+      - name: Verificar acciones fijadas por commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          if rg -n 'uses:[[:space:]]+[^[:space:]]+@(main|master|v[0-9]+([.]?[0-9]+)*)[[:space:]]*(#.*)?$' .github/workflows; then
+            echo "Las acciones externas deben fijarse por SHA, no por una etiqueta mutable."
             exit 1
           fi
 
