@@ -283,10 +283,23 @@ add_filter('authenticate', function ($user, $username, $password) {
     }
     return $user;
 }, 100, 3);
-add_action('wp_login_failed', function () {
+add_action('wp_login_failed', function ($username) {
     $key = gravedad_login_lockout_key();
-    set_transient($key, (int) get_transient($key) + 1, 15 * MINUTE_IN_SECONDS);
+    $fails = (int) get_transient($key) + 1;
+    set_transient($key, $fails, 15 * MINUTE_IN_SECONDS);
+    // Rastro mínimo en el log del servidor para poder revisar después si
+    // hubo un ataque de fuerza bruta: nunca la IP en claro ni la contraseña.
+    if ($fails === 5) {
+        error_log(sprintf('[gravedad-security] Login bloqueado 15 min tras 5 intentos fallidos (usuario probado: %s)', sanitize_user($username)));
+    }
 });
 add_action('wp_login', function () {
     delete_transient(gravedad_login_lockout_key());
 });
+
+// readme.html y license.txt del núcleo revelan la versión exacta de
+// WordPress instalada, pero son archivos físicos que Apache sirve directo
+// desde disco antes de que este código llegue a correr -- no se pueden
+// bloquear desde el tema. Para cerrarlo hay que borrarlos a mano en el
+// hosting (se recrean con cada actualización del núcleo) o pedirle al
+// hosting una regla de servidor que los bloquee.
