@@ -1,5 +1,5 @@
 name: Diagnosticar WordPress por SSH
-# Puerto 9022 confirmado por el hosting.
+# Puerto 9022 confirmado por el hosting. Reintento tras habilitación.
 
 on:
   workflow_dispatch:
