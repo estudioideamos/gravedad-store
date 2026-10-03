@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "23 10 * * *"
+  workflow_run:
+    workflows: ["Publicar tema en WordPress"]
+    types: [completed]
   push:
     branches: [main]
     paths:
@@ -57,6 +60,60 @@ jobs:
             test "$code" -ge 200 -a "$code" -lt 400
           done
 
+      - name: Probar carrito y checkout con una sesión temporal
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 2 --retry-all-errors \
+            --connect-timeout 15 --max-time 60 \
+            'https://gravedad.com.ar/wp-json/wc/store/v1/products?per_page=20&stock_status=instock' \
+            -o /tmp/products.json
+
+          product_id="$(python3 - <<'PY'
+          import json
+          products = json.load(open('/tmp/products.json', encoding='utf-8'))
+          eligible = [
+              p for p in products
+              if p.get('is_purchasable') and p.get('is_in_stock') and p.get('type') == 'simple'
+          ]
+          if not eligible:
+              raise SystemExit('No hay un producto simple, comprable y con stock para la prueba')
+          print(eligible[0]['id'])
+          PY
+          )"
+          echo "Producto temporal: ${product_id}"
+
+          curl --fail --silent --show-error --location --retry 2 --retry-all-errors \
+            --connect-timeout 15 --max-time 60 \
+            --cookie-jar /tmp/cart.cookies --cookie /tmp/cart.cookies \
+            "https://gravedad.com.ar/?add-to-cart=${product_id}" -o /dev/null
+
+          cart_result="$(curl --fail --silent --show-error --location \
+            --connect-timeout 15 --max-time 60 \
+            --cookie-jar /tmp/cart.cookies --cookie /tmp/cart.cookies \
+            --output /tmp/cart.html --write-out '%{http_code} %{url_effective}' \
+            https://gravedad.com.ar/carrito/)"
+          checkout_result="$(curl --fail --silent --show-error --location \
+            --connect-timeout 15 --max-time 60 \
+            --cookie-jar /tmp/cart.cookies --cookie /tmp/cart.cookies \
+            --output /tmp/checkout.html --write-out '%{http_code} %{url_effective}' \
+            https://gravedad.com.ar/finalizar-compra/)"
+          echo "Carrito: ${cart_result}"
+          echo "Checkout: ${checkout_result}"
+
+          grep -Eiq 'woocommerce-cart-form|wc-block-cart' /tmp/cart.html
+          grep -Eiq "woocommerce-checkout|wc-block-checkout|name=['\"]checkout['\"]" /tmp/checkout.html
+          case "${checkout_result}" in
+            2*\ https://gravedad.com.ar/finalizar-compra/*) ;;
+            *) echo 'El checkout no quedó accesible con un producto en el carrito' >&2; exit 1 ;;
+          esac
+
+          if grep -Eiq 'wc-block-checkout' /tmp/checkout.html; then
+            echo 'Tipo de checkout: bloques'
+          else
+            echo 'Tipo de checkout: clásico'
+          fi
+
       - name: Comprobar HTTPS y cabeceras de seguridad
         shell: bash
         run: |
@@ -65,7 +122,8 @@ jobs:
             --connect-timeout 15 --max-time 60 --dump-header /tmp/headers.txt \
             --output /dev/null https://gravedad.com.ar/
           tr -d '\r' </tmp/headers.txt | tee /tmp/headers-clean.txt
-          rg -i '^strict-transport-security:' /tmp/headers-clean.txt
-          rg -i '^content-security-policy:' /tmp/headers-clean.txt
-          rg -i '^x-content-type-options:[[:space:]]*nosniff' /tmp/headers-clean.txt
-          rg -i '^x-frame-options:[[:space:]]*SAMEORIGIN' /tmp/headers-clean.txt
+          grep -Eiq '^strict-transport-security:' /tmp/headers-clean.txt
+          grep -Eiq '^content-security-policy:' /tmp/headers-clean.txt
+          grep -Eiq '^x-content-type-options:[[:space:]]*nosniff' /tmp/headers-clean.txt
+          grep -Eiq '^x-frame-options:[[:space:]]*SAMEORIGIN' /tmp/headers-clean.txt
+
