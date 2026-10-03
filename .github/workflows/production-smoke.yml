@@ -1,0 +1,71 @@
+name: Verificar tienda en producción
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 10 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/production-smoke.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gravedad-production-smoke
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Versiones, seguridad y páginas comerciales
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Consultar WordPress y WooCommerce
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 15 --max-time 60 \
+            https://gravedad.com.ar/wp-json/ -o /tmp/wp-json.json
+          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
+            --connect-timeout 15 --max-time 60 \
+            https://gravedad.com.ar/tienda/ -o /tmp/shop.html
+
+          python3 - <<'PY'
+          import json, re
+          data = json.load(open('/tmp/wp-json.json', encoding='utf-8'))
+          print('WordPress:', data.get('generator', 'versión no expuesta'))
+          html = open('/tmp/shop.html', encoding='utf-8', errors='ignore').read()
+          versions = sorted(set(re.findall(r'(?:woocommerce|wc-[^?"\']+)[^?"\']*\?ver=([0-9.]+)', html, re.I)))
+          print('WooCommerce detectado en activos:', ', '.join(versions) if versions else 'versión no expuesta')
+          assert 'wc/store' in json.dumps(data.get('routes', {})), 'La Store API de WooCommerce no está disponible'
+          PY
+
+      - name: Comprobar páginas de compra
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in / /tienda/ /carrito/ /finalizar-compra/ /mi-cuenta/; do
+            result="$(curl --silent --show-error --location --retry 2 --retry-all-errors \
+              --connect-timeout 15 --max-time 60 -o /dev/null \
+              --write-out '%{http_code} %{time_starttransfer} %{url_effective}' \
+              "https://gravedad.com.ar${path}")"
+            echo "${path} ${result}"
+            code="${result%% *}"
+            test "$code" -ge 200 -a "$code" -lt 400
+          done
+
+      - name: Comprobar HTTPS y cabeceras de seguridad
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 2 --retry-all-errors \
+            --connect-timeout 15 --max-time 60 --dump-header /tmp/headers.txt \
+            --output /dev/null https://gravedad.com.ar/
+          tr -d '\r' </tmp/headers.txt | tee /tmp/headers-clean.txt
+          rg -i '^strict-transport-security:' /tmp/headers-clean.txt
+          rg -i '^content-security-policy:' /tmp/headers-clean.txt
+          rg -i '^x-content-type-options:[[:space:]]*nosniff' /tmp/headers-clean.txt
+          rg -i '^x-frame-options:[[:space:]]*SAMEORIGIN' /tmp/headers-clean.txt
