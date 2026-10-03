@@ -171,7 +171,7 @@ body.menu-is-open .nav-backdrop{opacity:1;visibility:visible}
 .main-nav li.has-mega>a:after{content:"+";position:static;left:auto;right:auto;bottom:auto;width:auto;height:auto;flex:0 0 auto;background:none;font-size:20px;line-height:1;color:var(--acid);transition:transform .25s;font-family:var(--body)}
 .main-nav li.has-mega.is-open>a:after{transform:rotate(45deg)}
 .mega-menu{position:static;inset:auto;opacity:1;visibility:visible;transform:none;display:none;width:100%;max-width:none;box-shadow:none;border:0;border-top:1px solid var(--line);background:#111217;padding:16px 0 20px;flex-direction:column;gap:18px;overflow:visible}
-.main-nav li.has-mega.is-open .mega-menu{display:flex}
+.main-nav li.has-mega.is-open .mega-menu{display:flex;left:auto!important;top:auto!important;opacity:1!important;visibility:visible!important;transform:none!important}
 .main-nav.submenu-open .nav-inner>ul>li{display:none}
 .main-nav.submenu-open .nav-inner>ul>li.has-mega.is-open{display:block;width:100%;opacity:1;transform:none}
 .main-nav .mega-menu .mega-columns{display:flex;width:100%;min-width:0;grid-template-columns:none;flex-direction:column;gap:0;padding:0 6px}

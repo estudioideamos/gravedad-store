@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) { exit; }
 
-define('GRAVEDAD_VERSION', '6.0.2');
+define('GRAVEDAD_VERSION', '6.0.3');
 
 // La tienda se administra desde Git/GitHub. Deshabilitar los editores de
 // archivos del panel evita que una cuenta comprometida inyecte PHP en el
