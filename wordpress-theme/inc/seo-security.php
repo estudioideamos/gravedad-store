@@ -209,10 +209,15 @@ add_action('init', 'gravedad_serve_text_files');
 remove_action('wp_head', 'wp_generator');
 add_filter('the_generator', '__return_empty_string');
 
-// Esta instalación no consume la REST API mediante contraseñas de aplicación:
-// GitHub despliega por la API de cPanel. Cerramos esa vía de autenticación para
-// reducir credenciales persistentes que puedan quedar olvidadas.
-add_filter('wp_is_application_passwords_available', '__return_false');
+// La aplicación móvil oficial de WooCommerce se autentica mediante contraseñas
+// de aplicación. Las habilitamos solamente sobre HTTPS y para usuarios con
+// permisos de gestión de la tienda; el resto de las cuentas no puede crearlas.
+add_filter('wp_is_application_passwords_available', function () {
+    return is_ssl();
+});
+add_filter('wp_is_application_passwords_available_for_user', function ($available, $user) {
+    return $available && $user instanceof WP_User && user_can($user, 'manage_woocommerce');
+}, 10, 2);
 
 // XML-RPC no se usa en este sitio (sin apps móviles ni publicación remota)
 // y es un vector clásico de fuerza bruta / amplificación DDoS (pingback).
