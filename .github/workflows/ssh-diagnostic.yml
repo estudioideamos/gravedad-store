@@ -41,21 +41,26 @@ jobs:
           export DISPLAY=:0
           eval "$(ssh-agent -s)"
           setsid -w ssh-add ~/.ssh/gravedad </dev/null
+          resolved_host=""
           resolved_port=""
-          for candidate in "$SSH_PORT" 9022 22; do
-            if timeout 10 ssh-keyscan -p "$candidate" -H "$SSH_HOST" > /tmp/host-key 2>/dev/null && test -s /tmp/host-key; then
-              resolved_port="$candidate"
-              break
-            fi
+          for host_candidate in "$SSH_HOST" 167.250.5.71; do
+            for port_candidate in 9022 "$SSH_PORT" 22; do
+              if timeout 10 ssh-keyscan -p "$port_candidate" -H "$host_candidate" > /tmp/host-key 2>/dev/null && test -s /tmp/host-key; then
+                resolved_host="$host_candidate"
+                resolved_port="$port_candidate"
+                break 2
+              fi
+            done
           done
-          if [ -z "$resolved_port" ]; then
-            echo "El servidor no respondió en los puertos SSH configurados" >&2
+          if [ -z "$resolved_host" ] || [ -z "$resolved_port" ]; then
+            echo "El servidor no respondió por hostname ni por IP pública" >&2
             exit 4
           fi
           cat /tmp/host-key >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
+          echo "SSH_RESOLVED_HOST=$resolved_host" >> "$GITHUB_ENV"
           echo "SSH_RESOLVED_PORT=$resolved_port" >> "$GITHUB_ENV"
-          echo "Puerto SSH detectado correctamente"
+          echo "Servidor y puerto SSH detectados correctamente"
 
       - name: Consultar versiones y configuración
         shell: bash
@@ -73,4 +78,4 @@ jobs:
           setsid -w ssh-add ~/.ssh/gravedad </dev/null
           printf '%s' 'c2V0IC1ldQpTSVRFPS9ob21lNi92YWdydm1qYS9wdWJsaWNfaHRtbApwcmludGYgJ1VzdWFyaW8gcmVtb3RvOiAnOyB3aG9hbWkKcHJpbnRmICdEaXJlY3RvcmlvIGRlbCBzaXRpbzogJzsgdGVzdCAtZiAiJFNJVEUvd3AtY29uZmlnLnBocCIgJiYgZWNobyBPSyB8fCB7IGVjaG8gTk9fRU5DT05UUkFETzsgZXhpdCAyOyB9CnByaW50ZiAnUEhQOiAnOyBwaHAgLXIgJ2VjaG8gUEhQX1ZFUlNJT04sIFBIUF9FT0w7JwpwcmludGYgJ0VzcGFjaW8gZGlzcG9uaWJsZTogJzsgZGYgLWggIiRTSVRFIiB8IGF3ayAnTlI9PTIge3ByaW50ICQ0fScKV1BfQklOPSIkKGNvbW1hbmQgLXYgd3AgfHwgdHJ1ZSkiCmlmIFsgLXogIiRXUF9CSU4iIF07IHRoZW4KICBmb3IgY2FuZGlkYXRlIGluIC91c3IvbG9jYWwvYmluL3dwIC91c3IvYmluL3dwIC9vcHQvY3BhbmVsL3dwLWNsaS93cDsgZG8KICAgIGlmIFsgLXggIiRjYW5kaWRhdGUiIF07IHRoZW4gV1BfQklOPSIkY2FuZGlkYXRlIjsgYnJlYWs7IGZpCiAgZG9uZQpmaQppZiBbIC16ICIkV1BfQklOIiBdOyB0aGVuIGVjaG8gJ1dQLUNMSTogTk9fRU5DT05UUkFETyc7IGV4aXQgMzsgZmkKZWNobyAiV1AtQ0xJOiAkV1BfQklOIgplY2hvICJXb3JkUHJlc3M6ICQoJFdQX0JJTiAtLXBhdGg9IiRTSVRFIiBjb3JlIHZlcnNpb24pIgplY2hvICdBY3R1YWxpemFjacOzbiBkZSBXb3JkUHJlc3MgZGlzcG9uaWJsZTonCiRXUF9CSU4gLS1wYXRoPSIkU0lURSIgY29yZSBjaGVjay11cGRhdGUgLS1mb3JtYXQ9dGFibGUgfHwgdHJ1ZQplY2hvICdXb29Db21tZXJjZTonCiRXUF9CSU4gLS1wYXRoPSIkU0lURSIgcGx1Z2luIGdldCB3b29jb21tZXJjZSAtLWZpZWxkcz1uYW1lLHN0YXR1cyx2ZXJzaW9uLHVwZGF0ZV92ZXJzaW9uLHJlcXVpcmVzX3dwLHJlcXVpcmVzX3BocCAtLWZvcm1hdD10YWJsZQplY2hvICdQbHVnaW5zIGFjdGl2b3MgeSBhY3R1YWxpemFjaW9uZXM6JwokV1BfQklOIC0tcGF0aD0iJFNJVEUiIHBsdWdpbiBsaXN0IC0tc3RhdHVzPWFjdGl2ZSAtLWZpZWxkcz1uYW1lLHN0YXR1cyx2ZXJzaW9uLHVwZGF0ZSx1cGRhdGVfdmVyc2lvbiAtLWZvcm1hdD10YWJsZQplY2hvICdUZW1hIGFjdGl2bzonCiRXUF9CSU4gLS1wYXRoPSIkU0lURSIgdGhlbWUgbGlzdCAtLXN0YXR1cz1hY3RpdmUgLS1maWVsZHM9bmFtZSxzdGF0dXMsdmVyc2lvbix1cGRhdGUsdXBkYXRlX3ZlcnNpb24gLS1mb3JtYXQ9dGFibGUKZWNobyAnQ29uZmlndXJhY2nDs24gY29tZXJjaWFsIGLDoXNpY2E6Jwpmb3Igb3B0aW9uIGluIHdvb2NvbW1lcmNlX2NhcnRfcGFnZV9pZCB3b29jb21tZXJjZV9jaGVja291dF9wYWdlX2lkIHdvb2NvbW1lcmNlX215YWNjb3VudF9wYWdlX2lkIHdvb2NvbW1lcmNlX2N1cnJlbmN5IHdvb2NvbW1lcmNlX2RlZmF1bHRfY291bnRyeTsgZG8KICB2YWx1ZT0iJCgkV1BfQklOIC0tcGF0aD0iJFNJVEUiIG9wdGlvbiBnZXQgIiRvcHRpb24iIDI+L2Rldi9udWxsIHx8IHRydWUpIgogIFsgLW4gIiR2YWx1ZSIgXSAmJiBwcmludGYgJyVzPSVzXG4nICIkb3B0aW9uIiAiJHZhbHVlIgpkb25lCmVjaG8gJ0RpYWduw7NzdGljbyBmaW5hbGl6YWRvJwo=' | base64 --decode > /tmp/remote-diagnostic.sh
           ssh -p "$SSH_RESOLVED_PORT" -o BatchMode=yes -o ConnectTimeout=20 \
-            "$SSH_USER@$SSH_HOST" 'bash -s' < /tmp/remote-diagnostic.sh
+            "$SSH_USER@$SSH_RESOLVED_HOST" 'bash -s' < /tmp/remote-diagnostic.sh
