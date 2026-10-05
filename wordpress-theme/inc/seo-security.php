@@ -213,7 +213,7 @@ add_filter('the_generator', '__return_empty_string');
 // de aplicación. Las habilitamos solamente sobre HTTPS y para usuarios con
 // permisos de gestión de la tienda; el resto de las cuentas no puede crearlas.
 add_filter('wp_is_application_passwords_available', function () {
-    return is_ssl();
+    return wp_parse_url(home_url('/'), PHP_URL_SCHEME) === 'https';
 });
 add_filter('wp_is_application_passwords_available_for_user', function ($available, $user) {
     return $available && $user instanceof WP_User && user_can($user, 'manage_woocommerce');
